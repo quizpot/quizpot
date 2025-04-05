@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Quiz File",
+  "description": "Schema for .qp quiz files",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "number",
+      "const": 0,
+      "description": "Version of the quiz file schema"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the quiz"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the quiz"
+    },
+    "thumbnail": {
+      "type": "string",
+      "description": "Base64 encoded thumbnail image of the quiz"
+    },
+    "background": {
+      "type": "string",
+      "description": "Base64 encoded background image of the quiz"
+    },
+    "language": {
+      "type": "string",
+      "description": "Language of the quiz in ISO 639 format"
+    },
+    "questions": {
+      "type": "array",
+      "description": "List of questions",
+      "items": {
+        "type": "object",
+        "title": "Question",
+        "description": "Question used in the quiz",
+        "properties": {
+          "questionType": {
+            "type": "string",
+            "description": "The question type declaration",
+            "enum": ["multipleChoice", "trueFalse", "poll", "slide"]
+          },
+          "timeLimit": {
+            "type": "integer",
+            "description": "Time limit in seconds for the question",
+            "minimum": 5
+          },
+          "points": {
+            "type": "string",
+            "description": "Points for the question",
+            "enum": ["normalPoints", "doublePoints", "noPoints"],
+            "default": "normalPoints"
+          }
+        },
+        "required": ["questionType"],
+        "oneOf": [
+          {
+            "title": "Multiple Choice Question",
+            "properties": {
+              "questionType": { 
+                "const": "multipleChoice" 
+              },
+              "question": { 
+                "type": "string" 
+              },
+              "image": {
+                "type": "string",
+                "description": "Image in Base64 encoding"
+              },
+              "choices": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 6,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": { 
+                      "type": "string" 
+                    },
+                    "correct": { 
+                      "type": "boolean" 
+                    }
+                  },
+                  "required": ["text", "correct"]
+                }
+              }
+            },
+            "required": ["question", "choices"]
+          },
+          {
+            "title": "True/False Question",
+            "properties": {
+              "questionType": { 
+                "const": "trueFalse" 
+              },
+              "question": { 
+                "type": "string" 
+              },
+              "image": {
+                "type": "string",
+                "description": "Image in Base64 encoding"
+              },
+              "choices": {
+                "type": "array",
+                "items": [
+                  { 
+                    "const": { 
+                      "text": "True", 
+                      "correct": true 
+                    } 
+                  },
+                  { 
+                    "const": { 
+                      "text": "False", 
+                      "correct": false 
+                    } 
+                  }
+                ]
+              }
+            },
+            "required": ["question", "choices"]
+          },
+          {
+            "title": "Poll Question",
+            "properties": {
+              "questionType": { 
+                "const": "poll" 
+              },
+              "question": { 
+                "type": "string" 
+              },
+              "image": {
+                "type": "string",
+                "description": "Image in Base64 encoding"
+              },
+              "choices": {
+                "type": "array",
+                "minItems": 2,
+                "maxItems": 6,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": { 
+                      "type": "string" 
+                    }
+                  },
+                  "required": ["text"]
+                }
+              }
+            },
+            "required": ["question", "choices"]
+          },
+          {
+            "title": "Slide (Informational)",
+            "properties": {
+              "questionType": { 
+                "const": "slide" 
+              },
+              "text": { 
+                "type": "string", 
+                "description": "Informational text" 
+              },
+              "image": {
+                "type": "string",
+                "description": "Image in Base64 encoding"
+              }
+            },
+            "required": ["text"]
+          }
+        ]
+      }
+    }
+  },
+  "required": ["title", "questions"]
+}

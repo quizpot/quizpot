@@ -21,7 +21,7 @@ const QuestionImage = () => {
   if (imageURL === undefined || !imageURL) {
     return (
       <section className='my-16 flex items-center justify-center'>
-        <div className='p-4 bg-white rounded aspect-video'>
+        <div className='p-4 bg-white rounded aspect-video min-w-sm'>
           <ImageInput
             onChange={(e) => { 
               const files = e.target?.files

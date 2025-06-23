@@ -21,7 +21,7 @@ const QuestionImage = () => {
   if (imageURL === undefined || !imageURL) {
     return (
       <section className='my-16 flex items-center justify-center'>
-        <div className='p-4 bg-white rounded aspect-video min-w-sm'>
+        <div className='p-4 bg-white rounded min-w-sm max-w-10/12'>
           <ImageInput
             onChange={(e) => { 
               const files = e.target?.files
@@ -70,7 +70,7 @@ const QuestionImage = () => {
 
   return (
     <section className='my-16 flex items-center justify-center'>
-      <div className='p-4 bg-white rounded flex flex-col gap-2'>
+      <div className='p-4 bg-white rounded min-w-sm max-w-10/12 flex flex-col gap-2'>
         <Image alt='Question Image' src={ imageURL } width={854} height={480} />
         <ImageInput
           onChange={(e) => { 

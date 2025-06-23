@@ -3,7 +3,7 @@ import Button from '@/components/ui/Button'
 import ColorInput from '@/components/ui/ColorInput'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/Dialog'
 import ImageInput from '@/components/ui/ImageInput'
-import ImageUpload from '@/components/ui/ImageInput'
+import QuizFileInput from '@/components/ui/QuizFileInput'
 import TextAreaInput from '@/components/ui/TextAreaInput'
 import TextInput from '@/components/ui/TextInput'
 import React, { useContext, useState } from 'react'
@@ -116,6 +116,60 @@ const EditorHeader = () => {
                     Apply
                   </Button>
                 </div>
+                <div className='flex gap-4 items-center'>
+                  <h1 className='text-xl whitespace-nowrap'>Load from file</h1>
+                  <QuizFileInput
+                    onChange={(e) => {
+                      const files = e.target?.files;
+
+                      if (!files || files.length === 0) {
+                        alert("Please select a valid file");
+                        return;
+                      }
+
+                      const file = files[0];
+
+                      if (file) {
+                        const reader = new FileReader();
+
+                        // This is the crucial part: move your logic here
+                        reader.onload = (loadEvent) => {
+                          try {
+                            // 'loadEvent.target.result' contains the file content as a string
+                            const fileContent = loadEvent.target?.result as string;
+
+                            // Set background (if applicable)
+                            setBackground(fileContent);
+
+                            // Parse the JSON object
+                            const jsonObject = JSON.parse(fileContent);
+
+                            // Update the quiz file context
+                            // Ensure that jsonObject truly matches your QuizFile type structure
+                            quizFileContext.setQuizFile({
+                              ...jsonObject,
+                            });
+
+                          } catch (error) {
+                            console.error("Error parsing JSON or setting quiz file:", error);
+                            alert("Error processing file: " + (error instanceof Error ? error.message : "Invalid JSON format."));
+                          }
+                        };
+
+                        reader.onerror = (errorEvent) => {
+                          console.error("Error reading file:", errorEvent);
+                          alert("Error reading file. Please try again.");
+                        };
+
+                        // Start reading the file
+                        reader.readAsText(file);
+
+                      } else {
+                        alert("Please select a valid quiz file");
+                      }
+                    }}
+                  />
+                </div>
               </div>
             </section>
           </DialogContent>
@@ -125,7 +179,15 @@ const EditorHeader = () => {
           <Button href='/' variant="secondary">
             Exit
           </Button>
-          <Button onClick={() => {/** modal with local storage save or file export */}} variant="primary">
+          <Button onClick={() => {
+            /** modal with local storage save or file export */
+            var a = document.createElement("a");
+            const jsonString = JSON.stringify(quizFileContext.quizFile, null, 2);
+            var file = new Blob([jsonString], {type: 'text/json'});
+            a.href = URL.createObjectURL(file);
+            a.download = quizFileContext.quizFile.title + '.qp';
+            a.click();
+          }} variant="primary">
             Save
           </Button>
         </div>

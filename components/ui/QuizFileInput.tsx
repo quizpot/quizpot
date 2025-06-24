@@ -4,7 +4,7 @@ const QuizFileInput = ({ onChange }: { onChange: (e: React.ChangeEvent<HTMLInput
   return (
     <input 
       type='file'
-      accept='application/qp'
+      accept=".qp, .json"
       className='p-2 border-2 border-gray-400 rounded w-full text-center'
       onChange={onChange} 
     />

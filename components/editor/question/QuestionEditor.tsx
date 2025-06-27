@@ -2,6 +2,7 @@
 import { EditorCurrentQuestionContext, EditorQuizFileContext } from '@/app/editor/page'
 import React, { useContext } from 'react'
 import QuestionImage from './QuestionImage'
+import QuestionChoices from './QuestionChoices'
 
 const QuestionEditor = () => {
   const quizFileContext = useContext(EditorQuizFileContext)
@@ -49,6 +50,9 @@ const QuestionEditor = () => {
         </div>
         <div>
           <QuestionImage />
+        </div>
+        <div className='grid grid-cols-2 p-4 gap-4'>
+          <QuestionChoices />
         </div>
       </div>
       {/** add a question editor on the side */}

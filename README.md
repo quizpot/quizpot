@@ -1,36 +1,23 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<p align="center">
+  🚧 ⚠️ This project is in early development, check out the milestone for more information <a href="https://github.com/quizpot/quizpot/milestone/1">here</a> ⚠️ 🚧
+</p>
 
-## Getting Started
+<h1 align="center">
+  Quizpot
+</h1>
 
-First, run the development server:
+An open-source quiz application that allows you to create entertaining quizzes, without limits. 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Based on Next.js, it uses the latest web technologies so it's accessible from your phone to your tv, and it's easy to run anywhere from your local machine or the cloud.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Why Quizpot?
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Quizpot is open-source and free to use, no strings attached. Aiming to be the best in class and easy to use, it's built with the latest technologies and is trying to be user-friendly.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Simple editor
 
-## Learn More
+The editor is simple and easy to use baked right into the game, allowing you to create quizzes without any technical knowledge. You can create questions, add images, and even change the theme of your quiz without having to pay for anything.
 
-To learn more about Next.js, take a look at the following resources:
+### Open-source
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Quizpot is open-source, so you can contribute to the project and help make it better. No plans to go premium, all the features will stay free.

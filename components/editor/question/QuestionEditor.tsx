@@ -3,6 +3,8 @@ import { EditorCurrentQuestionContext, EditorQuizFileContext } from '@/app/edito
 import React, { useContext } from 'react'
 import QuestionImage from './QuestionImage'
 import QuestionChoices from './QuestionChoices'
+import QuestionChoiceAdd from './QuestionChoiceAdd'
+import QuestionChoiceRemove from './QuestionChoiceRemove'
 
 const QuestionEditor = () => {
   const quizFileContext = useContext(EditorQuizFileContext)
@@ -59,6 +61,10 @@ const QuestionEditor = () => {
         </div>
         <div className='grid grid-cols-2 p-4 gap-4'>
           <QuestionChoices />
+        </div>
+        <div className='flex gap-4 items-stretch'>
+          <QuestionChoiceAdd />
+          <QuestionChoiceRemove />
         </div>
       </div>
       {/** add a question editor on the side */}

@@ -16,6 +16,13 @@ const QuestionEditor = () => {
     throw new Error("No current question index context found")
   }
 
+  if (quizFileContext === undefined) {
+    return <></>
+  }
+
+  const { quizFile, setQuizFile } = quizFileContext
+  const { currentQuestionIndex } = currentQuestionIndexContext
+
   return (
     <section className='h-full w-full'>
       <div className='h-full w-full overflow-y-auto'
@@ -28,24 +35,23 @@ const QuestionEditor = () => {
       >
         <div className='p-4'>
           <div className='bg-white rounded'>
-            <input 
-              type='text'
-              className='p-2 rounded w-full text-2xl text-center'
-              value={ quizFileContext.quizFile.questions[currentQuestionIndexContext.currentQuestionIndex].question }
-              onChange={(e) => { 
-                const updatedQuestions = [...quizFileContext.quizFile.questions]
-                
-                updatedQuestions[currentQuestionIndexContext.currentQuestionIndex] = {
-                  ...updatedQuestions[currentQuestionIndexContext.currentQuestionIndex],
-                  question: e.target.value,
-                }
-
-                quizFileContext.setQuizFile({
-                  ...quizFileContext.quizFile,
-                  questions: updatedQuestions,
-                })
-              }}
-            />
+            {quizFile.questions && quizFile.questions[currentQuestionIndex] ? (
+              <input
+                type="text"
+                className='p-2 rounded w-full text-2xl text-center'
+                value={quizFile.questions[currentQuestionIndex].question}
+                onChange={(e) => {
+                  const updatedQuestions = [...quizFile.questions];
+                  updatedQuestions[currentQuestionIndex] = {
+                    ...updatedQuestions[currentQuestionIndex],
+                    question: e.target.value,
+                  };
+                  setQuizFile({ ...quizFile, questions: updatedQuestions });
+                }}
+              />
+            ) : (
+              <p>Loading question...</p>
+            )}
           </div>
         </div>
         <div>

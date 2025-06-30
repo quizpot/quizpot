@@ -1,17 +1,12 @@
-"use client"
-import { MessageList } from "@/components/message_list";
-import { MessageSubmit } from "@/components/message_submit";
-import { useMessaging } from "@/components/messaging";
+import ConnectionStatus from '@/components/quiz/ConnectionStatus'
+import React from 'react'
 
-export default function Page() {
-  const [messages, sendMessage] = useMessaging(
-    () => `ws://${window.location.host}/api/ws`,
-  );
-
+const QuizPage = () => {
   return (
-    <div style={{ maxWidth: '50vh' }}>
-      <MessageList messages={messages} />
-      <MessageSubmit onMessage={sendMessage} />
-    </div>
-  );
+    <>
+      <ConnectionStatus />
+    </>
+  )
 }
+
+export default QuizPage

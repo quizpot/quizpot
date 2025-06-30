@@ -1,50 +1,43 @@
+import { hostWSLogic } from "@/lib/ws/HostLogic"
+import { randomUUID } from "crypto"
+
 export function GET() {
-  console.log("Got GET on /api/ws");
-  const headers = new Headers();
-  headers.set('Connection', 'Upgrade');
-  headers.set('Upgrade', 'websocket');
-  return new Response('Upgrade Required', { status: 426, headers });
+  console.log("GET /api/ws Upgrading connection")
+
+  const headers = new Headers()
+  headers.set('Connection', 'Upgrade')
+  headers.set('Upgrade', 'websocket')
+
+  return new Response('Upgrade Required', { status: 426, headers })
 }
 
-export function SOCKET(
-  client: import('ws').WebSocket,
-  _request: import('node:http').IncomingMessage,
-  server: import('ws').WebSocketServer,
+export function SOCKET (
+  client: WebSocketClient,
 ) {
-  console.log('Socket handling');
-  for (const other of server.clients) {
-    if (client === other || other.readyState !== other.OPEN) continue;
-    other.send(
-      JSON.stringify({
-        author: 'System',
-        content: 'A new user joined the chat',
-      }),
-    );
-  }
+  console.log('SOCKET /api/ws Handling socket connection')
 
-  client.on('message', (message) => {
-    // Forward the message to all other clients
-    for (const other of server.clients)
-      if (client !== other && other.readyState === other.OPEN)
-        other.send(message);
-  });
+  client.id = randomUUID()
+  clients.push(client)
 
+  // Send client assigned id
   client.send(
     JSON.stringify({
-      author: 'System',
-      content: `Welcome to the chat! There ${server.clients.size - 1 === 1 ? 'is 1 other user' : `are ${server.clients.size - 1 || 'no'} other users`} online`,
-    }),
-  );
+      type: 'id',
+      id: client.id
+    })
+  )
+
+  hostWSLogic(client)
 
   return () => {
-    for (const other of server.clients) {
-      if (client === other || other.readyState !== other.OPEN) continue;
-      other.send(
-        JSON.stringify({
-          author: 'System',
-          content: 'A user left the chat',
-        }),
-      );
-    }
-  };
+    clients.splice(clients.indexOf(client), 1)
+    console.log('Client ' + client.id + ' disconnected, remaining: ' + clients.length)
+  }
 }
+
+export interface WebSocketClient extends WebSocket {
+  id: string
+}
+
+// Keep track of all connected clients
+const clients: WebSocketClient[] = []

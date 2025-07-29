@@ -1,4 +1,5 @@
 import { hostWSLogic } from "@/lib/ws/HostLogic"
+import { quizWSLogic } from "@/lib/ws/QuizLogic"
 import { randomUUID } from "crypto"
 
 export function GET() {
@@ -14,7 +15,7 @@ export function GET() {
 export function SOCKET (
   client: WebSocketClient,
 ) {
-  console.log('SOCKET /api/ws Handling socket connection')
+  // console.log('SOCKET /api/ws Handling socket connection')
 
   client.id = randomUUID()
   clients.push(client)
@@ -27,11 +28,14 @@ export function SOCKET (
     })
   )
 
+  console.log('SOCKET /api/ws New client connected with id: ' + client.id + ', total: ' + clients.length)
+
   hostWSLogic(client)
+  quizWSLogic(client)
 
   return () => {
     clients.splice(clients.indexOf(client), 1)
-    console.log('Client ' + client.id + ' disconnected, remaining: ' + clients.length)
+    console.log('SOCKET /api/ws Client ' + client.id + ' disconnected, remaining: ' + clients.length)
   }
 }
 
@@ -40,4 +44,4 @@ export interface WebSocketClient extends WebSocket {
 }
 
 // Keep track of all connected clients
-const clients: WebSocketClient[] = []
+export const clients: WebSocketClient[] = []

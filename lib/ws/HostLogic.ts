@@ -1,5 +1,5 @@
 import { WebSocketClient } from "@/app/api/ws/route"
-import { lobbies } from "../LobbyManager"
+import { createLobby } from "../LobbyManager"
 
 export function hostWSLogic(ws: WebSocketClient) {
   ws.onmessage = (event) => {
@@ -7,18 +7,25 @@ export function hostWSLogic(ws: WebSocketClient) {
 
     if (content.type === 'quizUpload') {
       console.log("[HostLogic] Received quiz upload request from client:", content.hostId)
-      lobbies.push({
-        id: Math.floor(Math.random() * 900000 + 100000), // Generates a random number between 100000 and 999999
-        hostId: content.hostId,
-        quiz: JSON.parse(content.file)
-      })
+
+      // TODO: Validate quiz content
+      const res = createLobby(content.hostId, content.quiz)
+
+      if (res instanceof Error) {
+        ws.send(JSON.stringify({
+          type: 'quizUploadError',
+          error: res.message
+        }))
+        console.log("[HostLogic] Error uploading quiz:", res.message)
+        return
+      }
       
-      console.log("[HostLogic] Created new a new lobby with code:", lobbies[lobbies.length - 1].id)
+      console.log("[HostLogic] Created new a new lobby with code:", res)
       
       ws.send(JSON.stringify({
         type: 'lobbyCreated',
         hostId: content.hostId,
-        code: lobbies[lobbies.length - 1].id
+        code: res
       }))
     }
   }

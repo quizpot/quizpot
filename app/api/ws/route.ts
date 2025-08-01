@@ -1,6 +1,7 @@
 import { hostWSLogic } from "@/lib/ws/HostLogic"
 import { quizWSLogic } from "@/lib/ws/QuizLogic"
-import { randomUUID } from "crypto"
+import { createWSClient, deleteWSClient, getWSClientsSize, WebSocketClient } from "@/lib/managers/WSClientManager"
+import { deleteLobby } from "@/lib/managers/LobbyManager"
 
 export function GET() {
   console.log("GET /api/ws Upgrading connection")
@@ -15,33 +16,27 @@ export function GET() {
 export function SOCKET (
   client: WebSocketClient,
 ) {
-  // console.log('SOCKET /api/ws Handling socket connection')
-
-  client.id = randomUUID()
-  clients.push(client)
+  client = createWSClient(client)
 
   // Send client assigned id
   client.send(
     JSON.stringify({
-      type: 'id',
+      type: 'setId',
       id: client.id
     })
   )
 
-  console.log('SOCKET /api/ws New client connected with id: ' + client.id + ', total: ' + clients.length)
+  console.log('SOCKET /api/ws New client connected with id: ' + client.id + ', total: ' + getWSClientsSize())
 
   hostWSLogic(client)
   quizWSLogic(client)
 
+  /**
+   * Cleanup everything on disconnect
+   */
   return () => {
-    clients.splice(clients.indexOf(client), 1)
-    console.log('SOCKET /api/ws Client ' + client.id + ' disconnected, remaining: ' + clients.length)
+    deleteLobby(client.id)
+    deleteWSClient(client)
+    console.log('SOCKET /api/ws Client ' + client.id + ' disconnected, remaining: ' + getWSClientsSize())
   }
 }
-
-export interface WebSocketClient extends WebSocket {
-  id: string
-}
-
-// Keep track of all connected clients
-export const clients: WebSocketClient[] = []

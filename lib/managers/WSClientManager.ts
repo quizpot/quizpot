@@ -1,11 +1,18 @@
 import { randomUUID } from "crypto"
 
+declare global {
+  // eslint-disable-next-line no-var
+  var wsClientManager: {
+    wsclients: Map<string, WebSocketClient>
+  }
+}
+
 export interface WebSocketClient extends WebSocket {
   id: string
 }
 
 /**
- * Persist wsclients in globalThis to avoid Next.js trickery
+ * Persist wsclients in globalThis to avoid Next.js hotreload trickery
  */
 if (!globalThis.wsClientManager) {
   globalThis.wsClientManager = {

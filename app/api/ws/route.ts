@@ -1,6 +1,7 @@
 import { hostWSLogic } from "@/lib/ws/HostLogic"
 import { quizWSLogic } from "@/lib/ws/QuizLogic"
 import { createWSClient, deleteWSClient, getWSClientsSize, WebSocketClient } from "@/lib/managers/WSClientManager"
+import { deleteLobby } from "@/lib/managers/LobbyManager"
 
 export function GET() {
   console.log("GET /api/ws Upgrading connection")
@@ -30,7 +31,11 @@ export function SOCKET (
   hostWSLogic(client)
   quizWSLogic(client)
 
+  /**
+   * Cleanup everything on disconnect
+   */
   return () => {
+    deleteLobby(client.id)
     deleteWSClient(client)
     console.log('SOCKET /api/ws Client ' + client.id + ' disconnected, remaining: ' + getWSClientsSize())
   }

@@ -1,7 +1,6 @@
 "use client"
 import { useLobby } from '@/components/host/LobbyProvider'
 import UploadQuizPrompt from '@/components/host/UploadQuizPrompt'
-import ConnectionStatus from '@/components/quiz/ConnectionStatus'
 import React from 'react'
 
 const HostPage = () => {
@@ -11,7 +10,6 @@ const HostPage = () => {
   if (!lobbyCode) {
     return (
       <>
-        <ConnectionStatus />
         <UploadQuizPrompt />
       </>
     )

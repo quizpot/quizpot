@@ -37,6 +37,12 @@ const lobbies = globalThis.lobbyManager.lobbies
 const hostLobbyMap = globalThis.lobbyManager.hostLobbyMap
 const playerLobbyMap = globalThis.lobbyManager.playerLobbyMap
 
+/**
+ * Get the count of lobbies
+ * @returns number of lobbies
+ */
+export const getLobbiesSize = () => lobbies.size
+
 export const getLobbyByHostId = (hostId: string) => hostLobbyMap.get(hostId)
 
 export const getLobbyByCode = (code: number) => lobbies.get(code)

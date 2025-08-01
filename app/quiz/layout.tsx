@@ -1,5 +1,5 @@
 import { LobbyProvider } from '@/components/host/LobbyProvider'
-import { WebSocketProvider } from '@/components/quiz/WebSocket'
+import { WebSocketProvider } from '@/components/ws/WebSocket'
 import React from 'react'
 
 const QuizLayout = ({ children }: { children: React.ReactNode }) => {

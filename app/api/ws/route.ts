@@ -1,7 +1,6 @@
-import { hostWSLogic } from "@/lib/ws/HostLogic"
-import { quizWSLogic } from "@/lib/ws/QuizLogic"
 import { createWSClient, deleteWSClient, getWSClientsSize, WebSocketClient } from "@/lib/managers/WSClientManager"
 import { deleteLobby } from "@/lib/managers/LobbyManager"
+import { emitEvent, initializeServerEventHandlers, sendEvent } from "@/lib/ws/EventManager"
 
 export function GET() {
   console.log("GET /api/ws Upgrading connection")
@@ -18,18 +17,16 @@ export function SOCKET (
 ) {
   client = createWSClient(client)
 
-  // Send client assigned id
-  client.send(
-    JSON.stringify({
-      type: 'setId',
-      id: client.id
-    })
-  )
+  sendEvent(client, 'setId', { id: client.id })
+
+  client.onmessage = (e) => {
+    const { event, ctx } = JSON.parse(e.data)
+    emitEvent(event, { client, ctx })
+  }
+
+  initializeServerEventHandlers()
 
   console.log('SOCKET /api/ws New client connected with id: ' + client.id + ', total: ' + getWSClientsSize())
-
-  hostWSLogic(client)
-  quizWSLogic(client)
 
   /**
    * Cleanup everything on disconnect

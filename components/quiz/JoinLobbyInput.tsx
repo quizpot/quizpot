@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import NumberInput from '../ui/NumberInput'
-import { useWebSocket } from './WebSocket'
+import { useWebSocket } from '../ws/WebSocket'
 import { useLobby } from '../host/LobbyProvider'
 
 const JoinLobbyInput = () => {

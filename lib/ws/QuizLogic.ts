@@ -1,5 +1,5 @@
-import { WebSocketClient } from "@/app/api/ws/route"
-import { joinLobby } from "../LobbyManager"
+import { WebSocketClient } from "../managers/WSClientManager"
+import { joinLobby } from "../managers/LobbyManager"
 
 export function quizWSLogic(ws: WebSocketClient) { // ws is the conntected client
   ws.onmessage = (event) => {

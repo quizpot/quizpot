@@ -1,9 +1,9 @@
-import { getLobbies } from "@/lib/LobbyManager"
-import { clients } from "../ws/route"
+import { getLobbies } from "@/lib/managers/LobbyManager"
+import { getWSClientsSize } from "@/lib/managers/WSClientManager"
 
 export async function GET() {
   return Response.json({ 
     lobbies: getLobbies().length, 
-    clients: clients.length 
+    clients: getWSClientsSize()
   })
 }

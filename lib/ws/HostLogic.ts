@@ -1,5 +1,5 @@
-import { WebSocketClient } from "@/app/api/ws/route"
-import { createLobby } from "../LobbyManager"
+import { WebSocketClient } from "../managers/WSClientManager"
+import { createLobby } from "../managers/LobbyManager"
 
 export function hostWSLogic(ws: WebSocketClient) {
   ws.onmessage = (event) => {

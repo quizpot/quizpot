@@ -1,5 +1,5 @@
-import { WebSocketClient } from "@/app/api/ws/route"
-import { QuizFile } from "./QuizFile"
+import { WebSocketClient } from "./WSClientManager"
+import { QuizFile } from "../QuizFile"
 
 export interface Lobby {
   code: number

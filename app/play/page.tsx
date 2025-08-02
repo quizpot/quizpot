@@ -4,7 +4,7 @@ import ConnectionStatus from '@/components/quiz/ConnectionStatus'
 import JoinLobbyInput from '@/components/quiz/JoinLobbyInput'
 import React from 'react'
 
-const QuizPage = () => {
+const PlayPage = () => {
   const lobby = useLobby()
 
   if (!lobby.code) {
@@ -24,4 +24,4 @@ const QuizPage = () => {
   )
 }
 
-export default QuizPage
+export default PlayPage

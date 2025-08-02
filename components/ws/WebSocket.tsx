@@ -14,12 +14,14 @@ const WebSocketContext = createContext<{
 // A dictionary to store client-side event handlers
 const handlers: { [key: string]: ((ctx: any) => void)[] } = {}
 
-export const WebSocketProvider = ({ children, wsUrl }: { children: ReactNode, wsUrl: string }) => {
+export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const [ws, setWs] = useState<WebSocketClient | null>(null)
   const [clientId, setClientId] = useState<string | null>(null)
   const [readyState, setReadyState] = useState<number>(WebSocket.CLOSED)
   const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null)
   const reconnectAttemptsRef = useRef<number>(0)
+
+  const wsUrl = process.env.NEXT_PUBLIC_WS_URL
 
   const MAX_RECONNECT_ATTEMPTS = 10
   const RECONNECT_BASE_DELAY = 1000
@@ -58,15 +60,20 @@ export const WebSocketProvider = ({ children, wsUrl }: { children: ReactNode, ws
     }
 
     if (ws && ws.url === wsUrl &&
-        (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) {
-        console.log("[WebSocketProvider] Already connected or connecting, skipping new connection attempt.")
-        return
+      (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) {
+      console.log("[WebSocketProvider] Already connected or connecting, skipping new connection attempt.")
+      return
     }
 
     if (ws && ws.readyState !== WebSocket.CLOSED) {
       console.log("[WebSocketProvider] Closing existing WebSocket before new connection.")
       ws.close()
       setWs(null)
+    }
+
+    if (!wsUrl) {
+      console.error("[WebSocketProvider] No WS URL provided!!! Skipping connection attempt.")
+      return
     }
 
     setReadyState(WebSocket.CONNECTING)

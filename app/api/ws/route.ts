@@ -1,5 +1,5 @@
 import { createWSClient, deleteWSClient, getWSClientsSize, WebSocketClient } from "@/lib/managers/WSClientManager"
-import { deleteLobby } from "@/lib/managers/LobbyManager"
+import { deleteLobby, initializeLobbyManager } from "@/lib/managers/LobbyManager"
 import { emitEvent, initializeServerEventHandlers, sendEvent } from "@/lib/ws/EventManager"
 
 export function GET() {
@@ -12,9 +12,11 @@ export function GET() {
   return new Response('Upgrade Required', { status: 426, headers })
 }
 
-export function SOCKET (
+export function SOCKET(
   client: WebSocketClient,
 ) {
+  initializeLobbyManager()
+
   client = createWSClient(client)
 
   sendEvent(client, 'setId', { id: client.id })

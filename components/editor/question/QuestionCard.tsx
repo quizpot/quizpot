@@ -1,11 +1,12 @@
 "use client"
-import { EditorCurrentQuestionContext, EditorQuizFileContext } from '@/app/editor/page'
 import { Question } from '@/lib/QuizFile'
 import React, { useContext } from 'react'
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
 import QuestionCardIcon from './QuestionCardIcon'
 import { PiCards } from 'react-icons/pi'
 import { BiTrash } from 'react-icons/bi'
+import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
+import { EditorCurrentQuestionContext } from '../providers/EditorCurrentQuestionContext'
 
 const QuestionCard = ({ question, index }: { question: Question, index: number }) => {
   const quizFileContext = useContext(EditorQuizFileContext)

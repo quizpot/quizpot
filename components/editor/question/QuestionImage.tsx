@@ -1,8 +1,9 @@
 "use client"
-import { EditorCurrentQuestionContext, EditorQuizFileContext } from '@/app/editor/page'
 import ImageInput from '@/components/ui/ImageInput'
 import Image from 'next/image'
 import React, { useContext } from 'react'
+import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
+import { EditorCurrentQuestionContext } from '../providers/EditorCurrentQuestionContext'
 
 const QuestionImage = () => {
   const quizFileContext = useContext(EditorQuizFileContext)

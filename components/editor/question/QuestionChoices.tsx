@@ -1,6 +1,7 @@
-import { EditorCurrentQuestionContext, EditorQuizFileContext } from '@/app/editor/page'
 import React, { useContext } from 'react'
 import QuestionChoiceCard from './QuestionChoiceCard'
+import { EditorCurrentQuestionContext } from '../providers/EditorCurrentQuestionContext'
+import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
 
 const QuestionChoices = () => {
   const quizFileContext = useContext(EditorQuizFileContext)

@@ -8,6 +8,7 @@ const Button = (
   { onClick?: () => void, href?: string, variant?: ButtonVariant, children: ReactNode, className?: string }
 ) => {
   // Default button classes
+  // eslint-disable-next-line no-var
   var defaultClassName = 'py-2 px-4 rounded shadow text-center font-medium select-none cursor-pointer ' + className
 
   // Handle variants

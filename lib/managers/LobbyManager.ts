@@ -25,30 +25,52 @@ export interface Player {
 /**
  * Persist lobbies in globalThis to avoid Next.js hotreload trickery
  */
-if (!globalThis.wsClientManager) {
-  globalThis.lobbyManager = {
-    lobbies: new Map<number, Lobby>(),
-    hostLobbyMap: new Map<string, Lobby>(),
-    playerLobbyMap: new Map<string, Lobby>(),
+export function initializeLobbyManager() {
+  if (!globalThis.wsClientManager) {
+    globalThis.lobbyManager = {
+      lobbies: new Map<number, Lobby>(),
+      hostLobbyMap: new Map<string, Lobby>(),
+      playerLobbyMap: new Map<string, Lobby>(),
+    }
   }
 }
 
-const lobbies = globalThis.lobbyManager.lobbies
-const hostLobbyMap = globalThis.lobbyManager.hostLobbyMap
-const playerLobbyMap = globalThis.lobbyManager.playerLobbyMap
+/**
+ * A helper function to get the lobbies Map, ensuring it's ready first.
+ */
+const getLobbies = () => {
+  initializeLobbyManager()
+  return globalThis.lobbyManager.lobbies
+}
+
+/**
+ * A helper function to get the hostLobbyMap, ensuring it's ready first.
+ */
+const getHostLobbyMap = () => {
+  initializeLobbyManager()
+  return globalThis.lobbyManager.hostLobbyMap
+}
+
+/**
+ * A helper function to get the playerLobbyMap, ensuring it's ready first.
+ */
+const getPlayerLobbyMap = () => {
+  initializeLobbyManager()
+  return globalThis.lobbyManager.playerLobbyMap
+}
 
 /**
  * Get the count of lobbies
  * @returns number of lobbies
  */
-export const getLobbiesSize = () => lobbies.size
+export const getLobbiesSize = () => getLobbies().size
 
-export const getLobbyByHostId = (hostId: string) => hostLobbyMap.get(hostId)
+export const getLobbyByHostId = (hostId: string) => getHostLobbyMap().get(hostId)
 
-export const getLobbyByCode = (code: number) => lobbies.get(code)
+export const getLobbyByCode = (code: number) => getLobbies().get(code)
 
 export const createLobby = (hostId: string, quiz: QuizFile): number | Error => {
-  if (hostLobbyMap.has(hostId)) {
+  if (getHostLobbyMap().has(hostId)) {
     return new Error("You already have a lobby")
   }
 
@@ -60,27 +82,27 @@ export const createLobby = (hostId: string, quiz: QuizFile): number | Error => {
     players: []
   }
 
-  lobbies.set(code, newLobby)
-  hostLobbyMap.set(hostId, newLobby)
+  getLobbies().set(code, newLobby)
+  getHostLobbyMap().set(hostId, newLobby)
 
   return code
 }
 
 
 export const deleteLobby = (hostId: string) => {
-  const lobby = hostLobbyMap.get(hostId)
+  const lobby = getHostLobbyMap().get(hostId)
   if (!lobby) return
 
-  lobbies.delete(lobby.code)
-  hostLobbyMap.delete(hostId)
+  getLobbies().delete(lobby.code)
+  getHostLobbyMap().delete(hostId)
 }
 
 export const joinLobby = (code: number, client: WebSocketClient): Error | true => {
-  if (hostLobbyMap.has(client.id)) {
+  if (getHostLobbyMap().has(client.id)) {
     return new Error("You are hosting a lobby")
   }
 
-  const lobby = lobbies.get(code)
+  const lobby = getLobbies().get(code)
   if (!lobby) return new Error("Lobby not found")
 
   // TODO: generate a random name for the player
@@ -89,13 +111,13 @@ export const joinLobby = (code: number, client: WebSocketClient): Error | true =
     name: client.id,
   })
 
-  playerLobbyMap.set(client.id, lobby)
+  getPlayerLobbyMap().set(client.id, lobby)
 
   return true
 }
 
 export const leaveLobby = (client: WebSocketClient): Error | true => {
-  const lobby = playerLobbyMap.get(client.id)
+  const lobby = getPlayerLobbyMap().get(client.id)
 
   if (!lobby) {
     return new Error("Player not found in any lobby")
@@ -107,7 +129,7 @@ export const leaveLobby = (client: WebSocketClient): Error | true => {
     lobby.players.splice(playerIndex, 1)
   }
 
-  playerLobbyMap.delete(client.id)
+  getPlayerLobbyMap().delete(client.id)
 
   return true
 }

@@ -1,4 +1,3 @@
-import { EditorQuizFileContext } from '@/app/editor/page'
 import Button from '@/components/ui/Button'
 import ColorInput from '@/components/ui/ColorInput'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/Dialog'
@@ -7,6 +6,7 @@ import QuizFileInput from '@/components/ui/QuizFileInput'
 import TextAreaInput from '@/components/ui/TextAreaInput'
 import TextInput from '@/components/ui/TextInput'
 import React, { useContext, useState } from 'react'
+import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
 
 /** TODO:
  * enhance settings menu
@@ -181,9 +181,9 @@ const EditorHeader = () => {
           </Button>
           <Button onClick={() => {
             /** modal with local storage save or file export */
-            var a = document.createElement("a");
+            const a = document.createElement("a");
             const jsonString = JSON.stringify(quizFileContext.quizFile, null, 2);
-            var file = new Blob([jsonString], {type: 'text/json'});
+            const file = new Blob([jsonString], {type: 'text/json'});
             a.href = URL.createObjectURL(file);
             a.download = quizFileContext.quizFile.title + '.qp';
             a.click();

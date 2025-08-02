@@ -1,12 +1,12 @@
 "use client"
-import { EditorQuizFileContext } from '@/app/editor/page'
 import React, { useContext } from 'react'
 import QuestionCard from '../question/QuestionCard'
 import { Dialog, DialogContent, DialogContext, DialogHeader, DialogTrigger } from '@/components/ui/Dialog'
 import Button from '@/components/ui/Button'
 import { Question } from '@/lib/QuizFile'
 import Link from 'next/link'
-import { version } from '@/package.json'
+import pjson from '@/package.json'
+import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
 
 const EditorLeftBar = () => {
   const quizFileContext = useContext(EditorQuizFileContext)
@@ -80,7 +80,7 @@ const EditorLeftBar = () => {
           <Link href="https://github.com/kragleh/quizpot">
             {new Date().getFullYear() === 2025 ? '2025 ' : `${new Date().getFullYear()} - 2025 `} © QuizPot
           </Link>
-          {' '} v{ version } by{' '}
+          {' '} v{ pjson.version } by{' '}
           <Link href="https://kragleh.com" className='underline underline-offset-2 decoration-[#F90]'>
             kragleh.com
           </Link>

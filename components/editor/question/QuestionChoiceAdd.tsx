@@ -1,6 +1,7 @@
-import { EditorCurrentQuestionContext, EditorQuizFileContext } from '@/app/editor/page'
 import { MultipleChoiceQuestion } from '@/lib/QuizFile'
 import React, { useContext } from 'react'
+import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
+import { EditorCurrentQuestionContext } from '../providers/EditorCurrentQuestionContext'
 
 const QuestionChoiceAdd = () => {
   const quizFileContext = useContext(EditorQuizFileContext)
@@ -14,7 +15,7 @@ const QuestionChoiceAdd = () => {
     throw new Error("No current question index context found")
   }
 
-  const { quizFile, setQuizFile } = quizFileContext
+  const { quizFile } = quizFileContext
   const { currentQuestionIndex } = currentQuestionIndexContext
   const currentQuestion = quizFile.questions[currentQuestionIndex] as MultipleChoiceQuestion
 

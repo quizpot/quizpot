@@ -1,22 +1,13 @@
 "use client"
 import EditorHeader from '@/components/editor/header/EditorHeader'
 import EditorLeftBar from '@/components/editor/leftbar/EditorLeftBar'
+import { EditorCurrentQuestionContext } from '@/components/editor/providers/EditorCurrentQuestionContext'
+import { EditorQuizFileContext } from '@/components/editor/providers/EditorQuizFileContext'
 import QuestionEditor from '@/components/editor/question/QuestionEditor'
 import { QuizFile } from '@/lib/QuizFile'
-import React, { createContext, useEffect, useState } from 'react'
-
-export const EditorQuizFileContext = createContext<{
-  quizFile: QuizFile
-  setQuizFile: (quizFile: QuizFile) => void
-} | null>(null)
-
-export const EditorCurrentQuestionContext = createContext<{
-  currentQuestionIndex: number
-  setCurrentQuestionIndex: (questionIndex: number) => void
-} | null>(null)
+import React, { useEffect, useState } from 'react'
 
 const EditorPage = () => {
-
   useEffect(() => {
     window.onbeforeunload = function() {
       return "Data will be lost if you leave the page, save your work!"

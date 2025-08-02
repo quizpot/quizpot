@@ -1,10 +1,11 @@
 "use client"
-import { EditorCurrentQuestionContext, EditorQuizFileContext } from '@/app/editor/page'
 import React, { useContext } from 'react'
 import QuestionImage from './QuestionImage'
 import QuestionChoices from './QuestionChoices'
 import QuestionChoiceAdd from './QuestionChoiceAdd'
 import QuestionChoiceRemove from './QuestionChoiceRemove'
+import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
+import { EditorCurrentQuestionContext } from '../providers/EditorCurrentQuestionContext'
 
 const QuestionEditor = () => {
   const quizFileContext = useContext(EditorQuizFileContext)

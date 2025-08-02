@@ -1,7 +1,8 @@
-import { EditorCurrentQuestionContext, EditorQuizFileContext } from '@/app/editor/page'
 import TextInput from '@/components/ui/TextInput'
 import { Choice, MultipleChoiceQuestion } from '@/lib/QuizFile'
 import React, { useContext } from 'react'
+import { EditorCurrentQuestionContext } from '../providers/EditorCurrentQuestionContext'
+import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
 
 const QuestionChoiceCard = ({ choice, index }: { choice: Choice, index: number }) => {
   const quizFileContext = useContext(EditorQuizFileContext)

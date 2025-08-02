@@ -5,7 +5,7 @@ import React from 'react'
 
 const HostLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <WebSocketProvider wsUrl='ws://localhost:3000/api/ws'>
+    <WebSocketProvider>
       <LobbyProvider>
         <ConnectionStatus />
         { children }

@@ -19,6 +19,9 @@ const Header = () => {
           <Link href={'/stats'}>
             Stats
           </Link>
+          <Link href={'https://github.com/quizpot'}>
+            GitHub
+          </Link>
         </div>
       </div>
     </header>

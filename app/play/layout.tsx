@@ -4,7 +4,7 @@ import React from 'react'
 
 const PlayLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <WebSocketProvider wsUrl='ws://localhost:3000/api/ws'>
+    <WebSocketProvider>
       <LobbyProvider>
         { children }
       </LobbyProvider>

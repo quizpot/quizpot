@@ -26,7 +26,7 @@ export interface Player {
  * Persist lobbies in globalThis to avoid Next.js hotreload trickery
  */
 export function initializeLobbyManager() {
-  if (!globalThis.wsClientManager) {
+  if (!globalThis.lobbyManager) {
     globalThis.lobbyManager = {
       lobbies: new Map<number, Lobby>(),
       hostLobbyMap: new Map<string, Lobby>(),

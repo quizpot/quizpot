@@ -13,7 +13,7 @@ const Header = () => {
           <Link href={'/host'}>
             Host
           </Link>
-          <Link href={'/quiz'}>
+          <Link href={'/play'}>
             Play
           </Link>
           <Link href={'/stats'}>

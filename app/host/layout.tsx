@@ -1,5 +1,5 @@
 import { LobbyProvider } from '@/components/host/LobbyProvider'
-import ConnectionStatus from '@/components/quiz/ConnectionStatus'
+import ConnectionStatus from '@/components/play/ConnectionStatus'
 import { WebSocketProvider } from '@/components/ws/WebSocket'
 import React from 'react'
 

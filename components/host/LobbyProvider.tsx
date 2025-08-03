@@ -1,16 +1,17 @@
 "use client"
+import { Lobby } from '@/lib/managers/LobbyManager'
 import React, { createContext } from 'react'
 
 const LobbyContext = createContext<{
-  code: number | null
-  setCode: (code: number | null) => void
+  lobby: Lobby | null
+  setLobby: (lobby: Lobby | null) => void
 } | null>(null)
 
 export const LobbyProvider = ({ children }: { children: React.ReactNode }) => {
-  const [code, setCode] = React.useState<number | null>(null)
+  const [lobby, setLobby] = React.useState<Lobby | null>(null)
 
   return (
-    <LobbyContext.Provider value={{ code, setCode }}>
+    <LobbyContext.Provider value={{ lobby, setLobby }}>
       { children }
     </LobbyContext.Provider>
   )

@@ -4,10 +4,9 @@ import UploadQuizPrompt from '@/components/host/UploadQuizPrompt'
 import React from 'react'
 
 const HostPage = () => {
-  // Send quiz to websocket, load the quiz and create a lobby
-  const lobbyCode = useLobby().code
+  const lobby = useLobby().lobby
 
-  if (!lobbyCode) {
+  if (!lobby) {
     return (
       <>
         <UploadQuizPrompt />
@@ -15,10 +14,12 @@ const HostPage = () => {
     )
   }
   
-  // Show the lobby with all the info and stuff
   return (
     <>
-      { lobbyCode }
+      <section className='flex flex-col gap-4 items-center justify-center h-screen w-full'>
+        <h1>Code: { lobby.code }</h1>
+        <p>Players: { lobby.players.length }</p>
+      </section>
     </>
   )
 }

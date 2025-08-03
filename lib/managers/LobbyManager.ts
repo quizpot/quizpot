@@ -69,6 +69,10 @@ export const getLobbyByHostId = (hostId: string) => getHostLobbyMap().get(hostId
 
 export const getLobbyByCode = (code: number) => getLobbies().get(code)
 
+export const getLobbyByPlayerId = (playerId: string) => getPlayerLobbyMap().get(playerId)
+
+export const getPlayerCount = () => getPlayerLobbyMap().size
+
 export const createLobby = (hostId: string, quiz: QuizFile): number | Error => {
   if (getHostLobbyMap().has(hostId)) {
     return new Error("You already have a lobby")
@@ -95,6 +99,11 @@ export const deleteLobby = (hostId: string) => {
 
   getLobbies().delete(lobby.code)
   getHostLobbyMap().delete(hostId)
+  getPlayerLobbyMap().forEach((lobby, playerId) => {
+    if (lobby.code === lobby.code) {
+      getPlayerLobbyMap().delete(playerId)
+    }
+  })
 }
 
 export const joinLobby = (code: number, client: WebSocketClient): Error | true => {

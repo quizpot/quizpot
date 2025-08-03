@@ -1,18 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { sendEvent } from "./EventManager"
-import { createLobby } from "@/lib/managers/LobbyManager"
-import { WebSocketClient } from "@/lib/managers/WSClientManager"
+import { sendEvent } from "../managers/EventManager"
+import { createLobby, getLobbyByCode } from "@/lib/managers/LobbyManager"
+import { HandlerContext } from "./HandlerContext"
 
-// Define a common interface for the handler's context
-interface HandlerContext {
-  client: WebSocketClient
-  ctx: any
-}
-
-/**
- * Handles the 'quizUpload' event from a host client.
- * This function is registered with the server's event manager.
- */
 export function handleQuizUpload({ client, ctx }: HandlerContext) {
   const { hostId, file } = ctx
 
@@ -27,12 +16,15 @@ export function handleQuizUpload({ client, ctx }: HandlerContext) {
     const quizData = JSON.parse(file)
     const newLobbyCode = createLobby(hostId, quizData)
 
+    if (typeof newLobbyCode !== 'number') {
+      throw new Error("Unexpected error creating lobby")
+    }
+
     console.log(`[HostHandlers] Lobby created for host ${hostId} with code: ${newLobbyCode}`)
 
     // Send a success event back to the client
     sendEvent(client, 'lobbyCreated', {
-      code: newLobbyCode,
-      hostId,
+      lobby: getLobbyByCode(newLobbyCode),
     })
   } catch (error) {
     console.error(`[HostHandlers] Error handling quiz upload for host ${hostId}:`, error)

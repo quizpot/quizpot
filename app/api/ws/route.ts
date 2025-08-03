@@ -1,6 +1,6 @@
 import { createWSClient, deleteWSClient, getWSClientsSize, WebSocketClient } from "@/lib/managers/WSClientManager"
-import { deleteLobby, initializeLobbyManager } from "@/lib/managers/LobbyManager"
-import { emitEvent, initializeServerEventHandlers, sendEvent } from "@/lib/ws/EventManager"
+import { deleteLobby, initializeLobbyManager, leaveLobby } from "@/lib/managers/LobbyManager"
+import { emitEvent, initializeServerEventHandlers, sendEvent } from "@/lib/managers/EventManager"
 
 export function GET() {
   console.log("GET /api/ws Upgrading connection")
@@ -36,6 +36,12 @@ export function SOCKET(
   return () => {
     deleteLobby(client.id)
     deleteWSClient(client)
+    
+    try {
+      leaveLobby(client)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    } catch (ignored) {}
+
     console.log('SOCKET /api/ws Client ' + client.id + ' disconnected, remaining: ' + getWSClientsSize())
   }
 }

@@ -8,16 +8,17 @@ import { useToast } from '../ui/Toaster'
 const UploadQuizPrompt = () => {
   const addToast = useToast()
   const { clientId, sendEvent, onEvent, isConnected } = useWebSocket()
-  const lobby = useLobby()
+  const setLobby = useLobby().setLobby
 
   useEffect(() => {
     if (!isConnected) return
     
     // Register the handler for 'lobbyCreated'
     const unsubscribeLobbyCreated = onEvent('lobbyCreated', (ctx) => {
-      console.log("[UploadQuizPrompt] Received quiz upload response from server:", ctx.hostId)
-      lobby.setCode(ctx.code)
-      addToast({ message: 'Lobby created with code: ' + ctx.code, type: 'success' })
+      console.log(ctx)
+      console.log("[UploadQuizPrompt] Received lobby from server:", ctx.lobby.code)
+      setLobby(ctx.lobby)
+      addToast({ message: 'Lobby created with code: ' + ctx.lobby.code, type: 'success' })
     })
 
     // Register the handler for 'quizUploadError'
@@ -30,10 +31,10 @@ const UploadQuizPrompt = () => {
       unsubscribeLobbyCreated()
       unsubscribeUploadError()
     }
-  }, [isConnected, onEvent, addToast, lobby])
+  }, [isConnected, onEvent, addToast, setLobby])
 
   if (!isConnected) {
-    return <p>Connecting to server...</p>;
+    return <p>Connecting to server...</p>
   }
 
   // @ts-expect-error - any type

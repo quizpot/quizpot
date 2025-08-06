@@ -4,6 +4,7 @@ import EditorLeftBar from '@/components/editor/leftbar/EditorLeftBar'
 import { EditorCurrentQuestionContext } from '@/components/editor/providers/EditorCurrentQuestionContext'
 import { EditorQuizFileContext } from '@/components/editor/providers/EditorQuizFileContext'
 import QuestionEditor from '@/components/editor/question/QuestionEditor'
+import Button from '@/components/ui/Button'
 import { QuizFile } from '@/lib/QuizFile'
 import React, { useEffect, useState } from 'react'
 
@@ -59,17 +60,27 @@ const EditorPage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0)
 
   return (
-    <EditorQuizFileContext.Provider value={{ quizFile, setQuizFile }}>
-      <EditorCurrentQuestionContext.Provider value={{ currentQuestionIndex, setCurrentQuestionIndex }}>
-        <main className='flex flex-col h-screen overflow-hidden'>
-          <EditorHeader />
-          <section className='flex h-[calc(100vh_-_56px)] overflow-hidden'>
-            <EditorLeftBar />
-            <QuestionEditor />
-          </section>
-        </main>
-      </EditorCurrentQuestionContext.Provider>
-    </EditorQuizFileContext.Provider>
+    <>
+      <div className='lg:hidden flex flex-col items-center justify-center gap-4 h-screen w-full'>
+        <h1 className='text-2xl'>Screen size not yet supported</h1>
+        <Button href='/' variant='secondary'>
+          Home
+        </Button>
+      </div>
+      <main className='hidden lg:block'>
+        <EditorQuizFileContext.Provider value={{ quizFile, setQuizFile }}>
+          <EditorCurrentQuestionContext.Provider value={{ currentQuestionIndex, setCurrentQuestionIndex }}>
+            <main className='flex flex-col h-screen overflow-hidden'>
+              <EditorHeader />
+              <section className='flex h-[calc(100vh_-_56px)] overflow-hidden'>
+                <EditorLeftBar />
+                <QuestionEditor />
+              </section>
+            </main>
+          </EditorCurrentQuestionContext.Provider>
+        </EditorQuizFileContext.Provider>
+      </main>
+    </>
   )
 }
 

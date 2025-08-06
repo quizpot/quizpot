@@ -11,12 +11,22 @@ const HomePage = () => {
       <Header />
       <Hero />
       <Feature
-        title='Editor'
-        description='Simple and straightforward editor to unleash your quizzes and take them to the next level'
+        title='No Data Collection'
+        description='Quizpot instances are built to not collect any data'
         img='/img/logo_light.png'
       />
       <Feature
-        title='Host'
+        title='File Quiz Management'
+        description='All Quizpot needs is the .qp file and the instance handles the rest'
+        img='/img/logo_light.png'
+      />
+      <Feature
+        title='Simple Editing Experience'
+        description='Unlocking full potential of your quizzes with a simple and free editor'
+        img='/img/logo_light.png'
+      />
+      <Feature
+        title='Limitless Hosting'
         description='Host quizzes whenever and wherever you want, giving you the freedom to play quizzes even in an apocalypse'
         img='/img/logo_light.png'
       />

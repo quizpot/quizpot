@@ -1,47 +1,85 @@
 import Link from 'next/link'
 import React, { ReactNode } from 'react'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger'
+export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'green' | 'yellow' | 'blue' | 'red' | 'gray'
 
 const Button = (
   { onClick, href, variant, children, className }: 
   { onClick?: () => void, href?: string, variant?: ButtonVariant, children: ReactNode, className?: string }
 ) => {
-  // Default button classes
-  // eslint-disable-next-line no-var
-  var defaultClassName = 'py-2 px-4 rounded shadow text-center font-medium select-none cursor-pointer ' + className
+  let parentClassName = ''
+  let childClassName = ''
 
-  // Handle variants
   if (variant === 'primary' || !variant) {
-    defaultClassName += ' bg-blue-500 hover:bg-blue-600 text-white'
+    childClassName += ' bg-blue-500 text-white'
+    parentClassName += ' bg-blue-600'
   } else if (variant === 'secondary') {
-    defaultClassName += ' bg-white hover:bg-gray-200 text-black'
+    childClassName += ' bg-neutral-100'
+    parentClassName += ' bg-neutral-200'
   } else if (variant === 'danger') {
-    defaultClassName += ' bg-red-500 hover:bg-red-600 text-white'
+    childClassName += ' bg-red-500'
+    parentClassName += ' bg-red-600'
+  } else if (variant === 'green') {
+    childClassName += ' bg-green-500 text-white'
+    parentClassName += ' bg-green-600'
+  } else if (variant === 'yellow') {
+    childClassName += ' bg-yellow-500 text-white'
+    parentClassName += ' bg-yellow-600'
+  } else if (variant === 'blue') {
+    childClassName += ' bg-blue-500 text-white'
+    parentClassName += ' bg-blue-600'
+  } else if (variant === 'gray') {
+    childClassName += ' bg-neutral-100'
+    parentClassName += ' bg-neutral-200'
+  } else if (variant === 'red') {
+    childClassName += ' bg-red-500 text-white'
+    parentClassName += ' bg-red-600 text-white'
   }
 
-  // Return link if href is set
   if (href) {
     return (
-      <Link href={href} className={ defaultClassName }>
-        { children }
+      <Link href={href}>
+        <div className={'pb-0.5 rounded' + parentClassName}>
+          <div className={`
+            rounded px-2 py-1
+            -translate-y-1 active:hover:-translate-y-0 hover:-translate-y-1.5
+            duration-200
+          ` + childClassName + ' ' + className}>
+            { children }
+          </div>
+        </div>
       </Link>
+      
     )
   }
 
-  // Return button if onClick is set
   if (onClick) {
     return (
-      <button className={ defaultClassName } onClick={onClick}>
-        { children }
+      <button onClick={onClick}>
+        <div className={'pb-0.5 rounded' + parentClassName}>
+          <div className={`
+            rounded px-2 py-1
+            -translate-y-1 active:hover:-translate-y-0 hover:-translate-y-1.5
+            duration-200
+          ` + childClassName + ' ' + className}>
+            { children }
+          </div>
+        </div>
       </button>
     )
   }
   
-  // Return div as a placeholder button with no action
   return (
-    <div className={ defaultClassName }>
-      { children }
+    <div>
+      <div className={'pb-0.5 rounded' + parentClassName}>
+        <div className={`
+          rounded px-2 py-1
+          -translate-y-1 active:hover:-translate-y-0 hover:-translate-y-1.5
+          duration-200 select-none
+        ` + childClassName + ' ' + className}>
+          { children }
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,7 +1,10 @@
 import React from 'react'
 import Button from '../ui/Button'
+import DebugButton from '../ui/DebugButton'
 
 const Hero = () => {
+  const dev = process.env.NODE_ENV === 'development'
+
   return (
     <section className='w-full h-[80vh]'>
       <div className='container w-full h-full mx-auto flex flex-col items-center justify-center gap-4'>
@@ -20,6 +23,7 @@ const Hero = () => {
           <Button href={'/play'} variant='green' className='text-lg font-semibold'>
             Play
           </Button>
+          { dev && <DebugButton /> }
         </div>
       </div>
     </section>

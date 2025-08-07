@@ -8,17 +8,6 @@ const Header = () => {
         <Button href={'/'} variant='secondary' className='text-2xl font-semibold'>
           Quizpot
         </Button>
-        {/* <div className='flex gap-8 items-center justify-center text-xl'>
-          <Button href={'/editor'} variant='red' className='text-lg font-semibold'>
-            Editor
-          </Button>
-          <Button href={'/host'} variant='yellow' className='text-lg font-semibold'>
-            Host
-          </Button>
-          <Button href={'/play'} variant='green' className='text-lg font-semibold'>
-            Play
-          </Button>
-        </div> */}
         <div className='flex gap-8 items-center justify-center text-xl'>
           <Button href={'/stats'} variant='gray' className='text-lg font-semibold'>
             Stats

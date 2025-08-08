@@ -121,22 +121,24 @@ export const joinLobby = (code: number, client: WebSocketClient): Error | true =
   const lobby = getLobbies().get(code)
   if (!lobby) return new Error("Lobby not found")
 
+  const name = generateName()
+  
   lobby.players.push({
     client,
-    name: generateName(),
+    name,
     score: 0,
   })
 
   const players = getLobbyPlayers(code)
 
   players.forEach(player => {
-    sendEvent(player.client, 'playerJoined', { player: { name: client.id, score: 0 } })
+    sendEvent(player.client, 'playerJoined', { player: { name, score: 0 } })
   })
 
   const host = getWSClientById(lobby.hostId)
 
   if (host) {
-    sendEvent(host, 'playerJoined', { player: { name: client.id, score: 0 } })
+    sendEvent(host, 'playerJoined', { player: { name, score: 0 } })
   }
   
   getPlayerLobbyMap().set(client.id, lobby)

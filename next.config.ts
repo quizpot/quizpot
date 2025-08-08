@@ -3,7 +3,10 @@ import type { NextConfig } from "next"
 const nextConfig: NextConfig = {
   logging: {
     incomingRequests: {
-      ignore: [/\api\/stats/],
+      ignore: [
+        /\api\/stats/,
+        /\api\/debug/,
+      ],
     },
   },
 }

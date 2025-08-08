@@ -1,6 +1,7 @@
 import { getWSClientById, WebSocketClient } from "./WSClientManager"
 import { QuizFile } from "../QuizFile"
 import { sendEvent } from "./EventManager"
+import { generateName } from "../misc/generateName"
 
 declare global {
   // eslint-disable-next-line no-var
@@ -120,10 +121,9 @@ export const joinLobby = (code: number, client: WebSocketClient): Error | true =
   const lobby = getLobbies().get(code)
   if (!lobby) return new Error("Lobby not found")
 
-  // TODO: generate a random name for the player
   lobby.players.push({
     client,
-    name: client.id,
+    name: generateName(),
     score: 0,
   })
 

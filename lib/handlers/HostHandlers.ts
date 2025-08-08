@@ -36,7 +36,6 @@ export function handleQuizUpload({ client, ctx }: HandlerContext) {
 }
 
 export function handlePlayerKick({ client, ctx }: HandlerContext) {
-  console.log('kicking player')
   const { playerId } = ctx
   const initiator = client.id
   const lobby = getLobbyByHostId(initiator)

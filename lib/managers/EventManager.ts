@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { WebSocketClient } from "@/lib/managers/WSClientManager"
 import { handlePlayerKick, handleQuizUpload, handleStartLobby } from "../handlers/HostHandlers"
 import { handleLobbyJoin } from "../handlers/PlayerHandlers"
 
 interface HandlerContext {
   client: WebSocketClient
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ctx: any
 }
 
@@ -42,7 +42,6 @@ export function emitEvent(eventName: string, ctx: HandlerContext) {
  * @param event The event (e.g., 'lobbyCreated', 'quizUpdate').
  * @param ctx The data to be sent with the message.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function sendEvent(client: WebSocketClient, event: string, ctx: any) {
   if (!client || client.readyState !== WebSocket.OPEN) {
     console.warn(`Attempted to send message to a closed or non-existent client. Event: ${event}`)

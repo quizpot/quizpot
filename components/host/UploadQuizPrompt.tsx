@@ -2,13 +2,13 @@
 import React, { useEffect } from 'react'
 import QuizFileInput from '../ui/QuizFileInput'
 import { useWebSocket } from '../ws/WebSocket'
-import { useLobby } from './LobbyProvider'
 import { useToast } from '../ui/Toaster'
+import { useLobbyState } from '../providers/LobbyStateProvider'
 
 const UploadQuizPrompt = () => {
   const addToast = useToast()
   const { clientId, sendEvent, onEvent, isConnected } = useWebSocket()
-  const setLobby = useLobby().setLobby
+  const setLobbyState = useLobbyState().setLobbyState
 
   useEffect(() => {
     if (!isConnected) return
@@ -17,7 +17,7 @@ const UploadQuizPrompt = () => {
     const unsubscribeLobbyCreated = onEvent('lobbyCreated', (ctx) => {
       console.log(ctx)
       console.log("[UploadQuizPrompt] Received lobby from server:", ctx.lobby.code)
-      setLobby(ctx.lobby)
+      setLobbyState(ctx.lobby)
       addToast({ message: 'Lobby created with code: ' + ctx.lobby.code, type: 'success' })
     })
 
@@ -31,10 +31,10 @@ const UploadQuizPrompt = () => {
       unsubscribeLobbyCreated()
       unsubscribeUploadError()
     }
-  }, [isConnected, onEvent, addToast, setLobby])
+  }, [isConnected, onEvent, addToast, setLobbyState])
 
   if (!isConnected) {
-    return <p>Connecting to server...</p>
+    return <QuizFileInput disabled={true} />
   }
 
   // @ts-expect-error - any type

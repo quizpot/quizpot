@@ -1,5 +1,5 @@
 import { sendEvent } from "../managers/EventManager"
-import { createLobby, getLobbyByCode } from "@/lib/managers/LobbyManager"
+import { createLobby, getLobbyByCode, getLobbyByHostId, leaveLobby } from "@/lib/managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
 
 export function handleQuizUpload({ client, ctx }: HandlerContext) {
@@ -33,4 +33,26 @@ export function handleQuizUpload({ client, ctx }: HandlerContext) {
       error: "Invalid quiz file format or an unexpected error occurred.",
     })
   }
+}
+
+export function handlePlayerKick({ client, ctx }: HandlerContext) {
+  console.log('kicking player')
+  const { playerId } = ctx
+  const initiator = client.id
+  const lobby = getLobbyByHostId(initiator)
+
+  if (!lobby) {
+    console.log('lobby not found')
+    return
+  }
+
+  const player = lobby.players.find(player => player.client.id === playerId)
+
+  if (!player) {
+    console.log('player not found')
+    return
+  }
+
+  console.log('kicking player')
+  console.log('playerleft: ', leaveLobby(player.client))
 }

@@ -1,5 +1,5 @@
 import { WebSocketClient } from "@/lib/managers/WSClientManager"
-import { handleQuizUpload } from "../handlers/HostHandlers"
+import { handlePlayerKick, handleQuizUpload } from "../handlers/HostHandlers"
 import { handleLobbyJoin } from "../handlers/PlayerHandlers"
 
 interface HandlerContext {
@@ -66,6 +66,7 @@ export function initializeServerEventHandlers() {
   // Register events
   onEvent('quizUpload', handleQuizUpload)
   onEvent('lobbyJoin', handleLobbyJoin)
+  onEvent('playerKick', handlePlayerKick)
 
   console.log("✅ Server-side WebSocket event handlers initialized.")
   isInitialized = true

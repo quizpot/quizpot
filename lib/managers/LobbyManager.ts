@@ -1,5 +1,7 @@
-import { WebSocketClient } from "./WSClientManager"
+import { getWSClientById, WebSocketClient } from "./WSClientManager"
 import { QuizFile } from "../QuizFile"
+import { sendEvent } from "./EventManager"
+import { generateName } from "../misc/generateName"
 
 declare global {
   // eslint-disable-next-line no-var
@@ -15,11 +17,14 @@ export interface Lobby {
   hostId: string
   quiz: QuizFile
   players: Player[]
+  started: boolean
+  currentQuestionIndex: number
 }
 
 export interface Player {
   client: WebSocketClient
   name: string
+  score: number
 }
 
 /**
@@ -83,7 +88,9 @@ export const createLobby = (hostId: string, quiz: QuizFile): number | Error => {
     code,
     hostId,
     quiz,
-    players: []
+    players: [],
+    started: false,
+    currentQuestionIndex: 0,
   }
 
   getLobbies().set(code, newLobby)
@@ -114,12 +121,26 @@ export const joinLobby = (code: number, client: WebSocketClient): Error | true =
   const lobby = getLobbies().get(code)
   if (!lobby) return new Error("Lobby not found")
 
-  // TODO: generate a random name for the player
+  const name = generateName()
+  
   lobby.players.push({
     client,
-    name: client.id,
+    name,
+    score: 0,
   })
 
+  const players = getLobbyPlayers(code)
+
+  players.forEach(player => {
+    sendEvent(player.client, 'playerJoined', { player: { name, score: 0 } })
+  })
+
+  const host = getWSClientById(lobby.hostId)
+
+  if (host) {
+    sendEvent(host, 'playerJoined', { player: { id: client.id, name, score: 0 } })
+  }
+  
   getPlayerLobbyMap().set(client.id, lobby)
 
   return true
@@ -133,12 +154,118 @@ export const leaveLobby = (client: WebSocketClient): Error | true => {
   }
 
   const playerIndex = lobby.players.findIndex(player => player.client.id === client.id)
-  
+  const p = lobby.players[playerIndex]
+
+  const players = getLobbyPlayers(lobby.code)
+
+  players.forEach(player => {
+    sendEvent(player.client, 'playerLeft', { player: { id: p.client.id, name: p.name } })
+  })
+
   if (playerIndex > -1) {
     lobby.players.splice(playerIndex, 1)
+  }
+
+  const host = getWSClientById(lobby.hostId)
+
+  if (host) {
+    sendEvent(host, 'playerLeft', { player: { name: p.name, score: 0 } })
   }
 
   getPlayerLobbyMap().delete(client.id)
 
   return true
+}
+
+export const startLobby = (code: number): Error | true => {
+  const lobby = getLobbyByCode(code)
+
+  if (!lobby) {
+    return new Error("Lobby not found")
+  }
+
+  if (lobby.started) {
+    return new Error("Lobby already started")
+  }
+
+  const players = getLobbyPlayers(code)
+
+  players.forEach(player => {
+    sendEvent(player.client, 'lobbyStarted', {})
+  })
+
+  const host = getWSClientById(lobby.hostId)
+
+  if (host) {
+    sendEvent(host, 'lobbyStarted', {})
+  }
+
+  lobby.started = true
+
+  return true
+}
+
+/**
+ * Get the current question index for a lobby
+ * @param code 
+ * @returns -1 if lobby not found, current question index otherwise
+ */
+export const getLobbyQuestionIndex = (code: number): number => {
+  const lobby = getLobbyByCode(code)
+
+  if (!lobby) {
+    return -1
+  }
+
+  return lobby.currentQuestionIndex
+}
+
+export const getLobbyPlayers = (code: number): Player[] => {
+  const lobby = getLobbyByCode(code)
+
+  if (!lobby) {
+    return []
+  }
+
+  return lobby.players
+}
+
+export const getPlayerScore = (code: number, playerId: string): number => {
+  const lobby = getLobbyByCode(code)
+
+  if (!lobby) {
+    return 0
+  }
+
+  const player = lobby.players.find(player => player.name === playerId)
+
+  if (!player) {
+    return 0
+  }
+
+  return player.score
+}
+
+export const updatePlayerScore = (code: number, playerId: string, score: number) => {
+  const lobby = getLobbyByCode(code)
+
+  if (!lobby) {
+    return
+  }
+
+  const player = lobby.players.find(player => player.name === playerId)
+
+  if (!player) {
+    return
+  }
+
+  player.score = score
+
+  sendEvent(player.client, 'playerScoreUpdate', { player: { name: playerId, score } })
+
+  const host = getWSClientById(lobby.hostId)
+
+  if (host) {
+    sendEvent(host, 'playerScoreUpdate', { player: { name: playerId, score } })
+  }
 }

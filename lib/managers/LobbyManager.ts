@@ -104,6 +104,12 @@ export const deleteLobby = (hostId: string) => {
   const lobby = getHostLobbyMap().get(hostId)
   if (!lobby) return
 
+  const players = getLobbyPlayers(lobby.code)
+
+  players.forEach(player => {
+    sendEvent(player.client, 'lobbyDeleted', {})
+  })
+
   getLobbies().delete(lobby.code)
   getHostLobbyMap().delete(hostId)
   getPlayerLobbyMap().forEach((lobby, playerId) => {

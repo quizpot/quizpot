@@ -48,7 +48,9 @@ export const LobbyStateProvider = ({ children }: { children: React.ReactNode }) 
 
     const unsubscribePlayerLeft = onEvent('playerLeft', (ctx) => {
       if (ctx.player.id === clientId) {
-        redirect('/kicked')
+        sessionStorage.setItem('messageTitle', 'You were kicked')
+        sessionStorage.setItem('messageDescription', 'The host kicked you.')
+        redirect('/message')
       }
 
       setLobbyState(prevLobbyState => {
@@ -96,14 +98,21 @@ export const LobbyStateProvider = ({ children }: { children: React.ReactNode }) 
       })
     })
 
+    const unsubscribeLobbyDeleted = onEvent('lobbyDeleted', () => {
+      sessionStorage.setItem('messageTitle', 'Lobby Deleted')
+      sessionStorage.setItem('messageDescription', 'The host disconnected.')
+      redirect('/message')
+    })
+
     return () => {
       unsubscribePlayerJoined()
       unsubscribePlayerLeft()
       unsubscribePlayerScoreUpdate()
       unsubscribeLobbyStarted()
       unsubscribeCurrentQuestionIndexUpdate()
+      unsubscribeLobbyDeleted()
     }
-  }, [isConnected, lobbyState, onEvent, setLobbyState])
+  }, [clientId, isConnected, lobbyState, onEvent, setLobbyState])
 
   return (
     <LobbyStateContext.Provider value={{ lobbyState, setLobbyState }}>

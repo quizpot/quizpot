@@ -22,7 +22,7 @@ const JoinLobbyInput = () => {
     })
 
     const unsubscribeLobbyJoinError = onEvent('lobbyJoinError', (ctx) => {
-      addToast({ message: 'Failed to join lobby with code: ' + code, type: 'error' })
+      addToast({ message: 'Failed to join lobby!', type: 'error' })
       console.log(ctx.error)
     })
 
@@ -31,7 +31,7 @@ const JoinLobbyInput = () => {
       unsubscribeJoinLobby()
       unsubscribeLobbyJoinError()
     }
-  }, [isConnected, onEvent, addToast, code, setLobbyState])
+  }, [isConnected, onEvent, addToast, setLobbyState])
 
   if (!isConnected) {
     return <p>Connecting to server...</p>

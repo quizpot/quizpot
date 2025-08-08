@@ -40,7 +40,7 @@ export function emitEvent(eventName: string, ctx: HandlerContext) {
  *
  * @param client The WebSocketClient instance to send the message to.
  * @param event The event (e.g., 'lobbyCreated', 'quizUpdate').
- * @param ctx The data to be sent with the message.
+ * @param ctx The data to be sent with the message. Don't send websocket clients because they can't be JSON serialized!
  */
 export function sendEvent(client: WebSocketClient, event: string, ctx: any) {
   if (!client || client.readyState !== WebSocket.OPEN) {
@@ -48,13 +48,20 @@ export function sendEvent(client: WebSocketClient, event: string, ctx: any) {
     return
   }
 
-  // Structure the message object with 'type' and 'payload'
-  const message = JSON.stringify({
-    event,
-    ctx,
-  })
+  try {
+    const message = JSON.stringify({
+      event,
+      ctx,
+    })
 
-  client.send(message)
+    client.send(message)
+  } catch (error) {
+    if (error instanceof TypeError && error.message.includes('circular structure to JSON')) {
+      console.error('Circular reference detected in sendEvent:', { event, ctx })
+    } else {
+      console.error('An unexpected error occurred during JSON serialization:', error)
+    }
+  }
 }
 
 let isInitialized = false

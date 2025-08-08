@@ -1,25 +1,27 @@
 "use client"
-import { useLobby } from '@/components/host/LobbyProvider'
-import UploadQuizPrompt from '@/components/host/UploadQuizPrompt'
+import LobbyWaitingPage from '@/components/host/LobbyWaitingPage'
+import UploadQuizPage from '@/components/host/UploadQuizPage'
+import { useLobbyState } from '@/components/providers/LobbyStateProvider'
 import React from 'react'
 
 const HostPage = () => {
-  const lobby = useLobby().lobby
+  const lobbyState = useLobbyState().lobbyState
 
-  if (!lobby) {
+  if (!lobbyState) {
     return (
-      <>
-        <UploadQuizPrompt />
-      </>
+      <UploadQuizPage />
     )
   }
   
+  if (!lobbyState.started) {
+    return (
+      <LobbyWaitingPage />
+    )
+  }
+
   return (
     <>
-      <section className='flex flex-col gap-4 items-center justify-center h-screen w-full'>
-        <h1>Code: { lobby.code }</h1>
-        <p>Players: { lobby.players.length }</p>
-      </section>
+      Lobby started
     </>
   )
 }

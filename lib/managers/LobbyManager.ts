@@ -112,8 +112,8 @@ export const deleteLobby = (hostId: string) => {
 
   getLobbies().delete(lobby.code)
   getHostLobbyMap().delete(hostId)
-  getPlayerLobbyMap().forEach((lobby, playerId) => {
-    if (lobby.code === lobby.code) {
+  getPlayerLobbyMap().forEach((lob, playerId) => {
+    if (lob.code === lobby.code) {
       getPlayerLobbyMap().delete(playerId)
     }
   })
@@ -137,14 +137,29 @@ export const joinLobby = (code: number, client: WebSocketClient): Error | true =
 
   const players = getLobbyPlayers(code)
 
+  const playerPayload = {
+    player: {
+      name,
+      score: 0,
+    },
+  }
+
   players.forEach(player => {
-    sendEvent(player.client, 'playerJoined', { player: { name, score: 0 } })
+    sendEvent(player.client, 'playerJoined', playerPayload)
   })
 
   const host = getWSClientById(lobby.hostId)
 
   if (host) {
-    sendEvent(host, 'playerJoined', { player: { id: client.id, name, score: 0 } })
+    const hostPayload = {
+      player: {
+        id: client.id,
+        name,
+        score: 0,
+      },
+    }
+
+    sendEvent(host, 'playerJoined', hostPayload)
   }
   
   getPlayerLobbyMap().set(client.id, lobby)
@@ -164,10 +179,10 @@ export const leaveLobby = (client: WebSocketClient): Error | true => {
 
   const players = getLobbyPlayers(lobby.code)
 
-  const leavingPlayerOBJ = { player: { id: leavingPlayer.client.id, name: leavingPlayer.name } }
+  const payload = { player: { id: leavingPlayer.client.id, name: leavingPlayer.name } }
 
   players.forEach(player => {
-    sendEvent(player.client, 'playerLeft', leavingPlayerOBJ)
+    sendEvent(player.client, 'playerLeft', payload)
   })
 
   if (playerIndex > -1) {
@@ -177,7 +192,7 @@ export const leaveLobby = (client: WebSocketClient): Error | true => {
   const host = getWSClientById(lobby.hostId)
 
   if (host) {
-    sendEvent(host, 'playerLeft', leavingPlayerOBJ)
+    sendEvent(host, 'playerLeft', payload)
   }
 
   getPlayerLobbyMap().delete(client.id)
@@ -269,11 +284,19 @@ export const updatePlayerScore = (code: number, playerId: string, score: number)
 
   player.score = score
 
-  sendEvent(player.client, 'playerScoreUpdate', { player: { name: playerId, score } })
+  const payload = {
+    player: {
+      id: player.client.id,
+      name: player.name,
+      score: player.score,
+    },
+  }
+
+  sendEvent(player.client, 'playerScoreUpdate', payload)
 
   const host = getWSClientById(lobby.hostId)
 
   if (host) {
-    sendEvent(host, 'playerScoreUpdate', { player: { name: playerId, score } })
+    sendEvent(host, 'playerScoreUpdate', payload)
   }
 }

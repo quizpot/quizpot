@@ -36,7 +36,7 @@ export function emitEvent(eventName: string, ctx: HandlerContext) {
 }
 
 /**
- * Sends a structured message to a specific WebSocket client.
+ * Sends a structured message (that can be JSON serialized) to a specific WebSocket client.
  *
  * @param client The WebSocketClient instance to send the message to.
  * @param event The event (e.g., 'lobbyCreated', 'quizUpdate').

@@ -1,13 +1,13 @@
 "use client"
-import { useLobby } from '@/components/host/LobbyProvider'
 import ConnectionStatus from '@/components/play/ConnectionStatus'
 import JoinLobbyInput from '@/components/play/JoinLobbyInput'
+import { useLobbyState } from '@/components/providers/LobbyStateProvider'
 import React from 'react'
 
 const PlayPage = () => {
-  const lobby = useLobby().lobby
+  const lobbyState = useLobbyState().lobbyState
 
-  if (!lobby) {
+  if (!lobbyState) {
     return (
       <>
         <ConnectionStatus />
@@ -18,7 +18,7 @@ const PlayPage = () => {
 
   return (
     <>
-      Current lobby: { lobby.code }
+      Current lobby: { lobbyState.code }
       <ConnectionStatus />
     </>
   )

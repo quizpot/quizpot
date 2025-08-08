@@ -1,8 +1,16 @@
 "use client"
 import React, { createContext, useEffect } from 'react'
 import { useWebSocket } from '../ws/WebSocket'
+import { redirect } from 'next/navigation'
 
+/**
+ * Player state interface
+ * @property id - The player's websocket ID only on host
+ * @property name - The player's name
+ * @property score - The player's current score
+ */
 interface PlayerState {
+  id?: string
   name: string
   score: number
 }
@@ -22,15 +30,12 @@ const LobbyStateContext = createContext<{
 
 export const LobbyStateProvider = ({ children }: { children: React.ReactNode }) => {
   const [lobbyState, setLobbyState] = React.useState<LobbyState | null>(null)
-  const { onEvent, isConnected } = useWebSocket()
+  const { onEvent, isConnected, clientId } = useWebSocket()
 
   useEffect(() => {
-    console.log("[LobbyStateProvider] useEffect")
     if (!isConnected || !lobbyState) return
-    console.log("[LobbyStateProvider] connected")
     
     const unsubscribePlayerJoined = onEvent('playerJoined', (ctx) => {
-      console.log("[LobbyStateProvider] Handling player joined event")
       setLobbyState(prevLobbyState => {
         if (!prevLobbyState) return null
 
@@ -42,6 +47,10 @@ export const LobbyStateProvider = ({ children }: { children: React.ReactNode }) 
     })
 
     const unsubscribePlayerLeft = onEvent('playerLeft', (ctx) => {
+      if (ctx.player.id === clientId) {
+        redirect('/kicked')
+      }
+
       setLobbyState(prevLobbyState => {
         if (!prevLobbyState) return null
 

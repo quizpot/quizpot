@@ -138,7 +138,7 @@ export const joinLobby = (code: number, client: WebSocketClient): Error | true =
   const host = getWSClientById(lobby.hostId)
 
   if (host) {
-    sendEvent(host, 'playerJoined', { player: { name, score: 0 } })
+    sendEvent(host, 'playerJoined', { player: { id: client.id, name, score: 0 } })
   }
   
   getPlayerLobbyMap().set(client.id, lobby)
@@ -154,21 +154,22 @@ export const leaveLobby = (client: WebSocketClient): Error | true => {
   }
 
   const playerIndex = lobby.players.findIndex(player => player.client.id === client.id)
-  
-  if (playerIndex > -1) {
-    lobby.players.splice(playerIndex, 1)
-  }
+  const p = lobby.players[playerIndex]
 
   const players = getLobbyPlayers(lobby.code)
 
   players.forEach(player => {
-    sendEvent(player.client, 'playerLeft', { player: { name: client.id, score: 0 } })
+    sendEvent(player.client, 'playerLeft', { player: { id: p.client.id, name: p.name } })
   })
+
+  if (playerIndex > -1) {
+    lobby.players.splice(playerIndex, 1)
+  }
 
   const host = getWSClientById(lobby.hostId)
 
   if (host) {
-    sendEvent(host, 'playerLeft', { player: { name: client.id, score: 0 } })
+    sendEvent(host, 'playerLeft', { player: { name: p.name, score: 0 } })
   }
 
   getPlayerLobbyMap().delete(client.id)

@@ -3,13 +3,13 @@ import React, { useEffect } from 'react'
 import { useToast } from '../ui/Toaster'
 import { useWebSocket } from '../ws/WebSocket'
 import NumberInput from '../ui/NumberInput'
-import { useLobby } from '../host/LobbyProvider'
+import { useLobbyState } from '../providers/LobbyStateProvider'
 
 const JoinLobbyInput = () => {
   const addToast = useToast()
   const [code, setCode] = React.useState<number>(0)
   const { sendEvent, onEvent, isConnected } = useWebSocket()
-  const setLobby = useLobby().setLobby
+  const setLobby = useLobbyState().setLobbyState
 
   useEffect(() => {
     if (!isConnected) return

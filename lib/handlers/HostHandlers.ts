@@ -1,5 +1,5 @@
 import { sendEvent } from "../managers/EventManager"
-import { createLobby, getLobbyByCode, getLobbyByHostId, leaveLobby } from "@/lib/managers/LobbyManager"
+import { createLobby, getLobbyByCode, getLobbyByHostId, leaveLobby, startLobby } from "@/lib/managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
 
 export function handleQuizUpload({ client, ctx }: HandlerContext) {
@@ -36,7 +36,6 @@ export function handleQuizUpload({ client, ctx }: HandlerContext) {
 }
 
 export function handlePlayerKick({ client, ctx }: HandlerContext) {
-  console.log('kicking player')
   const { playerId } = ctx
   const initiator = client.id
   const lobby = getLobbyByHostId(initiator)
@@ -53,6 +52,17 @@ export function handlePlayerKick({ client, ctx }: HandlerContext) {
     return
   }
 
-  console.log('kicking player')
-  console.log('playerleft: ', leaveLobby(player.client))
+  leaveLobby(player.client)
+}
+
+export function handleStartLobby({ client }: HandlerContext) {
+  const lobby = getLobbyByHostId(client.id)
+
+  if (!lobby) {
+    return sendEvent(client, 'lobbyStartedError', {
+      error: "Lobby not found.",
+    })
+  }
+
+  startLobby(lobby.code)
 }

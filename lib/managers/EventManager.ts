@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { WebSocketClient } from "@/lib/managers/WSClientManager"
-import { handlePlayerKick, handleQuizUpload } from "../handlers/HostHandlers"
+import { handlePlayerKick, handleQuizUpload, handleStartLobby } from "../handlers/HostHandlers"
 import { handleLobbyJoin } from "../handlers/PlayerHandlers"
 
 interface HandlerContext {
   client: WebSocketClient
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ctx: any
 }
 
@@ -36,26 +36,32 @@ export function emitEvent(eventName: string, ctx: HandlerContext) {
 }
 
 /**
- * Sends a structured message to a specific WebSocket client.
+ * Sends a structured message (that can be JSON serialized) to a specific WebSocket client.
  *
  * @param client The WebSocketClient instance to send the message to.
  * @param event The event (e.g., 'lobbyCreated', 'quizUpdate').
- * @param ctx The data to be sent with the message.
+ * @param ctx The data to be sent with the message. Don't send websocket clients because they can't be JSON serialized!
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function sendEvent(client: WebSocketClient, event: string, ctx: any) {
   if (!client || client.readyState !== WebSocket.OPEN) {
     console.warn(`Attempted to send message to a closed or non-existent client. Event: ${event}`)
     return
   }
 
-  // Structure the message object with 'type' and 'payload'
-  const message = JSON.stringify({
-    event,
-    ctx,
-  })
+  try {
+    const message = JSON.stringify({
+      event,
+      ctx,
+    })
 
-  client.send(message)
+    client.send(message)
+  } catch (error) {
+    if (error instanceof TypeError && error.message.includes('circular structure to JSON')) {
+      console.error('Circular reference detected in sendEvent:', { event, ctx })
+    } else {
+      console.error('An unexpected error occurred during JSON serialization:', error)
+    }
+  }
 }
 
 let isInitialized = false
@@ -67,6 +73,7 @@ export function initializeServerEventHandlers() {
   onEvent('quizUpload', handleQuizUpload)
   onEvent('lobbyJoin', handleLobbyJoin)
   onEvent('playerKick', handlePlayerKick)
+  onEvent('startLobby', handleStartLobby)
 
   console.log("✅ Server-side WebSocket event handlers initialized.")
   isInitialized = true

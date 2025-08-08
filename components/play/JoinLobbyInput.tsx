@@ -9,18 +9,20 @@ const JoinLobbyInput = () => {
   const addToast = useToast()
   const [code, setCode] = React.useState<number>(0)
   const { sendEvent, onEvent, isConnected } = useWebSocket()
-  const setLobby = useLobbyState().setLobbyState
+  const setLobbyState = useLobbyState().setLobbyState
 
   useEffect(() => {
     if (!isConnected) return
+    console.log('hooking join logic')
     
     const unsubscribeJoinLobby = onEvent('lobbyJoined', (ctx) => {
-      setLobby(ctx.lobby)
+      console.log('joined lobby')
+      setLobbyState(ctx.lobby)
       addToast({ message: 'Lobby joined with code: ' + ctx.lobby.code, type: 'success' })
     })
 
     const unsubscribeLobbyJoinError = onEvent('lobbyJoinError', (ctx) => {
-      addToast({ message: 'Failed to join lobby with code: ' + code, type: 'error' })
+      addToast({ message: 'Failed to join lobby!', type: 'error' })
       console.log(ctx.error)
     })
 
@@ -29,13 +31,13 @@ const JoinLobbyInput = () => {
       unsubscribeJoinLobby()
       unsubscribeLobbyJoinError()
     }
-  }, [isConnected, onEvent, addToast, setLobby, code])
+  }, [isConnected, onEvent, addToast, setLobbyState])
 
   if (!isConnected) {
     return <p>Connecting to server...</p>
   }
 
-  const handleJoin = async () => {
+  const onClick = async () => {
     if (!code) return
 
     addToast({ message: 'Joining lobby...', type: 'info' })
@@ -51,7 +53,7 @@ const JoinLobbyInput = () => {
       <NumberInput onChange={(e) => {
         setCode(parseInt(e.target.value))
       }} value={ code } />
-      <button onClick={ handleJoin }>
+      <button onClick={ onClick }>
         Join
       </button>
     </>

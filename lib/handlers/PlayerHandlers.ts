@@ -33,7 +33,15 @@ export function handleLobbyJoin({ client, ctx }: HandlerContext) {
 
   joinLobby(code, client)
 
-  sendEvent(client, 'lobbyJoined', {
-    lobby,
-  })
+  const payload = {
+    lobby: {
+      code: lobby.code,
+      players: lobby.players.map(player => ({ name: player.name, score: player.score })),
+      started: lobby.started,
+      currentQuestionIndex: lobby.currentQuestionIndex,
+      totalQuestions: lobby.quiz.questions.length,
+    }
+  }
+
+  sendEvent(client, 'lobbyJoined', payload)
 }

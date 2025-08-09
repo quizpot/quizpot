@@ -2,6 +2,7 @@
 import React, { createContext, useEffect } from 'react'
 import { useWebSocket } from '../ws/WebSocket'
 import { redirect } from 'next/navigation'
+import { Question } from '@/lib/QuizFile'
 
 /**
  * Player state interface
@@ -15,14 +16,16 @@ interface PlayerState {
   score: number
 }
 
-interface LobbyState {
+export interface LobbyState {
   code: number
   players: PlayerState[]
   player: PlayerState
   started: boolean
   currentQuestionIndex: number
+  currentQuestion?: Question
   answerCount: number
   totalQuestions: number
+  state: 'waiting' | 'question' | 'answer' | 'score' | 'end'
 }
 
 const LobbyStateContext = createContext<{
@@ -89,6 +92,25 @@ export const LobbyStateProvider = ({ children }: { children: React.ReactNode }) 
       })
     })
 
+    const unsubscribeLobbyStateUpdate = onEvent('lobbyStateUpdate', (ctx) => {
+      setLobbyState(prevLobbyState => {
+        if (!prevLobbyState) return null
+
+        if (ctx.state === 'question') {
+          return {
+            ...prevLobbyState,
+            state: ctx.state,
+            currentQuestion: ctx.question,
+          }
+        }
+
+        return {
+          ...prevLobbyState,
+          state: ctx.state,
+        }
+      })
+    })
+
     const unsubscribeCurrentQuestionIndexUpdate = onEvent('currentQuestionIndexUpdate', (ctx) => {
       setLobbyState(prevLobbyState => {
         if (!prevLobbyState) return null
@@ -126,6 +148,7 @@ export const LobbyStateProvider = ({ children }: { children: React.ReactNode }) 
       unsubscribeCurrentQuestionIndexUpdate()
       unsubscribeLobbyDeleted()
       unsubscribeSyncPlayer()
+      unsubscribeLobbyStateUpdate()
     }
   }, [clientId, isConnected, lobbyState, onEvent, setLobbyState])
 

@@ -1,5 +1,6 @@
 "use client"
 import JoinLobbyPage from '@/components/play/JoinLobbyPage'
+import QuestionPage from '@/components/play/QuestionPage'
 import WaitingInLobbyPage from '@/components/play/WaitingInLobbyPage'
 import { useLobbyState } from '@/components/providers/LobbyStateProvider'
 import { useSearchParams } from 'next/navigation'
@@ -22,9 +23,35 @@ const PlayPage = () => {
     return <WaitingInLobbyPage />
   }
 
+  if (lobbyState.state === 'waiting') {
+    return <></>
+  }
+
+  if (lobbyState.state === 'question') {
+    return <QuestionPage lobbyState={ lobbyState } />
+  }
+
+  if (lobbyState.state === 'answer') {
+    return (
+      <p>Answer Page</p>
+    )
+  }
+
+  if (lobbyState.state === 'score') {
+    return (
+      <p>Score Page</p>
+    )
+  }
+
+  if (lobbyState.state === 'end') {
+    return (
+      <p>End Page</p>
+    )
+  }
+
   return (
     <>
-      Lobby Started
+      Lobby Done
     </>
   )
 }

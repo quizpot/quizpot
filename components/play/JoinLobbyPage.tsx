@@ -4,37 +4,38 @@ import { useToast } from '../ui/Toaster'
 import { useWebSocket } from '../ws/WebSocket'
 import NumberInput from '../ui/NumberInput'
 import { useLobbyState } from '../providers/LobbyStateProvider'
+import Button from '../ui/Button'
 
-const JoinLobbyInput = () => {
+const JoinLobbyPage = ({ queryCode }: { queryCode?: number }) => {
   const addToast = useToast()
   const [code, setCode] = React.useState<number>(0)
   const { sendEvent, onEvent, isConnected } = useWebSocket()
   const setLobbyState = useLobbyState().setLobbyState
 
   useEffect(() => {
+    if (queryCode) {
+      setCode(queryCode)
+    }
+
     if (!isConnected) return
-    console.log('hooking join logic')
     
     const unsubscribeJoinLobby = onEvent('lobbyJoined', (ctx) => {
-      sendEvent('syncPlayer', {})
       setLobbyState(ctx.lobby)
-      addToast({ message: 'Lobby joined with code: ' + ctx.lobby.code, type: 'success' })
+      sendEvent('syncPlayer', {})
     })
 
     const unsubscribeLobbyJoinError = onEvent('lobbyJoinError', (ctx) => {
-      addToast({ message: 'Failed to join lobby!', type: 'error' })
-      console.log(ctx.error)
+      addToast({ message: ctx.error, type: 'error' })
     })
 
-    // Cleanup function to remove handlers on unmount
     return () => {
       unsubscribeJoinLobby()
       unsubscribeLobbyJoinError()
     }
-  }, [isConnected, onEvent, addToast, setLobbyState, sendEvent])
+  }, [isConnected, onEvent, addToast, setLobbyState, sendEvent, queryCode])
 
   if (!isConnected) {
-    return <p>Connecting to server...</p>
+    return <></>
   }
 
   const onClick = async () => {
@@ -42,22 +43,27 @@ const JoinLobbyInput = () => {
 
     addToast({ message: 'Joining lobby...', type: 'info' })
 
-    // Use the new sendEvent helper
-    sendEvent('lobbyJoin', {
-      code,
-    })
+    sendEvent('lobbyJoin', { code })
   }
 
   return (
-    <>
-      <NumberInput onChange={(e) => {
-        setCode(parseInt(e.target.value))
-      }} value={ code } />
-      <button onClick={ onClick }>
+    <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>
+      <h1 className='text-2xl font-semibold'>Join a Lobby</h1>
+      <div className='max-w-md'>
+        <NumberInput onChange={(e) => {
+          const value = e.target.value
+          if (value === '') {
+            setCode(0)
+          } else {
+            setCode(parseInt(e.target.value))
+          }
+        }} value={ code } />
+      </div>
+      <Button onClick={ onClick } variant='green' >
         Join
-      </button>
-    </>
+      </Button>
+    </section>
   )
 }
 
-export default JoinLobbyInput
+export default JoinLobbyPage

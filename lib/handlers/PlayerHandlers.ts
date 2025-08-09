@@ -19,6 +19,12 @@ export function handleLobbyJoin({ client, ctx }: HandlerContext) {
     })
   }
 
+  if (lobby.started) {
+    return sendEvent(client, 'lobbyJoinError', {
+      error: "Lobby has already started.",
+    })
+  }
+
   if (getLobbyByHostId(client.id)) {
     return sendEvent(client, 'lobbyJoinError', {
       error: "You are hosting a lobby.",

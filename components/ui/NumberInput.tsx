@@ -1,13 +1,17 @@
 import React from 'react'
 
-const NumberInput = ({ value, onChange }: { value: number, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
+const NumberInput = ({ value, onChange, placeholder }: { value: number, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, placeholder?: string }) => {
   return (
-    <input 
-      type='number'
-      className='p-2 border-2 border-gray-400 rounded w-full'
-      onChange={(e) => { onChange(e) }} 
-      value={ value }
-    />
+    <div className='pb-1 rounded bg-neutral-200'>
+      <input 
+        type='number'
+        placeholder={ placeholder }
+        className='p-2 rounded w-full bg-neutral-100 outline-transparent border-transparent'
+        onChange={(e) => { onChange(e) }} 
+        value={ value }
+      />
+    </div>
+    
   )
 }
 

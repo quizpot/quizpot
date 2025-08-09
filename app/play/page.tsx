@@ -1,26 +1,30 @@
 "use client"
-import ConnectionStatus from '@/components/play/ConnectionStatus'
-import JoinLobbyInput from '@/components/play/JoinLobbyInput'
+import JoinLobbyPage from '@/components/play/JoinLobbyPage'
+import WaitingInLobbyPage from '@/components/play/WaitingInLobbyPage'
 import { useLobbyState } from '@/components/providers/LobbyStateProvider'
+import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
 const PlayPage = () => {
+  const queryCode = useSearchParams().get('code')
   const lobbyState = useLobbyState().lobbyState
+  let parsedCode
+
+  if (queryCode) {
+    parsedCode = parseInt(queryCode)
+  }
 
   if (!lobbyState) {
-    return (
-      <>
-        <ConnectionStatus />
-        <JoinLobbyInput />
-      </>
-    )
+    return <JoinLobbyPage queryCode={ parsedCode } />
+  }
+
+  if (!lobbyState.started) {
+    return <WaitingInLobbyPage />
   }
 
   return (
     <>
-      Current lobby: { lobbyState.code }
-      { lobbyState.player?.name }
-      <ConnectionStatus />
+      Lobby Started
     </>
   )
 }

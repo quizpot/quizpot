@@ -1,9 +1,9 @@
 "use client"
 import React from 'react'
-import ActionButton, { actionButtonVariants } from '../ui/ActionButton'
+import ActionButton, { ActionButtonVariant } from '../ui/ActionButton'
 import { useWebSocket } from '../ws/WebSocket'
 
-const PlayerKickButton = ({ player }: { player: { id?: string, name: string, score: number } }) => {
+const PlayerKickButton = ({ player, variant }: { player: { id?: string, name: string, score: number }, variant: ActionButtonVariant }) => {
   const { sendEvent } = useWebSocket()
 
   if (!player.id) {
@@ -16,7 +16,7 @@ const PlayerKickButton = ({ player }: { player: { id?: string, name: string, sco
   }
 
   return (
-    <ActionButton actionName='Kick' onClick={ onClick } variant={ actionButtonVariants[Math.floor(Math.random() * actionButtonVariants.length)] }>
+    <ActionButton actionName='Kick' onClick={ onClick } variant={ variant }>
       { player.name }
     </ActionButton>
   )

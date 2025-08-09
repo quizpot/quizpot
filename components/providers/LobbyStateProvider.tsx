@@ -18,8 +18,10 @@ interface PlayerState {
 interface LobbyState {
   code: number
   players: PlayerState[]
+  player: PlayerState
   started: boolean
   currentQuestionIndex: number
+  answerCount: number
   totalQuestions: number
 }
 
@@ -104,6 +106,18 @@ export const LobbyStateProvider = ({ children }: { children: React.ReactNode }) 
       redirect('/message')
     })
 
+    const unsubscribeSyncPlayer = onEvent('syncPlayer', (ctx) => {
+      setLobbyState(prevLobbyState => {
+        if (!prevLobbyState) return null
+        console.log('synced player with name:', ctx.player.name)
+
+        return {
+          ...prevLobbyState,
+          player: ctx.player
+        }
+      })
+    })
+
     return () => {
       unsubscribePlayerJoined()
       unsubscribePlayerLeft()
@@ -111,6 +125,7 @@ export const LobbyStateProvider = ({ children }: { children: React.ReactNode }) 
       unsubscribeLobbyStarted()
       unsubscribeCurrentQuestionIndexUpdate()
       unsubscribeLobbyDeleted()
+      unsubscribeSyncPlayer()
     }
   }, [clientId, isConnected, lobbyState, onEvent, setLobbyState])
 

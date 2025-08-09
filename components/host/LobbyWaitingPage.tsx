@@ -6,6 +6,7 @@ import PlayerKickButton from './PlayerKickButton'
 import Button from '../ui/Button'
 import { useWebSocket } from '../ws/WebSocket'
 import { useToast } from '../ui/Toaster'
+import { actionButtonVariants } from '../ui/ActionButton'
 
 const LobbyWaitingPage = () => {
   const addToast = useToast()
@@ -13,7 +14,7 @@ const LobbyWaitingPage = () => {
   const { sendEvent, onEvent } = useWebSocket()
 
   useEffect(() => {
-    const unsubscribeStartLobbyError = onEvent('lobbyStartedError', ({ ctx }) => {
+    const unsubscribeStartLobbyError = onEvent('lobbyStartedError', (ctx) => {
       addToast({ message: ctx.error, type: 'error' })
     })
 
@@ -46,7 +47,7 @@ const LobbyWaitingPage = () => {
         <div className='flex gap-4 flex-wrap'>
           {
             lobbyState.players.length > 0 && lobbyState.players.map((player, index) => (
-              <PlayerKickButton key={ index } player={ player } />
+              <PlayerKickButton key={ index } player={ player } variant={actionButtonVariants[Math.floor(Math.random() * actionButtonVariants.length)]} />
             ))
           }
         </div>

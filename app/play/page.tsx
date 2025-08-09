@@ -19,6 +19,7 @@ const PlayPage = () => {
   return (
     <>
       Current lobby: { lobbyState.code }
+      { lobbyState.player?.name }
       <ConnectionStatus />
     </>
   )

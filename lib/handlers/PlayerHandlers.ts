@@ -1,5 +1,5 @@
 import { sendEvent } from "../managers/EventManager"
-import { getLobbyByCode, getLobbyByHostId, getLobbyByPlayerId, joinLobby } from "../managers/LobbyManager"
+import { getLobbyByCode, getLobbyByHostId, getLobbyByPlayerId, getLobbyPlayers, joinLobby } from "../managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
 
 export function handleLobbyJoin({ client, ctx }: HandlerContext) {
@@ -44,4 +44,28 @@ export function handleLobbyJoin({ client, ctx }: HandlerContext) {
   }
 
   sendEvent(client, 'lobbyJoined', payload)
+}
+
+export function handlePlayerSync({ client }: HandlerContext) {
+  const lobby = getLobbyByPlayerId(client.id)
+
+  if (!lobby) return
+
+  const players = getLobbyPlayers(lobby.code)
+
+  if (!players) return
+
+  const player = players.find(player => player.client.id === client.id)
+
+  if (!player) return
+
+  const payload = {
+    player: {
+      name: player.name,
+      score: player.score,
+    },
+  }
+
+  console.log('sending player sync event')
+  sendEvent(client, 'syncPlayer', payload)
 }

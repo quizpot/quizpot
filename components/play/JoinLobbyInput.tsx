@@ -16,7 +16,7 @@ const JoinLobbyInput = () => {
     console.log('hooking join logic')
     
     const unsubscribeJoinLobby = onEvent('lobbyJoined', (ctx) => {
-      console.log('joined lobby')
+      sendEvent('syncPlayer', {})
       setLobbyState(ctx.lobby)
       addToast({ message: 'Lobby joined with code: ' + ctx.lobby.code, type: 'success' })
     })
@@ -31,7 +31,7 @@ const JoinLobbyInput = () => {
       unsubscribeJoinLobby()
       unsubscribeLobbyJoinError()
     }
-  }, [isConnected, onEvent, addToast, setLobbyState])
+  }, [isConnected, onEvent, addToast, setLobbyState, sendEvent])
 
   if (!isConnected) {
     return <p>Connecting to server...</p>

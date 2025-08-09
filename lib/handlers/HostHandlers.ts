@@ -60,9 +60,16 @@ export function handleStartLobby({ client }: HandlerContext) {
 
   if (!lobby) {
     return sendEvent(client, 'lobbyStartedError', {
-      error: "Lobby not found.",
+      error: "Lobby not found."
     })
   }
 
-  startLobby(lobby.code)
+  const res = startLobby(lobby.code)
+
+  if (res instanceof Error) {
+    console.log('start lobby message: ', res.message)
+    return sendEvent(client, 'lobbyStartedError', {
+      error: res.message
+    })
+  }
 }

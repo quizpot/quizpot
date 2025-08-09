@@ -213,6 +213,8 @@ export const startLobby = (code: number): Error | true => {
 
   const players = getLobbyPlayers(code)
 
+  if (players.length < 2) return new Error("Lobby must have at least 2 players")
+
   players.forEach(player => {
     sendEvent(player.client, 'lobbyStarted', {})
   })

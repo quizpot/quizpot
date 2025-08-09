@@ -66,6 +66,5 @@ export function handlePlayerSync({ client }: HandlerContext) {
     },
   }
 
-  console.log('sending player sync event')
   sendEvent(client, 'syncPlayer', payload)
 }

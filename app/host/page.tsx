@@ -1,6 +1,9 @@
 "use client"
+import AnswerPage from '@/components/host/AnswerPage'
+import EndPage from '@/components/host/EndPage'
 import LobbyWaitingPage from '@/components/host/LobbyWaitingPage'
 import QuestionPage from '@/components/host/QuestionPage'
+import ScorePage from '@/components/host/ScorePage'
 import UploadQuizPage from '@/components/host/UploadQuizPage'
 import { useLobbyState } from '@/components/providers/LobbyStateProvider'
 import React from 'react'
@@ -30,26 +33,20 @@ const HostPage = () => {
   }
 
   if (lobbyState.state === 'answer') {
-    return (
-      <p>Answer Page</p>
-    )
+    return <AnswerPage lobbyState={ lobbyState } />
   }
 
   if (lobbyState.state === 'score') {
-    return (
-      <p>Score Page</p>
-    )
+    return <ScorePage lobbyState={ lobbyState } />
   }
 
   if (lobbyState.state === 'end') {
-    return (
-      <p>End Page</p>
-    )
+    return <EndPage lobbyState={ lobbyState } />
   }
 
   return (
     <>
-      Lobby Done
+      Unknown Lobby State
     </>
   )
 }

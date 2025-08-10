@@ -34,6 +34,7 @@ const EditorPage = () => {
         questionType: 'multipleChoice',
         question: "What is the color of the sky?",
         timeLimit: 30,
+        questionDisplayTime: 5,
         points: 'normalPoints',
         choices: [
           {

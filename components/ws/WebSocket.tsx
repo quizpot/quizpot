@@ -11,27 +11,27 @@ const WebSocketContext = createContext<{
   sendEvent: (event: string, ctx: any) => void
 } | null>(null)
 
-// A dictionary to store client-side event handlers
-const handlers: { [key: string]: ((ctx: any) => void)[] } = {}
-
 export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const [clientId, setClientId] = useState<string | null>(null)
   const [readyState, setReadyState] = useState<number>(WebSocket.CLOSED)
+  
   const wsRef = useRef<WebSocketClient | null>(null)
-  const isMounted = useRef(false)
+  const handlersRef = useRef<{ [key: string]: ((ctx: any) => void)[] }>({})
+  const didConnectRef = useRef(false)
 
   const wsUrl = process.env.NEXT_PUBLIC_WS_URL
 
   // Function to register a handler for an event
   const onEvent = useCallback((event: string, handler: (ctx: any) => void) => {
-    if (!handlers[event]) {
-      handlers[event] = []
+    // Access the handlers from the ref
+    if (!handlersRef.current[event]) {
+      handlersRef.current[event] = []
     }
-    handlers[event].push(handler)
 
-    // Return a function to unregister the handler
+    handlersRef.current[event].push(handler)
+
     return () => {
-      handlers[event] = handlers[event].filter(h => h !== handler)
+      handlersRef.current[event] = handlersRef.current[event].filter(h => h !== handler)
     }
   }, [])
 
@@ -45,7 +45,11 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   useEffect(() => {
-    isMounted.current = true
+    if (!wsUrl || didConnectRef.current) {
+      return
+    }
+
+    didConnectRef.current = true
 
     const connectWebSocket = () => {
       if (wsRef.current && (wsRef.current.readyState === WebSocket.OPEN || wsRef.current.readyState === WebSocket.CONNECTING)) {
@@ -103,8 +107,8 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
           return
         }
 
-        if (handlers[event]) {
-          handlers[event].forEach(handler => handler(ctx))
+        if (handlersRef.current[event]) {
+          handlersRef.current[event].forEach(handler => handler(ctx))
         } else {
           console.warn(`[WebSocketProvider] Received message for unhandled event: ${event}`)
         }
@@ -114,7 +118,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     connectWebSocket()
     
     return () => {
-      isMounted.current = false
+      didConnectRef.current = false
 
       if (wsRef.current) {
         if (wsRef.current.readyState === WebSocket.OPEN) {

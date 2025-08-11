@@ -41,6 +41,7 @@ const EditorLeftBar = () => {
                     questionType: 'multipleChoice',
                     question: "What is the color of the sky?",
                     timeLimit: 30,
+                    questionDisplayTime: 5,
                     points: 'normalPoints',
                     choices: [
                       {
@@ -68,6 +69,7 @@ const EditorLeftBar = () => {
                     questionType: 'trueFalse',
                     question: "Do you like QuizPot?",
                     timeLimit: 10,
+                    questionDisplayTime: 5,
                     points: 'normalPoints',
                     answer: true,
                   }}

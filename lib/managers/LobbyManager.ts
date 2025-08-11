@@ -2,6 +2,7 @@ import { getWSClientById, WebSocketClient } from "./WSClientManager"
 import { QuizFile } from "../QuizFile"
 import { sendEvent } from "./EventManager"
 import { generateName } from "../misc/generateName"
+import { startGame } from "../handlers/GameHandler"
 
 declare global {
   // eslint-disable-next-line no-var
@@ -19,6 +20,7 @@ export interface Lobby {
   players: Player[]
   started: boolean
   currentQuestionIndex: number
+  state: 'waiting' | 'question' | 'answer' | 'score' | 'end'
 }
 
 export interface Player {
@@ -91,6 +93,7 @@ export const createLobby = (hostId: string, quiz: QuizFile): number | Error => {
     players: [],
     started: false,
     currentQuestionIndex: 0,
+    state: 'waiting',
   }
 
   getLobbies().set(code, newLobby)
@@ -226,6 +229,8 @@ export const startLobby = (code: number): Error | true => {
   }
 
   lobby.started = true
+
+  startGame(lobby)
 
   return true
 }

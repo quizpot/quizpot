@@ -1,24 +1,31 @@
 "use client"
-import AnswerPage from '@/components/host/AnswerPage'
-import EndPage from '@/components/host/EndPage'
-import LobbyWaitingPage from '@/components/host/LobbyWaitingPage'
-import QuestionPage from '@/components/host/QuestionPage'
-import ScorePage from '@/components/host/ScorePage'
-import StateWaitingPage from '@/components/host/StateWaitingPage'
-import UploadQuizPage from '@/components/host/UploadQuizPage'
+import AnswerPage from '@/components/play/AnswerPage'
+import EndPage from '@/components/play/EndPage'
+import JoinLobbyPage from '@/components/play/JoinLobbyPage'
+import QuestionPage from '@/components/play/QuestionPage'
+import ScorePage from '@/components/play/ScorePage'
+import StateWaitingPage from '@/components/play/StateWaitingPage'
+import WaitingInLobbyPage from '@/components/play/WaitingInLobbyPage'
 import { useLobbyState } from '@/components/providers/LobbyStateProvider'
 import Button from '@/components/ui/Button'
+import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
-const HostPage = () => {
+const PlayPageClient = () => {
+  const queryCode = useSearchParams().get('code')
   const lobbyState = useLobbyState().lobbyState
+  let parsedCode
+
+  if (queryCode) {
+    parsedCode = parseInt(queryCode)
+  }
 
   if (!lobbyState) {
-    return <UploadQuizPage />
+    return <JoinLobbyPage queryCode={ parsedCode } />
   }
-  
+
   if (!lobbyState.started) {
-    return <LobbyWaitingPage />
+    return <WaitingInLobbyPage />
   }
 
   if (lobbyState.state === 'waiting') {
@@ -51,4 +58,4 @@ const HostPage = () => {
   )
 }
 
-export default HostPage
+export default PlayPageClient

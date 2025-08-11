@@ -34,13 +34,13 @@ export function SOCKET(
    * Cleanup everything on disconnect
    */
   return () => {
-    deleteLobby(client.id)
-    deleteWSClient(client)
-    
     try {
       leaveLobby(client)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (ignored) {}
+
+    deleteLobby(client.id)
+    deleteWSClient(client)
 
     console.log('SOCKET /api/ws Client ' + client.id + ' disconnected, remaining: ' + getWSClientsSize())
   }

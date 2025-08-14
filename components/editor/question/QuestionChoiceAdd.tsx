@@ -1,4 +1,4 @@
-import { MultipleChoiceQuestion } from '@/lib/QuizFile'
+import { MultipleChoiceQuestion } from '@/lib/misc/QuizFile'
 import React, { useContext } from 'react'
 import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
 import { EditorCurrentQuestionContext } from '../providers/EditorCurrentQuestionContext'

@@ -1,44 +1,41 @@
 "use client"
 import React, { useEffect } from 'react'
 import QuizFileInput from '../ui/QuizFileInput'
-import { useWebSocket } from '../ws/WebSocket'
+import { useWebSocket } from '../providers/WebSocketProvider'
 import { useToast } from '../ui/Toaster'
-import { useLobbyState } from '../providers/LobbyStateProvider'
+import { useHostLobbyState } from '../providers/HostLobbyStateProvider'
 
 const UploadQuizPrompt = () => {
   const addToast = useToast()
   const { clientId, sendEvent, onEvent, isConnected } = useWebSocket()
-  const setLobbyState = useLobbyState().setLobbyState
+  const setHostLobbyState = useHostLobbyState().setHostLobbyState
 
   useEffect(() => {
     if (!isConnected) return
     
-    // Register the handler for 'lobbyCreated'
     const unsubscribeLobbyCreated = onEvent('lobbyCreated', (ctx) => {
       console.log(ctx)
       console.log("[UploadQuizPrompt] Received lobby from server:", ctx.lobby.code)
-      setLobbyState(ctx.lobby)
+      setHostLobbyState(ctx.lobby)
       addToast({ message: 'Lobby created with code: ' + ctx.lobby.code, type: 'success' })
     })
 
-    // Register the handler for 'quizUploadError'
+    // TODO: Rename event to createLobbyError
     const unsubscribeUploadError = onEvent('quizUploadError', (ctx) => {
       addToast({ message: 'Error uploading quiz: ' + ctx.error, type: 'error' })
     })
 
-    // Cleanup function to remove handlers on unmount
     return () => {
       unsubscribeLobbyCreated()
       unsubscribeUploadError()
     }
-  }, [isConnected, onEvent, addToast, setLobbyState])
+  }, [isConnected, onEvent, addToast, setHostLobbyState])
 
   if (!isConnected) {
     return <QuizFileInput disabled={true} />
   }
 
-  // @ts-expect-error - any type
-  const handleFileUpload = async (e) => {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null || e.target.files.length === 0) return
 
     const file = e.target.files[0]
@@ -46,10 +43,10 @@ const UploadQuizPrompt = () => {
 
     addToast({ message: 'Creating lobby...', type: 'info' })
 
-    // Use the new sendEvent helper
+    // TODO: Rename event to createLobby
     sendEvent('quizUpload', {
       hostId: clientId,
-      file: content, // You should probably send the content directly, not stringify it twice
+      file: content,
     })
   }
 

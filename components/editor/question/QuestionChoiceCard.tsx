@@ -1,5 +1,5 @@
 import TextInput from '@/components/ui/TextInput'
-import { Choice, MultipleChoiceQuestion } from '@/lib/QuizFile'
+import { Choice, MultipleChoiceQuestion } from '@/lib/misc/QuizFile'
 import React, { useContext } from 'react'
 import { EditorCurrentQuestionContext } from '../providers/EditorCurrentQuestionContext'
 import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'

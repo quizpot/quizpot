@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import { useWebSocket } from '../ws/WebSocket'
+import { useWebSocket } from '../providers/WebSocketProvider'
 import { FaArrowRotateRight } from 'react-icons/fa6'
 import { FaHeart, FaHeartBroken } from 'react-icons/fa'
 

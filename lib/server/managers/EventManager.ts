@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { WebSocketClient } from "@/lib/managers/WSClientManager"
+import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
 import { handlePlayerKick, handleQuizUpload, handleStartLobby } from "../handlers/HostHandlers"
 import { handleLobbyJoin, handlePlayerSync } from "../handlers/PlayerHandlers"
+import { handleQuestionAnswer } from "../handlers/GameHandlers"
 
 interface HandlerContext {
   client: WebSocketClient
@@ -44,7 +45,7 @@ export function emitEvent(eventName: string, ctx: HandlerContext) {
  */
 export function sendEvent(client: WebSocketClient, event: string, ctx: any) {
   if (!client || client.readyState !== WebSocket.OPEN) {
-    console.warn(`Attempted to send message to a closed or non-existent client. Event: ${event}`)
+    console.warn(`Attempted to send message to a closed or non-existent client. Event: ${event} ID: ${client?.id}`)
     return
   }
 
@@ -66,16 +67,19 @@ export function sendEvent(client: WebSocketClient, event: string, ctx: any) {
 
 let isInitialized = false
 
+/**
+ * Initializes the server-side WebSocket event handlers.
+ */
 export function initializeServerEventHandlers() {
   if (isInitialized) return
 
-  // Register events
   onEvent('quizUpload', handleQuizUpload)
   onEvent('lobbyJoin', handleLobbyJoin)
   onEvent('playerKick', handlePlayerKick)
   onEvent('startLobby', handleStartLobby)
   onEvent('syncPlayer', handlePlayerSync)
+  onEvent('submitAnswer', handleQuestionAnswer)
 
-  console.log("✅ Server-side WebSocket event handlers initialized.")
   isInitialized = true
+  console.log("✅ Server-side WebSocket event handlers initialized.")
 }

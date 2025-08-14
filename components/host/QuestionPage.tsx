@@ -1,11 +1,11 @@
 import React from 'react'
-import { LobbyState } from '../providers/LobbyStateProvider'
+import { HostLobbyState } from '../providers/HostLobbyStateProvider'
 
-const QuestionPage = ({ lobbyState }: { lobbyState: LobbyState }) => {
+const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   return (
     <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>
-      <p>Question { lobbyState.currentQuestionIndex + 1 }</p>
-      <h1 className='text-4xl font-semibold'>{ lobbyState.currentQuestion?.question }</h1>
+      <p>Question { hostLobbyState.currentQuestionNumber }</p>
+      <h1 className='text-4xl font-semibold'>{ hostLobbyState.currentQuestion.question }</h1>
     </section>
   )
 }

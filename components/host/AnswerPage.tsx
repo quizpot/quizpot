@@ -1,13 +1,13 @@
 import React from 'react'
-import { LobbyState } from '../providers/LobbyStateProvider'
+import { HostLobbyState } from '../providers/HostLobbyStateProvider'
 
-const AnswerPage = ({ lobbyState }: { lobbyState: LobbyState }) => {
+const AnswerPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   return (
     <section className='flex flex-col gap-4 items-center justify-between h-screen w-full p-4'>
-      <h1 className='text-4xl font-semibold'>{ lobbyState.currentQuestion?.question }</h1>
+      <h1 className='text-4xl font-semibold'>{ hostLobbyState.currentQuestion.question }</h1>
       <div>
         {
-          lobbyState.currentQuestion?.questionType === 'multipleChoice' && lobbyState.currentQuestion?.choices.map((answer, index) => (
+          hostLobbyState.currentQuestion?.questionType === 'multipleChoice' && hostLobbyState.currentQuestion.choices.map((answer, index) => (
             <p key={index}>{ answer.text }</p>
           ))
         }

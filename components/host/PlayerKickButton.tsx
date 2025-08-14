@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import ActionButton, { ActionButtonVariant } from '../ui/ActionButton'
-import { useWebSocket } from '../ws/WebSocket'
+import { useWebSocket } from '../providers/WebSocketProvider'
 
 const PlayerKickButton = ({ player, variant }: { player: { id?: string, name: string, score: number }, variant: ActionButtonVariant }) => {
   const { sendEvent } = useWebSocket()

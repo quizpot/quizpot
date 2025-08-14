@@ -3,7 +3,7 @@ import { getLobbyByCode, getLobbyByHostId, getLobbyByPlayerId, getLobbyPlayers, 
 import { HandlerContext } from "./HandlerContext"
 
 export function handleLobbyJoin({ client, ctx }: HandlerContext) {
-  const { code } = ctx
+  const { code, name } = ctx
 
   if (!code) {
     return sendEvent(client, 'lobbyJoinError', {
@@ -19,12 +19,6 @@ export function handleLobbyJoin({ client, ctx }: HandlerContext) {
     })
   }
 
-  if (lobby.started) {
-    return sendEvent(client, 'lobbyJoinError', {
-      error: "Lobby has already started.",
-    })
-  }
-
   if (getLobbyByHostId(client.id)) {
     return sendEvent(client, 'lobbyJoinError', {
       error: "You are hosting a lobby.",
@@ -37,13 +31,13 @@ export function handleLobbyJoin({ client, ctx }: HandlerContext) {
     })
   }
 
-  joinLobby(code, client)
+  joinLobby(code, name, client)
 
   const payload = {
     lobby: {
       code: lobby.code,
       players: lobby.players.map(player => ({ name: player.name, score: player.score })),
-      started: lobby.started,
+      started: lobby.state === 'waiting',
       currentQuestionIndex: lobby.currentQuestionIndex,
       totalQuestions: lobby.quiz.questions.length,
     }
@@ -60,6 +54,7 @@ export function handlePlayerSync({ client }: HandlerContext) {
   const players = getLobbyPlayers(lobby.code)
 
   if (!players) return
+  if (players instanceof Error) return
 
   const player = players.find(player => player.client.id === client.id)
 

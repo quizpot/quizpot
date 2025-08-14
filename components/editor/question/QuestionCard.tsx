@@ -1,5 +1,5 @@
 "use client"
-import { Question } from '@/lib/QuizFile'
+import { Question } from '@/lib/misc/QuizFile'
 import React, { useContext } from 'react'
 import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
 import QuestionCardIcon from './QuestionCardIcon'

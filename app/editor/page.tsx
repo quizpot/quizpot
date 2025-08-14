@@ -5,7 +5,7 @@ import { EditorCurrentQuestionContext } from '@/components/editor/providers/Edit
 import { EditorQuizFileContext } from '@/components/editor/providers/EditorQuizFileContext'
 import QuestionEditor from '@/components/editor/question/QuestionEditor'
 import Button from '@/components/ui/Button'
-import { QuizFile } from '@/lib/QuizFile'
+import { QuizFile } from '@/lib/misc/QuizFile'
 import React, { useEffect, useState } from 'react'
 
 const EditorPage = () => {

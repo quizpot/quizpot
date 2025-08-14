@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import { WebSocketClient } from "@/lib/managers/WSClientManager"
+import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react"
 
 const WebSocketContext = createContext<{

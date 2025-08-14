@@ -1,4 +1,4 @@
-import { QuizFile } from "@/lib/QuizFile"
+import { QuizFile } from "@/lib/misc/QuizFile"
 import { createContext } from "react"
 
 export const EditorQuizFileContext = createContext<{

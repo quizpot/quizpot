@@ -1,5 +1,5 @@
 import { sendEvent } from "../managers/EventManager"
-import { createLobby, getLobbyByCode, getLobbyByHostId, leaveLobby, startLobby } from "@/lib/managers/LobbyManager"
+import { createLobby, getLobbyByCode, getLobbyByHostId, leaveLobby, startLobby } from "@/lib/server/managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
 
 export function handleQuizUpload({ client, ctx }: HandlerContext) {
@@ -14,7 +14,7 @@ export function handleQuizUpload({ client, ctx }: HandlerContext) {
   try {
     // Assuming the 'file' content is a JSON string of the quiz data.
     const quizData = JSON.parse(file)
-    const newLobbyCode = createLobby(hostId, quizData)
+    const newLobbyCode = createLobby(client, quizData)
 
     if (typeof newLobbyCode !== 'number') {
       throw new Error("Unexpected error creating lobby")

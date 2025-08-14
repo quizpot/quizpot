@@ -1,11 +1,11 @@
 import React from 'react'
-import { LobbyState } from '../providers/LobbyStateProvider'
+import { HostLobbyState } from '../providers/HostLobbyStateProvider'
 
-const ScorePage = ({ lobbyState }: { lobbyState: LobbyState }) => {
+const ScorePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   return (
     <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>
       {
-        lobbyState.players.map((player, index) => (
+        hostLobbyState.players.map((player, index) => (
           <p key={index}>{ player.name }: { player.score }</p>
         ))
       }

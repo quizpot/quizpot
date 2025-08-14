@@ -1,27 +1,27 @@
 "use client"
 import React, { useEffect } from 'react'
 import { useToast } from '../ui/Toaster'
-import { useWebSocket } from '../ws/WebSocket'
+import { useWebSocket } from '../providers/WebSocketProvider'
 import NumberInput from '../ui/NumberInput'
-import { useLobbyState } from '../providers/LobbyStateProvider'
 import Button from '../ui/Button'
+import { usePlayerLobbyState } from '../providers/PlayerLobbyStateProvider'
 
-const JoinLobbyPage = ({ queryCode }: { queryCode?: number }) => {
+const JoinLobbyPage = ({ queryCode, name }: { queryCode?: number, name?: string }) => {
   const addToast = useToast()
   const [code, setCode] = React.useState<number>(0)
   const { sendEvent, onEvent, isConnected } = useWebSocket()
-  const setLobbyState = useLobbyState().setLobbyState
+  const setPlayerLobbyState = usePlayerLobbyState().setPlayerLobbyState
 
   useEffect(() => {
+    if (!isConnected) return
+
     if (queryCode) {
       setCode(queryCode)
+      sendEvent('lobbyJoin', { code, name })
     }
-
-    if (!isConnected) return
     
     const unsubscribeJoinLobby = onEvent('lobbyJoined', (ctx) => {
-      setLobbyState(ctx.lobby)
-      sendEvent('syncPlayer', {})
+      setPlayerLobbyState(ctx.lobby)
     })
 
     const unsubscribeLobbyJoinError = onEvent('lobbyJoinError', (ctx) => {
@@ -32,7 +32,7 @@ const JoinLobbyPage = ({ queryCode }: { queryCode?: number }) => {
       unsubscribeJoinLobby()
       unsubscribeLobbyJoinError()
     }
-  }, [isConnected, onEvent, addToast, setLobbyState, sendEvent, queryCode])
+  }, [isConnected, onEvent, addToast, setPlayerLobbyState, sendEvent, queryCode, code, name])
 
   if (!isConnected) {
     return <></>
@@ -43,7 +43,7 @@ const JoinLobbyPage = ({ queryCode }: { queryCode?: number }) => {
 
     addToast({ message: 'Joining lobby...', type: 'info' })
 
-    sendEvent('lobbyJoin', { code })
+    sendEvent('lobbyJoin', { code, name })
   }
 
   return (

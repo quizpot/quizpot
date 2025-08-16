@@ -1,16 +1,16 @@
 "use client"
 import React, { createContext, useEffect } from 'react'
 import { useWebSocket } from './WebSocketProvider'
-import { Question } from '@/lib/misc/QuizFile'
 import { Answer } from '@/lib/server/managers/LobbyManager'
 import { LobbyStatus } from '@/lib/misc/LobbyStatus'
 import { PlayerState } from '@/lib/misc/PlayerState'
+import { SanitizedQuestion } from '@/lib/misc/QuestionSanitizer'
 
 export interface HostLobbyState {
   code: number
   status: LobbyStatus
   players: PlayerState[]
-  currentQuestion: Question
+  currentQuestion: SanitizedQuestion
   currentQuestionNumber: number
   totalQuestions: number
   answers: Answer[]
@@ -71,8 +71,8 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
           return {
             ...prevHostLobbyState,
             status: ctx.status,
-            currentQuestion: ctx.question,
-            currentQuestionNumber: ctx.currentQuestionNumber,
+            currentQuestion: ctx.sanitizedQuestion,
+            currentQuestionNumber: prevHostLobbyState.currentQuestionNumber + 1,
           }
         }
 

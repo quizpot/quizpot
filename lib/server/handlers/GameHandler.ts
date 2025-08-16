@@ -1,5 +1,5 @@
 import { sendEvent } from "../managers/EventManager"
-import { deleteLobby, getLobbyByPlayerId, getPlayerScore, Lobby, updatePlayerScore, updateQuestionIndex } from "../managers/LobbyManager"
+import { deleteLobby, getLobbyByPlayerId, getPlayerScore, Lobby, updatePlayerScore } from "../managers/LobbyManager"
 import { getWSClientById } from "../managers/WSClientManager"
 import { MultipleChoiceQuestion } from "../../misc/QuizFile"
 import { HandlerContext } from "./HandlerContext"
@@ -20,17 +20,16 @@ function handleDisplayQuestionState(lobby: Lobby) {
   const quiz = lobby.quiz
   const question = quiz.questions[lobby.currentQuestionIndex]
   const sanitizedQuestion = sanitizeQuestion(question)
-
-  sendEvent(host, 'lobbyStateUpdate', {
-    state: 'question',
+  
+  const payload = {
+    status: 'question',
     sanitizedQuestion: sanitizedQuestion,
-  })
+  }
+
+  sendEvent(host, 'lobbyStatusUpdate', payload)
 
   lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStateUpdate', {
-      state: 'question',
-      sanitizedQuestion: sanitizedQuestion,
-    })
+    sendEvent(player.client, 'lobbyStatusUpdate', payload)
   })
 
   setTimeout(() => {
@@ -46,30 +45,32 @@ function handleQuestionAnswerState(lobby: Lobby) {
     return
   } 
 
-  sendEvent(host, 'lobbyStateUpdate', {
-    state: 'answer',
+  sendEvent(host, 'lobbyStatusUpdate', {
+    status: 'answer',
   })
 
   lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStateUpdate', {
-      state: 'answer',
+    sendEvent(player.client, 'lobbyStatusUpdate', {
+      status: 'answer',
     })
   })
 
   const quiz = lobby.quiz
   const question = quiz.questions[lobby.currentQuestionIndex]
 
-  // const timeout = 
-  setTimeout(() => {
+  if (lobby.answerTimeout) clearTimeout(lobby.answerTimeout)
+
+  lobby.answerTimeout = null
+  lobby.answerTimestamp = null
+
+  lobby.answerTimestamp = Date.now()
+  lobby.answerTimeout = setTimeout(() => {
     if (lobby.currentQuestionIndex === quiz.questions.length - 1) {
       handleEndState(lobby)
     } else {
       handleScoreState(lobby)
     }
   }, question.timeLimit * 1000)
-
-  //Clear timeout when everyone answered
-  //clearTimeout(timeout)
 }
 
 function handleScoreState(lobby: Lobby) {
@@ -80,33 +81,23 @@ function handleScoreState(lobby: Lobby) {
     return
   }
 
-  sendEvent(host, 'lobbyStateUpdate', {
+  // Calculate scores
+
+  sendEvent(host, 'lobbyStatusUpdate', {
     state: 'score',
   })
 
   lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStateUpdate', {
+    sendEvent(player.client, 'lobbyStatusUpdate', {
       state: 'score',
     })
   })
 
   setTimeout(() => {
-    // lobby.currentQuestionIndex++
-
-    // sendEvent(host, 'currentQuestionIndexUpdate', {
-    //   currentQuestionIndex: lobby.currentQuestionIndex,
-    // })
-
-    // lobby.players.forEach(player => {
-    //   sendEvent(player.client, 'currentQuestionIndexUpdate', {
-    //     currentQuestionIndex: lobby.currentQuestionIndex,
-    //   })
-    // })
-
-    updateQuestionIndex(lobby.code, lobby.currentQuestionIndex + 1)
+    lobby.currentQuestionIndex = lobby.currentQuestionIndex + 1
 
     handleDisplayQuestionState(lobby)
-  }, 3000)
+  }, lobby.quiz.scoreTimeout * 1000)
 }
 
 function handleEndState(lobby: Lobby) {
@@ -128,14 +119,20 @@ function handleEndState(lobby: Lobby) {
   })
 
   setTimeout(() => {
-    deleteLobby(lobby.host)
+    deleteLobby(lobby.host, 'Lobby ended')
   }, 3000)
 }
 
 export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
   const { answer } = ctx
 
-  if (!answer) return
+  if (!answer) {
+    sendEvent(client, 'submitAnswerError', {
+      error: 'No answer provided',
+    })
+
+    return
+  }
 
   const lobby = getLobbyByPlayerId(client.id)
 

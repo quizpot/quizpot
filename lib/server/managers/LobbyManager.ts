@@ -17,6 +17,8 @@ export interface Lobby {
   currentQuestionIndex: number
   answers: Answer[]
   settings: LobbySettings
+  answerTimeout: NodeJS.Timeout | null
+  answerTimestamp: number | null
 }
 
 export interface LobbySettings {
@@ -103,6 +105,8 @@ export const createLobby = (host: WebSocketClient, quiz: QuizFile, settings: Lob
     status: LobbyStatus.waiting,
     currentQuestionIndex: 0,
     answers: [],
+    answerTimeout: null,
+    answerTimestamp: null,
     settings
   }
 
@@ -266,25 +270,25 @@ export const updatePlayerScore = (code: number, playerId: string, score: number)
   return true
 }
 
-export const updateQuestionIndex = (lobbyCode: number, index: number): true | Error => {
-  const lobby = getLobbyByCode(lobbyCode)
+// export const updateQuestionIndex = (lobbyCode: number, index: number): true | Error => {
+//   const lobby = getLobbyByCode(lobbyCode)
 
-  if (!lobby) return new Error("Lobby not found")
+//   if (!lobby) return new Error("Lobby not found")
 
-  lobby.currentQuestionIndex = index
+//   lobby.currentQuestionIndex = index
 
-  const payload = {
-    currentQuestionIndex: index,
-  }
+//   const payload = {
+//     currentQuestionIndex: index,
+//   }
 
-  lobby.players.forEach(player => {
-    sendEvent(player.client, 'currentQuestionIndexUpdate', payload)
-  })
+//   lobby.players.forEach(player => {
+//     sendEvent(player.client, 'currentQuestionIndexUpdate', payload)
+//   })
 
-  sendEvent(lobby.host, 'currentQuestionIndexUpdate', payload)
+//   sendEvent(lobby.host, 'currentQuestionIndexUpdate', payload)
 
-  return true
-}
+//   return true
+// }
 
 export const updateLobbyAnswers = (code: number, answer: Answer): true | Error => {
   const lobby = getLobbyByCode(code)

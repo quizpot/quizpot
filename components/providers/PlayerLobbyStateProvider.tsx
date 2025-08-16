@@ -3,14 +3,14 @@ import React, { createContext, useEffect } from 'react'
 import { useWebSocket } from './WebSocketProvider'
 import { redirect } from 'next/navigation'
 import { LobbyStatus } from '@/lib/misc/LobbyStatus'
-import { Question } from '@/lib/misc/QuizFile'
 import { PlayerState } from '@/lib/misc/PlayerState'
+import { SanitizedQuestion } from '@/lib/misc/QuestionSanitizer'
 
 export interface PlayerLobbyState {
   code: number
   status: LobbyStatus
   player: PlayerState
-  currentQuestion: Question
+  currentQuestion: SanitizedQuestion
   currentQuestionNumber: number
   totalQuestions: number
 }
@@ -55,7 +55,7 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
           return {
             ...prevPlayerLobbyState,
             status: ctx.status,
-            currentQuestion: ctx.question,
+            currentQuestion: ctx.sanitizedQuestion,
             currentQuestionNumber: prevPlayerLobbyState.currentQuestionNumber + 1,
           }
         }

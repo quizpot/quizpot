@@ -2,9 +2,11 @@
 import { WebSocketClient } from "./WSClientManager"
 import { MultipleChoiceAnswer, QuizFile, ShortAnswerAnswer, TrueFalseAnswer } from "../../misc/QuizFile"
 import { sendEvent } from "./EventManager"
-import { generateName } from "../../misc/name/generateName"
-import { startGame } from "../handlers/GameHandlers"
+import { generateUniqueName } from "../../misc/name/NameUtil"
+import { startGame } from "../handlers/GameHandler"
 import { LobbyStatus } from "@/lib/misc/LobbyStatus"
+import { devLog } from "@/lib/misc/Log"
+import { log } from "console"
 
 export interface Lobby {
   code: number
@@ -14,6 +16,12 @@ export interface Lobby {
   status: LobbyStatus
   currentQuestionIndex: number
   answers: Answer[]
+  settings: LobbySettings
+}
+
+export interface LobbySettings {
+  customNames: boolean
+  questionsOnDevice: boolean
 }
 
 export interface Player {
@@ -72,7 +80,15 @@ export const getLobbyByPlayerId = (playerId: string) => getPlayerLobbyMap().get(
 
 export const getGlobalPlayerCount = () => getPlayerLobbyMap().size
 
-export const createLobby = (host: WebSocketClient, quiz: QuizFile): number | Error => {
+export const getLobbySettings = (code: number): LobbySettings | Error => {
+  const lobby = getLobbyByCode(code)
+
+  if (!lobby) return new Error("Lobby not found")
+
+  return lobby.settings
+}
+
+export const createLobby = (host: WebSocketClient, quiz: QuizFile, settings: LobbySettings): number | Error => {
   if (getHostLobbyMap().has(host.id)) {
     return new Error("You already have a lobby")
   }
@@ -87,12 +103,13 @@ export const createLobby = (host: WebSocketClient, quiz: QuizFile): number | Err
     status: LobbyStatus.waiting,
     currentQuestionIndex: 0,
     answers: [],
+    settings
   }
 
   getLobbies().set(code, lobby)
   getHostLobbyMap().set(host.id, lobby)
 
-  console.log('[LobbyManager] Lobby created with code:', code)
+  log('LobbyManager', 'Lobby created with code:', code)
 
   return code
 }
@@ -106,16 +123,16 @@ export const deleteLobby = (host: WebSocketClient, reason?: string): true | Erro
     sendEvent(player.client, 'lobbyDeleted', { reason })
     getPlayerLobbyMap().delete(player.client.id)
   })
-
+  
   getLobbies().delete(lobby.code)
   getHostLobbyMap().delete(host.id)
 
-  console.log('[LobbyManager] Lobby deleted with code:', lobby.code)
+  log('LobbyManager', 'Lobby deleted with code:', lobby.code)
 
   return true
 }
 
-export const joinLobby = (code: number, name: string | undefined, player: WebSocketClient): true | Error => {
+export const joinLobby = (code: number, name: string | null, player: WebSocketClient): true | Error => {
   if (getHostLobbyMap().has(player.id)) {
     return new Error("You are hosting a lobby")
   }
@@ -124,17 +141,28 @@ export const joinLobby = (code: number, name: string | undefined, player: WebSoc
 
   if (!lobby) return new Error("Lobby not found")
 
+  if (!lobby.settings.customNames) {
+    const uniqueName = generateUniqueName(lobby.players)
+
+    if (uniqueName instanceof Error) return uniqueName
+    
+    name = uniqueName
+  }
+  
+  if (!name) return new Error("Name not provided")
+
   const playerObj = {
     player: {
       client: player,
-      name: name || generateName(),
+      name: name,
       score: 0,
     }
   }
   
   lobby.players.push(playerObj.player)
 
-  console.log('[LobbyManager] Sending host playerJoined event:', lobby.host.id)
+  devLog('LobbyManager', 'Player joined a lobby with code:', lobby.code)
+  
   sendEvent(lobby.host, 'playerJoined', playerObj)
   
   getPlayerLobbyMap().set(player.id, lobby)
@@ -152,13 +180,11 @@ export const leaveLobby = (player: WebSocketClient): true | Error => {
 
   const payload = { player: { id: leavingPlayer.client.id, name: leavingPlayer.name } }
 
-  lobby.players.forEach(player => {
-    sendEvent(player.client, 'playerLeft', payload)
-  })
-
   if (playerIndex > -1) {
     lobby.players.splice(playerIndex, 1)
   }
+
+  devLog('LobbyManager', 'Player left a lobby with code:', lobby.code)
 
   sendEvent(lobby.host, 'playerLeft', payload)
 
@@ -177,9 +203,12 @@ export const startLobby = (code: number): true | Error => {
 
   if (players instanceof Error) return players
 
-  if (players.length < 2) return new Error("Lobby must have at least 2 players")
+  if (players.length < 1) return new Error("Lobby must have at least one player")
+
+  log('LobbyManager', 'Lobby started with code:', lobby.code)
 
   startGame(lobby)
+
   return true
 }
 
@@ -262,22 +291,20 @@ export const updateLobbyAnswers = (code: number, answer: Answer): true | Error =
 
   if (!lobby) return new Error("Lobby not found")
 
+  if (lobby.answers.map(a => a.playerId).includes(answer.playerId)) return new Error("You already answered")
+
   lobby.answers.push(answer)
 
   const payload = {
-    answerCount: lobby.answers.length,
+    answers: lobby.answers,
   }
 
-  lobby.players.forEach(player => {
-    sendEvent(player.client, 'updateLobbyAnswerCount', payload)
-  })
-
-  sendEvent(lobby.host, 'updateLobbyAnswerCount', payload)
+  sendEvent(lobby.host, 'updateLobbyAnswers', payload)
 
   return true
 }
 
-const generateLobbyCode = (): number => {
+const generateLobbyCode = (): number => { 
   let code = 0
 
   do {

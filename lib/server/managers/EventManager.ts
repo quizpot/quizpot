@@ -2,7 +2,7 @@
 import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
 import { handlePlayerKick, handleQuizUpload, handleStartLobby } from "../handlers/HostHandlers"
 import { handleLobbyJoin, handlePlayerSync } from "../handlers/PlayerHandlers"
-import { handleQuestionAnswer } from "../handlers/GameHandlers"
+import { handleQuestionAnswer } from "../handlers/GameHandler"
 
 interface HandlerContext {
   client: WebSocketClient

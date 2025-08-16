@@ -3,6 +3,7 @@ import { deleteLobby, getLobbyByPlayerId, getPlayerScore, Lobby, updatePlayerSco
 import { getWSClientById } from "../managers/WSClientManager"
 import { MultipleChoiceQuestion } from "../../misc/QuizFile"
 import { HandlerContext } from "./HandlerContext"
+import { sanitizeQuestion } from "@/lib/misc/QuestionSanitizer"
 
 export function startGame(lobby: Lobby) {
   handleDisplayQuestionState(lobby)
@@ -18,24 +19,17 @@ function handleDisplayQuestionState(lobby: Lobby) {
 
   const quiz = lobby.quiz
   const question = quiz.questions[lobby.currentQuestionIndex]
-
-  // Sanitize answers
-
-  if (question.questionType === 'multipleChoice') {
-    question.choices.forEach(choice => {
-      choice.correct = false
-    })
-  }
+  const sanitizedQuestion = sanitizeQuestion(question)
 
   sendEvent(host, 'lobbyStateUpdate', {
     state: 'question',
-    question: question,
+    sanitizedQuestion: sanitizedQuestion,
   })
 
   lobby.players.forEach(player => {
     sendEvent(player.client, 'lobbyStateUpdate', {
       state: 'question',
-      question: question,
+      sanitizedQuestion: sanitizedQuestion,
     })
   })
 

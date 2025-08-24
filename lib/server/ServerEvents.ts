@@ -23,6 +23,7 @@ export interface ServerEvents {
   'startLobbyError': ErrorPayload
   'lobbyJoined': LobbyJoinedPayload
   'lobbyJoinError': ErrorPayload
+  'submitAnswerError': ErrorPayload
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -52,7 +53,7 @@ interface PlayerUpdatePayload {
   player: PlayerState
 }
 
-type LobbyStatusUpdatePayload = OtherStatusUpdatePayload | QuestionStatusUpdatePayload
+export type LobbyStatusUpdatePayload = OtherStatusUpdatePayload | QuestionStatusUpdatePayload
 
 interface QuestionStatusUpdatePayload {
   status: LobbyStatus.question

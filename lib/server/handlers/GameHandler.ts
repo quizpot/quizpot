@@ -5,6 +5,8 @@ import { HandlerContext } from "./HandlerContext"
 import { sanitizeQuestion } from "@/lib/misc/QuestionSanitizer"
 import { validateAnswer } from "@/lib/misc/AnswerValidator"
 import { calculateScore } from "@/lib/misc/ScoreCalculator"
+import { LobbyStatus } from "@/lib/misc/LobbyStatus"
+import { LobbyStatusUpdatePayload } from "../ServerEvents"
 
 export function startGame(lobby: Lobby) {
   handleDisplayQuestionState(lobby)
@@ -21,9 +23,14 @@ function handleDisplayQuestionState(lobby: Lobby) {
   const quiz = lobby.quiz
   const question = quiz.questions[lobby.currentQuestionIndex]
   const sanitizedQuestion = sanitizeQuestion(question)
+
+  if (sanitizedQuestion instanceof Error) {
+    deleteLobby(lobby.host)
+    return
+  }
   
   const payload = {
-    status: 'question',
+    status: LobbyStatus.question,
     sanitizedQuestion: sanitizedQuestion,
   }
 
@@ -48,14 +55,14 @@ function handleQuestionAnswerState(lobby: Lobby) {
 
   lobby.answers = []
 
-  sendEvent(host, 'lobbyStatusUpdate', {
-    status: 'answer',
-  })
+  const payload: LobbyStatusUpdatePayload = {
+    status: LobbyStatus.answer
+  }
+
+  sendEvent(host, 'lobbyStatusUpdate', payload)
 
   lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStatusUpdate', {
-      status: 'answer',
-    })
+    sendEvent(player.client, 'lobbyStatusUpdate', payload)
   })
 
   const quiz = lobby.quiz
@@ -71,12 +78,35 @@ function handleQuestionAnswerState(lobby: Lobby) {
   lobby.answerTimestamp = Date.now()
   lobby.answerTimeout = setTimeout(() => {
     if (curQuestion !== lobby.currentQuestionIndex) return
-    if (lobby.currentQuestionIndex === quiz.questions.length - 1) {
+    handleAnswersState(lobby)
+  }, question.timeLimit * 1000)
+}
+
+function handleAnswersState(lobby: Lobby) {
+  const host = getWSClientById(lobby.host.id)
+
+  if (!host) {
+    deleteLobby(lobby.host)
+    return
+  }
+
+  const payload: LobbyStatusUpdatePayload = {
+    status: LobbyStatus.answers
+  }
+
+  sendEvent(host, 'lobbyStatusUpdate', payload)
+
+  lobby.players.forEach(player => {
+    sendEvent(player.client, 'lobbyStatusUpdate', payload)
+  })
+
+  setTimeout(() => {
+    if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
       handleEndState(lobby)
     } else {
       handleScoreState(lobby)
     }
-  }, question.timeLimit * 1000)
+  }, lobby.quiz.scoreTimeout * 1000)
 }
 
 function handleScoreState(lobby: Lobby) {
@@ -96,14 +126,14 @@ function handleScoreState(lobby: Lobby) {
     })
   })
 
-  sendEvent(host, 'lobbyStatusUpdate', {
-    status: 'score',
-  })
+  const payload: LobbyStatusUpdatePayload = {
+    status: LobbyStatus.score
+  }
+
+  sendEvent(host, 'lobbyStatusUpdate', payload)
 
   lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStatusUpdate', {
-      status: 'score',
-    })
+    sendEvent(player.client, 'lobbyStatusUpdate', payload)
   })
 
   setTimeout(() => {
@@ -129,14 +159,14 @@ function handleEndState(lobby: Lobby) {
     })
   })
 
-  sendEvent(host, 'lobbyStatusUpdate', {
-    status: 'end',
-  })
+  const payload: LobbyStatusUpdatePayload = {
+    status: LobbyStatus.end
+  }
+
+  sendEvent(host, 'lobbyStatusUpdate', payload)
 
   lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStatusUpdate', {
-      status: 'end',
-    })
+    sendEvent(player.client, 'lobbyStatusUpdate', payload)
   })
 
   setTimeout(() => {
@@ -149,7 +179,7 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
 
   if (!answer) {
     sendEvent(client, 'submitAnswerError', {
-      error: 'No answer provided',
+      message: 'No answer provided',
     })
 
     return
@@ -159,7 +189,7 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
 
   if (!lobby) {
     sendEvent(client, 'submitAnswerError', {
-      error: 'No lobby found',
+      message: 'No lobby found',
     })
 
     return
@@ -169,7 +199,7 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
 
   if (!question) {
     sendEvent(client, 'submitAnswerError', {
-      error: 'No question found',
+      message: 'No question found',
     })
 
     return
@@ -177,7 +207,7 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
 
   if (!lobby.answerTimestamp) {
     sendEvent(client, 'submitAnswerError', {
-      error: 'No answer timestamp',
+      message: 'No answer timestamp',
     })
 
     return
@@ -185,7 +215,7 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
 
   if (!lobby.answerTimeout) {
     sendEvent(client, 'submitAnswerError', {
-      error: 'No answer timeout',
+      message: 'No answer timeout',
     })
 
     return
@@ -219,10 +249,6 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
 
   if (lobby.answers.length === lobby.players.length) {
     clearTimeout(lobby.answerTimeout)
-    if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
-      handleEndState(lobby)
-    } else {
-      handleScoreState(lobby)
-    }
+    handleAnswersState(lobby)
   }
 }

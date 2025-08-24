@@ -2,7 +2,7 @@ import { sendEvent } from "../managers/EventManager"
 import { getLobbyByCode, getLobbyByHostId, getLobbyByPlayerId, getLobbyPlayers, joinLobby } from "../managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
 
-export function handleLobbyJoin({ client, ctx }: HandlerContext) {
+export function handleJoinLobby({ client, ctx }: HandlerContext) {
   const { code, name } = ctx
 
   if (!code) {
@@ -31,14 +31,24 @@ export function handleLobbyJoin({ client, ctx }: HandlerContext) {
     })
   }
 
-  joinLobby(code, name, client)
+  const res = joinLobby(code, name, client)
+
+  if (res instanceof Error) {
+    return sendEvent(client, 'lobbyJoinError', {
+      error: res.message,
+    })
+  }
 
   const payload = {
     lobby: {
       code: lobby.code,
-      players: lobby.players.map(player => ({ name: player.name, score: player.score })),
-      started: lobby.state === 'waiting',
-      currentQuestionIndex: lobby.currentQuestionIndex,
+      status: 'waiting',
+      player: {
+        id: client.id,
+        name: name,
+        score: 0,
+      },
+      currentQuestionNumber: 0,
       totalQuestions: lobby.quiz.questions.length,
     }
   }
@@ -46,26 +56,27 @@ export function handleLobbyJoin({ client, ctx }: HandlerContext) {
   sendEvent(client, 'lobbyJoined', payload)
 }
 
-export function handlePlayerSync({ client }: HandlerContext) {
-  const lobby = getLobbyByPlayerId(client.id)
+// Deprecated
+// export function handlePlayerSync({ client }: HandlerContext) {
+//   const lobby = getLobbyByPlayerId(client.id)
 
-  if (!lobby) return
+//   if (!lobby) return
 
-  const players = getLobbyPlayers(lobby.code)
+//   const players = getLobbyPlayers(lobby.code)
 
-  if (!players) return
-  if (players instanceof Error) return
+//   if (!players) return
+//   if (players instanceof Error) return
 
-  const player = players.find(player => player.client.id === client.id)
+//   const player = players.find(player => player.client.id === client.id)
 
-  if (!player) return
+//   if (!player) return
 
-  const payload = {
-    player: {
-      name: player.name,
-      score: player.score,
-    },
-  }
+//   const payload = {
+//     player: {
+//       name: player.name,
+//       score: player.score,
+//     },
+//   }
 
-  sendEvent(client, 'syncPlayer', payload)
-}
+//   sendEvent(client, 'syncPlayer', payload)
+// }

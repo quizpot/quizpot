@@ -1,36 +1,32 @@
 "use client"
-import AnswerPage from '@/components/play/AnswerPage'
-import QuestionPage from '@/components/play/QuestionPage'
-import JoinLobbyPage from '@/components/play/JoinLobbyPage'
-import SetNamePage from '@/components/play/SetNamePage'
-import WaitingInLobbyPage from '@/components/play/WaitingInLobbyPage'
+import AnswerPage from '@/components/player/AnswerPage'
+import QuestionPage from '@/components/player/QuestionPage'
+import SetNamePage from '@/components/player/SetNamePage'
+import WaitingInLobbyPage from '@/components/player/WaitingInLobbyPage'
 import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import { useSearchParams } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
-import ScorePage from '@/components/play/ScorePage'
-import EndPage from '@/components/play/EndPage'
+import React from 'react'
+import ScorePage from '@/components/player/ScorePage'
+import EndPage from '@/components/player/EndPage'
 import Button from '@/components/ui/Button'
+import AnswersPage from '@/components/player/AnswersPage'
+import SetCodePage from '@/components/player/SetCodePage'
 
 const PlayPage = () => {
   const queryCode = useSearchParams().get('code')
   const playerLobbyState = usePlayerLobbyState().playerLobbyState
-  const [name, setName] = useState<string | null>(null)
   let parsedCode
-
-  useEffect(() => {
-    setName(sessionStorage.getItem('name'))
-  }, [])
 
   if (queryCode) {
     parsedCode = parseInt(queryCode)
   }
 
-  if (!name) {
-    return <SetNamePage queryCode={ parsedCode } />
+  if (!queryCode) {
+    return <SetCodePage />
   }
 
   if (!playerLobbyState) {
-    return <JoinLobbyPage queryCode={ parsedCode } />
+    return <SetNamePage queryCode={ parsedCode } />
   }
 
   if (playerLobbyState.status === 'waiting') {
@@ -43,6 +39,10 @@ const PlayPage = () => {
 
   if (playerLobbyState.status === 'answer') {
     return <AnswerPage playerLobbyState={ playerLobbyState } />
+  }
+
+  if (playerLobbyState.status === 'answers') {
+    return <AnswersPage playerLobbyState={ playerLobbyState } />
   }
 
   if (playerLobbyState.status === 'score') {

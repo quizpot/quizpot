@@ -1,9 +1,10 @@
 import { sendEvent } from "../managers/EventManager"
-import { deleteLobby, getLobbyByPlayerId, getPlayerScore, Lobby, updatePlayerScore } from "../managers/LobbyManager"
+import { Answer, deleteLobby, getLobbyByPlayerId, Lobby, updatePlayerScore } from "../managers/LobbyManager"
 import { getWSClientById } from "../managers/WSClientManager"
-import { MultipleChoiceQuestion } from "../../misc/QuizFile"
 import { HandlerContext } from "./HandlerContext"
 import { sanitizeQuestion } from "@/lib/misc/QuestionSanitizer"
+import { validateAnswer } from "@/lib/misc/AnswerValidator"
+import { calculateScore } from "@/lib/misc/ScoreCalculator"
 
 export function startGame(lobby: Lobby) {
   handleDisplayQuestionState(lobby)
@@ -43,7 +44,9 @@ function handleQuestionAnswerState(lobby: Lobby) {
   if (!host) {
     deleteLobby(lobby.host)
     return
-  } 
+  }
+
+  lobby.answers = []
 
   sendEvent(host, 'lobbyStatusUpdate', {
     status: 'answer',
@@ -63,8 +66,11 @@ function handleQuestionAnswerState(lobby: Lobby) {
   lobby.answerTimeout = null
   lobby.answerTimestamp = null
 
+  const curQuestion = lobby.currentQuestionIndex
+
   lobby.answerTimestamp = Date.now()
   lobby.answerTimeout = setTimeout(() => {
+    if (curQuestion !== lobby.currentQuestionIndex) return
     if (lobby.currentQuestionIndex === quiz.questions.length - 1) {
       handleEndState(lobby)
     } else {
@@ -81,15 +87,22 @@ function handleScoreState(lobby: Lobby) {
     return
   }
 
-  // Calculate scores
+  // TODO: Optimize these
+  lobby.answers.forEach((answer) => {
+    lobby.players.forEach((p) => {
+      if (p.client.id === answer.playerId) {
+        updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
+      }
+    })
+  })
 
   sendEvent(host, 'lobbyStatusUpdate', {
-    state: 'score',
+    status: 'score',
   })
 
   lobby.players.forEach(player => {
     sendEvent(player.client, 'lobbyStatusUpdate', {
-      state: 'score',
+      status: 'score',
     })
   })
 
@@ -108,13 +121,21 @@ function handleEndState(lobby: Lobby) {
     return
   }
 
-  sendEvent(host, 'lobbyStateUpdate', {
-    state: 'end',
+  lobby.answers.forEach((answer) => {
+    lobby.players.forEach((p) => {
+      if (p.client.id === answer.playerId) {
+        updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
+      }
+    })
+  })
+
+  sendEvent(host, 'lobbyStatusUpdate', {
+    status: 'end',
   })
 
   lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStateUpdate', {
-      state: 'end',
+    sendEvent(player.client, 'lobbyStatusUpdate', {
+      status: 'end',
     })
   })
 
@@ -136,33 +157,72 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
 
   const lobby = getLobbyByPlayerId(client.id)
 
-  if (!lobby) return
+  if (!lobby) {
+    sendEvent(client, 'submitAnswerError', {
+      error: 'No lobby found',
+    })
 
-  let question = lobby.quiz.questions[lobby.currentQuestionIndex]
-
-  if (!question) return
-
-  if (question.questionType === 'multipleChoice') {
-    question = question as MultipleChoiceQuestion
-    const correctAnswerIndex = question.choices.findIndex(choice => choice.correct)
-
-    if (correctAnswerIndex === -1) return
-
-    if (answer === correctAnswerIndex) {
-      const score = getPlayerScore(lobby.code, client.id)
-      if (typeof score === 'number') {
-        updatePlayerScore(lobby.code, client.id, score + 1000)
-        console.log('correct answer')
-      }
-    }
+    return
   }
+
+  const question = lobby.quiz.questions[lobby.currentQuestionIndex]
+
+  if (!question) {
+    sendEvent(client, 'submitAnswerError', {
+      error: 'No question found',
+    })
+
+    return
+  }
+
+  if (!lobby.answerTimestamp) {
+    sendEvent(client, 'submitAnswerError', {
+      error: 'No answer timestamp',
+    })
+
+    return
+  }
+
+  if (!lobby.answerTimeout) {
+    sendEvent(client, 'submitAnswerError', {
+      error: 'No answer timeout',
+    })
+
+    return
+  }
+
+  const correct = validateAnswer(answer, question)
+
+  const answerObj: Answer = {
+    playerId: client.id,
+    answer,
+    isCorrect: correct,
+    timeTaken: Date.now() - lobby.answerTimestamp
+  }
+
+  // TODO: Optimize these
+  if (correct) {
+    lobby.players.forEach(p => {
+      if (p.client.id === answerObj.playerId) {
+        p.streak = p.streak + 1
+      }
+    })
+  } else {
+    lobby.players.forEach(p => {
+      if (p.client.id === answerObj.playerId) {
+        p.streak = 0
+      }
+    })
+  }
+
+  lobby.answers.push(answerObj)
 
   if (lobby.answers.length === lobby.players.length) {
-    //updateLobbyAnswers(lobby.code, [])
-    handleScoreState(lobby)
-  } else {
-    //updateLobbyAnswers(lobby.code, lobby.answerCount + 1)
+    clearTimeout(lobby.answerTimeout)
+    if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
+      handleEndState(lobby)
+    } else {
+      handleScoreState(lobby)
+    }
   }
-
-  // TODO: Handle other question types
 }

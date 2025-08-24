@@ -30,6 +30,7 @@ export interface Player {
   client: WebSocketClient
   name: string
   score: number
+  streak: number
 }
 
 export interface Answer {
@@ -157,13 +158,17 @@ export const joinLobby = (code: number, name: string | null, player: WebSocketCl
 
   const playerObj = {
     player: {
-      client: player,
+      id: player.id,
       name: name,
       score: 0,
+      streak: 0,
     }
   }
   
-  lobby.players.push(playerObj.player)
+  lobby.players.push({
+    ...playerObj.player,
+    client: player,
+  })
 
   devLog('LobbyManager', 'Player joined a lobby with code:', lobby.code)
   

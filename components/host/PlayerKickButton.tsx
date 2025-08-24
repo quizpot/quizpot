@@ -2,8 +2,9 @@
 import React from 'react'
 import ActionButton, { ActionButtonVariant } from '../ui/ActionButton'
 import { useWebSocket } from '../providers/WebSocketProvider'
+import { PlayerState } from '@/lib/misc/PlayerState'
 
-const PlayerKickButton = ({ player, variant }: { player: { id?: string, name: string, score: number }, variant: ActionButtonVariant }) => {
+const PlayerKickButton = ({ player, variant }: { player: PlayerState, variant: ActionButtonVariant }) => {
   const { sendEvent } = useWebSocket()
 
   if (!player.id) {

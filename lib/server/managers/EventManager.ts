@@ -1,28 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
-import { handlePlayerKick, handleQuizUpload, handleStartLobby } from "../handlers/HostHandlers"
-import { handleLobbyJoin, handlePlayerSync } from "../handlers/PlayerHandlers"
+import { handlePlayerKick, handleCreateLobby, handleStartLobby } from "../handlers/HostHandlers"
+import { handleJoinLobby, handlePlayerSync } from "../handlers/PlayerHandlers"
 import { handleQuestionAnswer } from "../handlers/GameHandler"
+import { ServerEvents } from "../ServerEvents"
+import { ClientEvents } from "@/lib/client/ClientEvents"
 
-interface HandlerContext {
+interface HandlerContext<T extends keyof ClientEvents> {
   client: WebSocketClient
-  ctx: any
+  ctx: ClientEvents[T]
 }
 
 // A dictionary to store our handlers, mapping event names to a list of functions
-const handlers: { [key: string]: ((context: HandlerContext) => void)[] } = {}
+const handlers: { [K in keyof ClientEvents]?: ((context: HandlerContext<K>) => void)[] } = {}
 
 /**
  * Registers a handler for a specific message type.
  * @param eventName The 'type' of the message to listen for.
  * @param handler The function to execute when the message is received.
  */
-export function onEvent(eventName: string, handler: (ctx: HandlerContext) => void) {
+export function onEvent<T extends keyof ClientEvents>(eventName: T, handler: (ctx: HandlerContext<T>) => void) {
   if (!handlers[eventName]) {
     handlers[eventName] = []
   }
 
-  handlers[eventName].push(handler)
+  // Use a type assertion here because TypeScript can't infer the generic relationship
+  (handlers[eventName] as ((context: HandlerContext<T>) => void)[]).push(handler)
 }
 
 /**
@@ -30,9 +32,9 @@ export function onEvent(eventName: string, handler: (ctx: HandlerContext) => voi
  * @param eventName The 'type' of the message that was received.
  * @param ctx The data to pass to the handlers (client, payload, etc.).
  */
-export function emitEvent(eventName: string, ctx: HandlerContext) {
+export function emitEvent<T extends keyof ClientEvents>(eventName: T, ctx: HandlerContext<T>) {
   if (handlers[eventName]) {
-    handlers[eventName].forEach(handler => handler(ctx))
+    (handlers[eventName] as ((context: HandlerContext<T>) => void)[]).forEach(handler => handler(ctx))
   }
 }
 
@@ -43,7 +45,7 @@ export function emitEvent(eventName: string, ctx: HandlerContext) {
  * @param event The event (e.g., 'lobbyCreated', 'quizUpdate').
  * @param ctx The data to be sent with the message. Don't send websocket clients because they can't be JSON serialized!
  */
-export function sendEvent(client: WebSocketClient, event: string, ctx: any) {
+export function sendEvent<T extends keyof ServerEvents>(client: WebSocketClient, event: T, ctx: ServerEvents[T]) {
   if (!client || client.readyState !== WebSocket.OPEN) {
     console.warn(`Attempted to send message to a closed or non-existent client. Event: ${event} ID: ${client?.id}`)
     return
@@ -73,11 +75,11 @@ let isInitialized = false
 export function initializeServerEventHandlers() {
   if (isInitialized) return
 
-  onEvent('quizUpload', handleQuizUpload)
-  onEvent('lobbyJoin', handleLobbyJoin)
+  onEvent('createLobby', handleCreateLobby)
+  onEvent('joinLobby', handleJoinLobby)
   onEvent('playerKick', handlePlayerKick)
   onEvent('startLobby', handleStartLobby)
-  onEvent('syncPlayer', handlePlayerSync)
+  //onEvent('syncPlayer', handlePlayerSync) deprecated
   onEvent('submitAnswer', handleQuestionAnswer)
 
   isInitialized = true

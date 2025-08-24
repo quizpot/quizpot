@@ -2,37 +2,26 @@ import { sendEvent } from "../managers/EventManager"
 import { createLobby, getLobbyByCode, getLobbyByHostId, leaveLobby, startLobby } from "@/lib/server/managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
 
-export function handleQuizUpload({ client, ctx }: HandlerContext) {
-  const { hostId, file } = ctx
+export function handleCreateLobby({ client, ctx }: HandlerContext) {
+  const { hostId, settings, file } = ctx
 
-  if (!hostId || !file) {
-    return sendEvent(client, 'quizUploadError', {
-      error: "Host ID or quiz file content is missing.",
+  if (!hostId || !settings || !file) {
+    return sendEvent(client, 'createLobbyError', {
+      error: "Invalid parameters.",
     })
   }
 
-  try {
-    // Assuming the 'file' content is a JSON string of the quiz data.
-    const quizData = JSON.parse(file)
-    const newLobbyCode = createLobby(client, quizData)
+  const newLobbyCode = createLobby(client, file, settings)
 
-    if (typeof newLobbyCode !== 'number') {
-      throw new Error("Unexpected error creating lobby")
-    }
-
-    console.log(`[HostHandlers] Lobby created for host ${hostId} with code: ${newLobbyCode}`)
-
-    // Send a success event back to the client
-    sendEvent(client, 'lobbyCreated', {
-      lobby: getLobbyByCode(newLobbyCode),
-    })
-  } catch (error) {
-    console.error(`[HostHandlers] Error handling quiz upload for host ${hostId}:`, error)
-
-    sendEvent(client, 'quizUploadError', {
-      error: "Invalid quiz file format or an unexpected error occurred.",
+  if (typeof newLobbyCode !== 'number') {
+    return sendEvent(client, 'createLobbyError', {
+      error: "Couldn't create lobby, " + newLobbyCode.message,
     })
   }
+
+  sendEvent(client, 'lobbyCreated', {
+    lobby: getLobbyByCode(newLobbyCode),
+  })
 }
 
 export function handlePlayerKick({ client, ctx }: HandlerContext) {

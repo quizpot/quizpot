@@ -1,14 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
+import { ClientEvents } from "@/lib/client/ClientEvents"
 import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
+import { ServerEvents } from "@/lib/server/ServerEvents"
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react"
 
 const WebSocketContext = createContext<{
   isConnected: boolean
   clientId: string | null
   readyState: number
-  onEvent: (event: string, handler: (ctx: any) => void) => () => void
-  sendEvent: (event: string, ctx: any) => void
+  onEvent: <T extends keyof ServerEvents>(event: T, handler: (ctx: ServerEvents[T]) => void) => () => void
+  sendEvent: <T extends keyof ClientEvents>(event: T, ctx: ClientEvents[T]) => void
 } | null>(null)
 
 export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
@@ -16,14 +17,12 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const [readyState, setReadyState] = useState<number>(WebSocket.CLOSED)
   
   const wsRef = useRef<WebSocketClient | null>(null)
-  const handlersRef = useRef<{ [key: string]: ((ctx: any) => void)[] }>({})
+  const handlersRef = useRef<{ [K in keyof ServerEvents]?: ((ctx: ServerEvents[K]) => void)[] }>({})
   const didConnectRef = useRef(false)
 
   const wsUrl = process.env.NEXT_PUBLIC_WS_URL
 
-  // Function to register a handler for an event
-  const onEvent = useCallback((event: string, handler: (ctx: any) => void) => {
-    // Access the handlers from the ref
+  const onEvent = useCallback(<T extends keyof ServerEvents>(event: T, handler: (ctx: ServerEvents[T]) => void) => {
     if (!handlersRef.current[event]) {
       handlersRef.current[event] = []
     }
@@ -31,12 +30,13 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     handlersRef.current[event].push(handler)
 
     return () => {
-      handlersRef.current[event] = handlersRef.current[event].filter(h => h !== handler)
+      if (handlersRef.current && handlersRef.current[event]) {
+        handlersRef.current[event] = handlersRef.current[event].filter(h => h !== handler)
+      }
     }
   }, [])
 
-  // Function to send a structured event to the server
-  const sendEvent = useCallback((event: string, ctx: any) => {
+  const sendEvent = useCallback(<T extends keyof ClientEvents>(event: T, ctx: ClientEvents[T]) => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify({ event, ctx }))
     } else {
@@ -107,8 +107,13 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
           return
         }
 
-        if (handlersRef.current[event]) {
-          handlersRef.current[event].forEach(handler => handler(ctx))
+        const handlers = handlersRef.current
+  
+        if (handlers && (event in handlers)) {
+          const typedEvent = event as keyof ServerEvents
+          const typedCtx = ctx as ServerEvents[typeof typedEvent]
+
+          handlers[typedEvent]?.forEach(handler => handler(typedCtx))
         } else {
           console.warn(`[WebSocketProvider] Received message for unhandled event: ${event}`)
         }

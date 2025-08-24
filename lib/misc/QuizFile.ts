@@ -21,6 +21,8 @@ export type QuizTheme = {
 
 export type Question = MultipleChoiceQuestion | TrueFalseQuestion | ShortAnswerQuestion
 
+export type QuestionPoints = "normalPoints" | "doublePoints" | "noPoints"
+
 export type MultipleChoiceQuestion = {
   questionType: "multipleChoice"
   question: string
@@ -28,7 +30,7 @@ export type MultipleChoiceQuestion = {
   choices: Choice[]
   questionDisplayTime: number
   timeLimit: number
-  points: "normalPoints" | "doublePoints" | "noPoints"
+  points: QuestionPoints
 }
 
 export type Choice = {
@@ -47,7 +49,7 @@ export type TrueFalseQuestion = {
   answer: boolean
   questionDisplayTime: number
   timeLimit: number
-  points: "normalPoints" | "doublePoints" | "noPoints"
+  points: QuestionPoints
 }
 
 export type TrueFalseAnswer = {
@@ -61,6 +63,7 @@ export type ShortAnswerQuestion = {
   answer: string
   questionDisplayTime: number
   timeLimit: number
+  points: QuestionPoints
 }
 
 export type ShortAnswerAnswer = {

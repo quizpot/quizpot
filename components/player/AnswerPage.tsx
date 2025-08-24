@@ -14,9 +14,13 @@ const AnswerPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }
           <>
             {
               playerLobbyState.currentQuestion.choices.map((choice, index) => (
-                <Button key={ index } onClick={ () => {
-                  sendEvent('submitAnswer', { answer: index })
-                } } variant='yellow'>
+                <Button key={ index } onClick={ 
+                  () => { 
+                    sendEvent('submitAnswer', { 
+                      answer: { choiceIndex: index } 
+                    }) 
+                  } 
+                } variant='yellow'>
                   { choice.text }
                 </Button>
               ))

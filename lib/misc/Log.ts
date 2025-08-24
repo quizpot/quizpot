@@ -7,7 +7,7 @@
  */
 export function devLog(id: string, ...message: any[]) {
   if (process.env.NODE_ENV !== 'development') return
-  console.log('[' + id + '] ' + message.map(m => m.toString() + ' '))
+  console.log(`[${id}]`, ...message)
 }
 
 /**
@@ -17,7 +17,7 @@ export function devLog(id: string, ...message: any[]) {
  */
 export function prodLog(id: string, ...message: any[]) {
   if (process.env.NODE_ENV === 'development') return
-  console.log('[' + id + '] ' + message.map(m => m.toString() + ' '))
+  console.log(`[${id}]`, ...message)
 }
 
 /**
@@ -26,5 +26,5 @@ export function prodLog(id: string, ...message: any[]) {
  * @param message Content of the log
  */
 export function log(id: string, ...message: any[]) {
-  console.log('[' + id + '] ' + message.map(m => m.toString() + ' '))
+  console.log(`[${id}]`, ...message)
 }

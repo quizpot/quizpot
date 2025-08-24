@@ -5,7 +5,6 @@ import PlayerKickButton from './PlayerKickButton'
 import Button from '../ui/Button'
 import { useWebSocket } from '../providers/WebSocketProvider'
 import { useToast } from '../ui/Toaster'
-import { actionButtonVariants } from '../ui/ActionButton'
 import { useHostLobbyState } from '../providers/HostLobbyStateProvider'
 
 const LobbyWaitingPage = () => {
@@ -33,13 +32,15 @@ const LobbyWaitingPage = () => {
         <div className='flex flex-col gap-4'>
           <h1 className='text-4xl lg:text-6xl'>Lobby Code: <span className='font-semibold'>{ hostLobbyState.code }</span></h1>
           <Button onClick={() => {
-            sendEvent('startLobby', {})
+            sendEvent('startLobby', {
+              start: true,
+            })
           }} variant='green' className='text-2xl' >
             Start
           </Button>
         </div>
         <div className=''>
-          <QRCode value={window.location.host + `/play?code=${hostLobbyState.code}`} />
+          <QRCode value={ window.location.host + `/play?code=${ hostLobbyState.code }` } />
         </div>
       </div>
       <div className='w-full flex flex-col gap-4'>
@@ -47,7 +48,7 @@ const LobbyWaitingPage = () => {
         <div className='flex gap-4 flex-wrap'>
           {
             hostLobbyState.players.length > 0 && hostLobbyState.players.map((player, index) => (
-              <PlayerKickButton key={ index } player={ player } variant={actionButtonVariants[Math.floor(Math.random() * actionButtonVariants.length)]} />
+              <PlayerKickButton key={ index } player={ player } variant={ 'gray' } />
             ))
           }
         </div>

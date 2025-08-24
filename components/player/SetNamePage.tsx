@@ -1,30 +1,30 @@
-"use client"
 import React, { useEffect } from 'react'
+import TextInput from '../ui/TextInput'
+import Button from '../ui/Button'
 import { useToast } from '../ui/Toaster'
 import { useWebSocket } from '../providers/WebSocketProvider'
-import NumberInput from '../ui/NumberInput'
-import Button from '../ui/Button'
 import { usePlayerLobbyState } from '../providers/PlayerLobbyStateProvider'
 
-const JoinLobbyPage = ({ queryCode, name }: { queryCode?: number, name?: string }) => {
+const SetNamePage = ({ queryCode }: { queryCode?: number }) => {
   const addToast = useToast()
-  const [code, setCode] = React.useState<number>(0)
+  const [name, setName] = React.useState<string>('')
   const { sendEvent, onEvent, isConnected } = useWebSocket()
   const setPlayerLobbyState = usePlayerLobbyState().setPlayerLobbyState
 
   useEffect(() => {
     if (!isConnected) return
-
-    if (queryCode) {
-      setCode(queryCode)
-      sendEvent('lobbyJoin', { code, name })
-    }
     
     const unsubscribeJoinLobby = onEvent('lobbyJoined', (ctx) => {
       setPlayerLobbyState(ctx.lobby)
     })
 
+    sendEvent('joinLobby', { code: queryCode })
+
     const unsubscribeLobbyJoinError = onEvent('lobbyJoinError', (ctx) => {
+      if (ctx.error === 'Lobby not found.') {
+        
+      }
+      console.log('Lobby join error:', ctx)
       addToast({ message: ctx.error, type: 'error' })
     })
 
@@ -32,38 +32,28 @@ const JoinLobbyPage = ({ queryCode, name }: { queryCode?: number, name?: string 
       unsubscribeJoinLobby()
       unsubscribeLobbyJoinError()
     }
-  }, [isConnected, onEvent, addToast, setPlayerLobbyState, sendEvent, queryCode, code, name])
-
-  if (!isConnected) {
-    return <></>
-  }
+  }, [isConnected, onEvent, addToast, setPlayerLobbyState, sendEvent, queryCode])
 
   const onClick = async () => {
-    if (!code) return
-
     addToast({ message: 'Joining lobby...', type: 'info' })
 
-    sendEvent('lobbyJoin', { code, name })
+    sendEvent('joinLobby', { code: queryCode, name })
   }
 
   return (
     <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>
-      <h1 className='text-2xl font-semibold'>Join a Lobby</h1>
+      <h1 className='text-2xl font-semibold'>Set Your Name</h1>
       <div className='max-w-md'>
-        <NumberInput onChange={(e) => {
+        <TextInput onChange={(e) => {
           const value = e.target.value
-          if (value === '') {
-            setCode(0)
-          } else {
-            setCode(parseInt(e.target.value))
-          }
-        }} value={ code } />
+          setName(value)
+        }} value={ name } />
       </div>
       <Button onClick={ onClick } variant='green' >
-        Join
+        Continue
       </Button>
     </section>
   )
 }
 
-export default JoinLobbyPage
+export default SetNamePage

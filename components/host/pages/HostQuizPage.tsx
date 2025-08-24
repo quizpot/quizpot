@@ -21,11 +21,11 @@ const HostQuizPage = () => {
     if (!isConnected) return
 
     const unsubscribeLobbyCreated = onEvent('lobbyCreated', (ctx) => {
-      setHostLobbyState(ctx.lobby)
+      setHostLobbyState(ctx.lobbyState)
     })
 
     const unsubscribeCreateLobbyError = onEvent('createLobbyError', (ctx) => {
-      addToast({ message: 'Error creating lobby: ' + ctx.error, type: 'error' })
+      addToast({ message: 'Error creating lobby: ' + ctx.message, type: 'error' })
     })
 
     return () => {
@@ -54,6 +54,16 @@ const HostQuizPage = () => {
   const onHost = () => {
     addToast({ message: 'Creating lobby...', type: 'info' })
 
+    if (clientId === null) {
+      addToast({ message: 'Error creating lobby: Client ID not found', type: 'error' })
+      return
+    }
+
+    if (quiz === null) {
+      addToast({ message: 'Error creating lobby: Quiz not found', type: 'error' })
+      return
+    }
+
     sendEvent("createLobby", {
       hostId: clientId,
       settings: {
@@ -69,7 +79,6 @@ const HostQuizPage = () => {
       <div className='flex flex-col items-center justify-center gap-4 p-4 max-w-md w-full'>
         <h1 className='text-4xl font-semibold w-full text-center'>Host Quiz</h1>
         <div className='p-4 max-w-md w-full flex flex-col gap-4'>
-          {/* <h2 className='text-2xl text-center'>Settings</h2> */}
           <div className='flex px-4 justify-between'>
             <p>Custom names:</p>
             <BooleanInput onChange={ (v) => { setCustomNames(v) } } value={ customNames } />

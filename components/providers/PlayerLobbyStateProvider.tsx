@@ -10,7 +10,7 @@ export interface PlayerLobbyState {
   code: number
   status: LobbyStatus
   player: PlayerState
-  currentQuestion: SanitizedQuestion
+  currentQuestion?: SanitizedQuestion
   currentQuestionNumber: number
   totalQuestions: number
 }
@@ -33,16 +33,13 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
       redirect('/message')
     })
 
-    const unsubscribePlayerScoreUpdate = onEvent('playerScoreUpdate', (ctx) => {
+    const unsubscribePlayerScoreUpdate = onEvent('playerUpdate', (ctx) => {
       setPlayerLobbyState(prevPlayerLobbyState => {
         if (!prevPlayerLobbyState) return null
 
         return {
           ...prevPlayerLobbyState,
-          player: {
-            ...prevPlayerLobbyState.player,
-            score: ctx.score
-          }
+          player: ctx.player
         }
       })
     })
@@ -51,7 +48,7 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
       setPlayerLobbyState(prevPlayerLobbyState => {
         if (!prevPlayerLobbyState) return null
 
-        if (ctx.state === 'question') {
+        if (ctx.status === LobbyStatus.question) {
           return {
             ...prevPlayerLobbyState,
             status: ctx.status,

@@ -1,20 +1,19 @@
 "use client"
 import React, { useEffect } from 'react'
 import QRCode from 'react-qr-code'
-import PlayerKickButton from './PlayerKickButton'
-import Button from '../ui/Button'
-import { useWebSocket } from '../providers/WebSocketProvider'
-import { useToast } from '../ui/Toaster'
-import { useHostLobbyState } from '../providers/HostLobbyStateProvider'
+import PlayerKickButton from '../ui/PlayerKickButton'
+import Button from '../../ui/Button'
+import { useWebSocket } from '../../providers/WebSocketProvider'
+import { useToast } from '../../ui/Toaster'
+import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 
-const LobbyWaitingPage = () => {
+const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const addToast = useToast()
-  const hostLobbyState = useHostLobbyState().hostLobbyState
   const { sendEvent, onEvent } = useWebSocket()
 
   useEffect(() => {
     const unsubscribeStartLobbyError = onEvent('startLobbyError', (ctx) => {
-      addToast({ message: ctx.error, type: 'error' })
+      addToast({ message: ctx.message, type: 'error' })
     })
 
     return () => {
@@ -22,19 +21,13 @@ const LobbyWaitingPage = () => {
     }
   }, [addToast, onEvent])
 
-  if (!hostLobbyState) {
-    return <></>
-  }
-
   return (
     <section className='flex flex-col gap-4 items-center justify-between h-screen w-full p-4'>
       <div className='w-full flex gap-4 justify-between'>
         <div className='flex flex-col gap-4'>
           <h1 className='text-4xl lg:text-6xl'>Lobby Code: <span className='font-semibold'>{ hostLobbyState.code }</span></h1>
           <Button onClick={() => {
-            sendEvent('startLobby', {
-              start: true,
-            })
+            sendEvent('startLobby', {})
           }} variant='green' className='text-2xl' >
             Start
           </Button>

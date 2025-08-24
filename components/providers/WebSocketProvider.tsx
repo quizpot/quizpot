@@ -12,26 +12,35 @@ const WebSocketContext = createContext<{
   sendEvent: <T extends keyof ClientEvents>(event: T, ctx: ClientEvents[T]) => void
 } | null>(null)
 
+type ServerEventHandler<T extends keyof ServerEvents> = (ctx: ServerEvents[T]) => void
+type ServerEventHandlers = {
+  [K in keyof ServerEvents]?: ServerEventHandler<K>[]
+}
+
 export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const [clientId, setClientId] = useState<string | null>(null)
   const [readyState, setReadyState] = useState<number>(WebSocket.CLOSED)
   
   const wsRef = useRef<WebSocketClient | null>(null)
-  const handlersRef = useRef<{ [K in keyof ServerEvents]?: ((ctx: ServerEvents[K]) => void)[] }>({})
+  const handlersRef = useRef<ServerEventHandlers>({})
   const didConnectRef = useRef(false)
 
   const wsUrl = process.env.NEXT_PUBLIC_WS_URL
 
   const onEvent = useCallback(<T extends keyof ServerEvents>(event: T, handler: (ctx: ServerEvents[T]) => void) => {
-    if (!handlersRef.current[event]) {
-      handlersRef.current[event] = []
+    if (!handlersRef.current) {
+      return () => {}
     }
 
-    handlersRef.current[event].push(handler)
+    if (!handlersRef.current[event]) {
+      (handlersRef.current[event] as unknown as ServerEventHandler<T>[]) = []
+    }
+    
+    handlersRef.current[event]!.push(handler)
 
     return () => {
       if (handlersRef.current && handlersRef.current[event]) {
-        handlersRef.current[event] = handlersRef.current[event].filter(h => h !== handler)
+        (handlersRef.current[event] as unknown as ServerEventHandler<T>[]) = (handlersRef.current[event] as ServerEventHandler<T>[]).filter(h => h !== handler)
       }
     }
   }, [])
@@ -113,7 +122,9 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
           const typedEvent = event as keyof ServerEvents
           const typedCtx = ctx as ServerEvents[typeof typedEvent]
 
-          handlers[typedEvent]?.forEach(handler => handler(typedCtx))
+          const eventHandlers = handlers[typedEvent] as ((ctx: ServerEvents[typeof typedEvent]) => void)[]
+
+          eventHandlers.forEach(handler => handler(typedCtx))
         } else {
           console.warn(`[WebSocketProvider] Received message for unhandled event: ${event}`)
         }

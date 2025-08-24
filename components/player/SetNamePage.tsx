@@ -5,7 +5,7 @@ import { useToast } from '../ui/Toaster'
 import { useWebSocket } from '../providers/WebSocketProvider'
 import { usePlayerLobbyState } from '../providers/PlayerLobbyStateProvider'
 
-const SetNamePage = ({ queryCode }: { queryCode?: number }) => {
+const SetNamePage = ({ queryCode }: { queryCode: number }) => {
   const addToast = useToast()
   const [name, setName] = React.useState<string>('')
   const { sendEvent, onEvent, isConnected } = useWebSocket()
@@ -21,11 +21,7 @@ const SetNamePage = ({ queryCode }: { queryCode?: number }) => {
     sendEvent('joinLobby', { code: queryCode })
 
     const unsubscribeLobbyJoinError = onEvent('lobbyJoinError', (ctx) => {
-      if (ctx.error === 'Lobby not found.') {
-        
-      }
-      console.log('Lobby join error:', ctx)
-      addToast({ message: ctx.error, type: 'error' })
+      addToast({ message: ctx.message, type: 'error' })
     })
 
     return () => {

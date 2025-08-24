@@ -74,7 +74,7 @@ const Button = (
       <div className={'pb-0.5 rounded' + parentClassName}>
         <div className={`
           rounded px-2 py-1
-          -translate-y-1 active:hover:-translate-y-0 hover:-translate-y-1.5
+          -translate-y-1 hover:-translate-y-1.5
           duration-200 select-none
         ` + childClassName + ' ' + className}>
           { children }

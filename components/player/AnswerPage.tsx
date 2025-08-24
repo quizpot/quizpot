@@ -10,7 +10,7 @@ const AnswerPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }
     <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>
       <h1 className='text-2xl font-semibold'>Answer Page</h1>
       {
-        playerLobbyState.currentQuestion.questionType === 'multipleChoice' && (
+        playerLobbyState.currentQuestion?.questionType === 'multipleChoice' && (
           <>
             {
               playerLobbyState.currentQuestion.choices.map((choice, index) => (

@@ -7,7 +7,7 @@ export function handleCreateLobby({ client, ctx }: HandlerContext) {
 
   if (!hostId || !settings || !file) {
     return sendEvent(client, 'createLobbyError', {
-      error: "Invalid parameters.",
+      message: "Invalid parameters.",
     })
   }
 
@@ -15,12 +15,27 @@ export function handleCreateLobby({ client, ctx }: HandlerContext) {
 
   if (typeof newLobbyCode !== 'number') {
     return sendEvent(client, 'createLobbyError', {
-      error: "Couldn't create lobby, " + newLobbyCode.message,
+      message: "Couldn't create lobby: " + newLobbyCode.message,
+    })
+  }
+
+  const lobby = getLobbyByCode(newLobbyCode)
+
+  if (!lobby) {
+    return sendEvent(client, 'createLobbyError', {
+      message: "Couldn't find created lobby.",
     })
   }
 
   sendEvent(client, 'lobbyCreated', {
-    lobby: getLobbyByCode(newLobbyCode),
+    lobbyState: {
+      code: lobby.code,
+      status: lobby.status,
+      players: [],
+      answers: [],
+      currentQuestionNumber: 0,
+      totalQuestions: lobby.quiz.questions.length,
+    }
   })
 }
 
@@ -49,16 +64,15 @@ export function handleStartLobby({ client }: HandlerContext) {
 
   if (!lobby) {
     return sendEvent(client, 'lobbyStartedError', {
-      error: "Lobby not found."
+      message: "Lobby not found."
     })
   }
 
   const res = startLobby(lobby.code)
 
   if (res instanceof Error) {
-    console.log('start lobby message: ', res.message)
     return sendEvent(client, 'lobbyStartedError', {
-      error: res.message
+      message: res.message
     })
   }
 }

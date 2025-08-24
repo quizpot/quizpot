@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
-import ActionButton, { ActionButtonVariant } from '../ui/ActionButton'
-import { useWebSocket } from '../providers/WebSocketProvider'
+import ActionButton, { ActionButtonVariant } from '../../ui/ActionButton'
+import { useWebSocket } from '../../providers/WebSocketProvider'
 import { PlayerState } from '@/lib/misc/PlayerState'
 
 const PlayerKickButton = ({ player, variant }: { player: PlayerState, variant: ActionButtonVariant }) => {

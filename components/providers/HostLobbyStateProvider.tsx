@@ -10,7 +10,7 @@ export interface HostLobbyState {
   code: number
   status: LobbyStatus
   players: PlayerState[]
-  currentQuestion: SanitizedQuestion
+  currentQuestion?: SanitizedQuestion
   currentQuestionNumber: number
   totalQuestions: number
   answers: Answer[]
@@ -50,14 +50,14 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
       })
     })
 
-    const unsubscribePlayerScoreUpdate = onEvent('playerScoreUpdate', (ctx) => {
+    const unsubscribePlayerScoreUpdate = onEvent('playerUpdate', (ctx) => {
       setHostLobbyState(prevHostLobbyState => {
         if (!prevHostLobbyState) return null
 
         return {
           ...prevHostLobbyState,
           players: prevHostLobbyState.players.map(player => 
-            player.id === ctx.player.id ? { ...player, score: ctx.player.score } : player
+            player.id === ctx.player.id ? { ...ctx.player } : player
           )
         }
       })
@@ -67,7 +67,7 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
       setHostLobbyState(prevHostLobbyState => {
         if (!prevHostLobbyState) return null
 
-        if (ctx.status === 'question') {
+        if (ctx.status === LobbyStatus.question) {
           return {
             ...prevHostLobbyState,
             status: ctx.status,

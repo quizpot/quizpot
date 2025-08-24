@@ -11,11 +11,10 @@ export function GET() {
 }
 
 export function SOCKET(client: WebSocketClient) {
+  initializeServerEventHandlers()
   client = createWSClient(client)
 
   sendEvent(client, 'setId', { id: client.id })
-
-  initializeServerEventHandlers()
 
   // Handle incoming events
   client.onmessage = (e) => {

@@ -1,4 +1,4 @@
-import ConnectionStatus from '@/components/player/ConnectionStatus'
+import ConnectionStatus from '@/components/ui/ConnectionStatus'
 import { HostLobbyStateProvider } from '@/components/providers/HostLobbyStateProvider'
 import { WebSocketProvider } from '@/components/providers/WebSocketProvider'
 import React from 'react'

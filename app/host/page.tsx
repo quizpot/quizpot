@@ -1,10 +1,10 @@
 "use client"
-import AnswerPage from '@/components/host/AnswerPage'
+import AnswerPage from '@/components/host/pages/AnswerPage'
 import AnswersPage from '@/components/host/AnswersPage'
 import EndPage from '@/components/host/EndPage'
-import LobbyWaitingPage from '@/components/host/LobbyWaitingPage'
+import LobbyWaitingPage from '@/components/host/pages/LobbyWaitingPage'
 import HostQuizPage from '@/components/host/pages/HostQuizPage'
-import QuestionPage from '@/components/host/QuestionPage'
+import QuestionPage from '@/components/host/pages/QuestionPage'
 import ScorePage from '@/components/host/ScorePage'
 import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
 import Button from '@/components/ui/Button'
@@ -18,7 +18,7 @@ const HostPage = () => {
   }
 
   if (hostLobbyState.status === 'waiting') {
-    return <LobbyWaitingPage />
+    return <LobbyWaitingPage hostLobbyState={ hostLobbyState } />
   }
 
   if (hostLobbyState.status === 'question') {

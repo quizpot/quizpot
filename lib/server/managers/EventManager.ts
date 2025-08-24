@@ -1,6 +1,6 @@
 import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
 import { handlePlayerKick, handleCreateLobby, handleStartLobby } from "../handlers/HostHandlers"
-import { handleJoinLobby, handlePlayerSync } from "../handlers/PlayerHandlers"
+import { handleJoinLobby } from "../handlers/PlayerHandlers"
 import { handleQuestionAnswer } from "../handlers/GameHandler"
 import { ServerEvents } from "../ServerEvents"
 import { ClientEvents } from "@/lib/client/ClientEvents"
@@ -79,7 +79,6 @@ export function initializeServerEventHandlers() {
   onEvent('joinLobby', handleJoinLobby)
   onEvent('playerKick', handlePlayerKick)
   onEvent('startLobby', handleStartLobby)
-  //onEvent('syncPlayer', handlePlayerSync) deprecated
   onEvent('submitAnswer', handleQuestionAnswer)
 
   isInitialized = true

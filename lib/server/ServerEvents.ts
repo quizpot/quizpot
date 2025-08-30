@@ -19,11 +19,12 @@ export interface ServerEvents {
   'updateLobbyAnswers': UpdateLobbyAnswersPayload
   'lobbyStartedError': ErrorPayload
   'playerKicked': EmptyPayload
-  'lobbyDeleted': EmptyPayload
+  'lobbyDeleted': LobbyDeletedPayload
   'startLobbyError': ErrorPayload
   'lobbyJoined': LobbyJoinedPayload
   'lobbyJoinError': ErrorPayload
   'submitAnswerError': ErrorPayload
+  'playerScoreUpdate': PlayerScoreUpdatePayload
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -31,6 +32,10 @@ interface EmptyPayload {}
 
 interface SetIdPayload {
   id: string
+}
+
+interface LobbyDeletedPayload {
+  reason: string
 }
 
 interface LobbyCreatedPayload {
@@ -70,4 +75,8 @@ interface UpdateLobbyAnswersPayload {
 
 interface LobbyJoinedPayload {
   lobby: PlayerLobbyState
+}
+
+interface PlayerScoreUpdatePayload {
+  player: PlayerState
 }

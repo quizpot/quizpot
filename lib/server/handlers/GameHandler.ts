@@ -1,44 +1,24 @@
 import { sendEvent } from "../managers/EventManager"
-import { Answer, deleteLobby, getLobbyByPlayerId, Lobby, updatePlayerScore } from "../managers/LobbyManager"
-import { getWSClientById } from "../managers/WSClientManager"
+import { Answer, deleteLobby, getLobbyByPlayerId, Lobby, updateLobbyStatus, updatePlayerScore } from "../managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
-import { sanitizeQuestion } from "@/lib/misc/QuestionSanitizer"
 import { validateAnswer } from "@/lib/misc/AnswerValidator"
 import { calculateScore } from "@/lib/misc/ScoreCalculator"
 import { LobbyStatus } from "@/lib/misc/LobbyStatus"
-import { LobbyStatusUpdatePayload } from "../ServerEvents"
 
 export function startGame(lobby: Lobby) {
   handleDisplayQuestionState(lobby)
 }
 
 function handleDisplayQuestionState(lobby: Lobby) {
-  const host = getWSClientById(lobby.host.id)
+  const status = updateLobbyStatus(lobby.code, LobbyStatus.question)
 
-  if (!host) {
-    deleteLobby(lobby.host)
+  if (status instanceof Error) {
+    deleteLobby(lobby.host, status.message)
     return
   }
 
   const quiz = lobby.quiz
   const question = quiz.questions[lobby.currentQuestionIndex]
-  const sanitizedQuestion = sanitizeQuestion(question)
-
-  if (sanitizedQuestion instanceof Error) {
-    deleteLobby(lobby.host)
-    return
-  }
-  
-  const payload = {
-    status: LobbyStatus.question,
-    sanitizedQuestion: sanitizedQuestion,
-  }
-
-  sendEvent(host, 'lobbyStatusUpdate', payload)
-
-  lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStatusUpdate', payload)
-  })
 
   setTimeout(() => {
     handleQuestionAnswerState(lobby)
@@ -46,59 +26,35 @@ function handleDisplayQuestionState(lobby: Lobby) {
 }
 
 function handleQuestionAnswerState(lobby: Lobby) {
-  const host = getWSClientById(lobby.host.id)
-
-  if (!host) {
-    deleteLobby(lobby.host)
-    return
-  }
-
+  if (lobby.answerTimeout) clearTimeout(lobby.answerTimeout)
   lobby.answers = []
-
-  const payload: LobbyStatusUpdatePayload = {
-    status: LobbyStatus.answer
-  }
-
-  sendEvent(host, 'lobbyStatusUpdate', payload)
-
-  lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStatusUpdate', payload)
-  })
+  lobby.answerTimestamp = Date.now()
 
   const quiz = lobby.quiz
   const question = quiz.questions[lobby.currentQuestionIndex]
 
-  if (lobby.answerTimeout) clearTimeout(lobby.answerTimeout)
-
-  lobby.answerTimeout = null
-  lobby.answerTimestamp = null
-
-  const curQuestion = lobby.currentQuestionIndex
-
-  lobby.answerTimestamp = Date.now()
   lobby.answerTimeout = setTimeout(() => {
-    if (curQuestion !== lobby.currentQuestionIndex) return
     handleAnswersState(lobby)
   }, question.timeLimit * 1000)
+
+  const status = updateLobbyStatus(lobby.code, LobbyStatus.answer)
+
+  if (status instanceof Error) {
+    clearTimeout(lobby.answerTimeout)
+    deleteLobby(lobby.host, status.message)
+    return
+  }
 }
 
 function handleAnswersState(lobby: Lobby) {
-  const host = getWSClientById(lobby.host.id)
+  if (lobby.status !== LobbyStatus.answer) return
 
-  if (!host) {
-    deleteLobby(lobby.host)
+  const status = updateLobbyStatus(lobby.code, LobbyStatus.answers)
+
+  if (status instanceof Error) {
+    deleteLobby(lobby.host, status.message)
     return
   }
-
-  const payload: LobbyStatusUpdatePayload = {
-    status: LobbyStatus.answers
-  }
-
-  sendEvent(host, 'lobbyStatusUpdate', payload)
-
-  lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStatusUpdate', payload)
-  })
 
   setTimeout(() => {
     if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
@@ -106,17 +62,20 @@ function handleAnswersState(lobby: Lobby) {
     } else {
       handleScoreState(lobby)
     }
-  }, lobby.quiz.scoreTimeout * 1000)
+  }, lobby.quiz.answersTimeout * 1000)
 }
 
 function handleScoreState(lobby: Lobby) {
-  const host = getWSClientById(lobby.host.id)
+  if (lobby.status !== LobbyStatus.answers) return
 
-  if (!host) {
-    deleteLobby(lobby.host)
+  const status = updateLobbyStatus(lobby.code, LobbyStatus.score)
+
+  if (status instanceof Error) {
+    deleteLobby(lobby.host, status.message)
     return
   }
 
+  // Calculate score and update it
   // TODO: Optimize these
   lobby.answers.forEach((answer) => {
     lobby.players.forEach((p) => {
@@ -124,16 +83,6 @@ function handleScoreState(lobby: Lobby) {
         updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
       }
     })
-  })
-
-  const payload: LobbyStatusUpdatePayload = {
-    status: LobbyStatus.score
-  }
-
-  sendEvent(host, 'lobbyStatusUpdate', payload)
-
-  lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStatusUpdate', payload)
   })
 
   setTimeout(() => {
@@ -144,29 +93,23 @@ function handleScoreState(lobby: Lobby) {
 }
 
 function handleEndState(lobby: Lobby) {
-  const host = getWSClientById(lobby.host.id)
+  if (lobby.status !== LobbyStatus.answers) return
 
-  if (!host) {
-    deleteLobby(lobby.host)
+  const status = updateLobbyStatus(lobby.code, LobbyStatus.end)
+
+  if (status instanceof Error) {
+    deleteLobby(lobby.host, status.message)
     return
   }
 
+  // Calculate score and update it
+  // TODO: Optimize these
   lobby.answers.forEach((answer) => {
     lobby.players.forEach((p) => {
       if (p.client.id === answer.playerId) {
         updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
       }
     })
-  })
-
-  const payload: LobbyStatusUpdatePayload = {
-    status: LobbyStatus.end
-  }
-
-  sendEvent(host, 'lobbyStatusUpdate', payload)
-
-  lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyStatusUpdate', payload)
   })
 
   setTimeout(() => {
@@ -190,6 +133,14 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
   if (!lobby) {
     sendEvent(client, 'submitAnswerError', {
       message: 'No lobby found',
+    })
+
+    return
+  }
+
+  if (lobby.status !== LobbyStatus.answer) {
+    sendEvent(client, 'submitAnswerError', {
+      message: 'Lobby is not in answer state',
     })
 
     return

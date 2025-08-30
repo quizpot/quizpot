@@ -64,9 +64,9 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
       })
     })
 
-    const unsubscribeLobbyDeleted = onEvent('lobbyDeleted', () => {
+    const unsubscribeLobbyDeleted = onEvent('lobbyDeleted', (ctx) => {
       sessionStorage.setItem('messageTitle', 'Lobby Deleted')
-      sessionStorage.setItem('messageDescription', 'The host disconnected.')
+      sessionStorage.setItem('messageDescription', ctx.reason)
       redirect('/message')
     })
 

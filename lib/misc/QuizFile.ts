@@ -7,6 +7,7 @@ export type QuizFile = {
   language: string
   questions: Question[]
   scoreTimeout: number
+  answersTimeout: number
 }
 
 export type QuizTheme = {

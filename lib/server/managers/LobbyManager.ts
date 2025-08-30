@@ -7,6 +7,8 @@ import { startGame } from "../handlers/GameHandler"
 import { LobbyStatus } from "@/lib/misc/LobbyStatus"
 import { devLog } from "@/lib/misc/Log"
 import { log } from "console"
+import { LobbyStatusUpdatePayload } from "../ServerEvents"
+import { sanitizeQuestion } from "@/lib/misc/QuestionSanitizer"
 
 export interface Lobby {
   code: number
@@ -125,9 +127,11 @@ export const deleteLobby = (host: WebSocketClient, reason?: string): true | Erro
   if (!lobby) return new Error("Lobby not found")
 
   lobby.players.forEach(player => {
-    sendEvent(player.client, 'lobbyDeleted', { reason })
+    sendEvent(player.client, 'lobbyDeleted', { reason: reason || 'Unknown reason' })
     getPlayerLobbyMap().delete(player.client.id)
   })
+
+  sendEvent(host, 'lobbyDeleted', { reason: reason || 'Unknown reason' })
   
   getLobbies().delete(lobby.code)
   getHostLobbyMap().delete(host.id)
@@ -187,7 +191,14 @@ export const leaveLobby = (player: WebSocketClient): true | Error => {
   const playerIndex = lobby.players.findIndex(p => p.client.id === player.id)
   const leavingPlayer = lobby.players[playerIndex]
 
-  const payload = { player: { id: leavingPlayer.client.id, name: leavingPlayer.name } }
+  const payload = { 
+    player: { 
+      id: leavingPlayer.client.id, 
+      name: leavingPlayer.name, 
+      score: leavingPlayer.score,
+      streak: leavingPlayer.streak,
+    } 
+  }
 
   if (playerIndex > -1) {
     lobby.players.splice(playerIndex, 1)
@@ -266,6 +277,7 @@ export const updatePlayerScore = (code: number, playerId: string, score: number)
       id: player.client.id,
       name: player.name,
       score: player.score,
+      streak: player.streak,
     },
   }
 
@@ -273,6 +285,39 @@ export const updatePlayerScore = (code: number, playerId: string, score: number)
   sendEvent(lobby.host, 'playerScoreUpdate', payload)
 
   return true
+}
+
+export const updateLobbyStatus = (code: number, status: LobbyStatus): LobbyStatus | Error => {
+  const lobby = getLobbyByCode(code)
+
+  if (!lobby) return new Error("Lobby not found")
+
+  lobby.status = status
+
+  let payload: LobbyStatusUpdatePayload
+
+  if (status === LobbyStatus.question) {
+    const sanitizedQuestion = sanitizeQuestion(lobby.quiz.questions[lobby.currentQuestionIndex])
+
+    if (sanitizedQuestion instanceof Error) return sanitizedQuestion
+
+    payload = {
+      status: LobbyStatus.question,
+      sanitizedQuestion: sanitizedQuestion,
+    }
+  } else {
+    payload = {
+      status: status,
+    }
+  }
+
+  sendEvent(lobby.host, 'lobbyStatusUpdate', payload)
+
+  lobby.players.forEach(player => {
+    sendEvent(player.client, 'lobbyStatusUpdate', payload)
+  })
+
+  return status
 }
 
 // export const updateQuestionIndex = (lobbyCode: number, index: number): true | Error => {

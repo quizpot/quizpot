@@ -5,6 +5,7 @@ import { Answer } from '@/lib/server/managers/LobbyManager'
 import { LobbyStatus } from '@/lib/misc/LobbyStatus'
 import { PlayerState } from '@/lib/misc/PlayerState'
 import { SanitizedQuestion } from '@/lib/misc/QuestionSanitizer'
+import { redirect } from 'next/navigation'
 
 export interface HostLobbyState {
   code: number
@@ -94,12 +95,19 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
       })
     })
 
+    const unsubscribeLobbyDeleted = onEvent('lobbyDeleted', (ctx) => {
+      sessionStorage.setItem('messageTitle', 'Lobby Deleted')
+      sessionStorage.setItem('messageDescription', ctx.reason)
+      redirect('/message')
+    })
+
     return () => {
       unsubscribePlayerJoined()
       unsubscribePlayerLeft()
       unsubscribePlayerScoreUpdate()
       unsubscribeUpdateLobbyAnswers()
       unsubscribeLobbyStatusUpdate()
+      unsubscribeLobbyDeleted()
     }
   }, [isConnected, onEvent])
 

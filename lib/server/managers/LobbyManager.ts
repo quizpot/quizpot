@@ -281,8 +281,8 @@ export const updatePlayerScore = (code: number, playerId: string, score: number)
     },
   }
 
-  sendEvent(player.client, 'playerScoreUpdate', payload)
-  sendEvent(lobby.host, 'playerScoreUpdate', payload)
+  sendEvent(player.client, 'playerUpdate', payload)
+  sendEvent(lobby.host, 'playerUpdate', payload)
 
   return true
 }

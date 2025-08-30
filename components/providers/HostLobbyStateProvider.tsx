@@ -51,7 +51,7 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
       })
     })
 
-    const unsubscribePlayerScoreUpdate = onEvent('playerUpdate', (ctx) => {
+    const unsubscribePlayerUpdate = onEvent('playerUpdate', (ctx) => {
       setHostLobbyState(prevHostLobbyState => {
         if (!prevHostLobbyState) return null
 
@@ -104,7 +104,7 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
     return () => {
       unsubscribePlayerJoined()
       unsubscribePlayerLeft()
-      unsubscribePlayerScoreUpdate()
+      unsubscribePlayerUpdate()
       unsubscribeUpdateLobbyAnswers()
       unsubscribeLobbyStatusUpdate()
       unsubscribeLobbyDeleted()

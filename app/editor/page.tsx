@@ -29,6 +29,8 @@ const EditorPage = () => {
       color5: "#ff00ff",
       color6: "#770077"
     },
+    answersTimeout: 3,
+    scoreTimeout: 3,
     questions: [
       {
         questionType: 'multipleChoice',

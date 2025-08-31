@@ -13,6 +13,7 @@ export interface PlayerLobbyState {
   currentQuestion?: SanitizedQuestion
   currentQuestionNumber: number
   totalQuestions: number
+  correctAnswer: boolean
 }
 
 const PlayerLobbyStateContext = createContext<{
@@ -40,6 +41,17 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
         return {
           ...prevPlayerLobbyState,
           player: ctx.player
+        }
+      })
+    })
+
+    const unsubscribeCorrectAnswerUpdate = onEvent('correctAnswerUpdate', (ctx) => {
+      setPlayerLobbyState(prevPlayerLobbyState => {
+        if (!prevPlayerLobbyState) return null
+
+        return {
+          ...prevPlayerLobbyState,
+          correctAnswer: ctx.correctAnswer
         }
       })
     })
@@ -75,6 +87,7 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
       unsubscribeLobbyDeleted()
       unsubscribeLobbyStatusUpdate()
       unsubscribePlayerKicked()
+      unsubscribeCorrectAnswerUpdate()
     }
   }, [isConnected, onEvent])
 

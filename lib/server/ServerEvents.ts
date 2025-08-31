@@ -25,6 +25,7 @@ export interface ServerEvents {
   'lobbyJoinError': ErrorPayload
   'submitAnswerError': ErrorPayload
   'playerScoreUpdate': PlayerScoreUpdatePayload
+  'correctAnswerUpdate': CorrectAnswerUpdatePayload
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -79,4 +80,8 @@ interface LobbyJoinedPayload {
 
 interface PlayerScoreUpdatePayload {
   player: PlayerState
+}
+
+interface CorrectAnswerUpdatePayload {
+  correctAnswer: boolean
 }

@@ -1,10 +1,11 @@
 import React from 'react'
 import { PlayerLobbyState } from '../providers/PlayerLobbyStateProvider'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const AnswersPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   return (
-    <div>AnswersPage</div>
+    <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>
+      <p>{ playerLobbyState.correctAnswer ? 'Correct' : 'Incorrect' }</p>
+    </section>
   )
 }
 

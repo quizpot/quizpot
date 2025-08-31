@@ -52,6 +52,7 @@ export function handleJoinLobby({ client, ctx }: HandlerContext) {
       },
       currentQuestionNumber: 0,
       totalQuestions: lobby.quiz.questions.length,
+      correctAnswer: false
     }
   }
 

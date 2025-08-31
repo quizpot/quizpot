@@ -4,6 +4,7 @@ import { HandlerContext } from "./HandlerContext"
 import { validateAnswer } from "@/lib/misc/AnswerValidator"
 import { calculateScore } from "@/lib/misc/ScoreCalculator"
 import { LobbyStatus } from "@/lib/misc/LobbyStatus"
+import { getWSClientById } from "../managers/WSClientManager"
 
 export function startGame(lobby: Lobby) {
   handleDisplayQuestionState(lobby)
@@ -56,6 +57,14 @@ function handleAnswersState(lobby: Lobby) {
     return
   }
 
+  lobby.answers.forEach((answer) => {
+    const player = getWSClientById(answer.playerId)
+
+    if (!player) return
+
+    sendEvent(player, 'correctAnswerUpdate', { correctAnswer: answer.isCorrect })
+  })
+
   setTimeout(() => {
     if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
       handleEndState(lobby)
@@ -78,11 +87,11 @@ function handleScoreState(lobby: Lobby) {
   // Calculate score and update it
   // TODO: Optimize these
   lobby.answers.forEach((answer) => {
-    lobby.players.forEach((p) => {
-      if (p.client.id === answer.playerId) {
-        updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
-      }
-    })
+    const p = lobby.players.find(player => player.client.id === answer.playerId)
+
+    if (!p) return
+
+    updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
   })
 
   setTimeout(() => {
@@ -105,11 +114,11 @@ function handleEndState(lobby: Lobby) {
   // Calculate score and update it
   // TODO: Optimize these
   lobby.answers.forEach((answer) => {
-    lobby.players.forEach((p) => {
-      if (p.client.id === answer.playerId) {
-        updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
-      }
-    })
+    const p = lobby.players.find(player => player.client.id === answer.playerId)
+
+    if (!p) return
+
+    updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
   })
 
   setTimeout(() => {

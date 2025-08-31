@@ -1,5 +1,5 @@
 import React from 'react'
-import { HostLobbyState } from '../providers/HostLobbyStateProvider'
+import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 
 const EndPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   return (

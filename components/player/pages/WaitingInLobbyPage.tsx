@@ -1,6 +1,6 @@
 import React from 'react'
-import Button from '../ui/Button'
-import { PlayerLobbyState } from '../providers/PlayerLobbyStateProvider'
+import Button from '../../ui/Button'
+import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 
 const WaitingInLobbyPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   if (!playerLobbyState) {

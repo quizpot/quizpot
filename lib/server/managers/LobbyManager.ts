@@ -271,6 +271,8 @@ export const updatePlayerScore = (code: number, playerId: string, score: number)
   if (!player) return new Error("Player not found")
 
   player.score = score
+  
+  lobby.players.sort((a, b) => b.score - a.score)
 
   const payload = {
     player: {

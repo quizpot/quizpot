@@ -1,16 +1,16 @@
 "use client"
-import AnswerPage from '@/components/player/AnswerPage'
-import QuestionPage from '@/components/player/QuestionPage'
-import SetNamePage from '@/components/player/SetNamePage'
-import WaitingInLobbyPage from '@/components/player/WaitingInLobbyPage'
+import AnswerPage from '@/components/player/pages/AnswerPage'
+import QuestionPage from '@/components/player/pages/QuestionPage'
+import SetNamePage from '@/components/player/pages/SetNamePage'
+import WaitingInLobbyPage from '@/components/player/pages/WaitingInLobbyPage'
 import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import { useSearchParams } from 'next/navigation'
 import React from 'react'
-import ScorePage from '@/components/player/ScorePage'
-import EndPage from '@/components/player/EndPage'
+import ScorePage from '@/components/player/pages/ScorePage'
+import EndPage from '@/components/player/pages/EndPage'
 import Button from '@/components/ui/Button'
-import AnswersPage from '@/components/player/AnswersPage'
-import SetCodePage from '@/components/player/SetCodePage'
+import AnswersPage from '@/components/player/pages/AnswersPage'
+import SetCodePage from '@/components/player/pages/SetCodePage'
 
 const PlayPage = () => {
   const queryCode = useSearchParams().get('code')
@@ -21,7 +21,7 @@ const PlayPage = () => {
     parsedCode = parseInt(queryCode)
   }
 
-  if (!queryCode) {
+  if (!queryCode || !parsedCode || isNaN(parsedCode)) {
     return <SetCodePage />
   }
 

@@ -55,11 +55,15 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
       setHostLobbyState(prevHostLobbyState => {
         if (!prevHostLobbyState) return null
 
+        const players = prevHostLobbyState.players.map(player => 
+          player.id === ctx.player.id ? { ...ctx.player } : player
+        )
+
+        players.sort((a, b) => b.score - a.score)
+
         return {
           ...prevHostLobbyState,
-          players: prevHostLobbyState.players.map(player => 
-            player.id === ctx.player.id ? { ...ctx.player } : player
-          )
+          players: players
         }
       })
     })

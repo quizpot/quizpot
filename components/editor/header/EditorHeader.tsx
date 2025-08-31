@@ -7,12 +7,14 @@ import TextAreaInput from '@/components/ui/TextAreaInput'
 import TextInput from '@/components/ui/TextInput'
 import React, { useContext, useState } from 'react'
 import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
+import { redirect } from 'next/navigation'
+import { randomUUID } from 'crypto'
 
 /** TODO:
  * enhance settings menu
  */
 
-const EditorHeader = () => {
+const EditorHeader = ({ quizId }: { quizId: string }) => {
   const quizFileContext = useContext(EditorQuizFileContext)
 
   if (!quizFileContext) {
@@ -180,13 +182,21 @@ const EditorHeader = () => {
             Exit
           </Button>
           <Button onClick={() => {
+            if (quizId === 'new') {
+              // TODO randomUUID doesnt work here
+              const newQuizId = randomUUID()
+              localStorage.setItem('quiz:' + newQuizId, JSON.stringify(quizFileContext.quizFile))
+              redirect(`/quizzes`)
+            } else {
+              localStorage.setItem('quiz:' + quizId, JSON.stringify(quizFileContext.quizFile))
+            }
             /** modal with local storage save or file export */
-            const a = document.createElement("a");
-            const jsonString = JSON.stringify(quizFileContext.quizFile, null, 2);
-            const file = new Blob([jsonString], {type: 'text/json'});
-            a.href = URL.createObjectURL(file);
-            a.download = quizFileContext.quizFile.title + '.qp';
-            a.click();
+            // const a = document.createElement("a");
+            // const jsonString = JSON.stringify(quizFileContext.quizFile, null, 2);
+            // const file = new Blob([jsonString], {type: 'text/json'});
+            // a.href = URL.createObjectURL(file);
+            // a.download = quizFileContext.quizFile.title + '.qp';
+            // a.click();
           }} variant="primary">
             Save
           </Button>

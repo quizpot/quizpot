@@ -1,5 +1,5 @@
 import React from 'react'
-import { PlayerLobbyState } from '../providers/PlayerLobbyStateProvider'
+import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 
 const AnswersPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   return (

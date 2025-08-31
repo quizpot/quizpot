@@ -1,7 +1,7 @@
 import React from 'react'
-import { PlayerLobbyState } from '../providers/PlayerLobbyStateProvider'
-import Button from '../ui/Button'
-import { useWebSocket } from '../providers/WebSocketProvider'
+import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
+import Button from '../../ui/Button'
+import { useWebSocket } from '../../providers/WebSocketProvider'
 
 const AnswerPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   const { sendEvent } = useWebSocket()

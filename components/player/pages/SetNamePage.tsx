@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import TextInput from '../ui/TextInput'
-import Button from '../ui/Button'
-import { useToast } from '../ui/Toaster'
-import { useWebSocket } from '../providers/WebSocketProvider'
-import { usePlayerLobbyState } from '../providers/PlayerLobbyStateProvider'
+import TextInput from '../../ui/TextInput'
+import Button from '../../ui/Button'
+import { useToast } from '../../ui/Toaster'
+import { useWebSocket } from '../../providers/WebSocketProvider'
+import { usePlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 
 const SetNamePage = ({ queryCode }: { queryCode: number }) => {
   const addToast = useToast()

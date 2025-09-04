@@ -46,7 +46,7 @@ export function handleJoinLobby({ client, ctx }: HandlerContext) {
       status: LobbyStatus.waiting,
       player: {
         id: client.id,
-        name: name,
+        name: res,
         score: 0,
         streak: 0,
       },

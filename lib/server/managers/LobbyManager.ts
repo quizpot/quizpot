@@ -141,7 +141,7 @@ export const deleteLobby = (host: WebSocketClient, reason?: string): true | Erro
   return true
 }
 
-export const joinLobby = (code: number, name: string | null, player: WebSocketClient): true | Error => {
+export const joinLobby = (code: number, name: string | null, player: WebSocketClient): string | Error => {
   if (getHostLobbyMap().has(player.id)) {
     return new Error("You are hosting a lobby")
   }
@@ -180,7 +180,7 @@ export const joinLobby = (code: number, name: string | null, player: WebSocketCl
   
   getPlayerLobbyMap().set(player.id, lobby)
 
-  return true
+  return name
 }
 
 export const leaveLobby = (player: WebSocketClient): true | Error => {

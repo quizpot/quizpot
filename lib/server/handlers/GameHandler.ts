@@ -96,12 +96,6 @@ function handleScoreState(lobby: Lobby) {
 
     updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
   })
-
-  setTimeout(() => {
-    lobby.currentQuestionIndex = lobby.currentQuestionIndex + 1
-
-    handleDisplayQuestionState(lobby)
-  }, lobby.quiz.scoreTimeout * 1000)
 }
 
 function handleEndState(lobby: Lobby) {
@@ -229,7 +223,8 @@ export const handleNextQuestion = ({ client }: HandlerContext) => {
 
   const skippableStates = [
     // LobbyStatus.slide, 
-    LobbyStatus.answers
+    LobbyStatus.answers,
+    LobbyStatus.score
   ]
 
   if (!skippableStates.includes(lobby.status)) {
@@ -250,6 +245,11 @@ export const handleNextQuestion = ({ client }: HandlerContext) => {
       } else {
         handleScoreState(lobby)
       }
+      break
+    case LobbyStatus.score:
+      lobby.currentQuestionIndex = lobby.currentQuestionIndex + 1
+
+      handleDisplayQuestionState(lobby)
       break
     default:
       deleteLobby(lobby.host, 'Unknown state to skip: ' + lobby.status)

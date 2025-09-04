@@ -5,7 +5,7 @@ import EndPage from '@/components/host/pages/EndPage'
 import LobbyWaitingPage from '@/components/host/pages/LobbyWaitingPage'
 import HostQuizPage from '@/components/host/pages/HostQuizPage'
 import QuestionPage from '@/components/host/pages/QuestionPage'
-import ScorePage from '@/components/host/pages/ScorePage'
+import ScoreboardPage from '@/components/host/pages/ScoreboardPage'
 import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
 import Button from '@/components/ui/Button'
 import React from 'react'
@@ -34,7 +34,7 @@ const HostPage = () => {
   }
 
   if (hostLobbyState.status === 'score') {
-    return <ScorePage hostLobbyState={ hostLobbyState } />
+    return <ScoreboardPage hostLobbyState={ hostLobbyState } />
   }
 
   if (hostLobbyState.status === 'end') {

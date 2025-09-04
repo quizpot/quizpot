@@ -39,6 +39,11 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
       }
 
       setQuiz(quizFile)
+
+      setTimeout(() => {
+        addToast({ message: 'Quiz automatically saved', type: 'success' })
+        localStorage.setItem('quiz:' + quizId, JSON.stringify(quizFile))
+      }, 1000 * 30)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (ignored) {
       addToast({ message: 'Invalid quiz file', type: 'error' })
@@ -46,10 +51,23 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
     }
   }, [addToast, quizId])
 
+  useEffect(() => {
+    const autoSaveHandler = setTimeout(() => {
+      if (quizId && quizId !== 'new' && quiz) {
+        localStorage.setItem('quiz:' + quizId, JSON.stringify(quiz))
+        addToast({ message: 'Quiz automatically saved', type: 'success' })
+      }
+    }, 3000)
+
+    return () => {
+      clearTimeout(autoSaveHandler)
+    }
+  }, [quiz, quizId, addToast])
+
   return (
     <>
       <div className='lg:hidden flex flex-col items-center justify-center gap-4 h-screen w-full'>
-        <h1 className='text-2xl'>Screen size not yet supported</h1>
+        <h1 className='text-2xl'>Screen size not supported</h1>
         <Button href='/' variant='secondary'>
           Home
         </Button>

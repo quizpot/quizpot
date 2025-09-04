@@ -1,5 +1,5 @@
 import { sendEvent } from "../managers/EventManager"
-import { Answer, deleteLobby, getLobbyByPlayerId, Lobby, updateLobbyStatus, updatePlayerScore } from "../managers/LobbyManager"
+import { Answer, deleteLobby, getLobbyByHostId, getLobbyByPlayerId, Lobby, updateLobbyStatus, updatePlayerScore } from "../managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
 import { validateAnswer } from "@/lib/misc/AnswerValidator"
 import { calculateScore } from "@/lib/misc/ScoreCalculator"
@@ -11,19 +11,19 @@ export function startGame(lobby: Lobby) {
 }
 
 function handleDisplayQuestionState(lobby: Lobby) {
-  const status = updateLobbyStatus(lobby.code, LobbyStatus.question)
+  const quiz = lobby.quiz
+  const question = quiz.questions[lobby.currentQuestionIndex]
+  const timeout = question.questionDisplayTime * 1000
+  const status = updateLobbyStatus(lobby.code, LobbyStatus.question, timeout)
 
   if (status instanceof Error) {
     deleteLobby(lobby.host, status.message)
     return
   }
 
-  const quiz = lobby.quiz
-  const question = quiz.questions[lobby.currentQuestionIndex]
-
   setTimeout(() => {
     handleQuestionAnswerState(lobby)
-  }, question.questionDisplayTime * 1000)
+  }, timeout)
 }
 
 function handleQuestionAnswerState(lobby: Lobby) {
@@ -65,13 +65,15 @@ function handleAnswersState(lobby: Lobby) {
     sendEvent(player, 'correctAnswerUpdate', { correctAnswer: answer.isCorrect })
   })
 
-  setTimeout(() => {
-    if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
-      handleEndState(lobby)
-    } else {
-      handleScoreState(lobby)
-    }
-  }, lobby.quiz.answersTimeout * 1000)
+  // Wait for host to send next question
+
+  // setTimeout(() => {
+  //   if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
+  //     handleEndState(lobby)
+  //   } else {
+  //     handleScoreState(lobby)
+  //   }
+  // }, lobby.quiz.answersTimeout * 1000)
 }
 
 function handleScoreState(lobby: Lobby) {
@@ -210,5 +212,46 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
   if (lobby.answers.length === lobby.players.length) {
     clearTimeout(lobby.answerTimeout)
     handleAnswersState(lobby)
+  }
+}
+
+export const handleNextQuestion = ({ client }: HandlerContext) => {
+  const lobby = getLobbyByHostId(client.id)
+
+  if (!lobby) {
+    sendEvent(client, 'nextQuestionError', {
+      message: 'No lobby found',
+    })
+
+    return
+  }
+
+  const skippableStates = [
+    // LobbyStatus.slide, 
+    LobbyStatus.answers
+  ]
+
+  if (!skippableStates.includes(lobby.status)) {
+    sendEvent(client, 'nextQuestionError', {
+      message: 'Unable to skip in this state',
+    })
+
+    return
+  }
+
+  switch (lobby.status) {
+    // case LobbyStatus.slide:
+    //   handleSlideState(lobby)
+    //   break
+    case LobbyStatus.answers:
+      if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
+        handleEndState(lobby)
+      } else {
+        handleScoreState(lobby)
+      }
+      break
+    default:
+      deleteLobby(lobby.host, 'Unknown state to skip: ' + lobby.status)
+      break
   }
 }

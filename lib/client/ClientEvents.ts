@@ -11,6 +11,7 @@ export interface ClientEvents {
   'playerKick': PlayerKickPayload
   'startLobby': EmptyPayload
   'submitAnswer': SubmitAnswerPayload
+  'nextQuestion': EmptyPayload
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type

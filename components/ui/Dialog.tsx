@@ -1,6 +1,6 @@
 "use client"
 import React, { createContext, useContext, useEffect } from 'react'
-import Button from './Button'
+import Button, { ButtonVariant } from './Button'
 
 export const DialogContext = createContext<{
   opened: boolean
@@ -19,12 +19,12 @@ export const Dialog = ({ children }: { children: React.ReactNode }) => {
 }
 
 // Component that triggers the dialog
-export const DialogTrigger = ({ children }: { children: React.ReactNode }) => {
+export const DialogTrigger = ({ children, variant }: { children: React.ReactNode, variant?: ButtonVariant }) => {
   const context = useContext(DialogContext)
   if (!context) throw new Error("DialogTrigger must be used within a Dialog")
 
   return (
-    <Button variant="secondary" onClick={() => context.setOpened(!context.opened)}>
+    <Button variant={ variant || 'green'} onClick={() => context.setOpened(!context.opened)}>
       { children }
     </Button>
   )
@@ -57,7 +57,7 @@ export const DialogContent = ({ children }: { children: React.ReactNode }) => {
         onClick={() => { context.setOpened(false) }}
       >
         <div 
-          className='bg-white w-[800px] h-[600px] rounded-lg shadow z-30 flex flex-col'
+          className='bg-white rounded-lg shadow z-30 flex flex-col'
           onClick={(e) => e.stopPropagation()}
         >
           { children }
@@ -72,7 +72,7 @@ export const DialogHeader = ({ title }: { title: string }) => {
   if (!context) throw new Error("DialogHeader must be used within a Dialog")
 
   return (
-    <header className='p-2 shadow flex justify-between items-center'>
+    <header className='p-2 shadow flex gap-4 justify-between items-center'>
       <h1 className='ml-2 text-xl font-semibold'>
         { title }
       </h1>

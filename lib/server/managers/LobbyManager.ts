@@ -289,7 +289,7 @@ export const updatePlayerScore = (code: number, playerId: string, score: number)
   return true
 }
 
-export const updateLobbyStatus = (code: number, status: LobbyStatus): LobbyStatus | Error => {
+export const updateLobbyStatus = (code: number, status: LobbyStatus, timeout?: number): LobbyStatus | Error => {
   const lobby = getLobbyByCode(code)
 
   if (!lobby) return new Error("Lobby not found")
@@ -306,10 +306,12 @@ export const updateLobbyStatus = (code: number, status: LobbyStatus): LobbyStatu
     payload = {
       status: LobbyStatus.question,
       sanitizedQuestion: sanitizedQuestion,
+      timeout: timeout,
     }
   } else {
     payload = {
       status: status,
+      timeout: timeout,
     }
   }
 

@@ -6,6 +6,7 @@ import { LobbyStatus } from '@/lib/misc/LobbyStatus'
 import { PlayerState } from '@/lib/misc/PlayerState'
 import { SanitizedQuestion } from '@/lib/misc/QuestionSanitizer'
 import { redirect } from 'next/navigation'
+import { QuizTheme } from '@/lib/misc/QuizFile'
 
 export interface HostLobbyState {
   code: number
@@ -15,6 +16,8 @@ export interface HostLobbyState {
   currentQuestionNumber: number
   totalQuestions: number
   answers: Answer[]
+  theme: QuizTheme
+  timeout?: number
 }
 
 const HostLobbyStateContext = createContext<{
@@ -78,12 +81,14 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
             status: ctx.status,
             currentQuestion: ctx.sanitizedQuestion,
             currentQuestionNumber: prevHostLobbyState.currentQuestionNumber + 1,
+            timeout: ctx.timeout,
           }
         }
 
         return {
           ...prevHostLobbyState,
           status: ctx.status,
+          timeout: ctx.timeout,
         }
       })
     })

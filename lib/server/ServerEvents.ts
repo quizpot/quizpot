@@ -26,6 +26,7 @@ export interface ServerEvents {
   'submitAnswerError': ErrorPayload
   'playerScoreUpdate': PlayerScoreUpdatePayload
   'correctAnswerUpdate': CorrectAnswerUpdatePayload
+  'nextQuestionError': ErrorPayload
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -64,10 +65,12 @@ export type LobbyStatusUpdatePayload = OtherStatusUpdatePayload | QuestionStatus
 interface QuestionStatusUpdatePayload {
   status: LobbyStatus.question
   sanitizedQuestion: SanitizedQuestion
+  timeout?: number
 }
 
 interface OtherStatusUpdatePayload {
   status: Exclude<LobbyStatus, LobbyStatus.question>
+  timeout?: number
 }
 
 interface UpdateLobbyAnswersPayload {

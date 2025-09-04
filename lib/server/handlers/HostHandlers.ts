@@ -35,6 +35,7 @@ export function handleCreateLobby({ client, ctx }: HandlerContext) {
       answers: [],
       currentQuestionNumber: 0,
       totalQuestions: lobby.quiz.questions.length,
+      theme: lobby.quiz.theme,
     }
   })
 }

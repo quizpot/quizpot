@@ -33,12 +33,13 @@ function handleQuestionAnswerState(lobby: Lobby) {
 
   const quiz = lobby.quiz
   const question = quiz.questions[lobby.currentQuestionIndex]
+  const timeout = question.timeLimit * 1000
 
   lobby.answerTimeout = setTimeout(() => {
     handleAnswersState(lobby)
-  }, question.timeLimit * 1000)
+  }, timeout)
 
-  const status = updateLobbyStatus(lobby.code, LobbyStatus.answer)
+  const status = updateLobbyStatus(lobby.code, LobbyStatus.answer, timeout)
 
   if (status instanceof Error) {
     clearTimeout(lobby.answerTimeout)

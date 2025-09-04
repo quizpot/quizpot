@@ -30,6 +30,14 @@ const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) =>
     return () => clearInterval(interval)
   }, [hostLobbyState.timeout])
 
+  let question: string
+
+  if (!hostLobbyState.currentQuestion?.question) {
+    question = "Missing question"
+  } else {
+    question = hostLobbyState.currentQuestion.question
+  }
+
   return (
     <section 
       className='flex flex-col gap-4 justify-between h-screen w-full'
@@ -43,8 +51,9 @@ const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) =>
         }
       }
     >
-      <p className='absolute right-4 top-4 rounded-full p-4 text-4xl text-black bg-white'>{ hostLobbyState.currentQuestionNumber } of { hostLobbyState.totalQuestions }</p>
-      <h1 className='text-4xl font-semibold bg-white text-black p-4 w-full'>{ hostLobbyState.currentQuestion?.question }</h1>
+      <p className='absolute right-4 top-4 rounded-full p-4 px-6 text-2xl font-semibold text-black bg-white'>{ hostLobbyState.currentQuestionNumber } of { hostLobbyState.totalQuestions }</p>
+      <div></div> {/** To center the question */}
+      <h1 className='text-center text-4xl font-semibold bg-white text-black p-4 w-full'>{ question }</h1>
       <div className='p-4'>
         <div 
           className='bg-green-500 p-2 rounded-full'

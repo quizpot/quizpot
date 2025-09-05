@@ -4,6 +4,7 @@ import { LobbyStatus } from "../misc/LobbyStatus"
 import { SanitizedQuestion } from "../misc/QuestionSanitizer"
 import { Answer } from "./managers/LobbyManager"
 import { PlayerLobbyState } from "@/components/providers/PlayerLobbyStateProvider"
+import { Question } from "../misc/QuizFile"
 
 /**
  * Events that the server can emit to the client.
@@ -64,6 +65,7 @@ export type LobbyStatusUpdatePayload = OtherStatusUpdatePayload | QuestionStatus
 
 interface QuestionStatusUpdatePayload {
   status: LobbyStatus.question
+  currentQuestion?: Question
   sanitizedQuestion: SanitizedQuestion
   timeout?: number
 }

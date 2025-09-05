@@ -8,6 +8,7 @@ import { useToast } from '../../ui/Toaster'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 
 const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
+  const backgroundIsImage = hostLobbyState.theme.background.startsWith('data:image/')
   const addToast = useToast()
   const { sendEvent, onEvent } = useWebSocket()
 
@@ -22,7 +23,18 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
   }, [addToast, onEvent])
 
   return (
-    <section className='flex flex-col gap-4 items-center justify-between h-screen w-full p-4'>
+    <section 
+      className='flex flex-col gap-4 items-center justify-between h-screen w-full p-4'
+      style={
+        backgroundIsImage ? { 
+          backgroundImage: `url(${hostLobbyState.theme.background})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        } : { 
+          backgroundColor: hostLobbyState.theme.background
+        }
+      }
+    >
       <div className='w-full flex gap-4 justify-between'>
         <div className='flex flex-col gap-4'>
           <h1 className='text-4xl lg:text-6xl'>Lobby Code: <span className='font-semibold'>{ hostLobbyState.code }</span></h1>

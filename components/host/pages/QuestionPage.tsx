@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 
 const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
-  const backgroundIsImage = hostLobbyState.theme.background.includes('base64')
+  const backgroundIsImage = hostLobbyState.theme.background.startsWith('data:image/')
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {

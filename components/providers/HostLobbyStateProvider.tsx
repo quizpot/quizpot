@@ -6,13 +6,14 @@ import { LobbyStatus } from '@/lib/misc/LobbyStatus'
 import { PlayerState } from '@/lib/misc/PlayerState'
 import { SanitizedQuestion } from '@/lib/misc/QuestionSanitizer'
 import { redirect } from 'next/navigation'
-import { QuizTheme } from '@/lib/misc/QuizFile'
+import { Question, QuizTheme } from '@/lib/misc/QuizFile'
 
 export interface HostLobbyState {
   code: number
   status: LobbyStatus
   players: PlayerState[]
-  currentQuestion?: SanitizedQuestion
+  currentQuestion?: Question
+  sanatizedQuestion?: SanitizedQuestion
   currentQuestionNumber: number
   totalQuestions: number
   answers: Answer[]
@@ -79,7 +80,8 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
           return {
             ...prevHostLobbyState,
             status: ctx.status,
-            currentQuestion: ctx.sanitizedQuestion,
+            currentQuestion: ctx.currentQuestion,
+            sanatizedQuestion: ctx.sanitizedQuestion,
             currentQuestionNumber: prevHostLobbyState.currentQuestionNumber + 1,
             timeout: ctx.timeout,
           }

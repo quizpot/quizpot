@@ -10,12 +10,13 @@ export type QuizFile = {
 
 export type QuizTheme = {
   background: string
-  color1: string
-  color2: string
-  color3: string
-  color4: string
-  color5: string
-  color6: string
+  // Deprecated custom buttons colors, might be introduced in the future
+  // color1: string
+  // color2: string
+  // color3: string
+  // color4: string
+  // color5: string
+  // color6: string
 }
 
 export type Question = MultipleChoiceQuestion | TrueFalseQuestion | ShortAnswerQuestion
@@ -38,6 +39,7 @@ export type Choice = {
 }
 
 export type MultipleChoiceAnswer = {
+  answerType: "multipleChoice"
   choiceIndex: number
 }
 
@@ -52,6 +54,7 @@ export type TrueFalseQuestion = {
 }
 
 export type TrueFalseAnswer = {
+  answerType: "trueFalse"
   answer: boolean
 }
 
@@ -66,5 +69,6 @@ export type ShortAnswerQuestion = {
 }
 
 export type ShortAnswerAnswer = {
+  answerType: "shortAnswer"
   answer: string
 }

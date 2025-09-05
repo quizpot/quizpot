@@ -22,7 +22,7 @@ const ScoreboardPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) 
         <NextQuestionButton />
       </div>
       <h1 className='text-center text-4xl font-semibold bg-white text-black p-4 mx-auto'>Scoreboard</h1>
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-4 p-4'>
         {
           hostLobbyState.players.map((player, index) => (
             <div key={index} className='flex justify-between items-center p-4 bg-white rounded-lg text-4xl'>
@@ -33,16 +33,6 @@ const ScoreboardPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) 
         }
       </div>
       <div></div>
-    </section>
-  )
-
-  return (
-    <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>
-      {
-        hostLobbyState.players.map((player, index) => (
-          <p key={index}>{ player.name }: { player.score }</p>
-        ))
-      }
     </section>
   )
 }

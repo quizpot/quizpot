@@ -1,5 +1,5 @@
 import { sendEvent } from "../managers/EventManager"
-import { Answer, deleteLobby, getLobbyByHostId, getLobbyByPlayerId, Lobby, updateLobbyStatus, updatePlayerScore } from "../managers/LobbyManager"
+import { Answer, deleteLobby, getLobbyByHostId, getLobbyByPlayerId, Lobby, resetLobbyAnswers, updateLobbyAnswers, updateLobbyStatus, updatePlayerScore } from "../managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
 import { validateAnswer } from "@/lib/misc/AnswerValidator"
 import { calculateScore } from "@/lib/misc/ScoreCalculator"
@@ -28,7 +28,8 @@ function handleDisplayQuestionState(lobby: Lobby) {
 
 function handleQuestionAnswerState(lobby: Lobby) {
   if (lobby.answerTimeout) clearTimeout(lobby.answerTimeout)
-  lobby.answers = []
+  // Reset answers and invalidate player answers
+  resetLobbyAnswers(lobby.code)
   lobby.answerTimestamp = Date.now()
 
   const quiz = lobby.quiz
@@ -202,7 +203,7 @@ export function handleQuestionAnswer({ client, ctx }: HandlerContext) {
     })
   }
 
-  lobby.answers.push(answerObj)
+  updateLobbyAnswers(lobby.code, answerObj)
 
   if (lobby.answers.length === lobby.players.length) {
     clearTimeout(lobby.answerTimeout)

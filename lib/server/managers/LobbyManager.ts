@@ -297,6 +297,7 @@ export const updateLobbyStatus = (code: number, status: LobbyStatus, timeout?: n
   lobby.status = status
 
   let payload: LobbyStatusUpdatePayload
+  let hostPayload: LobbyStatusUpdatePayload
 
   if (status === LobbyStatus.question) {
     const sanitizedQuestion = sanitizeQuestion(lobby.quiz.questions[lobby.currentQuestionIndex])
@@ -308,14 +309,26 @@ export const updateLobbyStatus = (code: number, status: LobbyStatus, timeout?: n
       sanitizedQuestion: sanitizedQuestion,
       timeout: timeout,
     }
+
+    hostPayload = {
+      status: LobbyStatus.question,
+      currentQuestion: lobby.quiz.questions[lobby.currentQuestionIndex],
+      sanitizedQuestion: sanitizedQuestion,
+      timeout: timeout,
+    }
   } else {
     payload = {
       status: status,
       timeout: timeout,
     }
+
+    hostPayload = {
+      status: status,
+      timeout: timeout,
+    }
   }
 
-  sendEvent(lobby.host, 'lobbyStatusUpdate', payload)
+  sendEvent(lobby.host, 'lobbyStatusUpdate', hostPayload)
 
   lobby.players.forEach(player => {
     sendEvent(player.client, 'lobbyStatusUpdate', payload)
@@ -358,6 +371,26 @@ export const updateLobbyAnswers = (code: number, answer: Answer): true | Error =
   }
 
   sendEvent(lobby.host, 'updateLobbyAnswers', payload)
+
+  return true
+}
+
+export const resetLobbyAnswers = (code: number): true | Error => {
+  const lobby = getLobbyByCode(code)
+
+  if (!lobby) return new Error("Lobby not found")
+
+  lobby.answers = []
+
+  const payload = {
+    answers: [],
+  }
+
+  sendEvent(lobby.host, 'updateLobbyAnswers', payload)
+
+  lobby.players.forEach(player => {
+    sendEvent(player.client, 'correctAnswerUpdate', { correctAnswer: false })
+  })
 
   return true
 }

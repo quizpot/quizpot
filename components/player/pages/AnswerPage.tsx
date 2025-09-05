@@ -17,7 +17,10 @@ const AnswerPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }
                 <Button key={ index } onClick={ 
                   () => { 
                     sendEvent('submitAnswer', { 
-                      answer: { choiceIndex: index } 
+                      answer: { 
+                        answerType: 'multipleChoice', 
+                        choiceIndex: index 
+                      } 
                     }) 
                   } 
                 } variant='yellow'>

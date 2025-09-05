@@ -7,7 +7,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/Dialog
 const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
   return (
     <div className='bg-neutral-100 rounded-lg'>
-      <div className='w-full h-48'>
+      <div className='w-full h-48 rounded-t-lg'
+        style={{ 
+          backgroundColor: quiz.theme.background.startsWith('data:image/') ? undefined : quiz.theme.background 
+        }}
+      >
         { quiz.thumbnail && <Image src={ quiz.thumbnail } alt={ quiz.title } width={ 480/9*16 } height={ 480 } className='object-cover' /> }
       </div>
       <div className='p-4 bg-neutral-200 rounded-b-lg'>

@@ -39,11 +39,6 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
       }
 
       setQuiz(quizFile)
-
-      setTimeout(() => {
-        addToast({ message: 'Quiz automatically saved', type: 'success' })
-        localStorage.setItem('quiz:' + quizId, JSON.stringify(quizFile))
-      }, 1000 * 30)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (ignored) {
       addToast({ message: 'Invalid quiz file', type: 'error' })

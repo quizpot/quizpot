@@ -25,7 +25,7 @@ const EditorHeader = ({ quizId }: { quizId: string }) => {
       <div className='flex gap-2 items-center'>
         <div className='flex gap-1 font-semibold'>
           <QuizSettings />
-          <Button href='/' variant="blue">
+          <Button href='/quizzes' variant="blue">
             Exit
           </Button>
           <Button onClick={() => {

@@ -6,7 +6,7 @@ export function GET() {
   const headers = new Headers()
   headers.set('Connection', 'Upgrade')
   headers.set('Upgrade', 'websocket')
-  
+
   return new Response('Upgrade Required', { status: 426, headers })
 }
 
@@ -19,7 +19,7 @@ export function UPGRADE(client: WebSocketClient) {
   // Handle incoming events
   client.onmessage = (e) => {
     try {
-      const { event, ctx } = JSON.parse(e.data)
+      const { event, ctx } = JSON.parse(e.data.toString())
       emitEvent(event, { client, ctx })
     } catch (error) {
       if (process.env.NODE_ENV === 'development') {
@@ -30,7 +30,7 @@ export function UPGRADE(client: WebSocketClient) {
 
   console.log('SOCKET /api/ws New client connected, total: ' + getWSClientsSize())
 
-  return () => {
+  client.once('close', () => {
     if (getLobbyByHostId(client.id)) {
       deleteLobby(client)
     }
@@ -42,5 +42,5 @@ export function UPGRADE(client: WebSocketClient) {
     deleteWSClient(client)
 
     console.log('SOCKET /api/ws Client disconnected, remaining: ' + getWSClientsSize())
-  }
+  })
 }

@@ -1,111 +1,142 @@
 "use client"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/Dialog'
-import React, { useContext, useState } from 'react'
-import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
+import React from 'react'
 import TextInput from '@/components/ui/TextInput'
-import TextAreaInput from '@/components/ui/TextAreaInput'
 import ColorInput from '@/components/ui/ColorInput'
 import ImageInput from '@/components/ui/ImageInput'
-import Button from '@/components/ui/Button'
+import { useToast } from '@/components/ui/Toaster'
+import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 
-const QuizSettings = ({ showTitle }: { showTitle?: boolean }) => {
-  const quizFileContext = useContext(EditorQuizFileContext)
-  
-  if (!quizFileContext) {
-    throw new Error("No quiz file context found")
+const QuizSettings = () => {
+  const addToast = useToast()
+  const { quizFile, setQuizFile } = useEditorQuizFile()
+
+  const onThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
+    const files = e.target?.files
+
+    if (!files || files.length === 0) {
+      addToast({ message: 'Please select a valid file', type: 'error' })
+      return
+    }
+
+    const file = files[0]
+    
+    if (file) {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        setQuizFile({
+          ...quizFile,
+          thumbnail: reader.result as string
+        })
+        addToast({ message: 'Thumbnail updated', type: 'success' })
+      }
+
+      reader.onerror = (error) => {
+        addToast({ message: 'Error converting file to base64: ' + error, type: 'error' })
+      }
+    } else {
+      addToast({ message: 'Please select a valid file', type: 'error' })
+    }
   }
 
-  const quiz = quizFileContext.quizFile
-  const [background, setBackground] = useState<string>(quizFileContext.quizFile.theme.background)
+  const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
+    setQuizFile({
+      ...quizFile,
+      title: e.target.value
+    })
+  }
+
+  const onDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
+    setQuizFile({
+      ...quizFile,
+      description: e.target.value
+    })
+  }
+
+  const onBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
+    setQuizFile({
+      ...quizFile,
+      theme: {
+        ...quizFile.theme,
+        background: e.target.value
+      }
+    })
+  }
+
+  const onBackgroundImageChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
+    const files = e.target?.files
+
+    if (!files || files.length === 0) {
+      alert("Please select a valid file")
+      return
+    }
+
+    const file = files[0]
+    
+    if (file) {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => {
+        setQuizFile({
+          ...quizFile,
+          theme: {
+            ...quizFile.theme,
+            background: reader.result as string
+          }
+        })
+      }
+
+      reader.onerror = (error) => {
+        addToast({ message: 'Error converting file to base64: ' + error, type: 'error' })
+      }
+    } else {
+      addToast({ message: 'Please select a valid file', type: 'error' })
+    }
+  }
 
   return (
     <Dialog>
-      <div className={ showTitle ? 'text-lg font-semibold' : '' }>
-        <DialogTrigger variant='gray'>
-          { showTitle ? quiz.title : 'Settings' }
-        </DialogTrigger>
-      </div>
+      <DialogTrigger variant='gray'>
+        Settings
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader title="Quiz Settings" />
         <section className="relative flex-grow overflow-y-auto">
           <div className='w-full h-full p-4 flex flex-col gap-4'>
             <div className='flex gap-4 items-center'>
-              <h1 className='text-xl whitespace-nowrap'>Title</h1>
-              <TextInput
-                value={ quizFileContext.quizFile.title }
-                onChange={(e) => { 
-                  quizFileContext.setQuizFile({
-                    ...quizFileContext.quizFile, // ✅ Creates a new object
-                    title: e.target.value // ✅ Updates only the title
-                  })
-                }} 
+              <h1 className='mb-2 text-xl whitespace-nowrap'>Thumbnail</h1>
+              <ImageInput 
+                className='w-full' 
+                onChange={ onThumbnailChange } 
               />
             </div>
             <div className='flex gap-4 items-center'>
-              <h1 className='text-xl whitespace-nowrap'>Description</h1>
-              <TextAreaInput
-                value={ quizFileContext.quizFile.description }
-                onChange={(e) => { 
-                  quizFileContext.setQuizFile({
-                    ...quizFileContext.quizFile,
-                    description: e.target.value
-                  })
-                }} 
+              <h1 className='mb-2 text-xl whitespace-nowrap'>Title</h1>
+              <TextInput
+                className='w-full'
+                value={ quizFile.title }
+                onChange={ onTitleChange }
+              />
+            </div>
+            <div className='flex gap-4 items-center'>
+              <h1 className='mb-2 text-xl whitespace-nowrap'>Description</h1>
+              <TextInput
+                className='w-full'
+                value={ quizFile.description }
+                onChange={ onDescriptionChange } 
               />
             </div>
             <div className='flex gap-4 items-center'>
               <h1 className='text-xl whitespace-nowrap'>Background</h1>
               <ColorInput
-                value={ quizFileContext.quizFile.theme.background }
-                onChange={(e) => { 
-                  setBackground(e.target.value)
-                }} 
+                value={ quizFile.theme.background }
+                onChange={ onBackgroundChange } 
               />
               <ImageInput
-                onChange={(e) => { 
-                  const files = e.target?.files
-
-                  if (!files || files.length === 0) {
-                    alert("Please select a valid file")
-                    return
-                  }
-
-                  const file = files[0]
-                  
-                  if (file) {
-                    const reader = new FileReader()
-                    reader.readAsDataURL(file)
-                    reader.onload = () => {
-                      setBackground(reader.result as string)
-                    }
-
-                    reader.onerror = (error) => {
-                      console.error("Error converting file to base64:", error);
-                    }
-
-                    quizFileContext.setQuizFile({
-                      ...quizFileContext.quizFile,
-                      theme: {
-                        ...quizFileContext.quizFile.theme,
-                        background: e.target.value
-                      }
-                    })
-                  } else {
-                    alert("Please select a valid file")
-                  }
-                }} 
+                className='w-full'
+                onChange={ onBackgroundImageChange } 
               />
-              <Button onClick={() => {
-                quizFileContext.setQuizFile({
-                  ...quizFileContext.quizFile,
-                  theme: {
-                    ...quizFileContext.quizFile.theme,
-                    background: background
-                  }
-                })
-              }} variant="primary">
-                Apply
-              </Button>
             </div>
           </div>
         </section>

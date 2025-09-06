@@ -1,0 +1,58 @@
+import TextInput from '@/components/ui/TextInput'
+import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import React from 'react'
+import QuestionImage from '../../ui/QuestionImage'
+import QuestionChoiceAdd from './ui/QuestionChoiceAdd'
+import QuestionChoiceRemove from './ui/QuestionChoiceRemove'
+import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
+import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
+import { MultipleChoiceQuestion } from '@/lib/misc/QuizFile'
+import MultipleChoiceQuestionChoiceInput from './ui/MultipleChoiceQuestionChoiceInput'
+
+const MultipleChoiceEditor = () => {
+  const { quizFile, setQuizFile } = useEditorQuizFile()
+  const { currentQuestionIndex } = useEditorCurrentQuestion()
+  const currentQuestion = quizFile.questions[currentQuestionIndex] as MultipleChoiceQuestion
+
+  return (
+    <section className='max-h-[calc(100vh-58px)] h-[calc(100vh-58px)] w-full overflow-hidden'>
+      <div className='h-full w-full flex justify-between flex-col gap-4' style={ getBackgroundStyles(quizFile.theme.background) }>
+        <div className='p-4 shrink-0'>
+          <TextInput value={ currentQuestion.question } className='text-2xl p-4 w-full text-center' 
+            onChange={(e) => {
+              const updatedQuestions = [...quizFile.questions]
+
+              updatedQuestions[currentQuestionIndex] = {
+                ...updatedQuestions[currentQuestionIndex],
+                question: e.target.value,
+              }
+
+              setQuizFile({ ...quizFile, questions: updatedQuestions })
+            }}
+          />
+        </div>
+        <div className='flex-grow flex items-center justify-center h-full'>
+          <QuestionImage />
+        </div>
+        <div className='shrink-0'>
+          <div className='grid grid-cols-2 p-4 gap-4'>
+            {
+              currentQuestion.choices.map((choice, index) => {
+                return (
+                  <MultipleChoiceQuestionChoiceInput key={index} index={index} />
+                )
+              })
+            }
+          </div>
+          <div className='flex gap-4 items-stretch'>
+            <QuestionChoiceAdd />
+            <QuestionChoiceRemove />
+          </div>
+        </div>
+      </div>
+      {/** add a question properly editor on the side */}
+    </section>
+  )
+}
+
+export default MultipleChoiceEditor

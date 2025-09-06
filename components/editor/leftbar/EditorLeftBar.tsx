@@ -6,20 +6,16 @@ import Button from '@/components/ui/Button'
 import { Question } from '@/lib/misc/QuizFile'
 import Link from 'next/link'
 import pjson from '@/package.json'
-import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
+import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 
 const EditorLeftBar = () => {
-  const quizFileContext = useContext(EditorQuizFileContext)
-  
-  if (!quizFileContext) {
-    throw new Error("No quiz file context found")
-  }
+  const { quizFile } = useEditorQuizFile()
 
   return (
     <section className='min-w-52 w-52 h-[calc(100vh_-_56px)] flex flex-col box-border'>
       <div className='flex flex-col gap-2 overflow-y-auto h-auto'>
         {
-          quizFileContext.quizFile.questions.map((question, index) => {
+          quizFile.questions.map((question, index) => {
             return (
               <QuestionCard key={index} question={question} index={index} />
             )
@@ -93,12 +89,8 @@ const EditorLeftBar = () => {
 }
 
 const AddQuestionButton = ({ title, question }: { title: string, question: Question }) => {
-  const quizFileContext = useContext(EditorQuizFileContext)
+  const { quizFile, setQuizFile } = useEditorQuizFile()
   const dialogContext = useContext(DialogContext)
-
-  if (!quizFileContext) {
-    throw new Error("No quiz file context found")
-  }
 
   if (!dialogContext) {
     throw new Error("No dialog context found")
@@ -106,12 +98,12 @@ const AddQuestionButton = ({ title, question }: { title: string, question: Quest
 
   return (
     <Button
-      variant='secondary'
+      variant='gray'
       onClick={() => {
-        quizFileContext.setQuizFile({
-          ...quizFileContext.quizFile,
+        setQuizFile({
+          ...quizFile,
           questions: [
-            ...quizFileContext.quizFile.questions,
+            ...quizFile.questions,
             question
           ],
         })

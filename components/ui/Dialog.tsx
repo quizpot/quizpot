@@ -1,6 +1,7 @@
 "use client"
 import React, { createContext, useContext, useEffect } from 'react'
-import Button, { ButtonVariant } from './Button'
+import Button from './Button'
+import { ColorVariants } from '@/lib/misc/ColorVariants'
 
 export const DialogContext = createContext<{
   opened: boolean
@@ -19,7 +20,7 @@ export const Dialog = ({ children }: { children: React.ReactNode }) => {
 }
 
 // Component that triggers the dialog
-export const DialogTrigger = ({ children, variant }: { children: React.ReactNode, variant?: ButtonVariant }) => {
+export const DialogTrigger = ({ children, variant }: { children: React.ReactNode, variant?: ColorVariants }) => {
   const context = useContext(DialogContext)
   if (!context) throw new Error("DialogTrigger must be used within a Dialog")
 
@@ -77,7 +78,7 @@ export const DialogHeader = ({ title }: { title: string }) => {
         { title }
       </h1>
       <div className='flex gap-1'>
-        <Button onClick={() => context.setOpened(false)} variant="secondary">
+        <Button onClick={() => context.setOpened(false)} variant="gray">
           Close
         </Button>
       </div>

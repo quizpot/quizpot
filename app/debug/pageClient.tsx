@@ -38,7 +38,7 @@ const DebugPageClient = () => {
             :
             <p>Memory: Loading...</p>
         }
-        <Button href={'/'} variant='secondary' className='mt-4'>
+        <Button href={'/'} variant='gray' className='mt-4'>
           Home
         </Button>
       </div>

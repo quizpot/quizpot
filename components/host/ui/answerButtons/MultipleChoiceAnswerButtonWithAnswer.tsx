@@ -1,8 +1,9 @@
-import Button, { ButtonVariant } from '@/components/ui/Button'
+import Button from '@/components/ui/Button'
+import { ColorVariants } from '@/lib/misc/ColorVariants'
 import React from 'react'
 import { FaCheck, FaX } from 'react-icons/fa6'
 
-const MultipleChoiceAnswerButtonWithAnswer = ({ label, variant, isCorrect }: { label: string, variant: ButtonVariant, isCorrect: boolean }) => {
+const MultipleChoiceAnswerButtonWithAnswer = ({ label, variant, isCorrect }: { label: string, variant: ColorVariants, isCorrect: boolean }) => {
   return (
     <div className={ (isCorrect ? 'opacity-100' : 'opacity-60') + ' w-full h-full' }>
       <Button variant={ variant }>

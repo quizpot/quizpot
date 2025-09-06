@@ -1,74 +1,56 @@
 "use client"
-import React, { useContext } from 'react'
-import QuestionImage from './QuestionImage'
-import QuestionChoices from './QuestionChoices'
-import QuestionChoiceAdd from './QuestionChoiceAdd'
-import QuestionChoiceRemove from './QuestionChoiceRemove'
-import { EditorQuizFileContext } from '../providers/EditorQuizFileContext'
-import { EditorCurrentQuestionContext } from '../providers/EditorCurrentQuestionContext'
+import React, { useEffect } from 'react'
+import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import Button from '@/components/ui/Button'
+import MultipleChoiceEditor from './editors/multipleChoice/MultipleChoiceEditor'
+import TrueFalseEditor from './editors/trueFalse/TrueFalseEditor'
+import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
+import { useEditorCurrentQuestion } from '../providers/EditorCurrentQuestionProvider'
 
 const QuestionEditor = () => {
-  const quizFileContext = useContext(EditorQuizFileContext)
-  const currentQuestionIndexContext = useContext(EditorCurrentQuestionContext)
+  const { quizFile, setQuizFile } = useEditorQuizFile()
+  const { currentQuestionIndex, setCurrentQuestionIndex } = useEditorCurrentQuestion()
+  const currentQuestion = quizFile.questions[currentQuestionIndex]
 
-  if (!quizFileContext) {
-    throw new Error("No quiz file context found")
+  useEffect(() => {
+    if (currentQuestionIndex >= quizFile.questions.length) {
+      const newIndex = Math.max(0, quizFile.questions.length - 1)
+      setCurrentQuestionIndex(newIndex)
+    }
+  }, [quizFile.questions.length, currentQuestionIndex, setCurrentQuestionIndex])
+
+  if (!currentQuestion) {
+    return (
+      <section className='h-[calc(100vh-58px)] w-full overflow-hidden'>
+        <div className='h-full w-full flex flex-col justify-between' style={ getBackgroundStyles(quizFile.theme.background) }>
+          <Button variant='gray' className='text-2xl w-full'>
+            No questions found, add one.
+          </Button>
+        </div>
+      </section>
+    )
   }
 
-  if (!currentQuestionIndexContext) {
-    throw new Error("No current question index context found")
+  if (currentQuestion.questionType === 'multipleChoice') {
+    return <MultipleChoiceEditor />
   }
 
-  if (quizFileContext === undefined) {
-    return <></>
+  if (currentQuestion.questionType === 'trueFalse') {
+    return <TrueFalseEditor
+      currentQuestion={ currentQuestion } 
+      currentQuestionIndex={ currentQuestionIndex } 
+      quizFile={ quizFile } 
+      setQuizFile={ setQuizFile } 
+    />
   }
-
-  const { quizFile, setQuizFile } = quizFileContext
-  const { currentQuestionIndex } = currentQuestionIndexContext
 
   return (
-    <section className='h-full w-full'>
-      <div className='h-full w-full overflow-y-auto'
-        style={
-          quizFileContext.quizFile.theme.background.includes('base64') ? 
-            { backgroundImage: `url(${quizFileContext.quizFile.theme.background})` }
-            :
-            { backgroundColor: `${quizFileContext.quizFile.theme.background}` }
-        }
-      >
-        <div className='p-4'>
-          <div className='bg-white rounded'>
-            {quizFile.questions && quizFile.questions[currentQuestionIndex] ? (
-              <input
-                type="text"
-                className='p-2 rounded w-full text-2xl text-center'
-                value={quizFile.questions[currentQuestionIndex].question}
-                onChange={(e) => {
-                  const updatedQuestions = [...quizFile.questions];
-                  updatedQuestions[currentQuestionIndex] = {
-                    ...updatedQuestions[currentQuestionIndex],
-                    question: e.target.value,
-                  };
-                  setQuizFile({ ...quizFile, questions: updatedQuestions });
-                }}
-              />
-            ) : (
-              <p>Loading question...</p>
-            )}
-          </div>
-        </div>
-        <div>
-          <QuestionImage />
-        </div>
-        <div className='grid grid-cols-2 p-4 gap-4'>
-          <QuestionChoices />
-        </div>
-        <div className='flex gap-4 items-stretch'>
-          <QuestionChoiceAdd />
-          <QuestionChoiceRemove />
-        </div>
+    <section className='h-[calc(100vh-58px)] w-full overflow-hidden'>
+      <div className='h-full w-full flex flex-col items-center justify-center' style={ getBackgroundStyles(quizFile.theme.background) }>
+        <Button variant='gray' className='text-2xl w-full'>
+          Unsupported question type: <span className='font-semibold'>{ currentQuestion.questionType }</span>
+        </Button>
       </div>
-      {/** add a question editor on the side */}
     </section>
   )
 }

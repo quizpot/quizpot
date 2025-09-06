@@ -34,7 +34,7 @@ const MultipleChoiceEditor = () => {
         <div className='flex-grow flex items-center justify-center h-full'>
           <QuestionImage />
         </div>
-        <div className='shrink-0'>
+        <div className='shrink-0 max-h-96 overflow-y-scroll'>
           <div className='grid grid-cols-2 p-4 gap-4'>
             {
               currentQuestion.choices.map((choice, index) => {
@@ -44,7 +44,7 @@ const MultipleChoiceEditor = () => {
               })
             }
           </div>
-          <div className='flex gap-4 items-stretch'>
+          <div className='flex items-center justify-center gap-4 p-4'>
             <QuestionChoiceAdd />
             <QuestionChoiceRemove />
           </div>

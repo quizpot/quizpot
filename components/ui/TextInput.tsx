@@ -17,6 +17,17 @@ const TextInput = ({
   }
 
   const { parent: parentClassName, child: childClassName } = colorStyles[variant]
+
+  if (variant === 'ghost') {
+    return (
+      <input 
+        type='text'
+        className={ className }
+        onChange={ (e) => { onChange(e) } } 
+        value={ value }
+      />
+    )
+  }
   
   return (
     <div className={`pb-0.5 ${className?.includes('w-full') ? 'w-full' : ''} rounded ` + parentClassName}>

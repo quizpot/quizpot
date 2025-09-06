@@ -1,5 +1,6 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
+import Button from '@/components/ui/Button'
 import { MultipleChoiceQuestion } from '@/lib/misc/QuizFile'
 import React from 'react'
 
@@ -8,33 +9,28 @@ const QuestionChoiceAdd = () => {
   const { currentQuestionIndex } = useEditorCurrentQuestion()
   const currentQuestion = quizFile.questions[currentQuestionIndex] as MultipleChoiceQuestion
 
-  return (
-    <button
-      className='p-4 text-center text-2xl' 
-      onClick={() => {
-        const newChoice = {
-          text: "Another Choice",
-          correct: false
-        }
+  const onClick = () => {
+    const newChoice = {
+      text: "Another Choice",
+      correct: false
+    }
 
-        const updatedChoices = [...currentQuestion.choices, newChoice]
+    const updatedChoices = [...currentQuestion.choices, newChoice]
 
-        setQuizFile({
-          ...quizFile,
-          questions: [
-            ...quizFile.questions.slice(0, currentQuestionIndex),
-            {
-              ...currentQuestion,
-              choices: updatedChoices
-            },
-            ...quizFile.questions.slice(currentQuestionIndex + 1)
-          ]
-        })
-      }}
-    >
-      Add Choice
-    </button>
-  )
+    setQuizFile({
+      ...quizFile,
+      questions: [
+        ...quizFile.questions.slice(0, currentQuestionIndex),
+        {
+          ...currentQuestion,
+          choices: updatedChoices
+        },
+        ...quizFile.questions.slice(currentQuestionIndex + 1)
+      ]
+    })
+  }
+
+  return <Button onClick={ onClick } variant='green' className='w-full'>Add Choice</Button>
 }
 
 export default QuestionChoiceAdd

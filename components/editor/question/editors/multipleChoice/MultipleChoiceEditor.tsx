@@ -8,6 +8,7 @@ import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileP
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { MultipleChoiceQuestion } from '@/lib/misc/QuizFile'
 import MultipleChoiceQuestionChoiceInput from './ui/MultipleChoiceQuestionChoiceInput'
+import MultipleChoicePropertySidebar from './ui/MultipleChoicePropertySidebar'
 
 const MultipleChoiceEditor = () => {
   const { quizFile, setQuizFile } = useEditorQuizFile()
@@ -15,7 +16,7 @@ const MultipleChoiceEditor = () => {
   const currentQuestion = quizFile.questions[currentQuestionIndex] as MultipleChoiceQuestion
 
   return (
-    <section className='max-h-[calc(100vh-58px)] h-[calc(100vh-58px)] w-full overflow-hidden'>
+    <section className='max-h-[calc(100vh-58px)] h-[calc(100vh-58px)] w-full overflow-hidden flex'>
       <div className='h-full w-full flex justify-between flex-col gap-4' style={ getBackgroundStyles(quizFile.theme.background) }>
         <div className='p-4 shrink-0'>
           <TextInput value={ currentQuestion.question } className='text-2xl p-4 w-full text-center' 
@@ -50,7 +51,7 @@ const MultipleChoiceEditor = () => {
           </div>
         </div>
       </div>
-      {/** add a question properly editor on the side */}
+      <MultipleChoicePropertySidebar />
     </section>
   )
 }

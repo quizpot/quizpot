@@ -5,7 +5,6 @@ import Button from '@/components/ui/Button'
 import QuizFileInput from '@/components/ui/QuizFileInput'
 import { useToast } from '@/components/ui/Toaster'
 import { QuizFile } from '@/lib/misc/QuizFile'
-import { redirect } from 'next/navigation'
 import React, { useEffect } from 'react'
 
 const QuizzesPage = () => {

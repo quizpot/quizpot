@@ -3,6 +3,7 @@ import { ClientEvents } from "@/lib/client/ClientEvents"
 import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
 import { ServerEvents } from "@/lib/server/ServerEvents"
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react"
+import WebSocket from "ws"
 
 const WebSocketContext = createContext<{
   isConnected: boolean
@@ -101,7 +102,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
         let message
 
         try {
-          message = JSON.parse(e.data)
+          message = JSON.parse(e.data.toString())
         } catch (err) {
           console.error("[WebSocketProvider] Failed to parse incoming message:", err)
           return

@@ -8,7 +8,7 @@ import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 import { useEditorCurrentQuestion } from '../providers/EditorCurrentQuestionProvider'
 
 const QuestionEditor = () => {
-  const { quizFile, setQuizFile } = useEditorQuizFile()
+  const { quizFile } = useEditorQuizFile()
   const { currentQuestionIndex, setCurrentQuestionIndex } = useEditorCurrentQuestion()
   const currentQuestion = quizFile.questions[currentQuestionIndex]
 
@@ -36,12 +36,7 @@ const QuestionEditor = () => {
   }
 
   if (currentQuestion.questionType === 'trueFalse') {
-    return <TrueFalseEditor
-      currentQuestion={ currentQuestion } 
-      currentQuestionIndex={ currentQuestionIndex } 
-      quizFile={ quizFile } 
-      setQuizFile={ setQuizFile } 
-    />
+    return <TrueFalseEditor />
   }
 
   return (

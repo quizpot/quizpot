@@ -2,6 +2,14 @@ import { createWSClient, deleteWSClient, getWSClientsSize, WebSocketClient } fro
 import { deleteLobby, getLobbyByHostId, getLobbyByPlayerId, leaveLobby } from "@/lib/server/managers/LobbyManager"
 import { emitEvent, initializeServerEventHandlers, sendEvent } from "@/lib/server/managers/EventManager"
 
+export function GET() {
+  const headers = new Headers()
+  headers.set('Connection', 'Upgrade')
+  headers.set('Upgrade', 'websocket')
+  
+  return new Response('Upgrade Required', { status: 426, headers })
+}
+
 export function UPGRADE(client: WebSocketClient) {
   initializeServerEventHandlers()
   client = createWSClient(client)

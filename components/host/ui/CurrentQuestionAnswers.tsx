@@ -1,11 +1,11 @@
-import { ButtonVariant } from '@/components/ui/Button'
 import React from 'react'
 import MultipleChoiceAnswerButton from './answerButtons/MultipleChoiceAnswerButton'
 import MultipleChoiceAnswerButtonWithAnswer from './answerButtons/MultipleChoiceAnswerButtonWithAnswer'
 import { Question } from '@/lib/misc/QuizFile'
+import { ColorVariants } from '@/lib/misc/ColorVariants'
 
 const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuestion: Question, showAnswers?: boolean }) => {
-  const variants: ButtonVariant[] = ['red', 'blue', 'yellow', 'green', 'gray']
+  const variants: ColorVariants[] = ['red', 'blue', 'yellow', 'green', 'gray']
 
   if (currentQuestion.questionType === 'multipleChoice') {
     return (

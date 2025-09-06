@@ -1,4 +1,4 @@
-import { QuizFile } from "./QuizFile";
+import { QuizFile } from "./QuizFile"
 
 export const defaultQuiz: QuizFile = {
   version: 0,
@@ -6,16 +6,8 @@ export const defaultQuiz: QuizFile = {
   description: "This is a short description of the quiz.",
   language: "en",
   theme: {
-    background: "#e5e5e5",
-    color1: "#ff0000",
-    color2: "#0000ff",
-    color3: "#ffff00",
-    color4: "#00ff00",
-    color5: "#ff00ff",
-    color6: "#770077"
+    background: "#e5e5e5"
   },
-  answersTimeout: 3,
-  scoreTimeout: 3,
   questions: [
     {
       questionType: 'multipleChoice',

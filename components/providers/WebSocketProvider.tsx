@@ -3,7 +3,6 @@ import { ClientEvents } from "@/lib/client/ClientEvents"
 import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
 import { ServerEvents } from "@/lib/server/ServerEvents"
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react"
-import WebSocket from "ws"
 
 const WebSocketContext = createContext<{
   isConnected: boolean

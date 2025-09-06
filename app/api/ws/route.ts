@@ -30,7 +30,7 @@ export function UPGRADE(client: WebSocketClient) {
 
   console.log('SOCKET /api/ws New client connected, total: ' + getWSClientsSize())
 
-  client.once('close', () => {
+  const handleClose = () => {
     if (getLobbyByHostId(client.id)) {
       deleteLobby(client)
     }
@@ -42,5 +42,9 @@ export function UPGRADE(client: WebSocketClient) {
     deleteWSClient(client)
 
     console.log('SOCKET /api/ws Client disconnected, remaining: ' + getWSClientsSize())
-  })
+
+    client.removeEventListener('close', handleClose)
+  }
+
+  client.addEventListener('close', handleClose)
 }

@@ -1,6 +1,5 @@
 /* eslint-disable no-var */
 import { randomUUID } from "crypto"
-import WebSocket from "ws"
 
 declare global {
   var wsClientManager: {

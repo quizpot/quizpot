@@ -1,21 +1,9 @@
+import { colorStyles, ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
 import React from 'react'
 import { FaCheck } from 'react-icons/fa6'
 
-export type MultipleChoiceGraphVariant =
-  'red' |
-  'blue' |
-  'yellow' |
-  'green'
-
-const MultipleChoiceGraph = ({ variant, answers, maxAnswers, correctAnswer }: { variant: MultipleChoiceGraphVariant, answers: number, maxAnswers: number, correctAnswer: boolean }) => {
-  const variants = {
-    'red': { parent: 'bg-red-600 text-white', child: 'bg-red-500' },
-    'blue': { parent: 'bg-blue-600 text-white', child: 'bg-blue-500' },
-    'yellow': { parent: 'bg-yellow-600 text-white', child: 'bg-yellow-500' },
-    'green': { parent: 'bg-green-600 text-white', child: 'bg-green-500' },
-  }
-
-  const { parent: parentClassName, child: childClassName } = variants[variant]
+const MultipleChoiceGraph = ({ variant, answers, maxAnswers, correctAnswer }: { variant: ColorVariants, answers: number, maxAnswers: number, correctAnswer: boolean }) => {
+  const { parent: parentClassName, child: childClassName } = colorStyles[variant]
 
   const columnHeight = answers / maxAnswers * 100 
 

@@ -2,10 +2,10 @@ import React from 'react'
 import MultipleChoiceAnswerButton from './answerButtons/MultipleChoiceAnswerButton'
 import MultipleChoiceAnswerButtonWithAnswer from './answerButtons/MultipleChoiceAnswerButtonWithAnswer'
 import { Question } from '@/lib/misc/QuizFile'
-import { ColorVariants } from '@/lib/misc/ColorVariants'
+import { multipleChoiceVariants } from '@/lib/misc/colorVariants/MultipleChoiceVariants'
+import { trueFalseVariants } from '@/lib/misc/colorVariants/TrueFalseVariants'
 
 const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuestion: Question, showAnswers?: boolean }) => {
-  const variants: ColorVariants[] = ['red', 'blue', 'yellow', 'green', 'gray']
 
   if (currentQuestion.questionType === 'multipleChoice') {
     return (
@@ -13,9 +13,18 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
         {
           currentQuestion.choices.map((choice, index) => {
             if (showAnswers) {
-              return <MultipleChoiceAnswerButtonWithAnswer key={ index } label={ choice.text } variant={variants[index % variants.length]} isCorrect={ choice.correct } />
+              return <MultipleChoiceAnswerButtonWithAnswer 
+                key={ index } 
+                label={ choice.text } 
+                variant={ multipleChoiceVariants[index % multipleChoiceVariants.length] } 
+                isCorrect={ choice.correct } 
+              />
             } else {
-              return <MultipleChoiceAnswerButton key={ index } label={ choice.text } variant={variants[index % variants.length]} />
+              return <MultipleChoiceAnswerButton 
+                key={ index } 
+                label={ choice.text } 
+                variant={ multipleChoiceVariants[index % multipleChoiceVariants.length] }
+              />
             }
           })
         }
@@ -29,13 +38,21 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
         {
           showAnswers ?
             <>
-              <MultipleChoiceAnswerButtonWithAnswer label={ "True" } variant={ 'red' } isCorrect={ currentQuestion.answer } />
-              <MultipleChoiceAnswerButtonWithAnswer label={ "False" } variant={ 'blue' } isCorrect={ !currentQuestion.answer } />
+              <MultipleChoiceAnswerButtonWithAnswer 
+                label={ "True" } 
+                variant={ trueFalseVariants[0] } 
+                isCorrect={ currentQuestion.answer } 
+              />
+              <MultipleChoiceAnswerButtonWithAnswer 
+                label={ "False" } 
+                variant={ trueFalseVariants[1] }
+                isCorrect={ !currentQuestion.answer } 
+              />
             </>
             :
             <>
-              <MultipleChoiceAnswerButton label={ "True" } variant={ 'red' } />
-              <MultipleChoiceAnswerButton label={ "False" } variant={ 'blue' } />
+              <MultipleChoiceAnswerButton label={ "True" } variant={ trueFalseVariants[0] } />
+              <MultipleChoiceAnswerButton label={ "False" } variant={ trueFalseVariants[1] } />
             </>
         }
       </section>

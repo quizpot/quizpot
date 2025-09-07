@@ -1,4 +1,4 @@
-import { colorStyles, ColorVariants } from '@/lib/misc/ColorVariants'
+import { colorStyles, ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
 import React from 'react'
 
 const TextInput = ({ 

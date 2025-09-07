@@ -1,9 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
+import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
 
 const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
-  const backgroundIsImage = hostLobbyState.theme.background.startsWith('data:image/')
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -41,15 +41,7 @@ const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) =>
   return (
     <section 
       className='flex flex-col gap-4 justify-between h-screen w-full'
-      style={
-        backgroundIsImage ? { 
-          backgroundImage: `url(${hostLobbyState.theme.background})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        } : { 
-          backgroundColor: hostLobbyState.theme.background
-        }
-      }
+      style={ getBackgroundStyles(hostLobbyState.theme.background) }
     >
       <p className='absolute right-4 top-4 rounded-full p-4 px-6 text-2xl font-semibold text-black bg-white'>{ hostLobbyState.currentQuestionNumber } of { hostLobbyState.totalQuestions }</p>
       <div></div> {/** To center the question */}

@@ -2,10 +2,10 @@ import React from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import CurrentQuestionAnswers from '../ui/CurrentQuestionAnswers'
 import Timer from '../ui/Timer'
-import Image from 'next/image'
+import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import QuestionImage from '../ui/QuestionImage'
 
 const AnswerPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
-  const backgroundIsImage = hostLobbyState.theme.background.startsWith('data:image/')
   let question: string
 
   if (!hostLobbyState.currentQuestion?.question) {
@@ -17,31 +17,17 @@ const AnswerPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   return (
     <section 
       className='flex flex-col gap-4 items-center justify-between max-h-screen h-screen w-full p-4'
-      style={
-        backgroundIsImage ? { 
-          backgroundImage: `url(${hostLobbyState.theme.background})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        } : { 
-          backgroundColor: hostLobbyState.theme.background
-        }
-      }
+      style={ getBackgroundStyles(hostLobbyState.theme.background) }
     >
       <h1 className='text-center text-4xl font-semibold bg-white text-black p-4 w-full'>{ question }</h1>
-      <div className='flex items-center justify-between p-4 w-full'>
+      <div className='flex items-center justify-between p-4 w-full h-full'>
         { hostLobbyState.timeout ? <Timer from={ hostLobbyState.timeout / 1000 } /> : <Timer from={ 0 } /> }
-        { 
-          hostLobbyState.currentQuestion?.image ?
-            <div className='rounded-2xl h-full w-full object-fill'>
-              <Image src={ hostLobbyState.currentQuestion.image } alt='image' width={ 1280 } height={ 720 } className='w-full h-full object-fill' />
-            </div>
-            : null
-        }
+        <QuestionImage src={ hostLobbyState.currentQuestion?.image } />
         <div className='flex flex-col gap-2'>
-          <div className='p-4 rounded-full bg-white text-black font-semibold text-4xl'>
+          <div className='h-24 w-24 p-4 flex items-center justify-center rounded-full bg-white text-black font-semibold text-4xl'>
             { hostLobbyState.answers.length }
           </div>
-          <div className='p-1 rounded-full bg-white text-black font-semibold text-xs'>
+          <div className='p-1 rounded-full bg-white text-black font-semibold text-xs text-center'>
             Answers
           </div>
         </div>

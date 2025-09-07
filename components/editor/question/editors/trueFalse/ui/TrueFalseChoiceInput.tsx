@@ -2,7 +2,7 @@ import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCu
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
 import Button from '@/components/ui/Button'
-import { ColorVariants } from '@/lib/misc/ColorVariants'
+import { trueFalseVariants } from '@/lib/misc/colorVariants/TrueFalseVariants'
 import { TrueFalseQuestion } from '@/lib/misc/QuizFile'
 import React from 'react'
 
@@ -27,10 +27,8 @@ const TrueFalseChoiceInput = ({ v }: { v: boolean }) => {
     })
   }
 
-  const variants: ColorVariants[] = ['red', 'blue']
-
   return (
-    <Button variant={ variants[v ? 0 : 1] }>
+    <Button variant={ trueFalseVariants[v ? 0 : 1] }>
       <div className='w-full flex justify-between items-center p-4 text-2xl'> 
         <h1 className='w-full h-full focus:outline-0'>
           { v ? 'True' : 'False' }

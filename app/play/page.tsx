@@ -11,6 +11,7 @@ import EndPage from '@/components/player/pages/EndPage'
 import Button from '@/components/ui/Button'
 import AnswersPage from '@/components/player/pages/AnswersPage'
 import SetCodePage from '@/components/player/pages/SetCodePage'
+import AnsweredPage from '@/components/player/pages/AnsweredPage'
 
 const PlayPage = () => {
   const queryCode = useSearchParams().get('code')
@@ -35,6 +36,10 @@ const PlayPage = () => {
 
   if (playerLobbyState.status === 'question') {
     return <QuestionPage playerLobbyState={ playerLobbyState } />
+  }
+
+  if (playerLobbyState.hasAnswered) {
+    return <AnsweredPage playerLobbyState={ playerLobbyState } />
   }
 
   if (playerLobbyState.status === 'answer') {

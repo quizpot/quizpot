@@ -23,7 +23,7 @@ const Timer = ({ from }: { from: number }) => {
 
 
   return (
-    <div className='p-4 rounded-full bg-white text-black font-semibold text-4xl'>
+    <div className='h-24 w-24 p-4 flex items-center justify-center rounded-full bg-white text-black font-semibold text-4xl'>
       { time }
     </div>
   )

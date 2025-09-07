@@ -1,27 +1,25 @@
 import React from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
+import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
 
 const EndPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
-  const backgroundIsImage = hostLobbyState.theme.background.startsWith('data:image/')
-
   return (
     <section 
-      className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'
-      style={
-        backgroundIsImage ? { 
-          backgroundImage: `url(${hostLobbyState.theme.background})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        } : { 
-          backgroundColor: hostLobbyState.theme.background
-        }
-      }
+      className='flex flex-col gap-4 justify-between h-screen w-full'
+      style={ getBackgroundStyles(hostLobbyState.theme.background) }
     >
-      {
-        hostLobbyState.players.map((player, index) => (
-          <p key={index}>{ player.name }: { player.score }</p>
-        ))
-      }
+      <h1 className='text-center text-4xl font-semibold bg-white text-black p-4 mx-auto'>Results</h1>
+      <div className='flex flex-col gap-4 p-4'>
+        {
+          hostLobbyState.players.map((player, index) => (
+            <div key={index} className='flex justify-between items-center p-4 bg-white rounded-lg text-4xl'>
+              <h1>{ player.name }</h1>
+              <span>{ player.score }</span>
+            </div>
+          ))
+        }
+      </div>
+      <div></div>
     </section>
   )
 }

@@ -1,7 +1,7 @@
 "use client"
 import React, { createContext, useContext, useEffect } from 'react'
 import Button from './Button'
-import { ColorVariants } from '@/lib/misc/ColorVariants'
+import { ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
 
 export const DialogContext = createContext<{
   opened: boolean

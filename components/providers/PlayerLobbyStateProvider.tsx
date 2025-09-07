@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { LobbyStatus } from '@/lib/misc/LobbyStatus'
 import { PlayerState } from '@/lib/misc/PlayerState'
 import { SanitizedQuestion } from '@/lib/misc/QuestionSanitizer'
+import { QuizTheme } from '@/lib/misc/QuizFile'
 
 export interface PlayerLobbyState {
   code: number
@@ -14,11 +15,13 @@ export interface PlayerLobbyState {
   currentQuestionNumber: number
   totalQuestions: number
   correctAnswer: boolean
+  hasAnswered: boolean
+  theme: QuizTheme
 }
 
 const PlayerLobbyStateContext = createContext<{
   playerLobbyState: PlayerLobbyState | null
-  setPlayerLobbyState: (playerLobbyState: PlayerLobbyState | null) => void
+  setPlayerLobbyState: React.Dispatch<React.SetStateAction<PlayerLobbyState | null>>
 } | null>(null)
 
 export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNode }) => {
@@ -72,6 +75,7 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
         return {
           ...prevPlayerLobbyState,
           status: ctx.status,
+          hasAnswered: false,
         }
       })
     })

@@ -3,9 +3,9 @@ import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import NextQuestionButton from '../ui/NextQuestionButton'
 import CurrentQuestionAnswers from '../ui/CurrentQuestionAnswers'
 import CurrentQuestionAnswersDisplay from '../ui/answerDisplay/CurrentQuestionAnswersDisplay'
+import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
 
 const AnswersPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
-  const backgroundIsImage = hostLobbyState.theme.background.startsWith('data:image/')
   let question: string
 
   if (!hostLobbyState.currentQuestion?.question) {
@@ -17,15 +17,7 @@ const AnswersPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => 
   return (
     <section 
       className='flex flex-col gap-4 items-center justify-between h-screen w-full p-4'
-      style={
-        backgroundIsImage ? { 
-          backgroundImage: `url(${hostLobbyState.theme.background})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        } : { 
-          backgroundColor: hostLobbyState.theme.background
-        }
-      }
+      style={ getBackgroundStyles(hostLobbyState.theme.background) }
     >
       <div className='absolute top-4 right-4'>
         <NextQuestionButton />

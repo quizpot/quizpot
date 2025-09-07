@@ -3,7 +3,7 @@ import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileP
 import BooleanInput from '@/components/ui/BooleanInput'
 import Button from '@/components/ui/Button'
 import TextInput from '@/components/ui/TextInput'
-import { ColorVariants } from '@/lib/misc/ColorVariants'
+import { multipleChoiceVariants } from '@/lib/misc/colorVariants/MultipleChoiceVariants'
 import { MultipleChoiceQuestion } from '@/lib/misc/QuizFile'
 import React from 'react'
 
@@ -45,10 +45,8 @@ const MultipleChoiceQuestionChoiceInput = ({ index }: { index: number }) => {
     })
   }
 
-  const variants: ColorVariants[] = ['red', 'blue', 'yellow', 'green', 'purple', 'orange', 'darkgray', 'gray']
-
   return (
-    <Button variant={ variants[index % variants.length] }>
+    <Button variant={ multipleChoiceVariants[index % multipleChoiceVariants.length] }>
       <div className='w-full flex justify-between items-center p-4 text-2xl'> 
         <TextInput onChange={ onTextChange } value={ choice.text } variant='ghost' className='w-full h-full focus:outline-0' />
         <div className='rounded-full border-2 border-current'>

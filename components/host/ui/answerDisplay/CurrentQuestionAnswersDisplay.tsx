@@ -1,11 +1,12 @@
 import { Question } from '@/lib/misc/QuizFile'
 import { Answer } from '@/lib/server/managers/LobbyManager'
 import React from 'react'
-import MultipleChoiceGraph, { MultipleChoiceGraphVariant } from './MultipleChoiceGraph'
+import MultipleChoiceGraph from './MultipleChoiceGraph'
+import { multipleChoiceVariants } from '@/lib/misc/colorVariants/MultipleChoiceVariants'
+import { trueFalseVariants } from '@/lib/misc/colorVariants/TrueFalseVariants'
 
 const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQuestion: Question, answers: Answer[] }) => {
   if (currentQuestion.questionType === 'multipleChoice') {
-    const variants: MultipleChoiceGraphVariant[] = ['red', 'blue', 'yellow', 'green']
     const pillars: Answer[][] = []
     
     currentQuestion.choices.forEach(() => { pillars.push([]) })
@@ -22,7 +23,13 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
         { 
           pillars.map((pillar, index) => {
             return (
-              <MultipleChoiceGraph key={ index } variant={ variants[index % variants.length] } answers={ pillar.length } maxAnswers={ maxAnswers } correctAnswer={ currentQuestion.choices[index].correct } />
+              <MultipleChoiceGraph 
+                key={ index } 
+                variant={ multipleChoiceVariants[index % multipleChoiceVariants.length] }
+                answers={ pillar.length } 
+                maxAnswers={ maxAnswers } 
+                correctAnswer={ currentQuestion.choices[index].correct } 
+              />
             )
           }) 
         }
@@ -31,7 +38,6 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
   }
 
   if (currentQuestion.questionType === 'trueFalse') {
-    const variants: MultipleChoiceGraphVariant[] = ['red', 'blue']
     const pillars: Answer[][] = [[], []]
 
     answers.forEach(answer => {
@@ -52,7 +58,7 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
         { 
           pillars.map((pillar, index) => {
             return (
-              <MultipleChoiceGraph key={ index } variant={ variants[index % variants.length] } answers={ pillar.length } maxAnswers={ maxAnswers } correctAnswer={ index === correctPillarIndex } />
+              <MultipleChoiceGraph key={ index } variant={ trueFalseVariants[index] } answers={ pillar.length } maxAnswers={ maxAnswers } correctAnswer={ index === correctPillarIndex } />
             )
           }) 
         }

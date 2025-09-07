@@ -1,5 +1,5 @@
 import Button from '@/components/ui/Button'
-import { ColorVariants } from '@/lib/misc/ColorVariants'
+import { ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
 import React from 'react'
 import { FaCheck, FaX } from 'react-icons/fa6'
 

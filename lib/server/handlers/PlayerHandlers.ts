@@ -54,6 +54,7 @@ export function handleJoinLobby({ client, ctx }: HandlerContext) {
       totalQuestions: lobby.quiz.questions.length,
       correctAnswer: false,
       theme: lobby.quiz.theme,
+      hasAnswered: false,
     }
   }
 

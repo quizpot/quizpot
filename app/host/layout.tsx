@@ -1,15 +1,13 @@
-import ConnectionStatus from '@/components/play/ConnectionStatus'
-import { LobbyStateProvider } from '@/components/providers/LobbyStateProvider'
-import { WebSocketProvider } from '@/components/ws/WebSocket'
+import { HostLobbyStateProvider } from '@/components/providers/HostLobbyStateProvider'
+import { WebSocketProvider } from '@/components/providers/WebSocketProvider'
 import React from 'react'
 
 const HostLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <WebSocketProvider>
-      <LobbyStateProvider>
-        <ConnectionStatus />
+      <HostLobbyStateProvider>
         { children }
-      </LobbyStateProvider>
+      </HostLobbyStateProvider>
     </WebSocketProvider>
   )
 }

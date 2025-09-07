@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header className='fixed top-0 left-0 w-full z-10 bg-white/50 backdrop-blur-sm'>
       <div className='container w-full mx-auto p-4 flex justify-between select-none'>
-        <Button href={'/'} variant='secondary' className='text-2xl font-semibold'>
+        <Button href={'/'} variant='gray' className='text-2xl font-semibold'>
           Quizpot
         </Button>
         <div className='flex gap-8 items-center justify-center text-xl'>

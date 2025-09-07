@@ -9,7 +9,7 @@ const DebugButton = () => {
       window.open('./play', '_blank')
       window.open('./host', '_blank')
       window.open('./debug', '_blank')?.focus()
-    }} variant='primary' className='text-lg font-semibold'>
+    }} variant='blue' className='text-lg font-semibold'>
       Debug
     </Button>
   )

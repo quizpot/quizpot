@@ -9,7 +9,7 @@ const Hero = () => {
     <section className='w-full h-[80vh]'>
       <div className='container w-full h-full mx-auto flex flex-col items-center justify-center gap-4'>
         {/* <h1 className='text-center font-semibold text-6xl'>Quizpot</h1> */}
-        <Button variant='secondary' className='text-center font-semibold text-6xl py-4 px-6'>
+        <Button variant='gray' className='text-center font-semibold text-6xl py-4 px-6'>
           Quizpot
         </Button>
         <p>A pot for all of your quizzes!</p>

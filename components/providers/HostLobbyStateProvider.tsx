@@ -1,5 +1,5 @@
 "use client"
-import React, { createContext, useEffect } from 'react'
+import React, { createContext, useEffect, useRef } from 'react'
 import { useWebSocket } from './WebSocketProvider'
 import { Answer } from '@/lib/server/managers/LobbyManager'
 import { LobbyStatus } from '@/lib/misc/LobbyStatus'
@@ -28,7 +28,12 @@ const HostLobbyStateContext = createContext<{
 
 export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode }) => {
   const [hostLobbyState, setHostLobbyState] = React.useState<HostLobbyState | null>(null)
+  const hostLobbyStateRef = useRef<HostLobbyState | null>(null)
   const { onEvent, isConnected } = useWebSocket()
+
+  useEffect(() => {
+    hostLobbyStateRef.current = hostLobbyState
+  }, [hostLobbyState])
 
   useEffect(() => {
     if (!isConnected) return
@@ -107,6 +112,8 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
     })
 
     const unsubscribeLobbyDeleted = onEvent('lobbyDeleted', (ctx) => {
+      if (LobbyStatus.end === hostLobbyStateRef.current?.status) return
+
       sessionStorage.setItem('messageTitle', 'Lobby Deleted')
       sessionStorage.setItem('messageDescription', ctx.reason)
       redirect('/message')

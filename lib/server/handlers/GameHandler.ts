@@ -66,20 +66,20 @@ function handleAnswersState(lobby: Lobby) {
 
     sendEvent(player, 'correctAnswerUpdate', { correctAnswer: answer.isCorrect })
   })
-
-  // Wait for host to send next question
-
-  // setTimeout(() => {
-  //   if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
-  //     handleEndState(lobby)
-  //   } else {
-  //     handleScoreState(lobby)
-  //   }
-  // }, lobby.quiz.answersTimeout * 1000)
 }
 
 function handleScoreState(lobby: Lobby) {
   if (lobby.status !== LobbyStatus.answers) return
+
+  // Calculate score and update it
+  // TODO: Optimize these
+  lobby.answers.forEach((answer) => {
+    const p = lobby.players.find(player => player.client.id === answer.playerId)
+
+    if (!p) return
+
+    updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
+  })
 
   const status = updateLobbyStatus(lobby.code, LobbyStatus.score)
 
@@ -87,7 +87,10 @@ function handleScoreState(lobby: Lobby) {
     deleteLobby(lobby.host, status.message)
     return
   }
+}
 
+function handleEndState(lobby: Lobby) {
+  if (lobby.status !== LobbyStatus.answers) return
   // Calculate score and update it
   // TODO: Optimize these
   lobby.answers.forEach((answer) => {
@@ -97,10 +100,6 @@ function handleScoreState(lobby: Lobby) {
 
     updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
   })
-}
-
-function handleEndState(lobby: Lobby) {
-  if (lobby.status !== LobbyStatus.answers) return
 
   const status = updateLobbyStatus(lobby.code, LobbyStatus.end)
 
@@ -108,16 +107,6 @@ function handleEndState(lobby: Lobby) {
     deleteLobby(lobby.host, status.message)
     return
   }
-
-  // Calculate score and update it
-  // TODO: Optimize these
-  lobby.answers.forEach((answer) => {
-    const p = lobby.players.find(player => player.client.id === answer.playerId)
-
-    if (!p) return
-
-    updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
-  })
 
   setTimeout(() => {
     deleteLobby(lobby.host, 'Lobby ended')

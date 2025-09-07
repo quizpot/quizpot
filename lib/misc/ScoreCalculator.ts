@@ -31,7 +31,7 @@ export const calculateScore = (currentScore: number, streak: number, question: Q
 
   let timeBonus = 0
   if (question.timeLimit > 0) {
-    const timeTakenRatio = answer.timeTaken / question.timeLimit
+    const timeTakenRatio = answer.timeTaken / (question.timeLimit * 1000)
     timeBonus = TIME_BONUS_MAX * (1 - timeTakenRatio)
     if (timeBonus < 0) {
       timeBonus = 0
@@ -46,5 +46,5 @@ export const calculateScore = (currentScore: number, streak: number, question: Q
     questionScore *= streakBonusMultiplier
   }
 
-  return currentScore + questionScore
+  return currentScore + Math.round(questionScore)
 }

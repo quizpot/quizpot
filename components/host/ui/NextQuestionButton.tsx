@@ -2,10 +2,11 @@ import { useWebSocket } from '@/components/providers/WebSocketProvider'
 import Button from '@/components/ui/Button'
 import React from 'react'
 
-const NextQuestionButton = () => {
+const NextQuestionButton = ({ className }: { className?: string }) => {
   const { sendEvent } = useWebSocket()
+  
   return (
-    <Button variant='gray' onClick={() => {
+    <Button variant='green' className={ className } onClick={() => {
       sendEvent('nextQuestion', {})
     }}>
       Next

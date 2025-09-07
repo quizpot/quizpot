@@ -8,7 +8,7 @@ const MultipleChoiceGraph = ({ variant, answers, maxAnswers, correctAnswer }: { 
   const columnHeight = answers / maxAnswers * 100 
 
   return (
-    <div className='h-full flex flex-col justify-end'>
+    <div className={'h-full flex flex-col justify-end ' + (correctAnswer ? 'opacity-100' : 'opacity-60') }>
       <div className={`
         rounded-t w-full p-2
       ` + childClassName } style={{ height: columnHeight + '%' }}>

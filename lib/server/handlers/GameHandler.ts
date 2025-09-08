@@ -7,12 +7,29 @@ import { LobbyStatus } from "@/lib/misc/LobbyStatus"
 import { getWSClientById } from "../managers/WSClientManager"
 
 export function startGame(lobby: Lobby) {
-  handleDisplayQuestionState(lobby)
+  handleNextQuestionState(lobby)
+}
+
+function handleNextQuestionState(lobby: Lobby) {
+  const quiz = lobby.quiz
+  const question = quiz.questions[lobby.currentQuestionIndex]
+
+  if (question.questionType === 'slide') {
+    handleSlideState(lobby)
+  } else {
+    handleDisplayQuestionState(lobby) 
+  }
 }
 
 function handleDisplayQuestionState(lobby: Lobby) {
   const quiz = lobby.quiz
   const question = quiz.questions[lobby.currentQuestionIndex]
+
+  if (question.questionType === 'slide') {
+    handleSlideState(lobby)
+    return
+  }
+
   const timeout = question.questionDisplayTime * 1000
   const status = updateLobbyStatus(lobby.code, LobbyStatus.question, timeout)
 
@@ -26,6 +43,15 @@ function handleDisplayQuestionState(lobby: Lobby) {
   }, timeout)
 }
 
+function handleSlideState(lobby: Lobby) {
+  const status = updateLobbyStatus(lobby.code, LobbyStatus.slide)
+
+  if (status instanceof Error) {
+    deleteLobby(lobby.host, status.message)
+    return
+  }
+}
+
 function handleQuestionAnswerState(lobby: Lobby) {
   if (lobby.answerTimeout) clearTimeout(lobby.answerTimeout)
   // Reset answers and invalidate player answers
@@ -34,6 +60,12 @@ function handleQuestionAnswerState(lobby: Lobby) {
 
   const quiz = lobby.quiz
   const question = quiz.questions[lobby.currentQuestionIndex]
+
+  if (question.questionType === 'slide') {
+    handleSlideState(lobby)
+    return
+  }
+
   const timeout = question.timeLimit * 1000
 
   lobby.answerTimeout = setTimeout(() => {
@@ -212,7 +244,7 @@ export const handleNextQuestion = ({ client }: HandlerContext) => {
   }
 
   const skippableStates = [
-    // LobbyStatus.slide, 
+    LobbyStatus.slide, 
     LobbyStatus.answers,
     LobbyStatus.score
   ]
@@ -226,9 +258,6 @@ export const handleNextQuestion = ({ client }: HandlerContext) => {
   }
 
   switch (lobby.status) {
-    // case LobbyStatus.slide:
-    //   handleSlideState(lobby)
-    //   break
     case LobbyStatus.answers:
       if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
         handleEndState(lobby)
@@ -236,13 +265,11 @@ export const handleNextQuestion = ({ client }: HandlerContext) => {
         handleScoreState(lobby)
       }
       break
+    case LobbyStatus.slide:
     case LobbyStatus.score:
       lobby.currentQuestionIndex = lobby.currentQuestionIndex + 1
 
-      handleDisplayQuestionState(lobby)
-      break
-    default:
-      deleteLobby(lobby.host, 'Unknown state to skip: ' + lobby.status)
+      handleNextQuestionState(lobby)
       break
   }
 }

@@ -12,6 +12,7 @@ import Button from '@/components/ui/Button'
 import AnswersPage from '@/components/player/pages/AnswersPage'
 import SetCodePage from '@/components/player/pages/SetCodePage'
 import AnsweredPage from '@/components/player/pages/AnsweredPage'
+import SlidePage from '@/components/player/pages/SlidePage'
 
 const PlayPage = () => {
   const queryCode = useSearchParams().get('code')
@@ -32,6 +33,10 @@ const PlayPage = () => {
 
   if (playerLobbyState.status === 'waiting') {
     return <WaitingInLobbyPage playerLobbyState={ playerLobbyState } />
+  }
+
+  if (playerLobbyState.status === 'slide') {
+    return <SlidePage playerLobbyState={ playerLobbyState } />
   }
 
   if (playerLobbyState.status === 'question') {

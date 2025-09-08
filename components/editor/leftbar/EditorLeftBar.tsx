@@ -1,12 +1,11 @@
 "use client"
-import React, { useContext } from 'react'
+import React from 'react'
 import QuestionCard from '../question/QuestionCard'
-import { Dialog, DialogContent, DialogContext, DialogHeader, DialogTrigger } from '@/components/ui/Dialog'
-import Button from '@/components/ui/Button'
-import { Question } from '@/lib/misc/QuizFile'
 import Link from 'next/link'
 import pjson from '@/package.json'
 import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
+import NewQuestionDialog from './ui/NewQuestionDialog'
+import NewSlideDialog from './ui/NewSlideDialog'
 
 const EditorLeftBar = () => {
   const { quizFile } = useEditorQuizFile()
@@ -23,57 +22,8 @@ const EditorLeftBar = () => {
         }
       </div>
       <div className='flex flex-col gap-4 p-4'>
-        <Dialog>
-          <DialogTrigger>
-            New Question
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader title="Choose Type" />
-            <section className="relative flex-grow overflow-y-auto">
-              <div className='w-full h-full p-4 flex flex-col gap-4'>
-                <AddQuestionButton 
-                  title="Multiple Choice Question" 
-                  question={{
-                    questionType: 'multipleChoice',
-                    question: "What is the color of the sky?",
-                    timeLimit: 30,
-                    questionDisplayTime: 5,
-                    points: 'normalPoints',
-                    choices: [
-                      {
-                        text: "Red",
-                        correct: false
-                      },
-                      {
-                        text: "Blue",
-                        correct: true
-                      },
-                      {
-                        text: "Yellow",
-                        correct: false
-                      },
-                      {
-                        text: "Green",
-                        correct: false
-                      }
-                    ]
-                  }}
-                />
-                <AddQuestionButton 
-                  title="True False Question" 
-                  question={{
-                    questionType: 'trueFalse',
-                    question: "Do you like QuizPot?",
-                    timeLimit: 10,
-                    questionDisplayTime: 5,
-                    points: 'normalPoints',
-                    answer: true,
-                  }}
-                />
-              </div>
-            </section>
-          </DialogContent>
-        </Dialog>
+        <NewQuestionDialog />
+        <NewSlideDialog />
         <div className='text-sm text-center'>
           <Link href="https://github.com/kragleh/quizpot">
             {new Date().getFullYear() === 2025 ? '2025 ' : `${new Date().getFullYear()} - 2025 `} © QuizPot
@@ -85,33 +35,6 @@ const EditorLeftBar = () => {
         </div>
       </div>
     </section>
-  )
-}
-
-const AddQuestionButton = ({ title, question }: { title: string, question: Question }) => {
-  const { quizFile, setQuizFile } = useEditorQuizFile()
-  const dialogContext = useContext(DialogContext)
-
-  if (!dialogContext) {
-    throw new Error("No dialog context found")
-  }
-
-  return (
-    <Button
-      variant='gray'
-      onClick={() => {
-        setQuizFile({
-          ...quizFile,
-          questions: [
-            ...quizFile.questions,
-            question
-          ],
-        })
-        dialogContext.setOpened(false)
-      }}
-    >
-      { title }
-    </Button>
   )
 }
 

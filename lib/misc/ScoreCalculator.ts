@@ -14,6 +14,7 @@ const TIME_BONUS_MAX = 500
  */
 export const calculateScore = (currentScore: number, streak: number, question: Question, answer: Answer): number => {
   if (!answer.isCorrect) return currentScore
+  if (question.questionType === 'slide') return currentScore
 
   let multiplier = 1
   switch (question.points) {

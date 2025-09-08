@@ -12,6 +12,9 @@ const MultipleChoicePropertySidebar = () => {
 
   const onQuestionDisplayTimeoutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updatedQuestions = [...quizFile.questions]
+
+    if (updatedQuestions[currentQuestionIndex].questionType !== 'multipleChoice') return
+
     updatedQuestions[currentQuestionIndex] = {
       ...updatedQuestions[currentQuestionIndex],
       questionDisplayTime: Number.parseInt(e.target.value)
@@ -22,6 +25,9 @@ const MultipleChoicePropertySidebar = () => {
 
   const onQuestionTimeoutChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updatedQuestions = [...quizFile.questions]
+
+    if (updatedQuestions[currentQuestionIndex].questionType !== 'multipleChoice') return
+
     updatedQuestions[currentQuestionIndex] = {
       ...updatedQuestions[currentQuestionIndex],
       timeLimit: Number.parseInt(e.target.value)
@@ -32,8 +38,10 @@ const MultipleChoicePropertySidebar = () => {
 
   const onQuestionPointsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const v: QuestionPoints = e.target.value as QuestionPoints
-
     const updatedQuestions = [...quizFile.questions]
+
+    if (updatedQuestions[currentQuestionIndex].questionType !== 'multipleChoice') return
+    
     updatedQuestions[currentQuestionIndex] = {
       ...updatedQuestions[currentQuestionIndex],
       points: v

@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
 import { WebSocketClient } from "./WSClientManager"
-import { MultipleChoiceAnswer, QuizFile, ShortAnswerAnswer, TrueFalseAnswer } from "../../misc/QuizFile"
+import { MultipleChoiceAnswer, QuizFile, ShortAnswerAnswer, SlideQuestion, TrueFalseAnswer } from "../../misc/QuizFile"
 import { sendEvent } from "./EventManager"
 import { generateUniqueName } from "../../misc/name/NameUtil"
 import { startGame } from "../handlers/GameHandler"
@@ -298,10 +298,26 @@ export const updateLobbyStatus = (code: number, status: LobbyStatus, timeout?: n
 
   let payload: LobbyStatusUpdatePayload
   let hostPayload: LobbyStatusUpdatePayload
+  let totalQuestions: number | undefined
+
+  if (status === LobbyStatus.question && lobby.currentQuestionIndex === 0) {
+    const quizQuestions = lobby.quiz.questions
+    const nextSlideIndex = quizQuestions.findIndex((question, index) => index > 0 && question.questionType === 'slide')
+    totalQuestions = quizQuestions
+      .slice(0, nextSlideIndex !== -1 ? nextSlideIndex : quizQuestions.length)
+      .filter(q => q.questionType !== 'slide')
+      .length
+  } else if (status === LobbyStatus.slide) {
+    const quizQuestions = lobby.quiz.questions
+    const nextSlideIndex = quizQuestions.findIndex((question, index) => index > lobby.currentQuestionIndex && question.questionType === 'slide')
+    totalQuestions = quizQuestions
+      .slice(lobby.currentQuestionIndex + 1, nextSlideIndex !== -1 ? nextSlideIndex : quizQuestions.length)
+      .filter(q => q.questionType !== 'slide')
+      .length
+  }
 
   if (status === LobbyStatus.question) {
     const sanitizedQuestion = sanitizeQuestion(lobby.quiz.questions[lobby.currentQuestionIndex])
-
     if (sanitizedQuestion instanceof Error) return sanitizedQuestion
 
     payload = {
@@ -315,6 +331,17 @@ export const updateLobbyStatus = (code: number, status: LobbyStatus, timeout?: n
       currentQuestion: lobby.quiz.questions[lobby.currentQuestionIndex],
       sanitizedQuestion: sanitizedQuestion,
       timeout: timeout,
+      totalQuestions: totalQuestions,
+    }
+  } else if (status === LobbyStatus.slide) {
+    payload = {
+      status: LobbyStatus.slide,
+    }
+
+    hostPayload = {
+      status: LobbyStatus.slide,
+      currentQuestion: lobby.quiz.questions[lobby.currentQuestionIndex] as SlideQuestion,
+      totalQuestions: totalQuestions,
     }
   } else {
     payload = {

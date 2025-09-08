@@ -109,7 +109,7 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
             sanatizedQuestion: undefined,
             currentQuestionNumber: 0,
             timeout: undefined,
-            totalQuestions: ctx.totalQuestions,
+            totalQuestions: ctx.totalQuestions ?? 0,
           }
         }
 

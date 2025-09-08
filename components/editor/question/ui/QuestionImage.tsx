@@ -10,6 +10,8 @@ const QuestionImage = () => {
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
 
+  if (quizFile.questions[currentQuestionIndex].questionType === 'slide') return <></>
+
   const imageURL = quizFile.questions[currentQuestionIndex].image
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
@@ -28,6 +30,9 @@ const QuestionImage = () => {
       reader.onload = () => {
         const updatedQuizFile = { ...quizFile }
         updatedQuizFile.questions = [...updatedQuizFile.questions]
+
+        if (updatedQuizFile.questions[currentQuestionIndex].questionType === 'slide') return
+
         updatedQuizFile.questions[currentQuestionIndex] = {  
           ...updatedQuizFile.questions[currentQuestionIndex],  
           image: reader.result as string  
@@ -55,6 +60,9 @@ const QuestionImage = () => {
   const onRemoveImage = () => {
     const updatedQuizFile = { ...quizFile }
     updatedQuizFile.questions = [...updatedQuizFile.questions]
+
+    if (updatedQuizFile.questions[currentQuestionIndex].questionType === 'slide') return
+
     updatedQuizFile.questions[currentQuestionIndex] = {  
       ...updatedQuizFile.questions[currentQuestionIndex],  
       image: undefined  

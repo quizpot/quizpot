@@ -77,6 +77,15 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
           }
         }
 
+        if (ctx.status === LobbyStatus.slide) {
+          return {
+            ...prevPlayerLobbyState,
+            status: ctx.status,
+            currentQuestion: undefined,
+            currentQuestionNumber: 0,
+          }
+        }
+
         return {
           ...prevPlayerLobbyState,
           status: ctx.status,

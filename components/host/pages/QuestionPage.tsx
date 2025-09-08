@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import InvalidPage from './InvalidPage'
 
 const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const [progress, setProgress] = useState(0)
@@ -29,6 +30,9 @@ const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) =>
 
     return () => clearInterval(interval)
   }, [hostLobbyState.timeout])
+
+  if (hostLobbyState.currentQuestion?.questionType === 'slide') 
+    return <InvalidPage hostLobbyState={ hostLobbyState } message='Invalid question type for question page.' />
 
   let question: string
 

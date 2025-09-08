@@ -4,7 +4,7 @@ import { LobbyStatus } from "../misc/LobbyStatus"
 import { SanitizedQuestion } from "../misc/QuestionSanitizer"
 import { Answer } from "./managers/LobbyManager"
 import { PlayerLobbyState } from "@/components/providers/PlayerLobbyStateProvider"
-import { Question } from "../misc/QuizFile"
+import { Question, SlideQuestion } from "../misc/QuizFile"
 
 /**
  * Events that the server can emit to the client.
@@ -61,17 +61,24 @@ interface PlayerUpdatePayload {
   player: PlayerState
 }
 
-export type LobbyStatusUpdatePayload = OtherStatusUpdatePayload | QuestionStatusUpdatePayload
+export type LobbyStatusUpdatePayload = OtherStatusUpdatePayload | QuestionStatusUpdatePayload | SlideStatusUpdatePayload
+
+interface SlideStatusUpdatePayload {
+  status: LobbyStatus.slide
+  currentQuestion?: SlideQuestion
+  totalQuestions?: number
+}
 
 interface QuestionStatusUpdatePayload {
   status: LobbyStatus.question
   currentQuestion?: Question
   sanitizedQuestion: SanitizedQuestion
+  totalQuestions?: number
   timeout?: number
 }
 
 interface OtherStatusUpdatePayload {
-  status: Exclude<LobbyStatus, LobbyStatus.question>
+  status: Exclude<Exclude<LobbyStatus, LobbyStatus.question>, LobbyStatus.slide>
   timeout?: number
 }
 

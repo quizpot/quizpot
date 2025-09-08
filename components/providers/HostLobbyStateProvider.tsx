@@ -82,13 +82,34 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
         if (!prevHostLobbyState) return null
 
         if (ctx.status === LobbyStatus.question) {
+          const newTotalQuestions = ctx.totalQuestions !== undefined
+            ? ctx.totalQuestions
+            : prevHostLobbyState.totalQuestions
+          
+          const newCurrentQuestionNumber = ctx.totalQuestions !== undefined
+            ? 1
+            : prevHostLobbyState.currentQuestionNumber + 1
+
           return {
             ...prevHostLobbyState,
             status: ctx.status,
             currentQuestion: ctx.currentQuestion,
             sanatizedQuestion: ctx.sanitizedQuestion,
-            currentQuestionNumber: prevHostLobbyState.currentQuestionNumber + 1,
+            currentQuestionNumber: newCurrentQuestionNumber,
+            totalQuestions: newTotalQuestions,
             timeout: ctx.timeout,
+          }
+        }
+
+        if (ctx.status === LobbyStatus.slide) {
+          return {
+            ...prevHostLobbyState,
+            status: ctx.status,
+            currentQuestion: ctx.currentQuestion,
+            sanatizedQuestion: undefined,
+            currentQuestionNumber: 0,
+            timeout: undefined,
+            totalQuestions: ctx.totalQuestions,
           }
         }
 

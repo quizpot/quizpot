@@ -23,6 +23,8 @@ const MultipleChoiceEditor = () => {
             onChange={(e) => {
               const updatedQuestions = [...quizFile.questions]
 
+              if (updatedQuestions[currentQuestionIndex].questionType !== 'multipleChoice') return
+
               updatedQuestions[currentQuestionIndex] = {
                 ...updatedQuestions[currentQuestionIndex],
                 question: e.target.value,

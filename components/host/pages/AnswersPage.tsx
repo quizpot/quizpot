@@ -5,9 +5,13 @@ import CurrentQuestionAnswers from '../ui/CurrentQuestionAnswers'
 import CurrentQuestionAnswersDisplay from '../ui/answerDisplay/CurrentQuestionAnswersDisplay'
 import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
 import Button from '@/components/ui/Button'
+import InvalidPage from './InvalidPage'
 
 const AnswersPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   let question: string
+
+  if (hostLobbyState.currentQuestion?.questionType === 'slide') 
+    return <InvalidPage hostLobbyState={ hostLobbyState } message='Invalid question type for answers page.' />
 
   if (!hostLobbyState.currentQuestion?.question) {
     question = "Missing question"

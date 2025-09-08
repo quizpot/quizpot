@@ -9,6 +9,7 @@ import ScoreboardPage from '@/components/host/pages/ScoreboardPage'
 import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
 import Button from '@/components/ui/Button'
 import React from 'react'
+import SlidePage from '@/components/host/pages/SlidePage'
 
 const HostPage = () => {
   const hostLobbyState = useHostLobbyState().hostLobbyState
@@ -19,6 +20,10 @@ const HostPage = () => {
 
   if (hostLobbyState.status === 'waiting') {
     return <LobbyWaitingPage hostLobbyState={ hostLobbyState } />
+  }
+
+  if (hostLobbyState.status === 'slide') {
+    return <SlidePage hostLobbyState={ hostLobbyState } />
   }
 
   if (hostLobbyState.status === 'question') {

@@ -13,9 +13,33 @@ const QuestionCard = ({ question, index }: { question: Question, index: number }
   const { setCurrentQuestionIndex } = useEditorCurrentQuestion()
   const length = quizFile.questions.length
 
+  let title = "Unsupported Type"
+
+  if (question.questionType !== 'slide') {
+    title = question.question
+  }
+
+  if (question.questionType === 'slide') {
+    if (question.layout.slideType === 'title') {
+      title = question.layout.title
+    }
+
+    if (question.layout.slideType === 'titleAndText') {
+      title = question.layout.title
+    }
+
+    if (question.layout.slideType === 'titleAndTextWithImage') {
+      title = question.layout.title
+    }
+
+    if (question.layout.slideType === 'titleImageText') {
+      title = question.layout.title
+    }
+  }
+
   return (
     <div key={index} onClick={() => { setCurrentQuestionIndex(index) }} className='w-full hover:cursor-pointer pb-2'>
-      <h1 className='text-xs p-2 font-semibold truncate'>{index + 1}. {question.question}</h1>
+      <h1 className='text-xs p-2 font-semibold truncate'>{index + 1}. { title }</h1>
       <div className='px-2 flex'>
         <div className='flex flex-col items-center justify-center gap-4 p-1'>
           <div

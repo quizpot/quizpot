@@ -4,36 +4,32 @@ import QuizCard from '@/components/quizzes/QuizCard'
 import Button from '@/components/ui/Button'
 import QuizFileInput from '@/components/ui/QuizFileInput'
 import { useToast } from '@/components/ui/Toaster'
+import { getAllQuizzes, saveQuiz } from '@/lib/client/IndexedDB'
 import { QuizFile } from '@/lib/misc/QuizFile'
 import React, { useEffect } from 'react'
 
 const QuizzesPage = () => {
   const [quizzes, setQuizzes] = React.useState<Map<string, QuizFile>>(new Map())
-
   const addToast = useToast()
 
   useEffect(() => {
-    const loadedQuizzes: Map<string, QuizFile> = new Map()
-
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i)
-
-      if (key && key.startsWith('quiz:')) {
-        const quizData = localStorage.getItem(key)
-
-        if (quizData) {
-          try {
-            const quiz = JSON.parse(quizData)
-            loadedQuizzes.set(key, quiz)
-          } catch (e) {
-            console.error(`Failed to parse quiz data for key: ${key}`, e)
-          }
-        }
+    const loadQuizzes = async () => {
+      try {
+        const loadedQuizzesArray = await getAllQuizzes()
+        const loadedQuizzesMap = new Map<string, QuizFile>()
+        loadedQuizzesArray.forEach(quiz => {
+          // @ts-expect-error db stored id
+          loadedQuizzesMap.set(quiz.id, quiz)
+        })
+        setQuizzes(loadedQuizzesMap)
+      } catch (error) {
+        addToast({ message: 'Error loading quizzes', type: 'error' })
+        console.error('Error loading quizzes:', error)
       }
     }
-
-    setQuizzes(loadedQuizzes)
-  }, [])
+    
+    loadQuizzes()
+  }, [addToast])
 
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null || e.target.files.length === 0) {
@@ -47,7 +43,7 @@ const QuizzesPage = () => {
     try {
       const jsonObj = JSON.parse(fileText)
       const newQuizId = crypto.randomUUID()
-      localStorage.setItem('quiz:' + newQuizId, JSON.stringify(jsonObj))
+      await saveQuiz(jsonObj, newQuizId)
       window.location.href = '/editor/' + newQuizId
     } catch (e) {
       addToast({ message: 'Error parsing quiz file, ' + e, type: 'error' })

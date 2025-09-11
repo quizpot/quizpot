@@ -7,46 +7,51 @@ import EditorHeader from "./header/EditorHeader"
 import EditorLeftBar from "./leftbar/EditorLeftBar"
 import QuestionEditor from "./question/QuestionEditor"
 import { useEditorQuizFile } from "./providers/EditorQuizFileProvider"
+import { getQuiz, saveQuiz } from "@/lib/client/IndexedDB"
 
 export const EditorPage = ({ quizId }: { quizId: string }) => {
   const addToast = useToast()
   const { quizFile: quiz, setQuizFile: setQuiz } = useEditorQuizFile()
 
   useEffect(() => {
-    if (!quizId) {
-      return redirect('/quizzes')
-    }
-
-    if (quizId === 'new') {
-      return
-    }
-    
-    const quizObj = localStorage.getItem('quiz:' + quizId)
-
-    if (!quizObj) {
-      return redirect('/quizzes')
-    }
-
-    try {
-      const quizFile = JSON.parse(quizObj)
-
-      if (!quizFile) {
+    const loadQuiz = async () => {
+      if (!quizId) {
         return redirect('/quizzes')
       }
 
-      setQuiz(quizFile)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (ignored) {
-      addToast({ message: 'Invalid quiz file', type: 'error' })
-      return redirect('/quizzes')
+      if (quizId === 'new') {
+        return
+      }
+
+      try {
+        const quizFile = await getQuiz(quizId)
+
+        if (!quizFile) {
+          addToast({ message: 'Quiz not found', type: 'error' })
+          return redirect('/quizzes')
+        }
+
+        setQuiz(quizFile)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (ignored) {
+        addToast({ message: 'Error loading quiz', type: 'error' })
+        return redirect('/quizzes')
+      }
     }
+
+    loadQuiz()
   }, [addToast, quizId, setQuiz])
 
   useEffect(() => {
-    const autoSaveHandler = setTimeout(() => {
+    const autoSaveHandler = setTimeout(async () => {
       if (quizId && quizId !== 'new' && quiz) {
-        localStorage.setItem('quiz:' + quizId, JSON.stringify(quiz))
-        addToast({ message: 'Quiz automatically saved', type: 'success' })
+        try {
+          await saveQuiz(quiz, quizId)
+          addToast({ message: 'Quiz automatically saved', type: 'success' })
+        } catch (error) {
+          addToast({ message: 'Error saving quiz automatically', type: 'error' })
+          console.error(error)
+        }
       }
     }, 3000)
 

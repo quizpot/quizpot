@@ -2,6 +2,7 @@ import { QuizFile } from '@/lib/misc/QuizFile'
 import React from 'react'
 import Button from '../ui/Button'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/Dialog'
+import { deleteQuiz } from '@/lib/client/IndexedDB'
 
 const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
   return (
@@ -47,8 +48,8 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
               <DialogHeader title="Are you sure?" />
               <section className="relative flex-grow overflow-y-auto">
                 <div className='w-full h-full p-4 flex flex-col gap-4'>
-                  <Button variant='red' onClick={() => {
-                    localStorage.removeItem(id)
+                  <Button variant='red' onClick={async () => {
+                    await deleteQuiz(id)
                     window.location.reload()
                   }}>
                     Delete

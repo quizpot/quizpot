@@ -1,22 +1,23 @@
 import Button from '@/components/ui/Button'
 import React from 'react'
-import { redirect } from 'next/navigation'
 import { useToast } from '@/components/ui/Toaster'
 import QuizSettings from './QuizSettings'
 import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
+import { saveQuiz } from '@/lib/client/IndexedDB'
+import { redirect } from 'next/navigation'
 
 const EditorHeader = ({ quizId }: { quizId: string }) => {
   const addToast = useToast()
   const { quizFile } = useEditorQuizFile()
 
-  const onSave = () => {
+  const onSave = async () => {
     try {
       if (quizId === 'new') {
-        const newQuizId = crypto.randomUUID()
-        localStorage.setItem('quiz:' + newQuizId, JSON.stringify(quizFile))
+        const newQuizId = crypto.randomUUID() 
+        await saveQuiz(quizFile, newQuizId)
         redirect(`/quizzes`)
       } else {
-        localStorage.setItem('quiz:' + quizId, JSON.stringify(quizFile))
+        await saveQuiz(quizFile, quizId)
         addToast({ message: 'Quiz saved', type: 'success' })
       }
     } catch (e) {

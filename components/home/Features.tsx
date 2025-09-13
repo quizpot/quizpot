@@ -5,7 +5,7 @@ import { FaFileArchive, FaHammer, FaShieldAlt } from 'react-icons/fa'
 const Features = () => {
   return (
     <section className='w-full'>
-      <div className='container mx-auto w-full p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-8'>
+      <div className='container mx-auto w-full p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
         <Feature
           title='No Data Collection'
           description='Quizpot will never collect or save any kind of information about you'

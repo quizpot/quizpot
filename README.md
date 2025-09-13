@@ -1,5 +1,5 @@
 <p align="center">
-  🚧 ⚠️ This project is in early development, check out the milestone for more information <a href="https://github.com/quizpot/quizpot/milestone/1">here</a> ⚠️ 🚧
+  🚧 ⚠️ This project is under active development, expect frequent changes. ⚠️ 🚧
 </p>
 
 <h1 align="center">
@@ -12,12 +12,10 @@ Based on Next.js, it uses the latest web technologies so it's accessible from yo
 
 ## Why Quizpot?
 
-Quizpot is open-source and free to use, no strings attached. Aiming to be the best in class and easy to use, it's built with the latest technologies and is trying to be user-friendly.
+Quizpot is open-source and free to use, no strings attached. Aiming to be the best in class and easy to use, it's built with the latest technologies and is user oriented.
 
-### Simple editor
+## Deploy
 
-The editor is simple and easy to use baked right into the game, allowing you to create quizzes without any technical knowledge. You can create questions, add images, and even change the theme of your quiz without having to pay for anything.
+Deploying Quizpot is as easy as cloning the repository with `git clone https://github.com/quizpot/quizpot` and running `npm i && npm run build && npm run start` then visit it at `http://localhost:3000`. 
 
-### Open-source
-
-Quizpot is open-source, so you can contribute to the project and help make it better. No plans to go premium, all the features will stay free.
+Disclaimer: Make sure it's not running in a serverless environment like Vercel since it's running a Websocket server under the hood which will not work in such environments.

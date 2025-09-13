@@ -5,8 +5,8 @@ import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
 import QuestionCardIcon from './QuestionCardIcon'
 import { PiCards } from 'react-icons/pi'
 import { BiTrash } from 'react-icons/bi'
-import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
-import { useEditorCurrentQuestion } from '../providers/EditorCurrentQuestionProvider'
+import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
+import { useEditorCurrentQuestion } from '../../providers/EditorCurrentQuestionProvider'
 
 const QuestionCard = ({ question, index }: { question: Question, index: number }) => {
   const { quizFile, setQuizFile } = useEditorQuizFile()

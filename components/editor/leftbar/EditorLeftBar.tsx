@@ -1,8 +1,6 @@
 "use client"
 import React from 'react'
-import QuestionCard from '../question/QuestionCard'
-import Link from 'next/link'
-import pjson from '@/package.json'
+import QuestionCard from './ui/QuestionCard'
 import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 import NewQuestionDialog from './ui/NewQuestionDialog'
 import NewSlideDialog from './ui/NewSlideDialog'
@@ -24,15 +22,6 @@ const EditorLeftBar = () => {
       <div className='flex flex-col gap-4 p-4'>
         <NewQuestionDialog />
         <NewSlideDialog />
-        <div className='text-sm text-center'>
-          <Link href="https://github.com/kragleh/quizpot">
-            {new Date().getFullYear() === 2025 ? '2025 ' : `${new Date().getFullYear()} - 2025 `} © QuizPot
-          </Link>
-          {' '} v{ pjson.version } by{' '}
-          <Link href="https://kragleh.com" className='underline underline-offset-2 decoration-[#F90]'>
-            kragleh.com
-          </Link>
-        </div>
       </div>
     </section>
   )

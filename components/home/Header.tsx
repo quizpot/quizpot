@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className='fixed top-0 left-0 w-full z-10 bg-white/50 backdrop-blur-sm'>
       <Notification>
-        This is an early version of Quizpot under active development. <b>Expect breaking changes.</b> Download quizzes for long term storage.
+        This is an early version of Quizpot under active development. <b>Expect frequent changes.</b> Download quizzes as a file for long term storage.
       </Notification>
       <div className='container w-full mx-auto p-4 flex justify-between select-none'>
         <Button href={'/'} variant='gray' className='text-2xl font-semibold'>

@@ -29,7 +29,7 @@ const MultipleChoicePlayerAnswerButton = ({ choice, index, variant }: { choice: 
 
   return (
     <Button variant={ variant } onClick={ sendAnswer } className='w-full h-full'>
-      <div className='flex justify-between items-center w-full h-full p-8 text-4xl'>
+      <div className='flex justify-between items-center w-full h-full p-8 text-2xl lg:text-4xl'>
         { choice.text }
       </div>
     </Button>

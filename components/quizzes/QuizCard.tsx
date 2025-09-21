@@ -27,10 +27,10 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
         <h2 className='text-xl font-bold'>{ quiz.title }</h2>
         <p className='text-sm'>{ quiz.description }</p>
         <div className='mt-4 flex gap-4'>
-          <Button href={`/editor/${id.replace('quiz:', '')}`} variant='green'>
+          <Button href={`/editor/${id.replace('quiz:', '')}`} className='font-semibold' variant='green'>
             Edit
           </Button>
-          <Button variant='blue' onClick={() => {
+          <Button variant='blue' className='font-semibold' onClick={() => {
             const a = document.createElement("a")
             const jsonString = JSON.stringify(quiz, null, 2)
             const file = new Blob([jsonString], {type: 'text/json'})
@@ -41,7 +41,7 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             Download
           </Button>
           <Dialog>
-            <DialogTrigger variant='red'>
+            <DialogTrigger variant='red' className='font-semibold'>
               Delete
             </DialogTrigger>
             <DialogContent>

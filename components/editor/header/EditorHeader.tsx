@@ -38,21 +38,21 @@ const EditorHeader = ({ quizId }: { quizId: string }) => {
   }
 
   return (
-    <header className='flex justify-between items-center p-2 shadow'>
-      <div className='flex gap-4 items-center'>
+    <header className='flex gap-4 justify-between items-center p-2 shadow'>
+      <div className='flex flex-col md:flex-row gap-2 items-center'>
         <Button href={'/'} variant='gray' className='text-2xl font-semibold'>
           Quizpot
         </Button>
         <h1 className='text-xl font-semibold'>{ quizFile.title }</h1>
       </div>
 
-      <div className='flex gap-2 items-center'>
-        <div className='flex gap-1'>
+      <div className='flex gap-2 items-center justify-center'>
+        <div className='flex gap-1 items-center justify-center'>
           <QuizSettings />
-          <Button href='/quizzes' variant="blue">
+          <Button href='/quizzes' variant="blue" className='font-semibold'>
             Exit
           </Button>
-          <Button onClick={ onSave } variant="green">
+          <Button onClick={ onSave } variant="green" className='font-semibold'>
             Save
           </Button>
         </div>

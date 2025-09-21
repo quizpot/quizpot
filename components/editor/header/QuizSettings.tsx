@@ -97,7 +97,7 @@ const QuizSettings = () => {
 
   return (
     <Dialog>
-      <DialogTrigger variant='gray'>
+      <DialogTrigger variant='gray' className='font-semibold'>
         Settings
       </DialogTrigger>
       <DialogContent>

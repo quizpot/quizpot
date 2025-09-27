@@ -1,4 +1,4 @@
-import { MultipleChoiceAnswer, Question, ShortAnswerAnswer, TrueFalseAnswer } from "./QuizFile"
+import { MultipleChoiceAnswer, Question, ShortAnswerAnswer, TrueFalseAnswer } from "../misc/QuizFile"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const validateAnswer = (answer: any, question: Question): boolean => {

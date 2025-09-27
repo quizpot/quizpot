@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from '../../ui/Button'
 import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 
 const WaitingInLobbyPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   if (!playerLobbyState) {

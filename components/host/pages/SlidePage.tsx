@@ -4,7 +4,7 @@ import InvalidPage from './InvalidPage'
 import TitleSlide from '../slides/TitleSlide'
 import SkipSlide from '../slides/SkipSlide'
 import TitleImageTextSlide from '../slides/TitleImageTextSlide'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 
 const SlidePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   if (hostLobbyState.currentQuestion?.questionType !== 'slide') 

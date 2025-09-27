@@ -1,5 +1,5 @@
 import TextInput from '@/components/ui/TextInput'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import React from 'react'
 import QuestionImage from '../../ui/QuestionImage'
 import QuestionChoiceAdd from './ui/QuestionChoiceAdd'

@@ -1,7 +1,7 @@
 import { HostLobbyState } from "@/components/providers/HostLobbyStateProvider"
 import { PlayerState } from "../misc/PlayerState"
 import { LobbyStatus } from "../misc/LobbyStatus"
-import { SanitizedQuestion } from "../misc/QuestionSanitizer"
+import { SanitizedQuestion } from "./QuestionSanitizer"
 import { Answer } from "./managers/LobbyManager"
 import { PlayerLobbyState } from "@/components/providers/PlayerLobbyStateProvider"
 import { Question, SlideQuestion } from "../misc/QuizFile"

@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import InvalidPage from './InvalidPage'
 
 const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {

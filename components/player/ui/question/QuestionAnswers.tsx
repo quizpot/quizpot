@@ -1,9 +1,9 @@
-import { SanitizedQuestion } from '@/lib/misc/QuestionSanitizer'
+import { SanitizedQuestion } from '@/lib/server/QuestionSanitizer'
 import React from 'react'
 import MultipleChoicePlayerAnswerButton from './multipleChoice/MultipleChoicePlayerAnswerButton'
 import TrueFalsePlayerAnswerButton from './trueFalse/TrueFalsePlayerAsnwerButton'
-import { multipleChoiceVariants } from '@/lib/misc/colorVariants/MultipleChoiceVariants'
-import { trueFalseVariants } from '@/lib/misc/colorVariants/TrueFalseVariants'
+import { multipleChoiceVariants } from '@/lib/client/colorVariants/MultipleChoiceVariants'
+import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
 
 const QuestionAnswers = ({ question }: { question: SanitizedQuestion }) => {
   if (question.questionType === 'multipleChoice') {

@@ -1,5 +1,5 @@
-import { Answer } from "../server/managers/LobbyManager"
-import { Question } from "./QuizFile"
+import { Answer } from "./managers/LobbyManager"
+import { Question } from "../misc/QuizFile"
 
 const BASE_SCORE = 500
 const TIME_BONUS_MAX = 500

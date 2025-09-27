@@ -1,8 +1,8 @@
 import { sendEvent } from "../managers/EventManager"
 import { Answer, deleteLobby, getLobbyByHostId, getLobbyByPlayerId, Lobby, resetLobbyAnswers, updateLobbyAnswers, updateLobbyStatus, updatePlayerScore } from "../managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
-import { validateAnswer } from "@/lib/misc/AnswerValidator"
-import { calculateScore } from "@/lib/misc/ScoreCalculator"
+import { validateAnswer } from "../AnswerValidator"
+import { calculateScore } from "@/lib/server/ScoreCalculator"
 import { LobbyStatus } from "@/lib/misc/LobbyStatus"
 import { getWSClientById } from "../managers/WSClientManager"
 

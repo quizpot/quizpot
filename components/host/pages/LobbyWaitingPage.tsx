@@ -6,7 +6,7 @@ import Button from '../../ui/Button'
 import { useWebSocket } from '../../providers/WebSocketProvider'
 import { useToast } from '../../ui/Toaster'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 
 const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const addToast = useToast()

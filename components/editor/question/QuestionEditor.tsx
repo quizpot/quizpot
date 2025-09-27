@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import Button from '@/components/ui/Button'
 import MultipleChoiceEditor from './editors/multipleChoice/MultipleChoiceEditor'
 import TrueFalseEditor from './editors/trueFalse/TrueFalseEditor'

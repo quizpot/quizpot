@@ -8,7 +8,7 @@ import { LobbyStatus } from "@/lib/misc/LobbyStatus"
 import { devLog } from "@/lib/misc/Log"
 import { log } from "console"
 import { LobbyStatusUpdatePayload } from "../ServerEvents"
-import { sanitizeQuestion } from "@/lib/misc/QuestionSanitizer"
+import { sanitizeQuestion } from "@/lib/server/QuestionSanitizer"
 
 export interface Lobby {
   code: number

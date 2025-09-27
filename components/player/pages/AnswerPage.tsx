@@ -1,7 +1,7 @@
 import React from 'react'
 import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 import QuestionAnswers from '../ui/question/QuestionAnswers'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 
 const AnswerPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   if (!playerLobbyState.currentQuestion) {

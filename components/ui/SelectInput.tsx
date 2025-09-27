@@ -1,4 +1,4 @@
-import { colorStyles, ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
+import { colorStyles, ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
 import React from 'react'
 
 const SelectInput = ({ 
@@ -8,7 +8,7 @@ const SelectInput = ({
   className,
   children
 }: {
-  value: string, 
+  value?: string, 
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void 
   variant?: ColorVariants,
   className?: string,

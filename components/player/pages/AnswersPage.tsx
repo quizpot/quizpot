@@ -1,6 +1,6 @@
 import React from 'react'
 import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 
 const AnswersPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   return (

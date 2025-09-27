@@ -6,17 +6,11 @@ export type QuizFile = {
   thumbnail?: string
   language: string
   questions: Question[]
+  createdAt: Date
 }
 
 export type QuizTheme = {
   background: string
-  // Deprecated custom buttons colors, might be introduced in the future
-  // color1: string
-  // color2: string
-  // color3: string
-  // color4: string
-  // color5: string
-  // color6: string
 }
 
 export type Question = MultipleChoiceQuestion | TrueFalseQuestion | ShortAnswerQuestion | SlideQuestion

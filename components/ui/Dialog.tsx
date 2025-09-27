@@ -1,16 +1,23 @@
 "use client"
-import React, { createContext, useContext, useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import Button from './Button'
-import { ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
+import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
 
 export const DialogContext = createContext<{
   opened: boolean
   setOpened: (open: boolean) => void
 } | null>(null)
 
-// Root dialog component
-export const Dialog = ({ children }: { children: React.ReactNode }) => {
-  const [opened, setOpened] = React.useState(false)
+export const Dialog = ({ children, open, onOpenChange }: { children: React.ReactNode, open?: boolean, onOpenChange?: (open: boolean) => void }) => {
+  const [opened, setOpened] = useState(false)
+
+  if (open !== undefined && onOpenChange !== undefined) {
+    return (
+      <DialogContext.Provider value={{ opened: open, setOpened: onOpenChange }}>
+        { children }
+      </DialogContext.Provider>
+    )
+  }
 
   return (
     <DialogContext.Provider value={{ opened, setOpened }}>

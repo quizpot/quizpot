@@ -1,6 +1,6 @@
 import React from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import Button from '@/components/ui/Button'
 
 const EndPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {

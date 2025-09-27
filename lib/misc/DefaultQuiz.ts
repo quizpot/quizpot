@@ -34,5 +34,6 @@ export const defaultQuiz: QuizFile = {
         }
       ]
     }
-  ]
+  ],
+  createdAt: new Date()
 }

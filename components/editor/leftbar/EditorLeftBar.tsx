@@ -9,7 +9,7 @@ const EditorLeftBar = () => {
   const { quizFile } = useEditorQuizFile()
 
   return (
-    <section className='min-w-52 w-52 h-[calc(100vh_-_56px)] flex flex-col box-border'>
+    <section className='hidden md:flex min-w-52 w-52 h-[calc(100vh_-_56px)] flex-col box-border'>
       <div className='flex flex-col gap-2 overflow-y-auto h-auto'>
         {
           quizFile.questions.map((question, index) => {

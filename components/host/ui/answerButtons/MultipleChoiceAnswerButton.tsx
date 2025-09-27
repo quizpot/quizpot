@@ -1,5 +1,5 @@
 import Button from '@/components/ui/Button'
-import { ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
+import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
 import React from 'react'
 
 const MultipleChoiceAnswerButton = ({ label, variant }: { label: string, variant: ColorVariants }) => {

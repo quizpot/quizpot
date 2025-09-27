@@ -1,4 +1,4 @@
-import { colorStyles, ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
+import { colorStyles, ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
 import Link from 'next/link'
 import React, { ReactNode } from 'react'
 

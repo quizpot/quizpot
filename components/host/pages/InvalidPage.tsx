@@ -1,6 +1,6 @@
 import { HostLobbyState } from '@/components/providers/HostLobbyStateProvider'
 import Button from '@/components/ui/Button'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import React from 'react'
 
 const InvalidPage = ({ hostLobbyState, message }: { hostLobbyState: HostLobbyState, message: string }) => {

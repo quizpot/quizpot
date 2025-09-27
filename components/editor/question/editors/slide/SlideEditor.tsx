@@ -1,6 +1,6 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import { SlideQuestion } from '@/lib/misc/QuizFile'
 import React from 'react'
 import TitleSlidePreview from './slides/title/TitleSlidePreview'

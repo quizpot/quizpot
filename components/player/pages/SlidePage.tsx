@@ -1,6 +1,6 @@
 import { PlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import Button from '@/components/ui/Button'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import React from 'react'
 
 const SlidePage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {

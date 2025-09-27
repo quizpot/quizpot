@@ -4,7 +4,7 @@ import { useWebSocket } from './WebSocketProvider'
 import { redirect } from 'next/navigation'
 import { LobbyStatus } from '@/lib/misc/LobbyStatus'
 import { PlayerState } from '@/lib/misc/PlayerState'
-import { SanitizedQuestion } from '@/lib/misc/QuestionSanitizer'
+import { SanitizedQuestion } from '@/lib/server/QuestionSanitizer'
 import { QuizTheme } from '@/lib/misc/QuizFile'
 
 export interface PlayerLobbyState {

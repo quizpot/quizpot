@@ -1,4 +1,4 @@
-import { colorStyles, ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
+import { colorStyles, ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
 import React, { ReactNode } from 'react'
 
 const Card = ({ 

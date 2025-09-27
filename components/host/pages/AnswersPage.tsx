@@ -3,7 +3,7 @@ import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import NextQuestionButton from '../ui/NextQuestionButton'
 import CurrentQuestionAnswers from '../ui/CurrentQuestionAnswers'
 import CurrentQuestionAnswersDisplay from '../ui/answerDisplay/CurrentQuestionAnswersDisplay'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import Button from '@/components/ui/Button'
 import InvalidPage from './InvalidPage'
 

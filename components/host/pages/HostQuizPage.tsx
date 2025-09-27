@@ -1,4 +1,5 @@
 "use client"
+import Header from '@/components/home/Header'
 import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
@@ -7,6 +8,7 @@ import QuizFileInput from '@/components/ui/QuizFileInput'
 import { useToast } from '@/components/ui/Toaster'
 import { QuizFile } from '@/lib/misc/QuizFile'
 import React, { useEffect, useState } from 'react'
+import SetQuizDialog from '../ui/SetQuizDialog'
 
 const HostQuizPage = () => {
   const [customNames, setCustomNames] = useState(true)
@@ -34,23 +36,6 @@ const HostQuizPage = () => {
     }
   }, [isConnected, addToast, onEvent, setHostLobbyState])
 
-  const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files === null || e.target.files.length === 0) {
-      addToast({ message: 'No file selected', type: 'error' })
-      return
-    }
-
-    const file = e.target.files[0]
-    const fileText = await file.text()
-
-    try {
-      const jsonObj = JSON.parse(fileText)
-      setQuiz(jsonObj)
-    } catch (e) {
-      addToast({ message: 'Error parsing quiz file, ' + e, type: 'error' })
-    }
-  }
-
   const onHost = () => {
     addToast({ message: 'Creating lobby...', type: 'info' })
 
@@ -75,25 +60,32 @@ const HostQuizPage = () => {
   }
 
   return (
-    <section className='min-h-screen w-full flex flex-col items-center justify-center'>
-      <div className='flex flex-col items-center justify-center gap-4 p-4 max-w-md w-full'>
-        <h1 className='text-4xl font-semibold w-full text-center'>Host Quiz</h1>
-        <div className='p-4 max-w-md w-full flex flex-col gap-4'>
-          <div className='flex px-4 justify-between'>
-            <p>Custom names:</p>
-            <BooleanInput onChange={ (v) => { setCustomNames(v) } } value={ customNames } />
+    <>
+      <Header />
+      <section className='min-h-screen w-full flex flex-col items-center justify-center'>
+        <div className='flex flex-col items-center justify-center gap-4 p-4 max-w-md w-full'>
+          <h1 className='text-4xl font-semibold w-full text-center'>Host Quiz</h1>
+          <div className='p-4 max-w-md w-full flex flex-col gap-4'>
+            <div className='flex px-4 justify-between'>
+              <p>Custom names:</p>
+              <BooleanInput onChange={ (v) => { setCustomNames(v) } } value={ customNames } />
+            </div>
+            <div className='flex px-4 justify-between'>
+              <p>Questions on device:</p>
+              <BooleanInput onChange={ (v) => { setQuestionsOnDevice(v) } } value={ questionsOnDevice } />
+            </div>
           </div>
-          <div className='flex px-4 justify-between'>
-            <p>Questions on device:</p>
-            <BooleanInput onChange={ (v) => { setQuestionsOnDevice(v) } } value={ questionsOnDevice } />
+          <div className='w-full flex flex-col gap-4 px-4'>
+            <div className='flex gap-4 items-center justify-center'>
+              <SetQuizDialog quizName={ quiz ? quiz.title : undefined } setQuiz={ setQuiz } />
+            </div>
+            <Button onClick={ onHost } variant='green' className='w-full font-semibold'>
+              Host
+            </Button>
           </div>
         </div>
-        <QuizFileInput onChange={ onFile } />
-        <Button onClick={ onHost } variant='green' className='w-full'>
-          Host
-        </Button>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
 

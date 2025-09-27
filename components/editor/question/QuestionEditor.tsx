@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
-import { getBackgroundStyles } from '@/lib/misc/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import Button from '@/components/ui/Button'
 import MultipleChoiceEditor from './editors/multipleChoice/MultipleChoiceEditor'
 import TrueFalseEditor from './editors/trueFalse/TrueFalseEditor'
@@ -22,7 +22,7 @@ const QuestionEditor = () => {
 
   if (!currentQuestion) {
     return (
-      <section className='h-[calc(100vh-58px)] w-full overflow-hidden'>
+      <section className='h-[calc(100vh-144px-128px)] md:h-[calc(100vh-58px)] w-full overflow-hidden'>
         <div className='h-full w-full flex flex-col justify-between p-4' style={ getBackgroundStyles(quizFile.theme.background) }>
           <Button variant='gray' className='text-2xl w-full text-center'>
             No questions found, add one.

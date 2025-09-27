@@ -2,8 +2,8 @@ import { Question } from '@/lib/misc/QuizFile'
 import { Answer } from '@/lib/server/managers/LobbyManager'
 import React from 'react'
 import MultipleChoiceGraph from './MultipleChoiceGraph'
-import { multipleChoiceVariants } from '@/lib/misc/colorVariants/MultipleChoiceVariants'
-import { trueFalseVariants } from '@/lib/misc/colorVariants/TrueFalseVariants'
+import { multipleChoiceVariants } from '@/lib/client/colorVariants/MultipleChoiceVariants'
+import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
 
 const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQuestion: Question, answers: Answer[] }) => {
   if (currentQuestion.questionType === 'multipleChoice') {

@@ -2,7 +2,6 @@
 import React, { useEffect } from "react"
 import { useToast } from "../ui/Toaster"
 import { redirect } from "next/navigation"
-import Button from "../ui/Button"
 import EditorHeader from "./header/EditorHeader"
 import EditorLeftBar from "./leftbar/EditorLeftBar"
 import QuestionEditor from "./question/QuestionEditor"
@@ -62,20 +61,12 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
 
   return (
     <>
-      <div className='lg:hidden flex flex-col items-center justify-center gap-4 h-screen w-full'>
-        <h1 className='text-2xl'>Screen size not supported</h1>
-        <Button href='/' variant='gray'>
-          Home
-        </Button>
-      </div>
-      <main className='hidden lg:block'>
-        <main className='flex flex-col h-screen overflow-hidden'>
-          <EditorHeader quizId={ quizId } />
-          <section className='flex h-[calc(100vh_-_56px)] overflow-hidden'>
-            <EditorLeftBar />
-            <QuestionEditor />
-          </section>
-        </main>
+      <main className='flex flex-col h-screen overflow-hidden'>
+        <EditorHeader quizId={ quizId } />
+        <section className='flex flex-row h-[calc(100vh_-_56px)] overflow-hidden'>
+          <EditorLeftBar />
+          <QuestionEditor />
+        </section>
       </main>
     </>
   )

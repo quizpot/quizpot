@@ -2,8 +2,8 @@ import React from 'react'
 import MultipleChoiceAnswerButton from './answerButtons/MultipleChoiceAnswerButton'
 import MultipleChoiceAnswerButtonWithAnswer from './answerButtons/MultipleChoiceAnswerButtonWithAnswer'
 import { Question } from '@/lib/misc/QuizFile'
-import { multipleChoiceVariants } from '@/lib/misc/colorVariants/MultipleChoiceVariants'
-import { trueFalseVariants } from '@/lib/misc/colorVariants/TrueFalseVariants'
+import { multipleChoiceVariants } from '@/lib/client/colorVariants/MultipleChoiceVariants'
+import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
 
 const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuestion: Question, showAnswers?: boolean }) => {
 

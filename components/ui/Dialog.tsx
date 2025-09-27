@@ -1,16 +1,23 @@
 "use client"
-import React, { createContext, useContext, useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import Button from './Button'
-import { ColorVariants } from '@/lib/misc/colorVariants/ColorVariants'
+import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
 
 export const DialogContext = createContext<{
   opened: boolean
   setOpened: (open: boolean) => void
 } | null>(null)
 
-// Root dialog component
-export const Dialog = ({ children }: { children: React.ReactNode }) => {
-  const [opened, setOpened] = React.useState(false)
+export const Dialog = ({ children, open, onOpenChange }: { children: React.ReactNode, open?: boolean, onOpenChange?: (open: boolean) => void }) => {
+  const [opened, setOpened] = useState(false)
+
+  if (open !== undefined && onOpenChange !== undefined) {
+    return (
+      <DialogContext.Provider value={{ opened: open, setOpened: onOpenChange }}>
+        { children }
+      </DialogContext.Provider>
+    )
+  }
 
   return (
     <DialogContext.Provider value={{ opened, setOpened }}>
@@ -20,12 +27,12 @@ export const Dialog = ({ children }: { children: React.ReactNode }) => {
 }
 
 // Component that triggers the dialog
-export const DialogTrigger = ({ children, variant }: { children: React.ReactNode, variant?: ColorVariants }) => {
+export const DialogTrigger = ({ children, variant, className }: { children: React.ReactNode, variant?: ColorVariants, className?: string }) => {
   const context = useContext(DialogContext)
   if (!context) throw new Error("DialogTrigger must be used within a Dialog")
 
   return (
-    <Button variant={ variant || 'green'} onClick={() => context.setOpened(!context.opened)}>
+    <Button variant={ variant || 'green'} onClick={() => context.setOpened(!context.opened)} className={ className }>
       { children }
     </Button>
   )
@@ -58,7 +65,7 @@ export const DialogContent = ({ children }: { children: React.ReactNode }) => {
         onClick={() => { context.setOpened(false) }}
       >
         <div 
-          className='bg-white rounded-lg shadow z-30 flex flex-col'
+          className='bg-white rounded-lg shadow z-30 flex flex-col m-4'
           onClick={(e) => e.stopPropagation()}
         >
           { children }

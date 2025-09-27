@@ -2,6 +2,7 @@
 import Header from '@/components/home/Header'
 import QuizCard from '@/components/quizzes/QuizCard'
 import Button from '@/components/ui/Button'
+import DeviceScreenUnsupported from '@/components/ui/DeviceScreenUnsupported'
 import QuizFileInput from '@/components/ui/QuizFileInput'
 import { useToast } from '@/components/ui/Toaster'
 import { getAllQuizzes, saveQuiz } from '@/lib/client/IndexedDB'
@@ -52,16 +53,17 @@ const QuizzesPage = () => {
 
   return (
     <>
+      <DeviceScreenUnsupported />
       <Header />
-      <section className='w-full mt-24'>
+      <section className='w-full mt-32'>
         <h1 className='text-2xl lg:text-4xl font-bold text-center p-4'>Your Quizzes</h1>
         <div className='max-w-sm mx-auto text-center p-4 flex flex-col gap-4'>
-          <Button href='/editor/new' variant='green'>
+          <Button href='/editor/new' variant='green' className='font-semibold'>
             Create New Quiz
           </Button>
-          <QuizFileInput onChange={ onFile } />
+          <QuizFileInput onChange={ onFile } className='w-full text-center' />
         </div>
-        <div className='container mx-auto w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+        <div className='container mx-auto w-full grid gap-4 p-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {
             Array.from(quizzes.entries()).map(([key, quiz]) => (
               <QuizCard key={ key } quiz={ quiz } id={ key } />

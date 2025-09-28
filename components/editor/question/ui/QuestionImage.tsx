@@ -46,14 +46,6 @@ const QuestionImage = () => {
       reader.onerror = (error) => {
         console.error("Error converting file to base64:", error);
       }
-
-      setQuizFile({
-        ...quizFile,
-        theme: {
-          ...quizFile.theme,
-          background: e.target.value
-        }
-      })
     } else {
       addToast({ message: 'Please select a valid file', type: 'error' })
     }

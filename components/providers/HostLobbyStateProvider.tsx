@@ -40,7 +40,7 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
     
     const unsubscribePlayerJoined = onEvent('playerJoined', (ctx) => {
       setHostLobbyState(prevHostLobbyState => {
-        if (!prevHostLobbyState || prevHostLobbyState.status !== 'waiting') return prevHostLobbyState
+        if (!prevHostLobbyState) return prevHostLobbyState
 
         return {
           ...prevHostLobbyState,

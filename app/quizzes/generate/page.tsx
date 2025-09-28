@@ -97,7 +97,11 @@ export default GenerateQuizPage
 
 
 const systemPrompt = `
-You can only output a valid json object, nothing else and your task is to generate a json object that represents a quiz according to the following typescript definition. Ignore any kind of image values you are not able to generate that. Here's the typescript definition of a quiz file object:
+You can only output a valid json object, 
+nothing else and your task is to generate a json object that represents a quiz according to the following typescript definition. 
+Ignore any kind of image values you are not able to generate that. 
+Current date is '${ new Date() }' use it as the createdAt value in the quiz file. 
+Here's the typescript definition of a quiz file object:
 
 export type QuizFile = {
   version: number

@@ -24,6 +24,13 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
           ></div>
       }
       <div className='p-4 bg-neutral-200 rounded-b-lg'>
+        <p className='text-xs font-semibold'>{ new Date(quiz.createdAt).toLocaleString(undefined, {
+          minute: 'numeric',
+          hour: 'numeric',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        }) }</p>
         <h2 className='text-xl font-bold'>{ quiz.title }</h2>
         <p className='text-sm'>{ quiz.description }</p>
         <div className='mt-4 flex gap-4'>

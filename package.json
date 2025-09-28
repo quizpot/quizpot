@@ -10,6 +10,7 @@
     "prepare": "next-ws patch"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "next": "^15.5.2",
     "next-ws": "^2.1.1",
     "react": "^19.0.0",

@@ -1,7 +1,6 @@
 "use client"
 import { Question } from '@/lib/misc/QuizFile'
 import React from 'react'
-import { BsArrowDown, BsArrowUp } from 'react-icons/bs'
 import QuestionCardIcon from './QuestionCardIcon'
 import { PiCards } from 'react-icons/pi'
 import { BiTrash } from 'react-icons/bi'
@@ -66,28 +65,6 @@ const QuestionCard = ({ question, index }: { question: Question, index: number }
         </div>
         <div className='aspect-video h-full md:w-full bg-neutral-200 border-neutral-400 rounded flex items-center justify-center'>
           <QuestionCardIcon questionType={question.questionType} />
-        </div>
-        <div className={'flex flex-col items-center justify-center gap-4 p-1' + (length > 1 ? '' : ' hidden')}>
-          <div
-            onClick={() => {
-              const newQuestions = [...quizFile.questions];
-              [newQuestions[index], newQuestions[index - 1]] = [newQuestions[index - 1], newQuestions[index]]
-              setQuizFile({ ...quizFile, questions: newQuestions })
-            }}
-            className={'p-1 hover:bg-gray-200 rounded-full' + (index == 0 ? ' hidden' : '')}
-          >
-            <BsArrowUp />
-          </div>
-          <div
-            onClick={() => {
-              const newQuestions = [...quizFile.questions];
-              [newQuestions[index], newQuestions[index + 1]] = [newQuestions[index + 1], newQuestions[index]]
-              setQuizFile({ ...quizFile, questions: newQuestions })
-            }}
-            className={'p-1 hover:bg-gray-200 rounded-full' + (index + 1 == length ? ' hidden' : '')}
-          >
-            <BsArrowDown />
-          </div>
         </div>
       </div>
     </div>

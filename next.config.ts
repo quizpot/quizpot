@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     },
   },
   devIndicators: false,
+  images: {
+    remotePatterns: [new URL('https://pixabay.com/get/**')],
+  },
 }
 
 export default nextConfig

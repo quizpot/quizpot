@@ -5,8 +5,10 @@ import React from 'react'
 import Button from '@/components/ui/Button'
 import { useEditorCurrentQuestion } from '../../providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
+import { useToast } from '@/components/ui/Toaster'
 
 const QuestionImage = () => {
+  const addToast = useToast()
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
 
@@ -18,7 +20,7 @@ const QuestionImage = () => {
     const files = e.target?.files
 
     if (!files || files.length === 0) {
-      alert("Please select a valid file")
+      addToast({ message: 'Please select a valid file', type: 'error' })
       return
     }
 
@@ -53,7 +55,7 @@ const QuestionImage = () => {
         }
       })
     } else {
-      alert("Please select a valid file")
+      addToast({ message: 'Please select a valid file', type: 'error' })
     }
   }
 

@@ -41,7 +41,7 @@ const TitleImageTextSlidePropertyEditor = () => {
     const files = e.target?.files
 
     if (!files || files.length === 0) {
-      alert("Please select a valid file")
+      addToast({ message: 'Please select a valid file', type: 'error' })
       return
     }
 

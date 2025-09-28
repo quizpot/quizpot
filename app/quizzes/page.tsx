@@ -61,6 +61,9 @@ const QuizzesPage = () => {
           <Button href='/editor/new' variant='green' className='font-semibold'>
             Create New Quiz
           </Button>
+          <Button href='/quizzes/generate' variant='yellow' className='font-semibold'>
+            Generate Quiz
+          </Button>
           <QuizFileInput onChange={ onFile } className='w-full text-center' />
         </div>
         <div className='container mx-auto w-full grid gap-4 p-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>

@@ -1,5 +1,6 @@
 import { QuestionType } from '@/lib/misc/QuizFile'
 import React from 'react'
+import { FaKeyboard } from 'react-icons/fa'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import { PiSlideshow } from 'react-icons/pi'
 import { TbCards } from 'react-icons/tb'
@@ -11,6 +12,8 @@ const QuestionCardIcon = ({ questionType }: { questionType: QuestionType }) => {
     return <IoMdCheckmarkCircleOutline size={24} />
   } else if (questionType === 'slide') {
     return <PiSlideshow size={24} />
+  } else if (questionType === 'shortAnswer') {
+    return <FaKeyboard size={24} />
   } else {
     return questionType
   }

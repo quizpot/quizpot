@@ -14,6 +14,7 @@ const NewQuestionDialog = () => {
           <div className='w-full h-full p-4 flex flex-col gap-4'>
             <AddQuestionButton questionType='multipleChoice' />
             <AddQuestionButton questionType='trueFalse' />
+            <AddQuestionButton questionType='shortAnswer' />
           </div>
         </section>
       </DialogContent>

@@ -7,6 +7,7 @@ import TrueFalseEditor from './editors/trueFalse/TrueFalseEditor'
 import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 import { useEditorCurrentQuestion } from '../providers/EditorCurrentQuestionProvider'
 import SlideEditor from './editors/slide/SlideEditor'
+import ShortAnswerEditor from './editors/shortAnswer/ShortAnswerEditor'
 
 const QuestionEditor = () => {
   const { quizFile } = useEditorQuizFile()
@@ -42,6 +43,10 @@ const QuestionEditor = () => {
 
   if (currentQuestion.questionType === 'slide') {
     return <SlideEditor />
+  }
+
+  if (currentQuestion.questionType === 'shortAnswer') {
+    return <ShortAnswerEditor />
   }
 
   return (

@@ -7,10 +7,12 @@ import EditorLeftBar from "./leftbar/EditorLeftBar"
 import QuestionEditor from "./question/QuestionEditor"
 import { useEditorQuizFile } from "./providers/EditorQuizFileProvider"
 import { getQuiz, saveQuiz } from "@/lib/client/IndexedDB"
+import { useEditorCurrentQuestion } from "./providers/EditorCurrentQuestionProvider"
 
 export const EditorPage = ({ quizId }: { quizId: string }) => {
   const addToast = useToast()
   const { quizFile: quiz, setQuizFile: setQuiz } = useEditorQuizFile()
+  const { currentQuestionIndex, setCurrentQuestionIndex } = useEditorCurrentQuestion()
 
   useEffect(() => {
     const loadQuiz = async () => {
@@ -58,6 +60,28 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
       clearTimeout(autoSaveHandler)
     }
   }, [quiz, quizId, addToast])
+
+  useEffect(() => {
+    const handleUp = (e: KeyboardEvent) => {
+      e.preventDefault()
+      if (e.key !== 'ArrowUp') return
+      if (currentQuestionIndex > 0) setCurrentQuestionIndex(currentQuestionIndex - 1)
+    }
+
+    const handleDown = (e: KeyboardEvent) => {
+      e.preventDefault()
+      if (e.key !== 'ArrowDown') return
+      if (currentQuestionIndex < quiz?.questions.length - 1) setCurrentQuestionIndex(currentQuestionIndex + 1)
+    }
+
+    document.addEventListener('keydown', handleUp)
+    document.addEventListener('keydown', handleDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleUp)
+      document.removeEventListener('keydown', handleDown)
+    }
+  }, [currentQuestionIndex, quiz?.questions.length, setCurrentQuestionIndex])
 
   return (
     <>

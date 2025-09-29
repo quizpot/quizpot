@@ -110,7 +110,7 @@ function handleScoreState(lobby: Lobby) {
 
     if (!p) return
 
-    updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
+    updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer, lobby.quiz))
   })
 
   const status = updateLobbyStatus(lobby.code, LobbyStatus.score)
@@ -130,7 +130,7 @@ function handleEndState(lobby: Lobby) {
 
     if (!p) return
 
-    updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer))
+    updatePlayerScore(lobby.code, answer.playerId, calculateScore(p.score, p.streak, lobby.quiz.questions[lobby.currentQuestionIndex], answer, lobby.quiz))
   })
 
   const status = updateLobbyStatus(lobby.code, LobbyStatus.end)

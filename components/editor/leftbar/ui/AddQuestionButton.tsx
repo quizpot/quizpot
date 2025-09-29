@@ -55,6 +55,17 @@ const AddQuestionButton = ({ questionType }: { questionType: string }) => {
         answer: true,
       }
       break
+    case 'shortAnswer':
+      title = "Short Answer Question"
+      question = {
+        questionType: 'shortAnswer',
+        question: "What is the capital of France?",
+        timeLimit: 10,
+        questionDisplayTime: 5,
+        points: 'normalPoints',
+        answer: "Paris"
+      }
+      break
     default:
       throw new Error("Invalid question type")
   }

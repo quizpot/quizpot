@@ -7,6 +7,7 @@ import TrueFalseEditor from './editors/trueFalse/TrueFalseEditor'
 import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 import { useEditorCurrentQuestion } from '../providers/EditorCurrentQuestionProvider'
 import SlideEditor from './editors/slide/SlideEditor'
+import ShortAnswerEditor from './editors/shortAnswer/ShortAnswerEditor'
 
 const QuestionEditor = () => {
   const { quizFile } = useEditorQuizFile()
@@ -44,10 +45,15 @@ const QuestionEditor = () => {
     return <SlideEditor />
   }
 
+  if (currentQuestion.questionType === 'shortAnswer') {
+    return <ShortAnswerEditor />
+  }
+
   return (
     <section className='h-[calc(100vh-58px)] w-full overflow-hidden'>
       <div className='h-full w-full flex flex-col items-center justify-center p-4' style={ getBackgroundStyles(quizFile.theme.background) }>
         <Button variant='gray' className='text-2xl w-full text-center'>
+          {/** @ts-expect-error may contain unknown type */}
           Unsupported question type: <span className='font-semibold'>{ currentQuestion.questionType }</span>
         </Button>
       </div>

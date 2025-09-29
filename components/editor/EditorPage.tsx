@@ -63,13 +63,11 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
 
   useEffect(() => {
     const handleUp = (e: KeyboardEvent) => {
-      e.preventDefault()
       if (e.key !== 'ArrowUp') return
       if (currentQuestionIndex > 0) setCurrentQuestionIndex(currentQuestionIndex - 1)
     }
 
     const handleDown = (e: KeyboardEvent) => {
-      e.preventDefault()
       if (e.key !== 'ArrowDown') return
       if (currentQuestionIndex < quiz?.questions.length - 1) setCurrentQuestionIndex(currentQuestionIndex + 1)
     }

@@ -37,7 +37,7 @@ const QuestionCard = ({ question, index }: { question: Question, index: number }
   }
 
   return (
-    <div key={index} onClick={() => { setCurrentQuestionIndex(index) }} className={'hover:cursor-pointer pb-2 shrink-0' + (index == currentQuestionIndex ? ' bg-neutral-100' : '')}>
+    <div key={index} onClick={() => { setCurrentQuestionIndex(index) }} className={'hover:cursor-pointer pb-2 shrink-0' + (index == currentQuestionIndex ? ' bg-neutral-200/50' : '')}>
       <h1 className='text-xs p-2 font-semibold truncate'>{index + 1}. { title }</h1>
       <div className='px-2 flex'>
         <div className='flex flex-col items-center justify-center gap-4 p-1'>

@@ -14,7 +14,7 @@ const EditorHeader = ({ quizId }: { quizId: string }) => {
       if (quizId === 'new') {
         const newQuizId = crypto.randomUUID() 
         await saveQuiz(quizFile, newQuizId)
-        window.location.href = `/quizzes/${newQuizId}`
+        window.location.href = `/editor/${newQuizId}`
       } else {
         await saveQuiz(quizFile, quizId)
         addToast({ message: 'Quiz saved', type: 'success' })

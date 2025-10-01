@@ -157,6 +157,21 @@ export type TrueFalseAnswer = {
   answer: boolean
 }
 
+export type ShortAnswerQuestion = {
+  questionType: "shortAnswer"
+  question: string
+  image?: string
+  answers: string[]
+  questionDisplayTime: number
+  timeLimit: number
+  points: QuestionPoints
+}
+
+export type ShortAnswerAnswer = {
+  answerType: "shortAnswer"
+  answer: string
+}
+
 // Slides Feature
 export type SlideQuestion = {
   questionType: "slide"

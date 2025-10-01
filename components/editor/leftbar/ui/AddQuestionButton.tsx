@@ -63,7 +63,7 @@ const AddQuestionButton = ({ questionType }: { questionType: string }) => {
         timeLimit: 10,
         questionDisplayTime: 5,
         points: 'normalPoints',
-        answer: "Paris"
+        answers: ["Paris"]
       }
       break
     default:

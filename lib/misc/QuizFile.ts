@@ -56,7 +56,7 @@ export type ShortAnswerQuestion = {
   questionType: "shortAnswer"
   question: string
   image?: string
-  answer: string
+  answers: string[]
   questionDisplayTime: number
   timeLimit: number
   points: QuestionPoints

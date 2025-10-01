@@ -6,7 +6,7 @@ export const defaultQuiz: QuizFile = {
   description: "This is a short description of the quiz.",
   language: "en",
   theme: {
-    background: "#e5e5e5"
+    background: "#deddda"
   },
   questions: [
     {

@@ -4,6 +4,7 @@ import MultipleChoicePlayerAnswerButton from './multipleChoice/MultipleChoicePla
 import TrueFalsePlayerAnswerButton from './trueFalse/TrueFalsePlayerAsnwerButton'
 import { multipleChoiceVariants } from '@/lib/client/colorVariants/MultipleChoiceVariants'
 import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
+import ShortAnswerPlayerInput from './shortAnswer/ShortAnswerPlayerInput'
 
 const QuestionAnswers = ({ question }: { question: SanitizedQuestion }) => {
   if (question.questionType === 'multipleChoice') {
@@ -34,7 +35,16 @@ const QuestionAnswers = ({ question }: { question: SanitizedQuestion }) => {
     )
   }
 
+  if (question.questionType === 'shortAnswer') {
+    return (
+      <section className='flex flex-col gap-4 items-center justify-center w-full h-full p-4'>
+        <ShortAnswerPlayerInput />
+      </section>
+    )
+  }
+
   return (
+    // @ts-expect-error may contain unknown type
     <div>Unknown question type: { question.questionType }</div>
   )
 }

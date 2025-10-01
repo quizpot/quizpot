@@ -7,7 +7,7 @@ import React from 'react'
 
 const MultipleChoicePlayerAnswerButton = ({ choice, index, variant }: { choice: Omit<Choice, 'correct'>, index: number, variant: ColorVariants }) => {
   const { setPlayerLobbyState } = usePlayerLobbyState()
-  const sendEvent = useWebSocket().sendEvent
+  const { sendEvent } = useWebSocket()
 
   const sendAnswer = () => {
     sendEvent('submitAnswer', { 

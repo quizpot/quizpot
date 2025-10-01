@@ -36,6 +36,8 @@ const HostQuizPage = () => {
   }, [isConnected, addToast, onEvent, setHostLobbyState])
 
   const onHost = () => {
+    document.documentElement.requestFullscreen()
+    
     addToast({ message: 'Creating lobby...', type: 'info' })
 
     if (clientId === null) {

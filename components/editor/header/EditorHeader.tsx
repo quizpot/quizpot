@@ -4,7 +4,6 @@ import { useToast } from '@/components/ui/Toaster'
 import QuizSettings from './QuizSettings'
 import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 import { saveQuiz } from '@/lib/client/IndexedDB'
-import { redirect } from 'next/navigation'
 
 const EditorHeader = ({ quizId }: { quizId: string }) => {
   const addToast = useToast()
@@ -15,7 +14,7 @@ const EditorHeader = ({ quizId }: { quizId: string }) => {
       if (quizId === 'new') {
         const newQuizId = crypto.randomUUID() 
         await saveQuiz(quizFile, newQuizId)
-        redirect(`/quizzes`)
+        window.location.href = `/editor/${newQuizId}`
       } else {
         await saveQuiz(quizFile, quizId)
         addToast({ message: 'Quiz saved', type: 'success' })

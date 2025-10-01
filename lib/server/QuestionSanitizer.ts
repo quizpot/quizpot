@@ -21,7 +21,7 @@ export const sanitizeQuestion = (question: Question): SanitizedQuestion | Error 
   }
 
   if (question.questionType === 'shortAnswer') {
-    const { answer, ...sanitizedQuestion } = question
+    const { answers, ...sanitizedQuestion } = question
     
     return sanitizedQuestion
   }
@@ -37,4 +37,4 @@ export type SanitizedMultipleChoiceQuestion = Omit<MultipleChoiceQuestion, 'choi
 
 export type SanitizedTrueFalseQuestion = Omit<TrueFalseQuestion, 'answer'>
 
-export type SanitizedShortAnswerQuestion = Omit<ShortAnswerQuestion, 'answer'>
+export type SanitizedShortAnswerQuestion = Omit<ShortAnswerQuestion, 'answers'>

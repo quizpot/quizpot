@@ -6,7 +6,7 @@ import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 import { saveQuiz } from '@/lib/client/IndexedDB'
 
 const EditorHeader = ({ quizId }: { quizId: string }) => {
-  const addToast = useToast()
+  const toast = useToast() 
   const { quizFile } = useEditorQuizFile()
 
   const onSave = async () => {
@@ -17,11 +17,11 @@ const EditorHeader = ({ quizId }: { quizId: string }) => {
         window.location.href = `/editor/${newQuizId}`
       } else {
         await saveQuiz(quizFile, quizId)
-        addToast({ message: 'Quiz saved', type: 'success' })
+        toast('Quiz saved', { variant: 'success' })
       }
     } catch (e) {
       if (e instanceof Error && e.message.includes('QuotaExceededError')) {
-        addToast({ message: 'Unable to save quiz to browser, downloaded it instead!', type: 'error' })
+        toast('Unable to save quiz to browser, downloaded it instead!', { variant: 'error' })
 
         const a = document.createElement("a")
         const jsonString = JSON.stringify(quizFile, null, 2)
@@ -30,7 +30,7 @@ const EditorHeader = ({ quizId }: { quizId: string }) => {
         a.download = quizFile.title + '.qp'
         a.click()
       } else {
-        addToast({ message: 'Error saving quiz', type: 'error' })
+        toast('Error saving quiz', { variant: 'error' })
         console.log(e)
       }
     }

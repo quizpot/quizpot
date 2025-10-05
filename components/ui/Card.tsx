@@ -26,7 +26,7 @@ const Card = ({
         (className?.includes('h-full') ? ' h-full ' : '') 
       }>
         <div className={`
-          rounded px-2 py-1
+          rounded
           -translate-y-1 hover:-translate-y-1.5
           duration-200 select-none 
         ` + childClassName + ' ' + className}>

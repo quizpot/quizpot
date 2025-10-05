@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect } from 'react'
 import TextInput from '../../ui/TextInput'
 import Button from '../../ui/Button'
@@ -6,7 +7,7 @@ import { useWebSocket } from '../../providers/WebSocketProvider'
 import { usePlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 
 const SetNamePage = ({ queryCode }: { queryCode: number }) => {
-  const addToast = useToast()
+  const toast = useToast() 
   const [name, setName] = React.useState<string>('')
   const { sendEvent, onEvent, isConnected } = useWebSocket()
   const setPlayerLobbyState = usePlayerLobbyState().setPlayerLobbyState
@@ -21,17 +22,17 @@ const SetNamePage = ({ queryCode }: { queryCode: number }) => {
     sendEvent('joinLobby', { code: queryCode })
 
     const unsubscribeLobbyJoinError = onEvent('lobbyJoinError', (ctx) => {
-      addToast({ message: ctx.message, type: 'error' })
+      toast(ctx.message, { variant: 'error' })
     })
 
     return () => {
       unsubscribeJoinLobby()
       unsubscribeLobbyJoinError()
     }
-  }, [isConnected, onEvent, addToast, setPlayerLobbyState, sendEvent, queryCode])
+  }, [isConnected, onEvent, toast, setPlayerLobbyState, sendEvent, queryCode])
 
   const onClick = async () => {
-    addToast({ message: 'Joining lobby...', type: 'info' })
+    toast('Joining lobby...', { variant: 'info' })
 
     sendEvent('joinLobby', { code: queryCode, name })
   }

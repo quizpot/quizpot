@@ -10,47 +10,42 @@ import { getQuiz, saveQuiz } from "@/lib/client/IndexedDB"
 import { useEditorCurrentQuestion } from "./providers/EditorCurrentQuestionProvider"
 
 export const EditorPage = ({ quizId }: { quizId: string }) => {
-  const addToast = useToast()
+  const toast = useToast() 
   const { quizFile: quiz, setQuizFile: setQuiz } = useEditorQuizFile()
   const { currentQuestionIndex, setCurrentQuestionIndex } = useEditorCurrentQuestion()
 
   useEffect(() => {
     const loadQuiz = async () => {
-      if (!quizId) {
-        return redirect('/quizzes')
-      }
-
-      if (quizId === 'new') {
-        return
-      }
+      if (!quizId) return redirect('/quizzes')
+      if (quizId === 'new') return
 
       try {
         const quizFile = await getQuiz(quizId)
 
         if (!quizFile) {
-          addToast({ message: 'Quiz not found', type: 'error' })
+          toast('Quiz not found', { variant: 'error' })
           return redirect('/quizzes')
         }
 
         setQuiz(quizFile)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (ignored) {
-        addToast({ message: 'Error loading quiz', type: 'error' })
+        toast('Error loading quiz', { variant: 'error' })
         return redirect('/quizzes')
       }
     }
 
     loadQuiz()
-  }, [addToast, quizId, setQuiz])
+  }, [toast, quizId, setQuiz])
 
   useEffect(() => {
     const autoSaveHandler = setTimeout(async () => {
       if (quizId && quizId !== 'new' && quiz) {
         try {
           await saveQuiz(quiz, quizId)
-          addToast({ message: 'Quiz automatically saved', type: 'success' })
+          toast('Quiz automatically saved', { variant: 'success' })
         } catch (error) {
-          addToast({ message: 'Error saving quiz automatically', type: 'error' })
+          toast('Error saving quiz automatically', { variant: 'error' })
           console.error(error)
         }
       }
@@ -59,7 +54,7 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
     return () => {
       clearTimeout(autoSaveHandler)
     }
-  }, [quiz, quizId, addToast])
+  }, [quiz, quizId, toast])
 
   useEffect(() => {
     const handleUp = (e: KeyboardEvent) => {

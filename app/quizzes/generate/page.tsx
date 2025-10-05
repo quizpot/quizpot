@@ -10,19 +10,19 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 
 const GenerateQuizPage = () => {
-  const addToast = useToast()
+  const toast = useToast()
   const [geminiApiKey, setGeminiApiKey] = useState(process.env.NEXT_PUBLIC_GEMINI_KEY ? process.env.NEXT_PUBLIC_GEMINI_KEY : '')
   const [prompt, setPrompt] = useState('Generate me a quiz about dogs and cats with a title slide and 10 questions')
   const [generating, setGenerating] = useState(false)
 
   const onGenerate = async () => {
     if (!geminiApiKey || geminiApiKey.length <= 2) {
-      addToast({ message: 'Invalid Gemini API key', type: 'error' })
+      toast('Invalid Gemini API key', { variant: 'error' })
       return
     }
 
     if (!prompt || prompt.length <= 15) {
-      addToast({ message: 'Invalid prompt, use atleast 15 characters', type: 'error' })
+      toast('Invalid prompt, use atleast 15 characters', { variant: 'error' })
       return
     }
 
@@ -40,7 +40,7 @@ const GenerateQuizPage = () => {
 
       if (!response.text) {
         setGenerating(false)
-        addToast({ message: 'Error generating quiz, check console for details', type: 'error' })
+        toast('Error generating quiz, check console for details', { variant: 'error' })
         return
       }
 
@@ -53,7 +53,7 @@ const GenerateQuizPage = () => {
       window.location.href = '/editor/' + id
     } catch (e) {
       setGenerating(false)
-      addToast({ message: 'Error generating quiz, check console for details', type: 'error' })
+      toast('Error generating quiz, check console for details', { variant: 'error' })
       console.error(e)
     }
   }
@@ -155,6 +155,21 @@ export type TrueFalseQuestion = {
 export type TrueFalseAnswer = {
   answerType: "trueFalse"
   answer: boolean
+}
+
+export type ShortAnswerQuestion = {
+  questionType: "shortAnswer"
+  question: string
+  image?: string
+  answers: string[]
+  questionDisplayTime: number
+  timeLimit: number
+  points: QuestionPoints
+}
+
+export type ShortAnswerAnswer = {
+  answerType: "shortAnswer"
+  answer: string
 }
 
 // Slides Feature

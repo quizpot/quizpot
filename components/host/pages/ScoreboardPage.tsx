@@ -22,7 +22,7 @@ const ScoreboardPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) 
           hostLobbyState.players.map((player, index) => {
             if (index > 4) return <></>
             return (
-              <Card key={index} className='flex justify-between items-center px-4 py-4 bg-white rounded-lg text-4xl'>
+              <Card key={index} className='flex justify-between items-center p-4 bg-white rounded-lg text-4xl'>
                 <h1>{ player.name }</h1>
                 <span>{ player.score }</span>
               </Card>

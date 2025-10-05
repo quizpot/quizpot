@@ -8,7 +8,7 @@ import { QuizFile } from '@/lib/misc/QuizFile'
 import React, { useEffect, useState } from 'react'
 
 const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (quiz: QuizFile) => void }) => {
-  const addToast = useToast()
+  const toast = useToast() 
   const [openedSetQuizDialog, setOpenedSetQuizDialog] = useState(false)
   const [quizzes, setQuizzes] = useState<QuizFile[]>([])
 
@@ -20,7 +20,7 @@ const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (qui
 
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null || e.target.files.length === 0) {
-      addToast({ message: 'No file selected', type: 'error' })
+      toast('No file selected', { variant: 'error' })
       return
     }
 
@@ -31,14 +31,17 @@ const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (qui
       const jsonObj = JSON.parse(fileText)
       setQuiz(jsonObj)
     } catch (e) {
-      addToast({ message: 'Error parsing quiz file, ' + e, type: 'error' })
+      toast('Error parsing quiz file, ' + e, { variant: 'error' })
     }
   }
 
   const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const quizIndex = e.target.value as unknown as number
-    setQuiz(quizzes[quizIndex])
-    setOpenedSetQuizDialog(false)
+    const quizIndex = parseInt(e.target.value)
+
+    if (!isNaN(quizIndex) && quizIndex >= 0 && quizIndex < quizzes.length) {
+      setQuiz(quizzes[quizIndex])
+      setOpenedSetQuizDialog(false)
+    }
   }
 
   return (
@@ -49,13 +52,18 @@ const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (qui
       <DialogContent>
         <DialogHeader title='Select Quiz' />
         <div className='p-4 flex flex-col gap-4'>
-          <QuizFileInput onChange={ (e) => { onFile(e); setOpenedSetQuizDialog(false) } } />
+          <QuizFileInput 
+            onChange={ (e) => { 
+              onFile(e); 
+              setOpenedSetQuizDialog(false) 
+            } } 
+          />
           <SelectInput onChange={ onSelectChange } className='w-full'>
-            <option>Select a quiz from editor</option>
+            <option value="">Select a quiz from editor</option>
             {
               quizzes.map((quiz, index) => {
                 return (
-                  <option key={ index } value={ index }>{ quiz.title }</option>
+                  <option key={ index } value={ index.toString() }>{ quiz.title }</option> 
                 )
               })
             }

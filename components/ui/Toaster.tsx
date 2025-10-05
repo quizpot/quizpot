@@ -1,39 +1,75 @@
 "use client"
-import React, { useCallback, useContext } from 'react'
+import React, { createContext, useCallback, useContext } from 'react'
+import Button from './Button'
+import Card from './Card'
 
 interface Toast {
   id: string
+  timeout: NodeJS.Timeout
   message: string
-  type: 'info' | 'success' | 'error'
+  props: ToastProps
+}
+
+interface ToastProps {
+  description?: string
+  variant?: 'info' | 'success' | 'error'
+  action?: {
+    label: string
+    onClick: () => void
+  }
 }
 
 interface ToastContextType {
-  addToast: (toast: Omit<Toast, 'id'>) => void
+  toast: (message: string, props?: ToastProps) => void
   removeToast: (id: string) => void
   toasts: Toast[]
 }
 
-const ToastContext = React.createContext<ToastContextType | undefined>(undefined)
+const ToastContext = createContext<ToastContextType | undefined>(undefined)
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   const [toasts, setToasts] = React.useState<Toast[]>([])
 
   const removeToast = useCallback((id: string) => {
-    setToasts((prevToasts) => prevToasts.filter((toast) => toast.id !== id))
+    setToasts((prevToasts) => {
+      const toastToRemove = prevToasts.find(t => t.id === id)
+
+      if (toastToRemove) {
+        clearTimeout(toastToRemove.timeout)
+      }
+      
+      return prevToasts.filter((toast) => toast.id !== id)
+    })
   }, [])
 
-  const addToast = useCallback((toast: Omit<Toast, 'id'>) => {
+  const toast = useCallback((message: string, props?: ToastProps) => {
     const id = Date.now().toString() + Math.random().toString(36).substring(2, 9)
-    const newToast = { ...toast, id }
-    setToasts((prevToasts) => [...prevToasts, newToast])
-
-    setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       removeToast(id)
-    }, 3000)
+    }, 5000)
+
+    const newToast = { 
+      id,
+      timeout: timeoutId,
+      message,
+      props: props || {
+        variant: 'info',
+      }
+    }
+
+    setToasts((prevToasts) => {
+      const toasts = [...prevToasts]
+
+      if (toasts.length === 3) {
+        toasts.shift()
+      }
+
+      return [...toasts, newToast]
+    })
   }, [removeToast])
 
   return (
-    <ToastContext.Provider value={{ addToast, removeToast, toasts }}>
+    <ToastContext.Provider value={{ toast, removeToast, toasts }}>
       { children }
     </ToastContext.Provider>
   )
@@ -46,38 +82,42 @@ export const useToast = () => {
     throw new Error('useToast must be used within a ToastProvider')
   }
 
-  return context.addToast
+  return context.toast
 }
 
 export const ToasterCard = ({ toast, onRemove }: { toast: Toast; onRemove: (id: string) => void }) => {
-  const baseClasses = 'flex gap-2 items-center p-4 rounded-2xl border shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105'
-  let typeClasses = ''
-
-  switch (toast.type) {
-    case 'info':
-      typeClasses = 'bg-blue-100 border-blue-500 text-blue-800'
-      break
-    case 'error':
-      typeClasses = 'bg-red-100 border-red-500 text-red-800'
-      break
-    case 'success':
-      typeClasses = 'bg-green-100 border-green-500 text-green-800'
-      break
-    default:
-      typeClasses = 'bg-neutral-100 border-neutral-400 text-neutral-800'
+  const variant = () => {
+    switch (toast.props.variant) {
+      case 'info':
+        return 'blue'
+      case 'error':
+        return 'red'
+      case 'success':
+        return 'green'
+      default:
+        return 'gray'
+    }
   }
 
   return (
-    <section className={`${baseClasses} ${typeClasses} w-full max-w-sm pointer-events-auto`}>
-      <p className="flex-grow text-sm font-medium">{toast.message}</p>
-      <button
-        onClick={() => onRemove(toast.id)}
-        className="ml-4 px-3 py-1 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 text-xs font-semibold"
-        aria-label="Close toast"
-      >
-        Close
-      </button>
-    </section>
+    <Card variant={ variant() } className='pointer-events-auto'>
+      <div className='bg-black/0 w-full h-full rounded flex gap-2 p-4'>
+        <div className='flex-grow'>
+          <p className="text-sm font-medium">{ toast.message }</p>
+          <p className='text-sm'>{ toast.props.description }</p>
+        </div>
+        <Button
+          variant={ variant() }
+          onClick={() => {
+            onRemove(toast.id)
+            toast.props.action?.onClick()
+          }}
+          className='text-xs'
+        >
+          { toast.props.action?.label ? toast.props.action.label : 'Close' }
+        </Button>
+      </div>
+    </Card>
   )
 }
 

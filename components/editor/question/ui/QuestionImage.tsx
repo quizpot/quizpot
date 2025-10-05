@@ -8,7 +8,7 @@ import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
 import { useToast } from '@/components/ui/Toaster'
 
 const QuestionImage = () => {
-  const addToast = useToast()
+  const toast = useToast()
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
 
@@ -20,7 +20,7 @@ const QuestionImage = () => {
     const files = e.target?.files
 
     if (!files || files.length === 0) {
-      addToast({ message: 'Please select a valid file', type: 'error' })
+      toast('Please select a valid file', { variant: 'error' })
       return
     }
 
@@ -47,7 +47,7 @@ const QuestionImage = () => {
         console.error("Error converting file to base64:", error);
       }
     } else {
-      addToast({ message: 'Please select a valid file', type: 'error' })
+      toast('Please select a valid file', { variant: 'error' })
     }
   }
 

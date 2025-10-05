@@ -8,7 +8,7 @@ import { TitleImageTextSlideLayout } from '@/lib/misc/QuizFile'
 import React from 'react'
 
 const TitleImageTextSlidePropertyEditor = () => {
-  const addToast = useToast()
+  const toast = useToast()
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
   const currentQuestion = quizFile.questions[currentQuestionIndex]
@@ -41,7 +41,7 @@ const TitleImageTextSlidePropertyEditor = () => {
     const files = e.target?.files
 
     if (!files || files.length === 0) {
-      addToast({ message: 'Please select a valid file', type: 'error' })
+      toast('Please select a valid file', { variant: 'error' })
       return
     }
 
@@ -69,10 +69,10 @@ const TitleImageTextSlidePropertyEditor = () => {
       }
 
       reader.onerror = (error) => {
-        addToast({ message: 'Error converting file to base64: ' + error, type: 'error' })
+        toast('Error converting file to base64: ' + error, { variant: 'error' })
       }
     } else {
-      addToast({ message: 'Please select a valid file', type: 'error' })
+      toast('Please select a valid file', { variant: 'error' })
     }
   }
 

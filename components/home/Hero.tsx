@@ -23,6 +23,11 @@ const Hero = () => {
             Play
           </Button>
           { dev && <DebugButton /> }
+          { dev && 
+            <Button variant='pink' href='/playground' className='text-lg font-semibold'>
+              Playground
+            </Button> 
+          }
         </div>
       </div>
     </section>

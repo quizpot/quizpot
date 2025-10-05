@@ -11,7 +11,7 @@ import React, { useEffect } from 'react'
 
 const QuizzesPage = () => {
   const [quizzes, setQuizzes] = React.useState<Map<string, QuizFile>>(new Map())
-  const addToast = useToast()
+  const toast = useToast()
 
   useEffect(() => {
     const loadQuizzes = async () => {
@@ -24,17 +24,17 @@ const QuizzesPage = () => {
         })
         setQuizzes(loadedQuizzesMap)
       } catch (error) {
-        addToast({ message: 'Error loading quizzes', type: 'error' })
+        toast('Error loading quizzes', { variant: 'error' })
         console.error('Error loading quizzes:', error)
       }
     }
     
     loadQuizzes()
-  }, [addToast])
+  }, [toast]) 
 
   const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files === null || e.target.files.length === 0) {
-      addToast({ message: 'No file selected', type: 'error' })
+      toast('No file selected', { variant: 'error' })
       return
     }
 
@@ -47,7 +47,8 @@ const QuizzesPage = () => {
       await saveQuiz(jsonObj, newQuizId)
       window.location.href = '/editor/' + newQuizId
     } catch (e) {
-      addToast({ message: 'Error parsing quiz file, ' + e, type: 'error' })
+      console.error(e)
+      toast('Error parsing quiz file', { variant: 'error' })
     }
   }
 

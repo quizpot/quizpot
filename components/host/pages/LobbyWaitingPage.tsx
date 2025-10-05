@@ -10,18 +10,18 @@ import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import Card from '@/components/ui/Card'
 
 const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
-  const addToast = useToast()
+  const toast = useToast() 
   const { sendEvent, onEvent } = useWebSocket()
 
   useEffect(() => {
     const unsubscribeStartLobbyError = onEvent('startLobbyError', (ctx) => {
-      addToast({ message: ctx.message, type: 'error' })
+      toast(ctx.message, { variant: 'error' })
     })
 
     return () => {
       unsubscribeStartLobbyError()
     }
-  }, [addToast, onEvent])
+  }, [toast, onEvent])
 
   return (
     <section 

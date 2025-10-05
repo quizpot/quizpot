@@ -8,14 +8,14 @@ import { useToast } from '@/components/ui/Toaster'
 import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 
 const QuizSettings = () => {
-  const addToast = useToast()
+  const toast = useToast() 
   const { quizFile, setQuizFile } = useEditorQuizFile()
 
   const onThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
     const files = e.target?.files
 
     if (!files || files.length === 0) {
-      addToast({ message: 'Please select a valid file', type: 'error' })
+      toast('Please select a valid file', { variant: 'error' })
       return
     }
 
@@ -29,14 +29,16 @@ const QuizSettings = () => {
           ...quizFile,
           thumbnail: reader.result as string
         })
-        addToast({ message: 'Thumbnail updated', type: 'success' })
+        
+        toast('Thumbnail updated', { variant: 'success' })
       }
 
       reader.onerror = (error) => {
-        addToast({ message: 'Error converting file to base64: ' + error, type: 'error' })
+        toast('Error converting file to base64', { variant: 'error' })
+        console.error(error)
       }
     } else {
-      addToast({ message: 'Please select a valid file', type: 'error' })
+      toast('Please select a valid file', { variant: 'error' })
     }
   }
 
@@ -68,7 +70,7 @@ const QuizSettings = () => {
     const files = e.target?.files
 
     if (!files || files.length === 0) {
-      addToast({ message: 'Please select a valid file', type: 'error' })
+      toast('Please select a valid file', { variant: 'error' })
       return
     }
 
@@ -88,10 +90,11 @@ const QuizSettings = () => {
       }
 
       reader.onerror = (error) => {
-        addToast({ message: 'Error converting file to base64: ' + error, type: 'error' })
+        toast('Error converting file to base64', { variant: 'error' })
+        console.error(error)
       }
     } else {
-      addToast({ message: 'Please select a valid file', type: 'error' })
+      toast('Please select a valid file', { variant: 'error' })
     }
   }
 

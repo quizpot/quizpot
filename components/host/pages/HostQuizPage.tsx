@@ -14,7 +14,7 @@ const HostQuizPage = () => {
   const [questionsOnDevice, setQuestionsOnDevice] = useState(false)
   const [quiz, setQuiz] = useState<QuizFile | null>(null)
 
-  const addToast = useToast()
+  const toast = useToast() 
   const { sendEvent, clientId, isConnected, onEvent } = useWebSocket()
   const setHostLobbyState = useHostLobbyState().setHostLobbyState
 
@@ -26,27 +26,27 @@ const HostQuizPage = () => {
     })
 
     const unsubscribeCreateLobbyError = onEvent('createLobbyError', (ctx) => {
-      addToast({ message: 'Error creating lobby: ' + ctx.message, type: 'error' })
+      toast('Error creating lobby: ' + ctx.message, { variant: 'error' })
     })
 
     return () => {
       unsubscribeCreateLobbyError()
       unsubscribeLobbyCreated()
     }
-  }, [isConnected, addToast, onEvent, setHostLobbyState])
+  }, [isConnected, toast, onEvent, setHostLobbyState])
 
   const onHost = () => {
     document.documentElement.requestFullscreen()
     
-    addToast({ message: 'Creating lobby...', type: 'info' })
+    toast('Creating lobby...', { variant: 'info' })
 
     if (clientId === null) {
-      addToast({ message: 'Error creating lobby: Client ID not found', type: 'error' })
+      toast('Error creating lobby: Client ID not found', { variant: 'error' })
       return
     }
 
     if (quiz === null) {
-      addToast({ message: 'Error creating lobby: Quiz not found', type: 'error' })
+      toast('Error creating lobby: Quiz not found', { variant: 'error' })
       return
     }
 

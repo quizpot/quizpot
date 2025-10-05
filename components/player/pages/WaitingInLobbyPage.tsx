@@ -14,7 +14,7 @@ const WaitingInLobbyPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobb
       className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'
       style={ getBackgroundStyles(playerLobbyState.theme.background) }
     >
-      <Card className='px-4 py-4 flex flex-col gap-4 text-center'>
+      <Card className='p-4 flex flex-col gap-4 text-center'>
         <h1 className='text-2xl font-semibold'>Waiting in Lobby</h1>
         <div className='flex flex-col gap-2 items-center'>
           <p>Lobby code: <span className='font-semibold'>{ playerLobbyState.code }</span></p>

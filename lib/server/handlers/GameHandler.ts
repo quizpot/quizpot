@@ -266,6 +266,19 @@ export const handleNextQuestion = ({ client }: HandlerContext) => {
       }
       break
     case LobbyStatus.slide:
+      if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
+        const status = updateLobbyStatus(lobby.code, LobbyStatus.end)
+
+        if (status instanceof Error) {
+          deleteLobby(lobby.host, status.message)
+          return
+        }
+
+        setTimeout(() => {
+          deleteLobby(lobby.host, 'Lobby ended')
+        }, 3000)
+        break
+      }
     case LobbyStatus.score:
       lobby.currentQuestionIndex = lobby.currentQuestionIndex + 1
 

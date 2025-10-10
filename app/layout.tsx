@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import "./globals.css"
 import Toaster, { ToastProvider } from "@/components/ui/Toaster"
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: "Quizpot",
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
+        { process.env.NEXT_PUBLIC_UMAMI_URL ? <Script defer src={ process.env.NEXT_PUBLIC_UMAMI_URL ? process.env.NEXT_PUBLIC_UMAMI_URL : '' } data-website-id={ process.env.NEXT_PUBLIC_UMAMI_KEY ? process.env.NEXT_PUBLIC_UMAMI_KEY : '' } /> : <></> }
         <ToastProvider>
           { children }
           <Toaster />

@@ -24,7 +24,7 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        { process.env.NEXT_PUBLIC_UMAMI_URL ? <Script defer src={ process.env.NEXT_PUBLIC_UMAMI_URL ? process.env.NEXT_PUBLIC_UMAMI_URL : '' } data-website-id={ process.env.NEXT_PUBLIC_UMAMI_ID ? process.env.NEXT_PUBLIC_UMAMI_ID : '' } /> : <></> }
+        { process.env.NEXT_PUBLIC_UMAMI_URL && process.env.NEXT_PUBLIC_UMAMI_ID && <Script defer src={ process.env.NEXT_PUBLIC_UMAMI_URL } data-website-id={ process.env.NEXT_PUBLIC_UMAMI_ID } /> }
         <ToastProvider>
           { children }
           <Toaster />

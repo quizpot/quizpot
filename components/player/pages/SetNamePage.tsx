@@ -10,7 +10,7 @@ import { redirect } from 'next/navigation'
 const SetNamePage = ({ queryCode }: { queryCode: number }) => {
   const toast = useToast() 
   const [name, setName] = React.useState<string>('')
-  const [nameNotProvidedDebounce, setNameNotProvidedDebounce] = React.useState(true)
+  const [wantsName, setWantsName] = React.useState(false)
   const { sendEvent, onEvent, isConnected } = useWebSocket()
   const setPlayerLobbyState = usePlayerLobbyState().setPlayerLobbyState
 
@@ -38,8 +38,8 @@ const SetNamePage = ({ queryCode }: { queryCode: number }) => {
         return
       }
 
-      if (nameNotProvidedDebounce && ctx.message.includes('Name not provided')) {
-        setNameNotProvidedDebounce(false)
+      if (ctx.message.includes('Name not provided')) {
+        setWantsName(true)
         return
       }
 
@@ -51,13 +51,15 @@ const SetNamePage = ({ queryCode }: { queryCode: number }) => {
       unsubscribeJoinLobby()
       unsubscribeLobbyJoinError()
     }
-  }, [isConnected, onEvent, toast, setPlayerLobbyState, sendEvent, queryCode, nameNotProvidedDebounce])
+  }, [isConnected, onEvent, toast, setPlayerLobbyState, sendEvent, queryCode])
 
   const onClick = async () => {
     toast('Joining lobby...', { variant: 'info' })
 
     sendEvent('joinLobby', { code: queryCode, name })
   }
+
+  if (!wantsName) return <></>
 
   return (
     <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>

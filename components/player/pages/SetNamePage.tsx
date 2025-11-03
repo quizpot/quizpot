@@ -10,6 +10,7 @@ import { redirect } from 'next/navigation'
 const SetNamePage = ({ queryCode }: { queryCode: number }) => {
   const toast = useToast() 
   const [name, setName] = React.useState<string>('')
+  const [nameNotProvidedDebounce, setNameNotProvidedDebounce] = React.useState(true)
   const { sendEvent, onEvent, isConnected } = useWebSocket()
   const setPlayerLobbyState = usePlayerLobbyState().setPlayerLobbyState
 
@@ -37,6 +38,11 @@ const SetNamePage = ({ queryCode }: { queryCode: number }) => {
         return
       }
 
+      if (nameNotProvidedDebounce && ctx.message.includes('Name not provided')) {
+        setNameNotProvidedDebounce(false)
+        return
+      }
+
       localStorage.removeItem('playerId')
       toast(ctx.message, { variant: 'error' })
     })
@@ -45,7 +51,7 @@ const SetNamePage = ({ queryCode }: { queryCode: number }) => {
       unsubscribeJoinLobby()
       unsubscribeLobbyJoinError()
     }
-  }, [isConnected, onEvent, toast, setPlayerLobbyState, sendEvent, queryCode])
+  }, [isConnected, onEvent, toast, setPlayerLobbyState, sendEvent, queryCode, nameNotProvidedDebounce])
 
   const onClick = async () => {
     toast('Joining lobby...', { variant: 'info' })

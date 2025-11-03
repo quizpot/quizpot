@@ -5,6 +5,7 @@ import Button from '../../ui/Button'
 import { useToast } from '../../ui/Toaster'
 import { useWebSocket } from '../../providers/WebSocketProvider'
 import { usePlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
+import { redirect } from 'next/navigation'
 
 const SetNamePage = ({ queryCode }: { queryCode: number }) => {
   const toast = useToast() 
@@ -16,12 +17,27 @@ const SetNamePage = ({ queryCode }: { queryCode: number }) => {
     if (!isConnected) return
     
     const unsubscribeJoinLobby = onEvent('lobbyJoined', (ctx) => {
+      localStorage.setItem('playerId', ctx.lobby.player.id)
       setPlayerLobbyState(ctx.lobby)
     })
 
-    sendEvent('joinLobby', { code: queryCode })
+    const playerId = localStorage.getItem('playerId')
+
+    if (typeof playerId === 'string') {
+      sendEvent('joinLobbyWithId', { code: queryCode, id: playerId })
+    } else {
+      sendEvent('joinLobby', { code: queryCode })
+    }
 
     const unsubscribeLobbyJoinError = onEvent('lobbyJoinError', (ctx) => {
+      if (ctx.message.includes('not found')) redirect('/play')
+
+      if (ctx.message.includes('not in the lobby')) {
+        sendEvent('joinLobby', { code: queryCode })
+        return
+      }
+
+      localStorage.removeItem('playerId')
       toast(ctx.message, { variant: 'error' })
     })
 

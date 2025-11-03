@@ -53,6 +53,7 @@ const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (qui
         <DialogHeader title='Select Quiz' />
         <div className='p-4 flex flex-col gap-4'>
           <QuizFileInput 
+            className='w-full'
             onChange={ (e) => { 
               onFile(e); 
               setOpenedSetQuizDialog(false) 

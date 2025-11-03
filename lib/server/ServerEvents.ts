@@ -58,7 +58,8 @@ interface PlayerLeftPayload {
 }
 
 interface PlayerUpdatePayload {
-  player: PlayerState
+  player: PlayerState,
+  newId?: string
 }
 
 export type LobbyStatusUpdatePayload = OtherStatusUpdatePayload | QuestionStatusUpdatePayload | SlideStatusUpdatePayload

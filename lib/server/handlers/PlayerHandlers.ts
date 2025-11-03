@@ -98,7 +98,7 @@ export function handleJoinLobbyWithId({ client, ctx }: HandlerContext) {
         score: player.score,
         streak: player.streak,
       },
-      currentQuestionNumber: 0,
+      currentQuestionNumber: lobby.currentQuestionIndex + 1,
       totalQuestions: lobby.quiz.questions.length,
       correctAnswer: false,
       theme: lobby.quiz.theme,

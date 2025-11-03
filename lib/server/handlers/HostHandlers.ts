@@ -57,6 +57,7 @@ export function handlePlayerKick({ client, ctx }: HandlerContext) {
     return
   }
 
+  sendEvent(player.client, 'playerKicked', {})
   leaveLobby(player.client)
 }
 

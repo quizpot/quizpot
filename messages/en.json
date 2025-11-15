@@ -8,6 +8,16 @@
     "sk": "Slovak",
     "cz": "Czech"
   },
+  "Header": {
+    "stats": {
+      "label": "Home",
+      "href": "https://quizpot.app"
+    },
+    "github": {
+      "label": "GitHub",
+      "href": "https://github.com/quizpot"
+    }
+  },
   "HomePage": {
     "menu": {
       "Play": {

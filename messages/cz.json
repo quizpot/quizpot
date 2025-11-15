@@ -8,6 +8,16 @@
     "sk": "Slovenčina",
     "cz": "Čeština"
   },
+  "Header": {
+    "stats": {
+      "label": "Domov",
+      "href": "https://quizpot.app"
+    },
+    "github": {
+      "label": "GitHub",
+      "href": "https://github.com/quizpot"
+    }
+  },
   "HomePage": {
     "menu": {
       "Play": {

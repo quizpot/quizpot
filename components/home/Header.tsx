@@ -7,6 +7,7 @@ import { ThemeSwitch } from '../ui/theme-switch'
 import { createPortal } from 'react-dom'
 import { Menu } from 'lucide-react'
 import { useMessages } from 'next-intl'
+import LocaleSwitch from '../ui/locale-switch'
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -44,6 +45,7 @@ const Header = () => {
                 </FancyButton>
               ))
             }
+            <LocaleSwitch size='sm' align='end' />
             <ThemeSwitch />
           </div>
           <div className='flex md:hidden items-center justify-between'>
@@ -76,7 +78,8 @@ const MobileMenu = ({ menu, setIsOpen }: { menu: { label: string, href: string }
           </FancyButton>
         ))
       }
-      <div className='flex items-center justify-center mt-8'>
+      <div className='flex items-center justify-center gap-4 mt-8 text-2xl'>
+        <LocaleSwitch align='center' />
         <ThemeSwitch />
       </div>
     </section>

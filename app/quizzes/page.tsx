@@ -2,7 +2,7 @@
 import Header from '@/components/home/Header'
 import QuizCard from '@/components/quizzes/QuizCard'
 import Button from '@/components/ui/ButtonOld'
-import DeviceScreenUnsupported from '@/components/ui/DeviceScreenUnsupported'
+import DeviceScreenUnsupported from '@/components/ui/unsupported-device-overlay'
 import QuizFileInput from '@/components/ui/QuizFileInput'
 import { useToast } from '@/components/ui/Toaster'
 import { getAllQuizzes, saveQuiz } from '@/lib/client/IndexedDB'

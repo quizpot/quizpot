@@ -8,6 +8,9 @@
     "sk": "Slovak",
     "cz": "Czech"
   },
+  "Buttons": {
+    "home": "Home"
+  },
   "Header": {
     "stats": {
       "label": "Home",
@@ -37,5 +40,15 @@
         "href": "/stats"
       }
     }
+  },
+  "StatsPage": {
+    "title": "Instance Stats",
+    "clients": "Clients",
+    "lobbies": "Lobbies",
+    "players": "Players"
+  },
+  "UnsupportedSizePage": {
+    "title": "Unsupported Device",
+    "description": "This device is not supported due to its screen size. Please use another device to access this page."
   }
 }

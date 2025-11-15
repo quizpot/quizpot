@@ -8,6 +8,9 @@
     "sk": "Slovenčina",
     "cz": "Čeština"
   },
+  "Buttons": {
+    "home": "Domov"
+  },
   "Header": {
     "stats": {
       "label": "Domov",
@@ -37,5 +40,16 @@
         "href": "/stats"
       }
     }
+  },
+  "StatsPage": {
+    "title": "Statistiky",
+    "clients": "Klienti",
+    "lobbies": "Skupiny",
+    "players": "Hráči",
+    "home": "Domov"
+  },
+  "UnsupportedSizePage": {
+    "title": "Nepodporované zařízení",
+    "description": "Tento zařízení není podporován kvůli jeho velikosti obrazovky. Prosím, použijte jiné zařízení k přístupu na této stránce."
   }
 }

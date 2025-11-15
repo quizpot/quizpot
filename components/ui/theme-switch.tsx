@@ -19,8 +19,8 @@ export function ThemeSwitch() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <FancyButton className="flex">
-          <Sun className="h-[1.2rem] w-[1.2rem] block dark:hidden" />
-          <Moon className="h-[1.2rem] w-[1.2rem] hidden dark:block" />
+          <Sun className="h-8 w-8 md:h-[1.2rem] md:w-[1.2rem] block dark:hidden" />
+          <Moon className="h-8 w-8 md:h-[1.2rem] md:w-[1.2rem] hidden dark:block" />
           <span className="sr-only">Toggle theme</span>
         </FancyButton>
       </DropdownMenuTrigger>

@@ -4,7 +4,7 @@ import NextQuestionButton from '../ui/NextQuestionButton'
 import CurrentQuestionAnswers from '../ui/CurrentQuestionAnswers'
 import CurrentQuestionAnswersDisplay from '../ui/answerDisplay/CurrentQuestionAnswersDisplay'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import InvalidPage from './InvalidPage'
 
 const AnswersPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {

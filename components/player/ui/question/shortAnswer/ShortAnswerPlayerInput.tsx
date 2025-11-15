@@ -1,7 +1,7 @@
 "use client"
 import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import TextInput from '@/components/ui/TextInput'
 import React from 'react'
 

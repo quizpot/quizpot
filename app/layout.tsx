@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import "./globals.css"
 import Toaster, { ToastProvider } from "@/components/ui/Toaster"
 import Script from "next/script";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
 export const metadata: Metadata = {
   title: "Quizpot",
@@ -20,15 +21,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`antialiased`}
       >
         { process.env.NEXT_PUBLIC_UMAMI_URL && process.env.NEXT_PUBLIC_UMAMI_ID && <Script defer src={ process.env.NEXT_PUBLIC_UMAMI_URL } data-website-id={ process.env.NEXT_PUBLIC_UMAMI_ID } /> }
-        <ToastProvider>
-          { children }
-          <Toaster />
-        </ToastProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ToastProvider>
+            { children }
+            <Toaster />
+          </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

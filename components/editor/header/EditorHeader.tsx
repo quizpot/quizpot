@@ -1,4 +1,4 @@
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import React from 'react'
 import { useToast } from '@/components/ui/Toaster'
 import QuizSettings from './QuizSettings'

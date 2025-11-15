@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../../ui/Button'
+import Button from '../../ui/ButtonOld'
 import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import Card from '@/components/ui/Card'

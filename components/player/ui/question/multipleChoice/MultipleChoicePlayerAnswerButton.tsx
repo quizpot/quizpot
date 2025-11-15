@@ -1,6 +1,6 @@
 import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
 import { Choice } from '@/lib/misc/QuizFile'
 import React from 'react'

@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect } from 'react'
 import TextInput from '../../ui/TextInput'
-import Button from '../../ui/Button'
+import Button from '../../ui/ButtonOld'
 import { useToast } from '../../ui/Toaster'
 import { useWebSocket } from '../../providers/WebSocketProvider'
 import { usePlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'

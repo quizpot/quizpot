@@ -1,7 +1,7 @@
 import React from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 
 const EndPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const onExitFullscreen = () => {

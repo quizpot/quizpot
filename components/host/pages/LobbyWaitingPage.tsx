@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import QRCode from 'react-qr-code'
 import PlayerKickButton from '../ui/PlayerKickButton'
-import Button from '../../ui/Button'
+import Button from '../../ui/ButtonOld'
 import { useWebSocket } from '../../providers/WebSocketProvider'
 import { useToast } from '../../ui/Toaster'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'

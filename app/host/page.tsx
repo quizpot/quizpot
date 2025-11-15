@@ -7,7 +7,7 @@ import HostQuizPage from '@/components/host/pages/HostQuizPage'
 import QuestionPage from '@/components/host/pages/QuestionPage'
 import ScoreboardPage from '@/components/host/pages/ScoreboardPage'
 import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import React from 'react'
 import SlidePage from '@/components/host/pages/SlidePage'
 

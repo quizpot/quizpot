@@ -1,6 +1,6 @@
 import { QuizFile } from '@/lib/misc/QuizFile'
 import React from 'react'
-import Button from '../ui/Button'
+import Button from '../ui/ButtonOld'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/Dialog'
 import { deleteQuiz } from '@/lib/client/IndexedDB'
 

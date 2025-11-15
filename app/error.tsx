@@ -1,5 +1,5 @@
 "use client"
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import React from 'react'
 
 const ErrorPage = ({

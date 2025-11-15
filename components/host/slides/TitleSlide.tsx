@@ -1,4 +1,4 @@
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import { TitleSlideLayout } from '@/lib/misc/QuizFile'
 import React from 'react'
 

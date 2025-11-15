@@ -2,7 +2,7 @@ import React from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import NextQuestionButton from '../ui/NextQuestionButton'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import Card from '@/components/ui/Card'
 
 const ScoreboardPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {

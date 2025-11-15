@@ -1,5 +1,5 @@
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import React from 'react'
 
 const NextQuestionButton = ({ className }: { className?: string }) => {

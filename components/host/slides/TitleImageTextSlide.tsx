@@ -1,4 +1,4 @@
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import { TitleImageTextSlideLayout } from '@/lib/misc/QuizFile'
 import Image from 'next/image'
 import React from 'react'

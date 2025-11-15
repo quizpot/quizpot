@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import NumberInput from '../../ui/NumberInput'
-import Button from '../../ui/Button'
+import Button from '../../ui/ButtonOld'
 
 const SetCodePage = () => {
   const [code, setCode] = React.useState<number>(0)

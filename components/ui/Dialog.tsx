@@ -1,6 +1,6 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import Button from './Button'
+import Button from './ButtonOld'
 import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
 
 export const DialogContext = createContext<{

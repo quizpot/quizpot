@@ -11,7 +11,7 @@
   "Header": {
     "stats": {
       "label": "Home",
-      "href": "https://quizpot.app"
+      "href": "/"
     },
     "github": {
       "label": "GitHub",

@@ -8,21 +8,24 @@ import { useToast } from '@/components/ui/Toaster'
 import { getAllQuizzes, saveQuiz } from '@/lib/client/IndexedDB'
 import { QuizFile } from '@/lib/misc/QuizFile'
 import React, { useEffect } from 'react'
+import { useTranslations } from 'next-intl'
+import FancyButton from '@/components/ui/fancy-button'
+import Link from 'next/link'
 
 const QuizzesPage = () => {
-  const [quizzes, setQuizzes] = React.useState<Map<string, QuizFile>>(new Map())
+  const t = useTranslations('QuizzesPage')
   const toast = useToast()
+  
+  const [quizzes, setQuizzes] = React.useState<QuizFile[]>([])
 
   useEffect(() => {
     const loadQuizzes = async () => {
       try {
         const loadedQuizzesArray = await getAllQuizzes()
-        const loadedQuizzesMap = new Map<string, QuizFile>()
-        loadedQuizzesArray.forEach(quiz => {
-          // @ts-expect-error db stored id
-          loadedQuizzesMap.set(quiz.id, quiz)
-        })
-        setQuizzes(loadedQuizzesMap)
+
+        loadedQuizzesArray.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+
+        setQuizzes(loadedQuizzesArray)
       } catch (error) {
         toast('Error loading quizzes', { variant: 'error' })
         console.error('Error loading quizzes:', error)
@@ -57,20 +60,24 @@ const QuizzesPage = () => {
       <DeviceScreenUnsupported />
       <Header />
       <section className='w-full mt-32'>
-        <h1 className='text-2xl lg:text-4xl font-bold text-center p-4'>Your Quizzes</h1>
+        <h1 className='text-2xl lg:text-4xl font-bold text-center p-4'>{ t('title') }</h1>
         <div className='max-w-sm mx-auto text-center p-4 flex flex-col gap-4'>
-          <Button href='/editor/new' variant='green' className='font-semibold'>
-            Create New Quiz
-          </Button>
-          <Button href='/quizzes/generate' variant='yellow' className='font-semibold'>
-            Generate Quiz
-          </Button>
+          <FancyButton color='green' asChild>
+            <Link href='/editor/new'>
+              { t('createNew') }
+            </Link>
+          </FancyButton>
+          <FancyButton color='yellow' asChild>
+            <Link href='/quizzes/generate'>
+              { t('generate') }
+            </Link>
+          </FancyButton>
           <QuizFileInput onChange={ onFile } className='w-full text-center' />
         </div>
         <div className='container mx-auto w-full grid gap-4 p-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {
-            Array.from(quizzes.entries()).map(([key, quiz]) => (
-              <QuizCard key={ key } quiz={ quiz } id={ key } />
+            quizzes.map((quiz) => (
+              <QuizCard key={ quiz.id } quiz={ quiz } id={ quiz.id } />
             ))
           }
         </div>

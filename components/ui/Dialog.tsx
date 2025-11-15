@@ -2,6 +2,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import Button from './ButtonOld'
 import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
+import FancyButton from './fancy-button'
+import { Color } from '@/lib/Colors'
 
 export const DialogContext = createContext<{
   opened: boolean
@@ -26,19 +28,17 @@ export const Dialog = ({ children, open, onOpenChange }: { children: React.React
   )
 }
 
-// Component that triggers the dialog
-export const DialogTrigger = ({ children, variant, className }: { children: React.ReactNode, variant?: ColorVariants, className?: string }) => {
+export const DialogTrigger = ({ children, color, className }: { children: React.ReactNode, color?: Color, className?: string }) => {
   const context = useContext(DialogContext)
   if (!context) throw new Error("DialogTrigger must be used within a Dialog")
 
   return (
-    <Button variant={ variant || 'green'} onClick={() => context.setOpened(!context.opened)} className={ className }>
+    <FancyButton color={ color } onClick={() => context.setOpened(!context.opened)} className={ className }>
       { children }
-    </Button>
+    </FancyButton>
   )
 }
 
-// Content of the dialog
 export const DialogContent = ({ children }: { children: React.ReactNode }) => {
   const context = useContext(DialogContext)
   if (!context) throw new Error("DialogContent must be used within a Dialog")

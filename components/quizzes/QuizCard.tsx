@@ -3,10 +3,12 @@ import React from 'react'
 import Button from '../ui/ButtonOld'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/Dialog'
 import { deleteQuiz } from '@/lib/client/IndexedDB'
+import FancyButton from '../ui/fancy-button'
+import Link from 'next/link'
 
 const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
   return (
-    <div className='bg-neutral-100 rounded-lg'>
+    <div className='bg-neutral-100 dark:bg-neutral-900 rounded-lg'>
       {
         quiz.thumbnail ?
           <div className='w-full h-48 rounded-t-lg'
@@ -23,7 +25,7 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             }}
           ></div>
       }
-      <div className='p-4 bg-neutral-200 rounded-b-lg'>
+      <div className='p-4 pb-6 bg-neutral-200 dark:bg-neutral-800 rounded-b-lg'>
         <p className='text-xs font-semibold'>{ new Date(quiz.createdAt).toLocaleString(undefined, {
           minute: 'numeric',
           hour: 'numeric',
@@ -34,10 +36,12 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
         <h2 className='text-xl font-bold'>{ quiz.title }</h2>
         <p className='text-sm'>{ quiz.description }</p>
         <div className='mt-4 flex gap-4'>
-          <Button href={`/editor/${id.replace('quiz:', '')}`} className='font-semibold' variant='green'>
-            Edit
-          </Button>
-          <Button variant='blue' className='font-semibold' onClick={() => {
+          <FancyButton color='green'>
+            <Link href={`/editor/${id.replace('quiz:', '')}`}>
+              Edit
+            </Link>
+          </FancyButton>
+          <FancyButton color='blue' onClick={() => {
             const a = document.createElement("a")
             const jsonString = JSON.stringify(quiz, null, 2)
             const file = new Blob([jsonString], {type: 'text/json'})
@@ -46,9 +50,9 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             a.click()
           }}>
             Download
-          </Button>
+          </FancyButton>
           <Dialog>
-            <DialogTrigger variant='red' className='font-semibold'>
+            <DialogTrigger color='red'>
               Delete
             </DialogTrigger>
             <DialogContent>

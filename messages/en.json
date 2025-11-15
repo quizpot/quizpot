@@ -9,7 +9,8 @@
     "cz": "Czech"
   },
   "Buttons": {
-    "home": "Home"
+    "home": "Home",
+    "quizFileInput": "Upload quiz file"
   },
   "Header": {
     "stats": {
@@ -50,5 +51,10 @@
   "UnsupportedSizePage": {
     "title": "Unsupported Device",
     "description": "This device is not supported due to its screen size. Please use another device to access this page."
+  },
+  "QuizzesPage": {
+    "title": "Your Quizzes",
+    "createNew": "Create New Quiz",
+    "generate": "Generate Quiz"
   }
 }

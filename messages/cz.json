@@ -9,7 +9,8 @@
     "cz": "Čeština"
   },
   "Buttons": {
-    "home": "Domov"
+    "home": "Domov",
+    "quizFileInput": "Nahrát soubor s kvízem"
   },
   "Header": {
     "stats": {
@@ -51,5 +52,10 @@
   "UnsupportedSizePage": {
     "title": "Nepodporované zařízení",
     "description": "Tento zařízení není podporován kvůli jeho velikosti obrazovky. Prosím, použijte jiné zařízení k přístupu na této stránce."
+  },
+  "QuizzesPage": {
+    "title": "Vaše Kvízy",
+    "createNew": "Vytvořit Nový Kvíz",
+    "generate": "Vygenerovat Kvíz"
   }
 }

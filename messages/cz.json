@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "Quizpot",
+    "description": "Vytvářejte zabavné kvízy, bez omezení"
+  },
+  "Locales": {
+    "en": "Angličtina",
+    "sk": "Slovenčina",
+    "cz": "Čeština"
+  },
+  "HomePage": {
+    "menu": {
+      "Play": {
+        "label": "Hrát",
+        "href": "/play"
+      },
+      "Host": {
+        "label": "Hostit",
+        "href": "/host"
+      },
+      "Edit": {
+        "label": "Editor",
+        "href": "/editor"
+      },
+      "Stats": {
+        "label": "Statistiky",
+        "href": "/stats"
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "title": "Quizpot",
+    "description": "Create entertaining quizzes, without limits"
+  },
+  "Locales": {
+    "en": "English",
+    "sk": "Slovak",
+    "cz": "Czech"
+  },
+  "HomePage": {
+    "menu": {
+      "Play": {
+        "label": "Play",
+        "href": "/play"
+      },
+      "Host": {
+        "label": "Host",
+        "href": "/host"
+      },
+      "Edit": {
+        "label": "Edit",
+        "href": "/editor"
+      },
+      "Stats": {
+        "label": "Stats",
+        "href": "/stats"
+      }
+    }
+  }
+}

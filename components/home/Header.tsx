@@ -1,5 +1,4 @@
 import React from 'react'
-import Button from '../ui/ButtonOld'
 import Notification from './Notification'
 import FancyButton from '../ui/fancy-button'
 import Link from 'next/link'

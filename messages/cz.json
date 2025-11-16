@@ -61,7 +61,7 @@
   "GenerateQuizPage": {
     "title": "Vygenerovat Kvíz",
     "generate": "Vygenerovat",
-    "prompt": "Vygeneruj mě kvíz o psech a kočkách s titulní slajdem a 10 otázek",
+    "prompt": "Vytvor mi kvíz o psoch a mačkách s titulným slajdom a 10 otázkami",
     "generating": "Generování...",
     "description": "Budete přesměrováni na editor zkráceně."
   }

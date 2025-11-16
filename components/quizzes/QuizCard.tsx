@@ -1,14 +1,17 @@
-import { QuizFile } from '@/lib/misc/QuizFile'
+import { QuizFile } from '@/lib/QuizFile'
 import React from 'react'
 import Button from '../ui/ButtonOld'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/Dialog'
 import { deleteQuiz } from '@/lib/client/IndexedDB'
 import FancyButton from '../ui/fancy-button'
 import Link from 'next/link'
+import FancyCard from '../ui/fancy-card'
 
 const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
+  const dev = process.env.NODE_ENV === 'development'
+
   return (
-    <div className='bg-neutral-100 dark:bg-neutral-900 rounded-lg'>
+    <FancyCard className='p-0 mb-auto'>
       {
         quiz.thumbnail ?
           <div className='w-full h-48 rounded-t-lg'
@@ -25,17 +28,31 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             }}
           ></div>
       }
-      <div className='p-4 pb-6 bg-neutral-200 dark:bg-neutral-800 rounded-b-lg'>
-        <p className='text-xs font-semibold'>{ new Date(quiz.createdAt).toLocaleString(undefined, {
-          minute: 'numeric',
-          hour: 'numeric',
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        }) }</p>
-        <h2 className='text-xl font-bold'>{ quiz.title }</h2>
-        <p className='text-sm'>{ quiz.description }</p>
-        <div className='mt-4 flex gap-4'>
+      <div className='p-4 pb-6 bg-neutral-200 dark:bg-neutral-800 rounded-b-lg flex flex-col gap-4'>
+        <div className='flex gap-2 select-none'>
+          <FancyCard className='text-xs font-semibold' size='sm'>{ 
+            new Date(quiz.createdAt).toLocaleString(undefined, {
+              minute: 'numeric',
+              hour: 'numeric',
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            }) 
+          }</FancyCard>
+          <FancyCard className='text-xs font-semibold' size='sm'>
+            { quiz.language }
+          </FancyCard>
+          {
+            dev && <FancyCard className='text-xs font-semibold mr-auto' size='sm'>
+              v{ quiz.version }
+            </FancyCard>
+          }
+        </div>
+        <div>
+          <h1 className='text-xl font-bold'>{ quiz.title }</h1>
+          <p className='text-sm'>{ quiz.description }</p>
+        </div>
+        <div className='flex gap-4'>
           <FancyButton color='green'>
             <Link href={`/editor/${id.replace('quiz:', '')}`}>
               Edit
@@ -71,7 +88,7 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
           </Dialog>
         </div>
       </div>
-    </div>
+    </FancyCard>
   )
 }
 

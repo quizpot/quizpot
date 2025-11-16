@@ -1,10 +1,10 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import ImageInput from '@/components/ui/ImageInput'
-import TextAreaInput from '@/components/ui/TextAreaInput'
+import TextAreaInput from '@/components/ui/textarea-input'
 import TextInput from '@/components/ui/TextInput'
 import { useToast } from '@/components/ui/Toaster'
-import { TitleImageTextSlideLayout } from '@/lib/misc/QuizFile'
+import { TitleImageTextSlideLayout } from '@/lib/QuizFile'
 import React from 'react'
 
 const TitleImageTextSlidePropertyEditor = () => {

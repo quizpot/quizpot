@@ -1,5 +1,5 @@
 import Button from '@/components/ui/ButtonOld'
-import { TitleImageTextSlideLayout } from '@/lib/misc/QuizFile'
+import { TitleImageTextSlideLayout } from '@/lib/QuizFile'
 import Image from 'next/image'
 import React from 'react'
 

@@ -3,7 +3,7 @@ import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileP
 import BooleanInput from '@/components/ui/BooleanInput'
 import Button from '@/components/ui/ButtonOld'
 import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
-import { TrueFalseQuestion } from '@/lib/misc/QuizFile'
+import { TrueFalseQuestion } from '@/lib/QuizFile'
 import React from 'react'
 
 const TrueFalseChoiceInput = ({ v }: { v: boolean }) => {

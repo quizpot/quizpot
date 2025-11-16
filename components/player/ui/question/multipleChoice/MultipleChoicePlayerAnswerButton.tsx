@@ -2,7 +2,7 @@ import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProv
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
 import Button from '@/components/ui/ButtonOld'
 import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
-import { Choice } from '@/lib/misc/QuizFile'
+import { Choice } from '@/lib/QuizFile'
 import React from 'react'
 
 const MultipleChoicePlayerAnswerButton = ({ choice, index, variant }: { choice: Omit<Choice, 'correct'>, index: number, variant: ColorVariants }) => {

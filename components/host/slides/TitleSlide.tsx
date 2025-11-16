@@ -1,5 +1,5 @@
 import Button from '@/components/ui/ButtonOld'
-import { TitleSlideLayout } from '@/lib/misc/QuizFile'
+import { TitleSlideLayout } from '@/lib/QuizFile'
 import React from 'react'
 
 const TitleSlide = ({ slide }: { slide: TitleSlideLayout }) => {

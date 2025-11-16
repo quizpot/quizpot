@@ -1,4 +1,4 @@
-import { QuizFile } from "../misc/QuizFile"
+import { QuizFile } from "../QuizFile"
 
 let db: IDBDatabase
 

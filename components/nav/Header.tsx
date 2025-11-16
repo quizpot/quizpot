@@ -1,6 +1,5 @@
 "use client"
 import React, { useState } from 'react'
-import Notification from './Notification'
 import FancyButton from '../ui/fancy-button'
 import Link from 'next/link'
 import { ThemeSwitch } from '../ui/theme-switch'
@@ -8,6 +7,7 @@ import { createPortal } from 'react-dom'
 import { Menu } from 'lucide-react'
 import { useMessages } from 'next-intl'
 import LocaleSwitch from '../ui/locale-switch'
+import Notification from './Notification'
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)

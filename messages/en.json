@@ -34,7 +34,7 @@
       },
       "Edit": {
         "label": "Edit",
-        "href": "/editor"
+        "href": "/quizzes"
       },
       "Stats": {
         "label": "Stats",
@@ -56,5 +56,12 @@
     "title": "Your Quizzes",
     "createNew": "Create New Quiz",
     "generate": "Generate Quiz"
+  },
+  "GenerateQuizPage": {
+    "title": "Generate Quiz",
+    "generate": "Generate",
+    "prompt": "Generate me a quiz about dogs and cats with a title slide and 10 questions",
+    "generating": "Generating...",
+    "description": "You will be redirected to the editor shortly."
   }
 }

@@ -1,4 +1,5 @@
-import Header from '@/components/home/Header'
+import Footer from '@/components/nav/Footer'
+import Header from '@/components/nav/Header'
 import FancyButton from '@/components/ui/fancy-button'
 import { Color } from '@/lib/Colors'
 import { cn } from '@/lib/utils'
@@ -31,13 +32,7 @@ const HomePage = () => {
           </MenuButton>
         </div>
       </section>
-      <footer className='p-4 flex items-center justify-center'>
-        <FancyButton size='sm' asChild>
-          <Link href='https://quizpot.app' target='_blank' className='text-sm'>
-            2025 © Quizpot
-          </Link>
-        </FancyButton>
-      </footer>
+      <Footer />
     </section>
   )
 }

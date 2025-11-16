@@ -1,7 +1,7 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import Button from '@/components/ui/ButtonOld'
-import { MultipleChoiceQuestion } from '@/lib/misc/QuizFile'
+import { MultipleChoiceQuestion } from '@/lib/QuizFile'
 import React from 'react'
 
 const QuestionChoiceRemove = () => {

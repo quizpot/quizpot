@@ -6,7 +6,7 @@ import QuestionChoiceAdd from './ui/QuestionChoiceAdd'
 import QuestionChoiceRemove from './ui/QuestionChoiceRemove'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
-import { MultipleChoiceQuestion } from '@/lib/misc/QuizFile'
+import { MultipleChoiceQuestion } from '@/lib/QuizFile'
 import MultipleChoiceQuestionChoiceInput from './ui/MultipleChoiceQuestionChoiceInput'
 import MultipleChoicePropertySidebar from './ui/MultipleChoicePropertySidebar'
 

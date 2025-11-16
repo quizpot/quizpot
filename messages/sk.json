@@ -34,7 +34,7 @@
       },
       "Edit": {
         "label": "Editor",
-        "href": "/editor"
+        "href": "/quizzes"
       },
       "Stats": {
         "label": "Štatistiky",
@@ -57,5 +57,12 @@
     "title": "Vaše Kvízy",
     "createNew": "Vytvoriť Nový Kvíz",
     "generate": "Vygenerovať Kvíz"
+  },
+  "GenerateQuizPage": {
+    "title": "Vygenerovať Kvíz",
+    "generate": "Vygenerovať",
+    "prompt": "Vytvor mi kvíz o psoch a mačkách s titulným slajdom a 10 otázkami",
+    "generating": "Generovanie...",
+    "description": "Budete presmerovaní na editor čoskoro."
   }
 }

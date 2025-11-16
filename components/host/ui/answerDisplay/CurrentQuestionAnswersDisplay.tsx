@@ -1,4 +1,4 @@
-import { Question } from '@/lib/misc/QuizFile'
+import { Question } from '@/lib/QuizFile'
 import { Answer } from '@/lib/server/managers/LobbyManager'
 import React from 'react'
 import MultipleChoiceGraph from './MultipleChoiceGraph'

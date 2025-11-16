@@ -2,7 +2,7 @@ import { DialogContext } from '@/components/ui/Dialog'
 import React, { useContext } from 'react'
 import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
 import Button from '@/components/ui/ButtonOld'
-import { Question } from '@/lib/misc/QuizFile'
+import { Question } from '@/lib/QuizFile'
 
 const AddQuestionButton = ({ questionType }: { questionType: string }) => {
   const { quizFile, setQuizFile } = useEditorQuizFile()

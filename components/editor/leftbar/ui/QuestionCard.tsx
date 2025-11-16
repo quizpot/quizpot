@@ -1,5 +1,5 @@
 "use client"
-import { Question } from '@/lib/misc/QuizFile'
+import { Question } from '@/lib/QuizFile'
 import React from 'react'
 import QuestionCardIcon from './QuestionCardIcon'
 import { PiCards } from 'react-icons/pi'

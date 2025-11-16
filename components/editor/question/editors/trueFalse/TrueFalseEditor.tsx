@@ -4,7 +4,7 @@ import React from 'react'
 import QuestionImage from '../../ui/QuestionImage'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
-import { TrueFalseQuestion } from '@/lib/misc/QuizFile'
+import { TrueFalseQuestion } from '@/lib/QuizFile'
 import TrueFalsePropertySidebar from './ui/TrueFalsePropertySidebar'
 import TrueFalseChoiceInput from './ui/TrueFalseChoiceInput'
 

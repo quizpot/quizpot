@@ -6,7 +6,7 @@ import { LobbyStatus } from '@/lib/misc/LobbyStatus'
 import { PlayerState } from '@/lib/misc/PlayerState'
 import { SanitizedQuestion } from '@/lib/server/QuestionSanitizer'
 import { redirect } from 'next/navigation'
-import { Question, QuizTheme } from '@/lib/misc/QuizFile'
+import { Question, QuizTheme } from '@/lib/QuizFile'
 
 export interface HostLobbyState {
   code: number

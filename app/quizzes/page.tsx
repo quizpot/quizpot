@@ -1,16 +1,16 @@
 "use client"
-import Header from '@/components/home/Header'
 import QuizCard from '@/components/quizzes/QuizCard'
-import Button from '@/components/ui/ButtonOld'
 import DeviceScreenUnsupported from '@/components/ui/unsupported-device-overlay'
 import QuizFileInput from '@/components/ui/QuizFileInput'
 import { useToast } from '@/components/ui/Toaster'
 import { getAllQuizzes, saveQuiz } from '@/lib/client/IndexedDB'
-import { QuizFile } from '@/lib/misc/QuizFile'
+import { QuizFile } from '@/lib/QuizFile'
 import React, { useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
 import Link from 'next/link'
+import Header from '@/components/nav/Header'
+import Footer from '@/components/nav/Footer'
 
 const QuizzesPage = () => {
   const t = useTranslations('QuizzesPage')
@@ -81,6 +81,7 @@ const QuizzesPage = () => {
             ))
           }
         </div>
+        <Footer />
       </section>
     </>
   )

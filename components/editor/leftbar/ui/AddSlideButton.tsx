@@ -1,10 +1,12 @@
-import { DialogContext } from '@/components/ui/Dialog'
+import { DialogContext } from '@/components/ui/dialog'
 import React, { useContext } from 'react'
 import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
-import Button from '@/components/ui/ButtonOld'
 import { Question, SlideType } from '@/lib/QuizFile'
+import { useTranslations } from 'next-intl'
+import FancyButton from '@/components/ui/fancy-button'
 
 const AddSlideButton = ({ slideType }: { slideType: SlideType }) => {
+  const t = useTranslations('Slides')
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const dialogContext = useContext(DialogContext)
 
@@ -12,12 +14,10 @@ const AddSlideButton = ({ slideType }: { slideType: SlideType }) => {
     throw new Error("No dialog context found")
   }
 
-  let title: string
   let question: Question
 
   switch (slideType) {
     case 'title':
-      title = "Title Slide"
       question = {
         questionType: 'slide',
         layout: {
@@ -28,7 +28,6 @@ const AddSlideButton = ({ slideType }: { slideType: SlideType }) => {
       }
       break
     case 'titleImageText':
-      title = "Title Image Text Slide"
       question = {
         questionType: 'slide',
         layout: {
@@ -43,8 +42,7 @@ const AddSlideButton = ({ slideType }: { slideType: SlideType }) => {
   }
 
   return (
-    <Button
-      variant='gray'
+    <FancyButton
       onClick={() => {
         setQuizFile({
           ...quizFile,
@@ -56,8 +54,8 @@ const AddSlideButton = ({ slideType }: { slideType: SlideType }) => {
         dialogContext.setOpened(false)
       }}
     >
-      { title }
-    </Button>
+      { t(slideType) }
+    </FancyButton>
   )
 }
 

@@ -2,7 +2,7 @@
 import QuizCard from '@/components/quizzes/QuizCard'
 import DeviceScreenUnsupported from '@/components/ui/unsupported-device-overlay'
 import QuizFileInput from '@/components/ui/QuizFileInput'
-import { useToast } from '@/components/ui/Toaster'
+import { useToast } from '@/components/ui/toaster'
 import { getAllQuizzes, saveQuiz } from '@/lib/client/IndexedDB'
 import { QuizFile } from '@/lib/QuizFile'
 import React, { useEffect } from 'react'

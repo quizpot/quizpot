@@ -1,10 +1,12 @@
-import { DialogContext } from '@/components/ui/Dialog'
+import { DialogContext } from '@/components/ui/dialog'
 import React, { useContext } from 'react'
 import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
-import Button from '@/components/ui/ButtonOld'
 import { Question } from '@/lib/QuizFile'
+import FancyButton from '@/components/ui/fancy-button'
+import { useTranslations } from 'next-intl'
 
 const AddQuestionButton = ({ questionType }: { questionType: string }) => {
+  const t = useTranslations('Questions')
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const dialogContext = useContext(DialogContext)
 
@@ -12,12 +14,10 @@ const AddQuestionButton = ({ questionType }: { questionType: string }) => {
     throw new Error("No dialog context found")
   }
 
-  let title: string
   let question: Question
 
   switch (questionType) {
     case 'multipleChoice':
-      title = "Multiple Choice Question"
       question = {
         questionType: 'multipleChoice',
         question: "What is the color of the sky?",
@@ -45,7 +45,6 @@ const AddQuestionButton = ({ questionType }: { questionType: string }) => {
       }
       break
     case 'trueFalse':
-      title = "True False Question"
       question = {
         questionType: 'trueFalse',
         question: "Do you like QuizPot?",
@@ -56,7 +55,6 @@ const AddQuestionButton = ({ questionType }: { questionType: string }) => {
       }
       break
     case 'shortAnswer':
-      title = "Short Answer Question"
       question = {
         questionType: 'shortAnswer',
         question: "What is the capital of France?",
@@ -71,8 +69,7 @@ const AddQuestionButton = ({ questionType }: { questionType: string }) => {
   }
 
   return (
-    <Button
-      variant='gray'
+    <FancyButton
       onClick={() => {
         setQuizFile({
           ...quizFile,
@@ -84,8 +81,8 @@ const AddQuestionButton = ({ questionType }: { questionType: string }) => {
         dialogContext.setOpened(false)
       }}
     >
-      { title }
-    </Button>
+      { t(questionType) }
+    </FancyButton>
   )
 }
 

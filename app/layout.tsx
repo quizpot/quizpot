@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import Toaster, { ToastProvider } from "@/components/ui/Toaster"
+import Toaster, { ToastProvider } from "@/components/ui/toaster"
 import Script from "next/script";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { NextIntlClientProvider } from "next-intl";

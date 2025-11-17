@@ -4,7 +4,7 @@ import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
 import Button from '@/components/ui/ButtonOld'
-import { useToast } from '@/components/ui/Toaster'
+import { useToast } from '@/components/ui/toaster'
 import { QuizFile } from '@/lib/QuizFile'
 import React, { useEffect, useState } from 'react'
 import SetQuizDialog from '../ui/SetQuizDialog'

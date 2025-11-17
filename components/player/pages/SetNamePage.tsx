@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import TextInput from '../../ui/TextInput'
 import Button from '../../ui/ButtonOld'
-import { useToast } from '../../ui/Toaster'
+import { useToast } from '../../ui/toaster'
 import { useWebSocket } from '../../providers/WebSocketProvider'
 import { usePlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 import { redirect } from 'next/navigation'

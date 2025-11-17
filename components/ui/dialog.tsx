@@ -1,9 +1,8 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from 'react'
-import Button from './ButtonOld'
-import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
 import FancyButton from './fancy-button'
 import { Color } from '@/lib/Colors'
+import { useTranslations } from 'next-intl'
 
 export const DialogContext = createContext<{
   opened: boolean
@@ -64,8 +63,8 @@ export const DialogContent = ({ children }: { children: React.ReactNode }) => {
         className='fixed left-0 top-0 w-full h-screen bg-black/50 z-10 flex items-center justify-center'
         onClick={() => { context.setOpened(false) }}
       >
-        <div 
-          className='bg-white rounded-lg shadow z-30 flex flex-col m-4'
+        <div
+          className='bg-white shadow-neutral-100 dark:bg-neutral-900 dark:shadow-neutral-950 shadow-[0_8px] rounded-xl z-30 flex flex-col m-4'
           onClick={(e) => e.stopPropagation()}
         >
           { children }
@@ -78,6 +77,8 @@ export const DialogContent = ({ children }: { children: React.ReactNode }) => {
 export const DialogHeader = ({ title }: { title: string }) => {
   const context = useContext(DialogContext)
   if (!context) throw new Error("DialogHeader must be used within a Dialog")
+  
+  const t = useTranslations('Buttons')
 
   return (
     <header className='p-2 shadow flex gap-4 justify-between items-center'>
@@ -85,9 +86,9 @@ export const DialogHeader = ({ title }: { title: string }) => {
         { title }
       </h1>
       <div className='flex gap-1'>
-        <Button onClick={() => context.setOpened(false)} variant="gray">
-          Close
-        </Button>
+        <FancyButton size='sm' onClick={ () => context.setOpened(false) }>
+          { t('close') }
+        </FancyButton>
       </div>
     </header>
   )

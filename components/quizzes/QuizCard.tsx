@@ -1,13 +1,15 @@
 import { QuizFile } from '@/lib/QuizFile'
 import React from 'react'
 import Button from '../ui/ButtonOld'
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/Dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/dialog'
 import { deleteQuiz } from '@/lib/client/IndexedDB'
 import FancyButton from '../ui/fancy-button'
 import Link from 'next/link'
 import FancyCard from '../ui/fancy-card'
+import { useTranslations } from 'next-intl'
 
 const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
+  const t = useTranslations('Buttons')
   const dev = process.env.NODE_ENV === 'development'
 
   return (
@@ -53,9 +55,9 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
           <p className='text-sm'>{ quiz.description }</p>
         </div>
         <div className='flex gap-4'>
-          <FancyButton color='green'>
+          <FancyButton color='green' asChild>
             <Link href={`/editor/${id.replace('quiz:', '')}`}>
-              Edit
+              { t('edit') }
             </Link>
           </FancyButton>
           <FancyButton color='blue' onClick={() => {
@@ -66,21 +68,21 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             a.download = quiz.title + '.qp'
             a.click()
           }}>
-            Download
+            { t('download') }
           </FancyButton>
           <Dialog>
             <DialogTrigger color='red'>
-              Delete
+              { t('delete') }
             </DialogTrigger>
             <DialogContent>
-              <DialogHeader title="Are you sure?" />
+              <DialogHeader title={ t('sure') } />
               <section className="relative flex-grow overflow-y-auto">
                 <div className='w-full h-full p-4 flex flex-col gap-4'>
                   <Button variant='red' onClick={async () => {
                     await deleteQuiz(id)
                     window.location.reload()
                   }}>
-                    Delete
+                    { t('delete') }
                   </Button>
                 </div>
               </section>

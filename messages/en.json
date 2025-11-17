@@ -10,7 +10,16 @@
   },
   "Buttons": {
     "home": "Home",
-    "quizFileInput": "Upload quiz file"
+    "quizFileInput": "Upload quiz file",
+    "close" : "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "retry": "Retry",
+    "exit": "Exit",
+    "download": "Download",
+    "sure": "Are you sure?",
+    "goHome": "Go Home"
   },
   "Header": {
     "stats": {
@@ -63,5 +72,37 @@
     "prompt": "Generate me a quiz about dogs and cats with a title slide and 10 questions",
     "generating": "Generating...",
     "description": "You will be redirected to the editor shortly."
+  },
+  "QuizSettings": {
+    "button": "Settings",
+    "dialogTitle": "Quiz Settings",
+    "thumbnail": "Thumbnail",
+    "title": "Title",
+    "description": "Description",
+    "background": "Background"
+  },
+  "SelectImageInput": {
+    "button": "Select Image",
+    "title": "Select Image",
+    "fromFile": "From file",
+    "fromPixabay": "From Pixabay",
+    "selectFromPixabay": "Select From Pixabay",
+    "search": "Search"
+  },
+  "NewQuestionDialog": {
+    "button": "New Question",
+    "title": "Choose Question Type"
+  },
+  "NewSlideDialog": {
+    "button": "New Slide",
+    "title": "Choose Slide Type"
+  },
+  "Questions": {
+    "multipleChoice": "Multiple Choice",
+    "trueFalse": "True False",
+    "shortAnswer": "Short Answer"
+  },
+  "Slides": {
+    "title": "Title"
   }
 }

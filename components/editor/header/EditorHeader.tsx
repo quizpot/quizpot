@@ -1,11 +1,14 @@
-import Button from '@/components/ui/ButtonOld'
 import React from 'react'
-import { useToast } from '@/components/ui/Toaster'
+import { useToast } from '@/components/ui/toaster'
 import QuizSettings from './QuizSettings'
 import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 import { saveQuiz } from '@/lib/client/IndexedDB'
+import FancyButton from '@/components/ui/fancy-button'
+import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 const EditorHeader = ({ quizId }: { quizId: string }) => {
+  const t = useTranslations('Buttons')
   const toast = useToast() 
   const { quizFile } = useEditorQuizFile()
 
@@ -37,24 +40,26 @@ const EditorHeader = ({ quizId }: { quizId: string }) => {
   }
 
   return (
-    <header className='flex gap-4 justify-between items-center p-2 shadow'>
-      <div className='flex flex-col md:flex-row gap-2 items-center'>
-        <Button href={'/'} variant='gray' className='text-2xl font-semibold'>
-          Quizpot
-        </Button>
+    <header className='flex gap-4 justify-between items-center p-2'>
+      <div className='flex flex-col md:flex-row gap-4 items-center'>
+        <FancyButton className='text-xl font-semibold' asChild>
+          <Link href={'/'}>
+            Quizpot
+          </Link>
+        </FancyButton>
         <h1 className='text-xl font-semibold'>{ quizFile.title }</h1>
       </div>
 
       <div className='flex gap-2 items-center justify-center'>
-        <div className='flex gap-1 items-center justify-center'>
-          <QuizSettings />
-          <Button href='/quizzes' variant="blue" className='font-semibold'>
-            Exit
-          </Button>
-          <Button onClick={ onSave } variant="green" className='font-semibold'>
-            Save
-          </Button>
-        </div>
+        <QuizSettings />
+        <FancyButton color="blue" asChild>
+          <Link href='/quizzes'>
+            { t('exit') }
+          </Link>
+        </FancyButton>
+        <FancyButton onClick={ onSave } color="green">
+          { t('save') }
+        </FancyButton>
       </div>
     </header>
   )

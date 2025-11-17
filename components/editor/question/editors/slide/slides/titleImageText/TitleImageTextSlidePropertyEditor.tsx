@@ -3,7 +3,7 @@ import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileP
 import ImageInput from '@/components/ui/ImageInput'
 import TextAreaInput from '@/components/ui/textarea-input'
 import TextInput from '@/components/ui/TextInput'
-import { useToast } from '@/components/ui/Toaster'
+import { useToast } from '@/components/ui/toaster'
 import { TitleImageTextSlideLayout } from '@/lib/QuizFile'
 import React from 'react'
 

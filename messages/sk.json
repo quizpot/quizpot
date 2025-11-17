@@ -10,7 +10,16 @@
   },
   "Buttons": {
     "home": "Domov",
-    "quizFileInput": "Nahrať súbor s kvízom"
+    "quizFileInput": "Nahrať súbor s kvízom",
+    "close" : "Zavrieť",
+    "save": "Uložiť",
+    "delete": "Vymazať",
+    "edit": "Upraviť",
+    "retry": "Skúsiť znova",
+    "exit": "Zavrieť",
+    "download": "Stiahnuť",
+    "sure": "Ste si istý?",
+    "goHome": "Ísť domov"
   },
   "Header": {
     "stats": {
@@ -29,7 +38,7 @@
         "href": "/play"
       },
       "Host": {
-        "label": "Hostiť",
+        "label": "Hostovať",
         "href": "/host"
       },
       "Edit": {
@@ -64,5 +73,37 @@
     "prompt": "Vytvor mi kvíz o psoch a mačkách s titulným slajdom a 10 otázkami",
     "generating": "Generovanie...",
     "description": "Budete presmerovaní na editor čoskoro."
+  },
+  "QuizSettings": {
+    "button": "Nastavenia",
+    "dialogTitle": "Nastavenia Kvízu",
+    "thumbnail": "Náhľad",
+    "title": "Názov",
+    "description": "Popis",
+    "background": "Pozadie"
+  },
+  "SelectImageInput": {
+    "button": "Vyberte obrázok",
+    "title": "Vyberte obrázok",
+    "fromFile": "Zo súboru",
+    "fromPixabay": "Z Pixabay",
+    "selectFromPixabay": "Vyberte z Pixabay",
+    "search": "Vyhľadať"
+  },
+  "NewQuestionDialog": {
+    "button": "Nová Otázka",
+    "title": "Vyberte typ otázky"
+  },
+  "NewSlideDialog": {
+    "button": "Nový Slajd",
+    "title": "Vyberte typ slajdu"
+  },
+  "Questions": {
+    "multipleChoice": "Viacero Na Výber",
+    "trueFalse": "Pravda Nepravda",
+    "shortAnswer": "Krátka Odpoveď"
+  },
+  "Slides": {
+    "title": "Názov"
   }
 }

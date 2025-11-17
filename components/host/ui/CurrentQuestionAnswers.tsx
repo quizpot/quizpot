@@ -1,7 +1,7 @@
 import React from 'react'
 import MultipleChoiceAnswerButton from './answerButtons/MultipleChoiceAnswerButton'
 import MultipleChoiceAnswerButtonWithAnswer from './answerButtons/MultipleChoiceAnswerButtonWithAnswer'
-import { Question } from '@/lib/misc/QuizFile'
+import { Question } from '@/lib/QuizFile'
 import { multipleChoiceVariants } from '@/lib/client/colorVariants/MultipleChoiceVariants'
 import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
 import Card from '@/components/ui/Card'

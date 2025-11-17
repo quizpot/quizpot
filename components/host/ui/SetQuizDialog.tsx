@@ -1,10 +1,10 @@
 "use client"
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/Dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import QuizFileInput from '@/components/ui/QuizFileInput'
 import SelectInput from '@/components/ui/SelectInput'
-import { useToast } from '@/components/ui/Toaster'
+import { useToast } from '@/components/ui/toaster'
 import { getAllQuizzes } from '@/lib/client/IndexedDB'
-import { QuizFile } from '@/lib/misc/QuizFile'
+import { QuizFile } from '@/lib/QuizFile'
 import React, { useEffect, useState } from 'react'
 
 const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (quiz: QuizFile) => void }) => {

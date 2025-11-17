@@ -5,7 +5,7 @@ import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCu
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import TextInput from '@/components/ui/TextInput'
-import { ShortAnswerQuestion } from '@/lib/misc/QuizFile'
+import { ShortAnswerQuestion } from '@/lib/QuizFile'
 import ShortAnswerPropertySidebar from './ui/ShortAnswerPropertySidebar'
 import AddAnswerButton from './ui/AddAnswerButton'
 import RemoveAnswerButton from './ui/RemoveAnswerButton'

@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
 import { WebSocketClient } from "./WSClientManager"
-import { MultipleChoiceAnswer, QuizFile, ShortAnswerAnswer, SlideQuestion, TrueFalseAnswer } from "../../misc/QuizFile"
+import { MultipleChoiceAnswer, QuizFile, ShortAnswerAnswer, SlideQuestion, TrueFalseAnswer } from "../../QuizFile"
 import { sendEvent } from "./EventManager"
 import { generateUniqueName } from "../../misc/name/NameUtil"
 import { startGame } from "../handlers/GameHandler"

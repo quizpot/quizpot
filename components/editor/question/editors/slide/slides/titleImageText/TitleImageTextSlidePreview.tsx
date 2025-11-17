@@ -1,7 +1,7 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
-import Button from '@/components/ui/Button'
-import { SlideQuestion, TitleImageTextSlideLayout } from '@/lib/misc/QuizFile'
+import Button from '@/components/ui/ButtonOld'
+import { SlideQuestion, TitleImageTextSlideLayout } from '@/lib/QuizFile'
 import Image from 'next/image'
 import React from 'react'
 

@@ -1,7 +1,7 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import TextInput from '@/components/ui/TextInput'
-import { TitleSlideLayout } from '@/lib/misc/QuizFile'
+import { TitleSlideLayout } from '@/lib/QuizFile'
 import React from 'react'
 
 const TitleSlidePropertyEditor = () => {

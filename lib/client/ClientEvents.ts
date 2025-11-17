@@ -1,4 +1,4 @@
-import { QuizFile } from "../misc/QuizFile"
+import { QuizFile } from "../QuizFile"
 import { LobbySettings } from "../server/managers/LobbyManager"
 import { ClientAnswer } from "./ClientAnswer"
 

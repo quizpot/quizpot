@@ -1,6 +1,6 @@
 "use client"
 import { defaultQuiz } from "@/lib/misc/DefaultQuiz"
-import { QuizFile } from "@/lib/misc/QuizFile"
+import { QuizFile } from "@/lib/QuizFile"
 import { createContext, useContext, useState } from "react"
 
 const EditorQuizFileContext = createContext<{

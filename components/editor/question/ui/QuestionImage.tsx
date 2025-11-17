@@ -2,10 +2,10 @@
 import ImageInput from '@/components/ui/ImageInput'
 import Image from 'next/image'
 import React from 'react'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import { useEditorCurrentQuestion } from '../../providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
-import { useToast } from '@/components/ui/Toaster'
+import { useToast } from '@/components/ui/toaster'
 
 const QuestionImage = () => {
   const toast = useToast()

@@ -2,7 +2,7 @@ import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCu
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import NumberInput from '@/components/ui/NumberInput'
 import SelectInput from '@/components/ui/SelectInput'
-import { MultipleChoiceQuestion, QuestionPoints } from '@/lib/misc/QuizFile'
+import { MultipleChoiceQuestion, QuestionPoints } from '@/lib/QuizFile'
 import React from 'react'
 
 const MultipleChoicePropertySidebar = () => {

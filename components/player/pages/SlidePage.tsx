@@ -1,5 +1,5 @@
 import { PlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import React from 'react'
 

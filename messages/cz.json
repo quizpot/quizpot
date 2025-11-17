@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "title": "Quizpot",
+    "description": "Vytvářejte zabavné kvízy, bez omezení"
+  },
+  "Locales": {
+    "en": "Angličtina",
+    "sk": "Slovenčina",
+    "cz": "Čeština"
+  },
+  "Buttons": {
+    "home": "Domov",
+    "quizFileInput": "Nahrát soubor s kvízem"
+  },
+  "Header": {
+    "stats": {
+      "label": "Domov",
+      "href": "/"
+    },
+    "github": {
+      "label": "GitHub",
+      "href": "https://github.com/quizpot"
+    }
+  },
+  "HomePage": {
+    "menu": {
+      "Play": {
+        "label": "Hrát",
+        "href": "/play"
+      },
+      "Host": {
+        "label": "Hostit",
+        "href": "/host"
+      },
+      "Edit": {
+        "label": "Editor",
+        "href": "/quizzes"
+      },
+      "Stats": {
+        "label": "Statistiky",
+        "href": "/stats"
+      }
+    }
+  },
+  "StatsPage": {
+    "title": "Statistiky",
+    "clients": "Klienti",
+    "lobbies": "Skupiny",
+    "players": "Hráči",
+    "home": "Domov"
+  },
+  "UnsupportedSizePage": {
+    "title": "Nepodporované zařízení",
+    "description": "Tento zařízení není podporován kvůli jeho velikosti obrazovky. Prosím, použijte jiné zařízení k přístupu na této stránce."
+  },
+  "QuizzesPage": {
+    "title": "Vaše Kvízy",
+    "createNew": "Vytvořit Nový Kvíz",
+    "generate": "Vygenerovat Kvíz"
+  },
+  "GenerateQuizPage": {
+    "title": "Vygenerovat Kvíz",
+    "generate": "Vygenerovat",
+    "prompt": "Vytvor mi kvíz o psoch a mačkách s titulným slajdom a 10 otázkami",
+    "generating": "Generování...",
+    "description": "Budete přesměrováni na editor zkráceně."
+  }
+}

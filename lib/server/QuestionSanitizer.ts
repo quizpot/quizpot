@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Choice, MultipleChoiceQuestion, Question, ShortAnswerQuestion, TrueFalseQuestion } from "../misc/QuizFile"
+import { Choice, MultipleChoiceQuestion, Question, ShortAnswerQuestion, TrueFalseQuestion } from "../QuizFile"
 
 export const sanitizeQuestion = (question: Question): SanitizedQuestion | Error => {
   if (question.questionType === 'multipleChoice') {

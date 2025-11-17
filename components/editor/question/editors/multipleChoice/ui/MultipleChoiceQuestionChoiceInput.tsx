@@ -1,10 +1,10 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
-import Button from '@/components/ui/Button'
+import Button from '@/components/ui/ButtonOld'
 import TextInput from '@/components/ui/TextInput'
 import { multipleChoiceVariants } from '@/lib/client/colorVariants/MultipleChoiceVariants'
-import { MultipleChoiceQuestion } from '@/lib/misc/QuizFile'
+import { MultipleChoiceQuestion } from '@/lib/QuizFile'
 import React from 'react'
 
 const MultipleChoiceQuestionChoiceInput = ({ index }: { index: number }) => {

@@ -1,4 +1,4 @@
-import { QuestionType } from '@/lib/misc/QuizFile'
+import { QuestionType } from '@/lib/QuizFile'
 import React from 'react'
 import { FaKeyboard } from 'react-icons/fa'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'

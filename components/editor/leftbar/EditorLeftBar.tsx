@@ -5,7 +5,7 @@ import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
 import NewQuestionDialog from './ui/NewQuestionDialog'
 import NewSlideDialog from './ui/NewSlideDialog'
 import { DragDropContext, Draggable, Droppable, DropResult } from '@hello-pangea/dnd'
-import { Question } from '@/lib/misc/QuizFile'
+import { Question } from '@/lib/QuizFile'
 
 const reorder = (list: Question[], startIndex: number, endIndex: number) => {
   const result = Array.from(list)

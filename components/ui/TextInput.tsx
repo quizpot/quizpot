@@ -1,48 +1,27 @@
-import { colorStyles, ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
+import { Color } from '@/lib/Colors'
 import React from 'react'
+import FancyButton from './fancy-button'
 
 const TextInput = ({ 
   value, 
   onChange,
-  variant,
+  color,
   className
 }: { 
   value: string, 
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void 
-  variant?: ColorVariants,
+  color?: Color,
   className?: string
 }) => {
-  if (!variant) {
-    variant = 'gray'
-  }
-
-  const { parent: parentClassName, child: childClassName } = colorStyles[variant]
-
-  if (variant === 'ghost') {
-    return (
+  return (
+    <FancyButton color={ color } asChild>
       <input 
         type='text'
         className={ className }
         onChange={ (e) => { onChange(e) } } 
         value={ value }
       />
-    )
-  }
-  
-  return (
-    <div className={`pb-0.5 ${className?.includes('w-full') ? 'w-full' : ''} rounded ` + parentClassName}>
-      <input 
-        type='text'
-        className={`
-          rounded px-2 py-1
-          -translate-y-1
-          focus:outline-none focus:border-0
-          duration-200
-        ` + childClassName + ' ' + className }
-        onChange={(e) => { onChange(e) }} 
-        value={ value }
-      />
-    </div>
+    </FancyButton>
   )
 }
 

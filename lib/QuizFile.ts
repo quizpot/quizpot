@@ -1,4 +1,5 @@
 export type QuizFile = {
+  id: string
   version: number
   title: string
   description: string

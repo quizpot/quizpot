@@ -2,7 +2,7 @@ import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCu
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import NumberInput from '@/components/ui/NumberInput'
 import SelectInput from '@/components/ui/SelectInput'
-import { QuestionPoints, ShortAnswerQuestion } from '@/lib/misc/QuizFile'
+import { QuestionPoints, ShortAnswerQuestion } from '@/lib/QuizFile'
 
 const ShortAnswerPropertySidebar = () => {
   const { quizFile, setQuizFile } = useEditorQuizFile()

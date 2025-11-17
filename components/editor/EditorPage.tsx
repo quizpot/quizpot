@@ -6,12 +6,13 @@ import EditorHeader from "./header/EditorHeader"
 import EditorLeftBar from "./leftbar/EditorLeftBar"
 import QuestionEditor from "./question/QuestionEditor"
 import { useEditorQuizFile } from "./providers/EditorQuizFileProvider"
-import { getQuiz, saveQuiz } from "@/lib/client/IndexedDB"
+import { getQuiz } from "@/lib/client/IndexedDB"
 import SlideArrowKeybind from "./keybinds/SlideArrowKeybind"
+import AutoSave from "./AutoSave"
 
 export const EditorPage = ({ quizId }: { quizId: string }) => {
   const toast = useToast() 
-  const { quizFile: quiz, setQuizFile: setQuiz } = useEditorQuizFile()
+  const { setQuizFile: setQuiz } = useEditorQuizFile()
 
   useEffect(() => {
     const loadQuiz = async () => {
@@ -36,26 +37,9 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
     loadQuiz()
   }, [toast, quizId, setQuiz])
 
-  useEffect(() => {
-    const autoSaveHandler = setTimeout(async () => {
-      if (quizId && quizId !== 'new' && quiz) {
-        try {
-          await saveQuiz(quiz, quizId)
-          toast('Quiz automatically saved', { variant: 'success' })
-        } catch (error) {
-          toast('Error saving quiz automatically', { variant: 'error' })
-          console.error(error)
-        }
-      }
-    }, 3000)
-
-    return () => {
-      clearTimeout(autoSaveHandler)
-    }
-  }, [quiz, quizId, toast])
-
   return (
     <>
+      <AutoSave quizId={ quizId } />
       <SlideArrowKeybind />
       <main className='flex flex-col h-screen overflow-hidden'>
         <EditorHeader quizId={ quizId } />

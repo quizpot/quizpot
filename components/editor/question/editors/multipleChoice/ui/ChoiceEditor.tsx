@@ -1,7 +1,6 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
-import FancyCard from '@/components/ui/fancy-card'
 import TextInput from '@/components/ui/TextInput'
 import { colors } from '@/lib/Colors'
 import { MultipleChoiceQuestion } from '@/lib/QuizFile'

@@ -62,7 +62,7 @@ const TrueFalsePropertySidebar = () => {
       </div>
       <div className='flex flex-col gap-2'>
         <h1 className='text-xl'>Points</h1>
-        <SelectInput onChange={ onQuestionPointsChange } value={ currentQuestion.points } className='w-full'>
+        <SelectInput onChange={ onQuestionPointsChange } value={ currentQuestion.points }>
           <option value='normalPoints'>Normal</option>
           <option value='doublePoints'>Double</option>
           <option value='noPoints'>None</option>

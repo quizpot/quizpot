@@ -46,7 +46,7 @@ const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (qui
 
   return (
     <Dialog open={ openedSetQuizDialog } onOpenChange={ (open) => { setOpenedSetQuizDialog(open) } }>
-      <DialogTrigger variant='gray' className='font-semibold w-full'>
+      <DialogTrigger className='font-semibold w-full'>
         { quizName || 'Select Quiz' }
       </DialogTrigger>
       <DialogContent>
@@ -59,7 +59,7 @@ const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (qui
               setOpenedSetQuizDialog(false) 
             } } 
           />
-          <SelectInput onChange={ onSelectChange } className='w-full'>
+          <SelectInput onChange={ onSelectChange }>
             <option value="">Select a quiz from editor</option>
             {
               quizzes.map((quiz, index) => {

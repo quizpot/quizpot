@@ -1,5 +1,5 @@
 "use client"
-import Header from '@/components/home/Header'
+import Header from '@/components/nav/Header'
 import FancyButton from '@/components/ui/fancy-button'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'

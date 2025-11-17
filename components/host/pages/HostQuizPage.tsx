@@ -1,5 +1,4 @@
 "use client"
-import Header from '@/components/home/Header'
 import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
@@ -8,6 +7,7 @@ import { useToast } from '@/components/ui/toaster'
 import { QuizFile } from '@/lib/QuizFile'
 import React, { useEffect, useState } from 'react'
 import SetQuizDialog from '../ui/SetQuizDialog'
+import Header from '@/components/nav/Header'
 
 const HostQuizPage = () => {
   const [customNames, setCustomNames] = useState(true)

@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import FancyButton from './fancy-button'
 
-const BooleanInput = ({ value, className, children, onChange }: { value: boolean, className?: string, children: React.ReactNode, onChange: (value: boolean) => void }) => {
+const BooleanInput = ({ value, className, children, onChange }: { value: boolean, className?: string, children?: React.ReactNode, onChange: (value: boolean) => void }) => {
   const [state, setState] = useState(value)
 
   const onClick = () => {

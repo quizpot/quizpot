@@ -1,5 +1,5 @@
 "use client"
-import Header from '@/components/home/Header'
+import Header from '@/components/nav/Header'
 import Button from '@/components/ui/ButtonOld'
 import React, { useEffect } from 'react'
 

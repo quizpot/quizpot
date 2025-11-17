@@ -1,6 +1,6 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
-import NumberInput from '@/components/ui/NumberInput'
+import NumberInput from '@/components/ui/number-input'
 import SelectInput from '@/components/ui/SelectInput'
 import { QuestionPoints, ShortAnswerQuestion } from '@/lib/QuizFile'
 

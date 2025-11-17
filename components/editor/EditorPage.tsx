@@ -3,12 +3,11 @@ import React, { useEffect } from "react"
 import { useToast } from "../ui/toaster"
 import { redirect } from "next/navigation"
 import EditorHeader from "./header/EditorHeader"
-import EditorLeftBar from "./leftbar/EditorLeftBar"
-import QuestionEditor from "./question/QuestionEditor"
 import { useEditorQuizFile } from "./providers/EditorQuizFileProvider"
-import { getQuiz } from "@/lib/client/IndexedDB"
-import SlideArrowKeybind from "./keybinds/SlideArrowKeybind"
-import AutoSave from "./AutoSave"
+import { getQuiz, saveQuiz } from "@/lib/client/IndexedDB"
+import { useEditorCurrentQuestion } from "./providers/EditorCurrentQuestionProvider"
+import Editor from "./question/Editor"
+import EditorNavigation from "./leftbar/EditorNavigation"
 
 export const EditorPage = ({ quizId }: { quizId: string }) => {
   const toast = useToast() 
@@ -44,10 +43,62 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
       <main className='flex flex-col h-screen overflow-hidden'>
         <EditorHeader quizId={ quizId } />
         <section className='flex flex-row h-[calc(100vh_-_56px)] overflow-hidden'>
-          <EditorLeftBar />
-          <QuestionEditor />
+          <EditorNavigation />
+          <Editor />
         </section>
       </main>
     </>
   )
+}
+
+const AutoSave = ({ quizId }: { quizId: string }) => {
+  const toast = useToast()
+  const { quizFile: quiz } = useEditorQuizFile()
+
+  useEffect(() => {
+    const autoSaveHandler = setTimeout(async () => {
+      if (quizId && quizId !== 'new' && quiz) {
+        try {
+          await saveQuiz(quiz, quizId)
+          toast('Quiz automatically saved', { variant: 'success' })
+        } catch (error) {
+          toast('Error saving quiz automatically', { variant: 'error' })
+          console.error(error)
+        }
+      }
+    }, 3000)
+
+    return () => {
+      clearTimeout(autoSaveHandler)
+    }
+  }, [quiz, quizId, toast])
+
+  return <></>
+}
+
+const SlideArrowKeybind = () => {
+  const { quizFile } = useEditorQuizFile()
+  const { currentQuestionIndex, setCurrentQuestionIndex } = useEditorCurrentQuestion()
+
+  useEffect(() => {
+    const handleUp = (e: KeyboardEvent) => {
+      if (e.key !== 'ArrowUp') return
+      if (currentQuestionIndex > 0) setCurrentQuestionIndex(currentQuestionIndex - 1)
+    }
+
+    const handleDown = (e: KeyboardEvent) => {
+      if (e.key !== 'ArrowDown') return
+      if (currentQuestionIndex < quizFile.questions.length - 1) setCurrentQuestionIndex(currentQuestionIndex + 1)
+    }
+
+    document.addEventListener('keydown', handleUp)
+    document.addEventListener('keydown', handleDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleUp)
+      document.removeEventListener('keydown', handleDown)
+    }
+  }, [currentQuestionIndex, quizFile.questions.length, setCurrentQuestionIndex])
+
+  return <></>
 }

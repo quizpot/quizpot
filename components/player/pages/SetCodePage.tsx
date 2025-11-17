@@ -1,6 +1,6 @@
 "use client"
 import React from 'react'
-import NumberInput from '../../ui/NumberInput'
+import NumberInput from '../../ui/number-input'
 import Button from '../../ui/ButtonOld'
 
 const SetCodePage = () => {

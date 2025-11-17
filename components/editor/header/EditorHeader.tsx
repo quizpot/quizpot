@@ -42,7 +42,7 @@ const EditorHeader = ({ quizId }: { quizId: string }) => {
   return (
     <header className='flex gap-4 justify-between items-center p-2'>
       <div className='flex flex-col md:flex-row gap-4 items-center'>
-        <FancyButton className='text-xl font-semibold' asChild>
+        <FancyButton className='text-xl font-semibold ' asChild>
           <Link href={'/'}>
             Quizpot
           </Link>

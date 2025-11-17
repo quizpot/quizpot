@@ -1,10 +1,13 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
-import Button from '@/components/ui/ButtonOld'
+import FancyButton from '@/components/ui/fancy-button'
 import { MultipleChoiceQuestion } from '@/lib/QuizFile'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 const QuestionChoiceAdd = () => {
+  const t = useTranslations('MultipleChoiceEditor')
+
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
   const currentQuestion = quizFile.questions[currentQuestionIndex] as MultipleChoiceQuestion
@@ -30,7 +33,15 @@ const QuestionChoiceAdd = () => {
     })
   }
 
-  return <Button onClick={ onClick } variant='green' className='w-full'>Add Choice</Button>
+  if (currentQuestion.choices.length >= 8) {
+    return null
+  }
+
+  return (
+    <FancyButton onClick={ onClick } color='green' className='w-full'>
+      { t('addChoice') }
+    </FancyButton>
+  )
 }
 
 export default QuestionChoiceAdd

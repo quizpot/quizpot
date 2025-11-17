@@ -105,5 +105,9 @@
   },
   "Slides": {
     "title": "Názov"
+  },
+  "MultipleChoiceEditor": {
+    "addChoice": "Pridať Voľbu",
+    "removeChoice": "Odstrániť Voľbu"
   }
 }

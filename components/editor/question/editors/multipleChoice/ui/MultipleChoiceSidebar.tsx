@@ -1,11 +1,11 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
-import NumberInput from '@/components/ui/NumberInput'
+import NumberInput from '@/components/ui/number-input'
 import SelectInput from '@/components/ui/SelectInput'
 import { MultipleChoiceQuestion, QuestionPoints } from '@/lib/QuizFile'
 import React from 'react'
 
-const MultipleChoicePropertySidebar = () => {
+const MultipleChoiceSidebar = () => {
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
   const currentQuestion = quizFile.questions[currentQuestionIndex] as MultipleChoiceQuestion
@@ -72,4 +72,4 @@ const MultipleChoicePropertySidebar = () => {
   )
 }
 
-export default MultipleChoicePropertySidebar
+export default MultipleChoiceSidebar

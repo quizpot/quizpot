@@ -1,7 +1,6 @@
 export type Color = "ghost" | "red" | "blue" | "yellow" | "green" | "purple" | "orange" | "pink" | "gray" | "darkgray" | "lightblue" | "black" | "white"
 
 export const colors: Record<Color, { cls: string }> = {
-  'ghost': { cls: 'shadow-black/20 bg-black/10 dark:bg-white/10 dark:shadow-white/5 text-black dark:text-white' },
   'red': { cls: 'bg-red-500 shadow-red-600 dark:bg-red-600 dark:shadow-red-700 text-white' },
   'blue': { cls: 'bg-blue-500 shadow-blue-600 dark:bg-blue-600 dark:shadow-blue-700 text-white' },
   'yellow': { cls: 'bg-yellow-500 shadow-yellow-600 dark:bg-yellow-600 dark:shadow-yellow-700 text-black dark:text-white' },
@@ -14,4 +13,5 @@ export const colors: Record<Color, { cls: string }> = {
   'lightblue': { cls: 'bg-blue-300 shadow-blue-400 dark:bg-blue-400 dark:shadow-blue-500 text-black dark:text-white' },
   'black': { cls: 'bg-black shadow-gray-900 dark:bg-black dark:shadow-gray-900 text-white' },
   'white': { cls: 'bg-white shadow-neutral-400 dark:bg-neutral-100 dark:shadow-neutral-400 text-black dark:text-black' },
+  'ghost': { cls: 'shadow-black/20 bg-black/10 dark:bg-white/10 dark:shadow-white/5 text-black dark:text-white' },
 }

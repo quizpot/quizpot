@@ -14,7 +14,7 @@ const reorder = (list: Question[], startIndex: number, endIndex: number) => {
   return result
 }
 
-const EditorLeftBar = () => {
+const EditorNavigation = () => {
   const { quizFile, setQuizFile } = useEditorQuizFile()
 
   const onDragEnd = (result: DropResult) => {
@@ -79,4 +79,4 @@ const EditorLeftBar = () => {
   )
 }
 
-export default EditorLeftBar
+export default EditorNavigation

@@ -104,5 +104,9 @@
   },
   "Slides": {
     "title": "Title"
+  },
+  "MultipleChoiceEditor": {
+    "addChoice": "Add Choice",
+    "removeChoice": "Remove Choice"
   }
 }

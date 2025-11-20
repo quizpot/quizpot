@@ -34,7 +34,7 @@ const Editor = () => {
   }
 
   if (currentQuestion.questionType === 'shortAnswer') {
-    return <ShortAnswerEditor />
+    return <ShortAnswerEditor question={ currentQuestion } />
   }
 
   if (currentQuestion.questionType === 'slide') {

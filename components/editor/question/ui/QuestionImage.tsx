@@ -2,12 +2,14 @@
 import ImageInput from '@/components/ui/ImageInput'
 import Image from 'next/image'
 import React from 'react'
-import Button from '@/components/ui/ButtonOld'
 import { useEditorCurrentQuestion } from '../../providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
 import { useToast } from '@/components/ui/toaster'
+import FancyButton from '@/components/ui/fancy-button'
+import { useTranslations } from 'next-intl'
 
 const QuestionImage = () => {
+  const t = useTranslations('Buttons')
   const toast = useToast()
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
@@ -86,9 +88,9 @@ const QuestionImage = () => {
         </div>
         <div className='flex gap-4 p-4'>
           <ImageInput className='w-full' onChange={ onChange } />
-          <Button variant='red' className='text-nowrap' onClick={ onRemoveImage }>
-            Remove Image
-          </Button>
+          <FancyButton color='red' className='text-nowrap' onClick={ onRemoveImage }>
+            { t('removeImage') }
+          </FancyButton>
         </div>
       </div>
     </section>

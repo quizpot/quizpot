@@ -19,7 +19,12 @@
     "exit": "Exit",
     "download": "Download",
     "sure": "Are you sure?",
-    "goHome": "Go Home"
+    "goHome": "Go Home",
+    "removeImage": "Remove Image",
+    "true": "True",
+    "false": "False",
+    "addAnswer": "Add Answer",
+    "removeAnswer": "Remove Answer"
   },
   "Header": {
     "stats": {
@@ -108,5 +113,13 @@
   "MultipleChoiceEditor": {
     "addChoice": "Add Choice",
     "removeChoice": "Remove Choice"
+  },
+  "QuestionSettings": {
+    "displayTimeout": "Display Timeout",
+    "answerTimeout": "Answer Timeout",
+    "points": "Points",
+    "normal": "Normal",
+    "double": "Double",
+    "none": "None"
   }
 }

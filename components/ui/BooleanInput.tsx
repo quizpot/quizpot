@@ -11,13 +11,9 @@ const BooleanInput = ({ value, className, children, onChange }: { value: boolean
   }
 
   return (
-    <FancyButton color={ state ? 'green' : 'red' } onClick={ onClick } className={ className }>
+    <FancyButton color={ value ? 'green' : 'red' } onClick={ onClick } className={ className }>
       { children }
     </FancyButton>
-  )
-
-  return (
-    <section onClick={ onClick } className={ (value ? 'bg-green-500' : 'bg-red-500') + ' p-4 rounded-full duration-200' }></section>
   )
 }
 

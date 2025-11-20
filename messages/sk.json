@@ -19,7 +19,10 @@
     "exit": "Zavrieť",
     "download": "Stiahnuť",
     "sure": "Ste si istý?",
-    "goHome": "Ísť domov"
+    "goHome": "Ísť domov",
+    "removeImage": "Odstrániť Obrázok",
+    "true": "Pravda",
+    "false": "Nepravda"
   },
   "Header": {
     "stats": {
@@ -109,5 +112,13 @@
   "MultipleChoiceEditor": {
     "addChoice": "Pridať Voľbu",
     "removeChoice": "Odstrániť Voľbu"
+  },
+  "QuestionSettings": {
+    "displayTimeout": "Čas Zobrazenia",
+    "answerTimeout": "Čas Na Odpoveď",
+    "points": "Body",
+    "normal": "Normálne",
+    "double": "Dvojnásobné",
+    "none": "Žiadne"
   }
 }

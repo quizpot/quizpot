@@ -3,8 +3,9 @@ import QuestionImage from './QuestionImage'
 import QuestionQuestionEditor from './QuestionQuestionEditor'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
+import QuestionSettings from './QuestionSettings'
 
-const QuestionEditorLayout = ({ children, sidebar }: { children: React.ReactNode, sidebar?: React.ReactNode }) => {
+const QuestionEditorLayout = ({ children, settings }: { children: React.ReactNode, settings?: React.ReactNode }) => {
   const { quizFile } = useEditorQuizFile()
 
   return (
@@ -20,7 +21,9 @@ const QuestionEditorLayout = ({ children, sidebar }: { children: React.ReactNode
           { children }
         </div>
       </div>
-      { sidebar }
+      <QuestionSettings>
+        { settings }
+      </QuestionSettings>
     </section>
   )
 }

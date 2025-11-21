@@ -28,9 +28,9 @@ const TrueFalsePlayerAnswerButton = ({ value, color }: { value: boolean, color: 
 
   return (
     <FancyButton color={ color } onClick={ sendAnswer } className='w-full h-full'>
-      <div className='flex justify-between items-center w-full h-full p-8 text-4xl'>
+      {/* <div className='flex justify-between items-center w-full h-full p-8 text-4xl'>
         { value ? 'True' : 'False' }
-      </div>
+      </div> */}
     </FancyButton>
   )
 }

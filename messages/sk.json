@@ -27,7 +27,8 @@
     "removeAnswer": "Odstrániť Odpoveď",
     "host": "Hostuj",
     "start": "Začať",
-    "kick": "Vyhodiť"
+    "kick": "Vyhodiť",
+    "submit": "Odoslať"
   },
   "Header": {
     "stats": {
@@ -140,5 +141,25 @@
   "LobbyWaitingPage": {
     "players": "Hráči",
     "code": "Lobby Kód"
+  },
+  "PlayPage": {
+    "title": "Lobby Kód",
+    "continue": "Pokračovať",
+    "setName": "Zadaj svoje meno"
+  },
+  "WaitingInLobbyPage": {
+    "title": "Čakám na lobby",
+    "lobbyCode": "Lobby Kód",
+    "leave": "Opustiť lobby"
+  },
+  "SlidePage": {
+    "title": "Pozri sa na slajd"
+  },
+  "AnsweredPage": {
+    "title": "Odpovedal"
+  },
+  "AnswersPage": {
+    "correct": "Správne",
+    "incorrect": "Nesprávne"
   }
 }

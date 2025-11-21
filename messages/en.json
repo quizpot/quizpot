@@ -27,7 +27,8 @@
     "removeAnswer": "Remove Answer",
     "host": "Host",
     "start": "Start",
-    "kick": "Kick"
+    "kick": "Kick",
+    "submit": "Submit"
   },
   "Header": {
     "stats": {
@@ -139,5 +140,25 @@
   "LobbyWaitingPage": {
     "players": "Players",
     "code": "Lobby Code"
+  },
+  "PlayPage": {
+    "title": "Lobby Code",
+    "continue": "Continue",
+    "setName": "Set your name"
+  },
+  "WaitingInLobbyPage": {
+    "title": "Waiting in lobby",
+    "lobbyCode": "Lobby Code",
+    "leave": "Leave"
+  },
+  "SlidePage": {
+    "title": "Slide"
+  },
+  "AnsweredPage": {
+    "title": "Answered"
+  },
+  "AnswersPage": {
+    "correct": "Correct",
+    "incorrect": "Incorrect"
   }
 }

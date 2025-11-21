@@ -1,13 +1,15 @@
 "use client"
 import React, { useEffect } from 'react'
 import TextInput from '../../ui/TextInput'
-import Button from '../../ui/ButtonOld'
 import { useToast } from '../../ui/toaster'
 import { useWebSocket } from '../../providers/WebSocketProvider'
 import { usePlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 import { redirect } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import FancyButton from '@/components/ui/fancy-button'
 
 const SetNamePage = ({ queryCode }: { queryCode: number }) => {
+  const t = useTranslations('PlayPage')
   const toast = useToast() 
   const [name, setName] = React.useState<string>('')
   const [wantsName, setWantsName] = React.useState(false)
@@ -63,16 +65,16 @@ const SetNamePage = ({ queryCode }: { queryCode: number }) => {
 
   return (
     <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>
-      <h1 className='text-2xl font-semibold'>Set Your Name</h1>
+      <h1 className='text-2xl font-semibold'>{ t('setName') }</h1>
       <div className='max-w-md'>
         <TextInput onChange={(e) => {
           const value = e.target.value
           setName(value)
         }} value={ name } />
       </div>
-      <Button onClick={ onClick } variant='green' >
-        Continue
-      </Button>
+      <FancyButton onClick={ onClick } color='green' >
+        { t('continue') }
+      </FancyButton>
     </section>
   )
 }

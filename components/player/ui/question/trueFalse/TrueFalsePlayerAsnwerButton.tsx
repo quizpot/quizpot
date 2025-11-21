@@ -1,10 +1,10 @@
 import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
-import Button from '@/components/ui/ButtonOld'
-import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
+import FancyButton from '@/components/ui/fancy-button'
+import { Color } from '@/lib/Colors'
 import React from 'react'
 
-const TrueFalsePlayerAnswerButton = ({ value, variant }: { value: boolean, variant: ColorVariants }) => {
+const TrueFalsePlayerAnswerButton = ({ value, color }: { value: boolean, color: Color }) => {
   const { setPlayerLobbyState } = usePlayerLobbyState()
   const sendEvent = useWebSocket().sendEvent
 
@@ -27,11 +27,11 @@ const TrueFalsePlayerAnswerButton = ({ value, variant }: { value: boolean, varia
   }
 
   return (
-    <Button variant={ variant } onClick={ sendAnswer } className='w-full h-full'>
+    <FancyButton color={ color } onClick={ sendAnswer } className='w-full h-full'>
       <div className='flex justify-between items-center w-full h-full p-8 text-4xl'>
         { value ? 'True' : 'False' }
       </div>
-    </Button>
+    </FancyButton>
   )
 }
 

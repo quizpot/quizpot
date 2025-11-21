@@ -22,7 +22,7 @@ const AnswerEditor = ({ index }: { index: number }) => {
     setQuizFile({ ...quizFile, questions: updatedQuestions })
   }
 
-  return <TextInput value={ currentQuestion.answers[index] } className='text-2xl p-4 w-full text-center' onChange={ onChange }/>
+  return <TextInput value={ currentQuestion.answers[index] } color='white' className='text-2xl p-4 w-full text-center' onChange={ onChange }/>
 }
 
 export default AnswerEditor

@@ -12,6 +12,6 @@ export const colors: Record<Color, { cls: string }> = {
   'darkgray': { cls: 'bg-neutral-700 shadow-neutral-800 dark:bg-neutral-700 dark:shadow-neutral-900 text-white' },
   'lightblue': { cls: 'bg-blue-300 shadow-blue-400 dark:bg-blue-400 dark:shadow-blue-500 text-black dark:text-white' },
   'black': { cls: 'bg-black shadow-gray-900 dark:bg-black dark:shadow-gray-900 text-white' },
-  'white': { cls: 'bg-white shadow-neutral-400 dark:bg-neutral-100 dark:shadow-neutral-400 text-black dark:text-black' },
+  'white': { cls: 'bg-white shadow-neutral-200 dark:bg-neutral-100 dark:shadow-neutral-300 text-black dark:text-black' },
   'ghost': { cls: 'shadow-black/20 bg-black/10 dark:bg-white/10 dark:shadow-white/5 text-black dark:text-white' },
 }

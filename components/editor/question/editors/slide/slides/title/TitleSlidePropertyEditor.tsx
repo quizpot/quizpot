@@ -2,9 +2,11 @@ import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCu
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import TextInput from '@/components/ui/TextInput'
 import { TitleSlideLayout } from '@/lib/QuizFile'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 const TitleSlidePropertyEditor = () => {
+  const t = useTranslations('SlideEditor')
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
   const currentQuestion = quizFile.questions[currentQuestionIndex]
@@ -54,11 +56,11 @@ const TitleSlidePropertyEditor = () => {
   return (
     <section className='w-96 max-h-[calc(100vh-58px)] h-[calc(100vh-58px)] flex flex-col gap-4 p-4'>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-xl'>Title</h1>
+        <h1 className='text-xl'>{ t('title') }</h1>
         <TextInput onChange={ onTitleChange } value={ properties.title } className='w-full' />
       </div>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-xl'>Subtitle</h1>
+        <h1 className='text-xl'>{ t('subtitle') }</h1>
         <TextInput onChange={ onSubtitleChange } value={ properties.subtitle ? properties.subtitle : '' } className='w-full' />
       </div>
     </section>

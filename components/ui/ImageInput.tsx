@@ -5,20 +5,23 @@ import TextInput from './TextInput'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import FancyButton from './fancy-button'
+import { Color } from '@/lib/Colors'
 
 const ImageInput = ({ 
   onChange,
-  className
+  className,
+  color
 }: { 
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  className?: string
+  className?: string,
+  color?: Color
 }) => {
   const [open, setOpen] = useState(false)
   const t = useTranslations('SelectImageInput')
 
   return (
     <Dialog open={ open } onOpenChange={ (open) => { setOpen(open) } }>
-      <DialogTrigger className={ className }>
+      <DialogTrigger color={ color } className={ className }>
         { t('button') }
       </DialogTrigger>
       <DialogContent>

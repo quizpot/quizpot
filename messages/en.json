@@ -108,7 +108,8 @@
     "shortAnswer": "Short Answer"
   },
   "Slides": {
-    "title": "Title"
+    "title": "Title",
+    "titleImageText": "Title and Text"
   },
   "MultipleChoiceEditor": {
     "addChoice": "Add Choice",
@@ -121,5 +122,11 @@
     "normal": "Normal",
     "double": "Double",
     "none": "None"
+  },
+  "SlideEditor": {
+    "title": "Title",
+    "subtitle": "Subtitle",
+    "image": "Image",
+    "text": "Text"
   }
 }

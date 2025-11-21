@@ -10,7 +10,19 @@
   },
   "Buttons": {
     "home": "Domov",
-    "quizFileInput": "Nahrát soubor s kvízem"
+    "quizFileInput": "Nahrát soubor s kvízem",
+    "close" : "Zavřít",
+    "save": "Uložit",
+    "delete": "Smazat",
+    "edit": "Upravit",
+    "retry": "Zkusit znovu",
+    "exit": "Ukončit",
+    "download": "Stáhnout",
+    "sure": "Jsi si jistý?",
+    "goHome": "Jít domů",
+    "removeImage": "Odstranit obrázek",
+    "true": "Pravda",
+    "false": "Nepravda"
   },
   "Header": {
     "stats": {
@@ -64,5 +76,56 @@
     "prompt": "Vytvor mi kvíz o psoch a mačkách s titulným slajdom a 10 otázkami",
     "generating": "Generování...",
     "description": "Budete přesměrováni na editor zkráceně."
+  },
+  "QuizSettings": {
+    "button": "Nastavení",
+    "dialogTitle": "Nastavení Kvízu",
+    "thumbnail": "Náhled",
+    "title": "Název",
+    "description": "Popis",
+    "background": "Pozadí"
+  },
+  "SelectImageInput": {
+    "button": "Vybrat obrázek",
+    "title": "Vybrat obrázek",
+    "fromFile": "Z souboru",
+    "fromPixabay": "Z Pixabay",
+    "selectFromPixabay": "Vybrat z Pixabay",
+    "search": "Hledat"
+  },
+  "NewQuestionDialog": {
+    "button": "Nová Otázka",
+    "title": "Vybrat typ otázky"
+  },
+  "NewSlideDialog": {
+    "button": "Nový Slajd",
+    "title": "Vybrat typ slajdu"
+  },
+  "Questions": {
+    "multipleChoice": "Více voleb",
+    "trueFalse": "Pravda Nepravda",
+    "shortAnswer": "Krátká Odpověď"
+  },
+  "Slides": {
+    "title": "Název",
+    "titleImageText": "Nadpis a Text"
+  },
+  "MultipleChoiceEditor": {
+    "addChoice": "Přidat Volbu",
+    "removeChoice": "Odstranit Volbu"
+  },
+  "QuestionSettings": {
+    "displayTimeout": "Čas Zobrazení",
+    "answerTimeout": "Čas Na Odpověď",
+    "points": "Body",
+    "normal": "Normální",
+    "double": "Dvojnásobné",
+    "none": "Žádné"
+  },
+  "SlideEditor": {
+    "title": "Nadpis",
+    "subtitle": "Podnadpis",
+    "image": "Obrázek",
+    "text": "Text"
   }
 }

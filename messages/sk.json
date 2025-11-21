@@ -107,7 +107,8 @@
     "shortAnswer": "Krátka Odpoveď"
   },
   "Slides": {
-    "title": "Názov"
+    "title": "Názov",
+    "titleImageText": "Nadpis a Text"
   },
   "MultipleChoiceEditor": {
     "addChoice": "Pridať Voľbu",
@@ -120,5 +121,11 @@
     "normal": "Normálne",
     "double": "Dvojnásobné",
     "none": "Žiadne"
+  },
+  "SlideEditor": {
+    "title": "Nadpis",
+    "subtitle": "Podnadpis",
+    "image": "Obrázok",
+    "text": "Text"
   }
 }

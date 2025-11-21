@@ -1,6 +1,6 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
-import Button from '@/components/ui/ButtonOld'
+import FancyCard from '@/components/ui/fancy-card'
 import { SlideQuestion, TitleSlideLayout } from '@/lib/QuizFile'
 import React from 'react'
 
@@ -12,14 +12,14 @@ const TitleSlidePreview = () => {
 
   return (
     <section className='h-full w-full flex flex-col items-center justify-center gap-4 p-4'>
-      <Button variant='gray' className='text-4xl px-4 py-4 text-center font-semibold mx-auto'>
+      <FancyCard color='white' className='text-4xl px-4 py-4 text-center font-semibold mx-auto'>
         { properties.title }
-      </Button>
+      </FancyCard>
       {
         properties.subtitle && (
-          <Button variant='gray' className='text-xl text-center mx-auto'>
+          <FancyCard color='white' className='text-xl text-center mx-auto'>
             { properties.subtitle }
-          </Button>
+          </FancyCard>
         )
       }
     </section>

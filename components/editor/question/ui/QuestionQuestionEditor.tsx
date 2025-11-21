@@ -10,7 +10,7 @@ const QuestionQuestionEditor = () => {
   if (currentQuestion.questionType === 'slide') return <></>
 
   return (
-    <TextInput value={ currentQuestion.question } className='text-2xl p-4 w-full text-center' 
+    <TextInput value={ currentQuestion.question } color="white" className='text-2xl p-4 w-full text-center' 
       onChange={(e) => {
         const updatedQuestions = [...quizFile.questions]
 

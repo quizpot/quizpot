@@ -24,7 +24,10 @@
     "true": "True",
     "false": "False",
     "addAnswer": "Add Answer",
-    "removeAnswer": "Remove Answer"
+    "removeAnswer": "Remove Answer",
+    "host": "Host",
+    "start": "Start",
+    "kick": "Kick"
   },
   "Header": {
     "stats": {
@@ -128,5 +131,13 @@
     "subtitle": "Subtitle",
     "image": "Image",
     "text": "Text"
+  },
+  "HostPage": {
+    "title": "Host Quiz",
+    "customNames": "Custom names"
+  },
+  "LobbyWaitingPage": {
+    "players": "Players",
+    "code": "Lobby Code"
   }
 }

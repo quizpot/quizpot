@@ -2,9 +2,8 @@ import React from 'react'
 import MultipleChoiceAnswerButton from './answerButtons/MultipleChoiceAnswerButton'
 import MultipleChoiceAnswerButtonWithAnswer from './answerButtons/MultipleChoiceAnswerButtonWithAnswer'
 import { Question } from '@/lib/QuizFile'
-import { multipleChoiceVariants } from '@/lib/client/colorVariants/MultipleChoiceVariants'
-import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
-import Card from '@/components/ui/Card'
+import { colorKeys } from '@/lib/Colors'
+import FancyCard from '@/components/ui/fancy-card'
 
 const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuestion: Question, showAnswers?: boolean }) => {
   if (currentQuestion.questionType === 'multipleChoice') {
@@ -16,14 +15,14 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
               return <MultipleChoiceAnswerButtonWithAnswer 
                 key={ index } 
                 label={ choice.text } 
-                variant={ multipleChoiceVariants[index % multipleChoiceVariants.length] } 
+                color={ colorKeys[index % 8] } 
                 isCorrect={ choice.correct } 
               />
             } else {
               return <MultipleChoiceAnswerButton 
                 key={ index } 
                 label={ choice.text } 
-                variant={ multipleChoiceVariants[index % multipleChoiceVariants.length] }
+                color={ colorKeys[index % 8] } 
               />
             }
           })
@@ -39,20 +38,20 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
           showAnswers ?
             <>
               <MultipleChoiceAnswerButtonWithAnswer 
-                label={ "True" } 
-                variant={ trueFalseVariants[0] } 
+                label="True"
+                color='red'
                 isCorrect={ currentQuestion.answer } 
               />
               <MultipleChoiceAnswerButtonWithAnswer 
-                label={ "False" } 
-                variant={ trueFalseVariants[1] }
+                label="False"
+                color='blue'
                 isCorrect={ !currentQuestion.answer } 
               />
             </>
             :
             <>
-              <MultipleChoiceAnswerButton label={ "True" } variant={ trueFalseVariants[0] } />
-              <MultipleChoiceAnswerButton label={ "False" } variant={ trueFalseVariants[1] } />
+              <MultipleChoiceAnswerButton label={ "True" } color='red' />
+              <MultipleChoiceAnswerButton label={ "False" } color='blue' />
             </>
         }
       </section>
@@ -61,9 +60,11 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
 
   if (currentQuestion.questionType === 'shortAnswer') {
     return (
-      <Card className='flex items-center justify-center p-16 w-full text-2xl'>
-        Send your answer!
-      </Card>
+      <div className='flex items-center justify-center p-8'>
+        <FancyCard color="white" className='flex items-center justify-center p-8 mx-auto text-2xl'>
+          Send your answer!
+        </FancyCard>
+      </div>
     )
   }
 

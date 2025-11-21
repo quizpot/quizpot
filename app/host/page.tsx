@@ -7,9 +7,10 @@ import HostQuizPage from '@/components/host/pages/HostQuizPage'
 import QuestionPage from '@/components/host/pages/QuestionPage'
 import ScoreboardPage from '@/components/host/pages/ScoreboardPage'
 import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
-import Button from '@/components/ui/ButtonOld'
 import React from 'react'
 import SlidePage from '@/components/host/pages/SlidePage'
+import FancyButton from '@/components/ui/fancy-button'
+import Link from 'next/link'
 
 const HostPage = () => {
   const hostLobbyState = useHostLobbyState().hostLobbyState
@@ -49,9 +50,11 @@ const HostPage = () => {
   return (
     <section className='flex flex-col items-center justify-center gap-4 h-screen w-full p-4'>
       <h1 className='text-2xl font-semibold'>Unknown Lobby State</h1>
-      <Button href='/' variant='yellow'>
-        Leave
-      </Button>
+      <FancyButton color='yellow' asChild>
+        <Link href='/'>
+          Leave
+        </Link>
+      </FancyButton>
     </section>
   )
 }

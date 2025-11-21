@@ -22,7 +22,12 @@
     "goHome": "Ísť domov",
     "removeImage": "Odstrániť Obrázok",
     "true": "Pravda",
-    "false": "Nepravda"
+    "false": "Nepravda",
+    "addAnswer": "Pridať Odpoveď",
+    "removeAnswer": "Odstrániť Odpoveď",
+    "host": "Hostuj",
+    "start": "Začať",
+    "kick": "Vyhodiť"
   },
   "Header": {
     "stats": {
@@ -127,5 +132,13 @@
     "subtitle": "Podnadpis",
     "image": "Obrázok",
     "text": "Text"
+  },
+  "HostPage": {
+    "title": "Hostuj Kvíz",
+    "customNames": "Vlastné mená"
+  },
+  "LobbyWaitingPage": {
+    "players": "Hráči",
+    "code": "Lobby Kód"
   }
 }

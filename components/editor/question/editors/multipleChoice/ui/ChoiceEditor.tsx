@@ -2,7 +2,7 @@ import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCu
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
 import TextInput from '@/components/ui/TextInput'
-import { colors } from '@/lib/Colors'
+import { colorKeys } from '@/lib/Colors'
 import { MultipleChoiceQuestion } from '@/lib/QuizFile'
 import { Check, X } from 'lucide-react'
 import React from 'react'
@@ -44,8 +44,6 @@ const ChoiceEditor = ({ index }: { index: number }) => {
       ]
     })
   }
-
-  const colorKeys = Object.keys(colors) as (keyof typeof colors)[]
 
   return (
     <section className='flex gap-4'>

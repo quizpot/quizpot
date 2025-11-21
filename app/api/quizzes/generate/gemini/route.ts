@@ -26,11 +26,16 @@ export async function POST(request: NextRequest) {
     return new Response(JSON.stringify({ error: 'Error generating quiz, check console for details' }), { status: 500 })
   }
 
-  const unparsedJson = response.text.replaceAll('```json', '').replaceAll('```', '')
-  const quiz: QuizFile = JSON.parse(unparsedJson)
-  const id = crypto.randomUUID()
+  try {
+    const unparsedJson = response.text.replaceAll('```json', '').replaceAll('```', '')
+    const quiz: QuizFile = JSON.parse(unparsedJson)
+    const id = crypto.randomUUID()
 
-  quiz.id = id
+    quiz.id = id
 
-  return new Response(JSON.stringify({ quiz }), { status: 200 })
+    return new Response(JSON.stringify({ quiz }), { status: 200 })
+  } catch (e) {
+    console.log(e)
+    return new Response(JSON.stringify({ error: 'Error parsing quiz, check console for details' }), { status: 500 })
+  }
 }

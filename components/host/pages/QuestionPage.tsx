@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import InvalidPage from './InvalidPage'
+import FancyCard from '@/components/ui/fancy-card'
 
 const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const [progress, setProgress] = useState(0)
@@ -47,9 +48,9 @@ const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) =>
       className='flex flex-col gap-4 justify-between h-screen w-full'
       style={ getBackgroundStyles(hostLobbyState.theme.background) }
     >
-      <p className='absolute right-4 top-4 rounded-full p-4 px-6 text-2xl font-semibold text-black bg-white'>{ hostLobbyState.currentQuestionNumber } of { hostLobbyState.totalQuestions }</p>
+      <FancyCard color='white' className='absolute right-4 top-4 rounded-full p-4 px-6 text-2xl font-semibold'>{ hostLobbyState.currentQuestionNumber } of { hostLobbyState.totalQuestions }</FancyCard>
       <div></div> {/** To center the question */}
-      <h1 className='text-center text-4xl font-semibold bg-white text-black p-4 w-full'>{ question }</h1>
+      <FancyCard color='white' className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>{ question }</FancyCard>
       <div className='p-4'>
         <div 
           className='bg-green-500 p-2 rounded-full'

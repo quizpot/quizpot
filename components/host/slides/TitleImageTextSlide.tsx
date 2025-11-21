@@ -1,4 +1,4 @@
-import Button from '@/components/ui/ButtonOld'
+import FancyCard from '@/components/ui/fancy-card'
 import { TitleImageTextSlideLayout } from '@/lib/QuizFile'
 import Image from 'next/image'
 import React from 'react'
@@ -6,9 +6,9 @@ import React from 'react'
 const TitleImageTextSlide = ({ slide }: { slide: TitleImageTextSlideLayout }) => {
   return (
     <section className='h-full w-full flex flex-col items-center justify-center gap-4 p-4'>
-      <Button variant='gray' className='text-center text-4xl font-semibold w-full py-4 px-4'>
+      <FancyCard color='white' className='text-center text-4xl font-semibold w-full py-4 px-4'>
         { slide.title }
-      </Button>
+      </FancyCard>
       <div className='flex items-center justify-center p-4 w-full h-full'>
         {
           slide.image && (
@@ -27,9 +27,9 @@ const TitleImageTextSlide = ({ slide }: { slide: TitleImageTextSlideLayout }) =>
           )
         }
       </div>
-      <Button variant='gray' className='text-xl w-full py-4 px-4'>
+      <FancyCard color='white' className='text-xl w-full py-4 px-4'>
         { slide.text }
-      </Button>
+      </FancyCard>
     </section>
   )
 }

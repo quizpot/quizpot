@@ -2,9 +2,8 @@ import { Question } from '@/lib/QuizFile'
 import { Answer } from '@/lib/server/managers/LobbyManager'
 import React from 'react'
 import MultipleChoiceGraph from './MultipleChoiceGraph'
-import { multipleChoiceVariants } from '@/lib/client/colorVariants/MultipleChoiceVariants'
-import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
 import AnswerCard from './AnswerCard'
+import { colorKeys } from '@/lib/Colors'
 
 const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQuestion: Question, answers: Answer[] }) => {
   if (currentQuestion.questionType === 'multipleChoice') {
@@ -26,7 +25,7 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
             return (
               <MultipleChoiceGraph 
                 key={ index } 
-                variant={ multipleChoiceVariants[index % multipleChoiceVariants.length] }
+                color={ colorKeys[index % 8] }
                 answers={ pillar.length } 
                 maxAnswers={ maxAnswers } 
                 correctAnswer={ currentQuestion.choices[index].correct } 
@@ -59,7 +58,7 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
         { 
           pillars.map((pillar, index) => {
             return (
-              <MultipleChoiceGraph key={ index } variant={ trueFalseVariants[index] } answers={ pillar.length } maxAnswers={ maxAnswers } correctAnswer={ index === correctPillarIndex } />
+              <MultipleChoiceGraph key={ index } color={ colorKeys[index] } answers={ pillar.length } maxAnswers={ maxAnswers } correctAnswer={ index === correctPillarIndex } />
             )
           }) 
         }

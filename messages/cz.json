@@ -22,7 +22,12 @@
     "goHome": "Jít domů",
     "removeImage": "Odstranit obrázek",
     "true": "Pravda",
-    "false": "Nepravda"
+    "false": "Nepravda",
+    "addAnswer": "Přidat odpověď",
+    "removeAnswer": "Odstranit odpověď",
+    "host": "Hostit",
+    "start": "Začít",
+    "kick": "Vyhodit"
   },
   "Header": {
     "stats": {
@@ -127,5 +132,13 @@
     "subtitle": "Podnadpis",
     "image": "Obrázek",
     "text": "Text"
+  },
+  "HostPage": {
+    "title": "Hostit Kvíz",
+    "customNames": "Vlastní mena"
+  },
+  "LobbyWaitingPage": {
+    "players": "Hráči",
+    "code": "Lobby Kód"
   }
 }

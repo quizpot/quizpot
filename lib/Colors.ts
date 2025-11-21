@@ -15,3 +15,5 @@ export const colors: Record<Color, { cls: string }> = {
   'white': { cls: 'bg-white shadow-neutral-200 dark:bg-neutral-100 dark:shadow-neutral-300 text-black dark:text-black' },
   'ghost': { cls: 'shadow-black/20 bg-black/10 dark:bg-white/10 dark:shadow-white/5 text-black dark:text-white' },
 }
+
+export const colorKeys = Object.keys(colors) as (keyof typeof colors)[]

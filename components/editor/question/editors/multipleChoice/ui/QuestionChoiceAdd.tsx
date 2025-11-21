@@ -33,7 +33,7 @@ const QuestionChoiceAdd = () => {
     })
   }
 
-  if (currentQuestion.choices.length >= 8) {
+  if (currentQuestion.choices.length >= 10) {
     return null
   }
 

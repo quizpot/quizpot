@@ -16,7 +16,7 @@ const QuestionAnswers = ({ question }: { question: SanitizedQuestion }) => {
                 choice={ choice } 
                 index={ index } 
                 key={ index } 
-                color={ colorKeys[index % 8] } 
+                color={ colorKeys[index % 10] } 
               />
             )
           })

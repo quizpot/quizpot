@@ -15,14 +15,14 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
               return <MultipleChoiceAnswerButtonWithAnswer 
                 key={ index } 
                 label={ choice.text } 
-                color={ colorKeys[index % 8] } 
+                color={ colorKeys[index % 10] } 
                 isCorrect={ choice.correct } 
               />
             } else {
               return <MultipleChoiceAnswerButton 
                 key={ index } 
                 label={ choice.text } 
-                color={ colorKeys[index % 8] } 
+                color={ colorKeys[index % 10] } 
               />
             }
           })

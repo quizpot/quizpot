@@ -48,7 +48,7 @@ const ChoiceEditor = ({ index }: { index: number }) => {
   return (
     <section className='flex gap-4'>
       <TextInput 
-        color={ colorKeys[index % 8] } 
+        color={ colorKeys[index % 10] } 
         onChange={ onTextChange } 
         value={ choice.text } 
         className='text-2xl px-8 py-4 w-full' 

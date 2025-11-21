@@ -25,7 +25,7 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
             return (
               <MultipleChoiceGraph 
                 key={ index } 
-                color={ colorKeys[index % 8] }
+                color={ colorKeys[index % 10] }
                 answers={ pillar.length } 
                 maxAnswers={ maxAnswers } 
                 correctAnswer={ currentQuestion.choices[index].correct } 

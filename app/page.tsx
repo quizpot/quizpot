@@ -1,10 +1,6 @@
 import Footer from '@/components/nav/Footer'
 import Header from '@/components/nav/Header'
 import FancyButton from '@/components/ui/fancy-button'
-import { Color } from '@/lib/Colors'
-import { cn } from '@/lib/utils'
-import { Slot } from '@radix-ui/react-slot'
-import { Cog, Gamepad, Pencil, PersonStanding } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import React from 'react'
@@ -16,58 +12,35 @@ const HomePage = () => {
     <section className='h-screen w-full flex flex-col justify-between'>
       <Header />
       <div className='h-32'></div>
-      <section className='flex items-center justify-center'>
-        <div className='grid grid-cols-2 lg:grid-cols-4 gap-4 w-full container p-4'>
-          <MenuButton color='red' href={ t('menu.Edit.href') } size='lg' icon={ <Pencil size={ 128 } /> }>
-            { t('menu.Edit.label') }
-          </MenuButton>
-          <MenuButton color='green' href={ t('menu.Host.href') } size='lg' icon={ <PersonStanding size={ 128 } /> }>
-            { t('menu.Host.label') }
-          </MenuButton>
-          <MenuButton color='blue' href={ t('menu.Play.href') } size='lg' icon={ <Gamepad size={ 128 } /> }>
-            { t('menu.Play.label') }
-          </MenuButton>
-          <MenuButton color='orange' href={ t('menu.Stats.href') } size='lg' icon={ <Cog size={ 128 } /> }>
-            { t('menu.Stats.label') }
-          </MenuButton>
+      <section className='flex flex-col gap-8 items-center justify-center'>
+        <FancyButton className='text-4xl lg:text-6xl font-semibold' size='lg'>
+          Quizpot
+        </FancyButton>
+        <div className='flex gap-4 items-center justify-center'>
+          <FancyButton color='red' className='text-2xl' asChild>
+            <Link href={ t('menu.Edit.href') }>
+              { t('menu.Edit.label') }
+            </Link>
+          </FancyButton>
+          <FancyButton color='blue' className='text-2xl' asChild>
+            <Link href={ t('menu.Host.href') }>
+              { t('menu.Host.label') }
+            </Link>
+          </FancyButton>
+          <FancyButton color='green' className='text-2xl' asChild>
+            <Link href={ t('menu.Play.href') }>
+              { t('menu.Play.label') }
+            </Link>
+          </FancyButton>
+          <FancyButton color='yellow' className='text-2xl' asChild>
+            <Link href={ t('menu.Stats.href') }>
+              { t('menu.Stats.label') }
+            </Link>
+          </FancyButton>
         </div>
       </section>
       <Footer />
     </section>
-  )
-}
-
-const MenuButton = ({ 
-  children, 
-  color, 
-  size, 
-  className,
-  icon,
-  href
-}: { 
-  children: React.ReactNode, 
-  color?: Color, 
-  size?: 'sm' | 'lg', 
-  className?: string,
-  icon?: React.ReactNode,
-  href: string
-}) => {
-  return (
-    <FancyButton color={ color } size={ size } className={ 
-      cn('w-full aspect-square flex flex-col gap-2 items-center justify-center relative overflow-hidden group text-4xl', className) 
-    } asChild>
-      <Link href={ href }>
-        <Slot className='
-          absolute opacity-20 
-          top-[calc(50%-64px)] right-[calc(50%-64px)]
-          group-hover:rotate-30 group-hover:scale-200
-          group-active:top-[calc(100%)] group-active:right-[calc(100%)] group-active:rotate-0 group-active:scale-75
-          duration-200
-        '>
-          { icon }
-        </Slot> { children }
-      </Link>
-    </FancyButton>
   )
 }
 

@@ -1,6 +1,6 @@
 import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
 import { handlePlayerKick, handleCreateLobby, handleStartLobby } from "../handlers/HostHandlers"
-import { handleJoinLobby } from "../handlers/PlayerHandlers"
+import { handleJoinLobby, handleJoinLobbyWithId } from "../handlers/PlayerHandlers"
 import { handleNextQuestion, handleQuestionAnswer } from "../handlers/GameHandler"
 import { ServerEvents } from "../ServerEvents"
 import { ClientEvents } from "@/lib/client/ClientEvents"
@@ -77,6 +77,7 @@ export function initializeServerEventHandlers() {
 
   onEvent('createLobby', handleCreateLobby)
   onEvent('joinLobby', handleJoinLobby)
+  onEvent('joinLobbyWithId', handleJoinLobbyWithId)
   onEvent('playerKick', handlePlayerKick)
   onEvent('startLobby', handleStartLobby)
   onEvent('submitAnswer', handleQuestionAnswer)

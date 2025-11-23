@@ -1,14 +1,17 @@
 "use client"
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/Dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import React from 'react'
 import TextInput from '@/components/ui/TextInput'
 import ColorInput from '@/components/ui/ColorInput'
 import ImageInput from '@/components/ui/ImageInput'
-import { useToast } from '@/components/ui/Toaster'
+import { useToast } from '@/components/ui/toaster'
 import { useEditorQuizFile } from '../providers/EditorQuizFileProvider'
+import { useTranslations } from 'next-intl'
+import FancyButton from '@/components/ui/fancy-button'
 
 const QuizSettings = () => {
   const toast = useToast() 
+  const t = useTranslations('QuizSettings')
   const { quizFile, setQuizFile } = useEditorQuizFile()
 
   const onThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
@@ -100,46 +103,63 @@ const QuizSettings = () => {
 
   return (
     <Dialog>
-      <DialogTrigger variant='gray' className='font-semibold'>
-        Settings
+      <DialogTrigger>
+        { t('button') }
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader title="Quiz Settings" />
-        <section className="relative flex-grow overflow-y-auto">
-          <div className='w-full h-full p-4 flex flex-col gap-4'>
-            <div className='flex gap-4 items-center'>
-              <h1 className='mb-2 text-xl whitespace-nowrap'>Thumbnail</h1>
+        <DialogHeader title={ t('dialogTitle') } />
+        <section className="relative flex-grow overflow-y-auto min-w-md">
+          <div className='w-full h-full p-4 flex flex-col gap-8'>
+            <div className='flex flex-col gap-2'>
+              <h1 className='text-xl'>
+                { t('thumbnail') }
+              </h1>
               <ImageInput 
                 className='w-full' 
                 onChange={ onThumbnailChange } 
               />
             </div>
-            <div className='flex gap-4 items-center'>
-              <h1 className='mb-2 text-xl whitespace-nowrap'>Title</h1>
+            <div className='flex flex-col gap-2'>
+              <h1 className='text-xl'>
+                { t('title') }
+              </h1>
               <TextInput
                 className='w-full'
                 value={ quizFile.title }
                 onChange={ onTitleChange }
               />
             </div>
-            <div className='flex gap-4 items-center'>
-              <h1 className='mb-2 text-xl whitespace-nowrap'>Description</h1>
+            <div className='flex flex-col gap-2'>
+              <h1 className='text-xl'>
+                { t('description') }
+              </h1>
               <TextInput
                 className='w-full'
                 value={ quizFile.description }
                 onChange={ onDescriptionChange } 
               />
             </div>
-            <div className='flex gap-4 items-center'>
-              <h1 className='text-xl whitespace-nowrap'>Background</h1>
-              <ColorInput
-                value={ quizFile.theme.background }
-                onChange={ onBackgroundChange } 
-              />
-              <ImageInput
-                className='w-full'
-                onChange={ onBackgroundImageChange } 
-              />
+            <div className='flex flex-col gap-2'>
+              <h1 className='text-xl'>
+                { t('background') }
+              </h1>
+              <div className='flex gap-2 items-center'>
+                <div style={{ 
+                  backgroundColor: quizFile.theme.background.length === 7 ? quizFile.theme.background : 'transparent' 
+                }} className='rounded'>
+                  <FancyButton className='p-0' asChild>
+                    <ColorInput
+                      className='opacity-0'
+                      value={ quizFile.theme.background }
+                      onChange={ onBackgroundChange } 
+                    />
+                  </FancyButton>
+                </div>
+                <ImageInput
+                  className='w-full'
+                  onChange={ onBackgroundImageChange } 
+                />
+              </div>
             </div>
           </div>
         </section>

@@ -1,11 +1,13 @@
 "use client"
 import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
-import Button from '@/components/ui/Button'
+import FancyButton from '@/components/ui/fancy-button'
 import TextInput from '@/components/ui/TextInput'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 const ShortAnswerPlayerInput = () => {
+  const t = useTranslations('Buttons')
   const [answer, setAnswer] = React.useState("")
   const { sendEvent } = useWebSocket()
   const { setPlayerLobbyState } = usePlayerLobbyState()
@@ -31,9 +33,9 @@ const ShortAnswerPlayerInput = () => {
   return (
     <>
       <TextInput onChange={ e => setAnswer(e.target.value) } value={ answer } className='w-full text-center' />
-      <Button onClick={ onSubmit } variant='green' className='w-full text-center'>
-        Submit
-      </Button>
+      <FancyButton onClick={ onSubmit } color='green' className='w-full text-center'>
+        { t('submit') }
+      </FancyButton>
     </>
   )
 }

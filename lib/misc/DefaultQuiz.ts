@@ -1,7 +1,9 @@
-import { QuizFile } from "./QuizFile"
+import { currentVersion } from "../editor/Editor"
+import { QuizFile } from "../QuizFile"
 
 export const defaultQuiz: QuizFile = {
-  version: 0,
+  version: currentVersion,
+  id: crypto.randomUUID(),
   title: "Quiz Title",
   description: "This is a short description of the quiz.",
   language: "en",

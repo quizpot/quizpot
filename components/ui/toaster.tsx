@@ -1,7 +1,7 @@
 "use client"
 import React, { createContext, useCallback, useContext } from 'react'
-import Button from './Button'
-import Card from './Card'
+import FancyCard from './fancy-card'
+import FancyButton from './fancy-button'
 
 interface Toast {
   id: string
@@ -95,19 +95,18 @@ export const ToasterCard = ({ toast, onRemove }: { toast: Toast; onRemove: (id: 
       case 'success':
         return 'green'
       default:
-        return 'gray'
+        return 'ghost'
     }
   }
 
   return (
-    <Card variant={ variant() } className='pointer-events-auto'>
-      <div className='bg-black/0 w-full h-full rounded flex gap-2 p-4'>
+    <FancyCard color={ variant() } className='pointer-events-auto' size='sm'>
+      <div className='bg-black/0 w-full h-full rounded flex gap-2 p-4 items-center'>
         <div className='flex-grow'>
-          <p className="text-sm font-medium">{ toast.message }</p>
+          <p className="text-sm font-semibold">{ toast.message }</p>
           <p className='text-sm'>{ toast.props.description }</p>
         </div>
-        <Button
-          variant={ variant() }
+        <FancyButton size='sm' color={ variant() }
           onClick={() => {
             onRemove(toast.id)
             toast.props.action?.onClick()
@@ -115,9 +114,9 @@ export const ToasterCard = ({ toast, onRemove }: { toast: Toast; onRemove: (id: 
           className='text-xs'
         >
           { toast.props.action?.label ? toast.props.action.label : 'Close' }
-        </Button>
+        </FancyButton>
       </div>
-    </Card>
+    </FancyCard>
   )
 }
 
@@ -131,10 +130,10 @@ const Toaster = () => {
   const { toasts, removeToast } = context
 
   return (
-    <section className='fixed bottom-4 right-4 flex flex-col gap-3 z-50 w-full max-w-xs sm:max-w-sm md:max-w-md pointer-events-none'>
+    <section className='fixed bottom-4 right-4 flex flex-col gap-4 z-50 w-full max-w-xs sm:max-w-sm md:max-w-md pointer-events-none'>
       {
         toasts.map((toast) => (
-          <ToasterCard key={toast.id} toast={toast} onRemove={removeToast} />
+          <ToasterCard key={ toast.id } toast={ toast } onRemove={ removeToast } />
         ))
       }
     </section>

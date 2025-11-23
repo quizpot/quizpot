@@ -1,7 +1,7 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
-import Button from '@/components/ui/Button'
-import { SlideQuestion, TitleImageTextSlideLayout } from '@/lib/misc/QuizFile'
+import FancyCard from '@/components/ui/fancy-card'
+import { SlideQuestion, TitleImageTextSlideLayout } from '@/lib/QuizFile'
 import Image from 'next/image'
 import React from 'react'
 
@@ -13,9 +13,9 @@ const TitleImageTextSlidePreview = () => {
 
   return (
     <section className='h-full w-full flex flex-col items-center justify-center gap-4 p-4'>
-      <Button variant='gray' className='text-center text-4xl font-semibold w-full py-4 px-4'>
+      <FancyCard color='white' className='text-center text-4xl font-semibold w-full py-4 px-4'>
         { properties.title }
-      </Button>
+      </FancyCard>
       <div className='flex items-center justify-center p-4 w-full h-full'>
         {
           properties.image && (
@@ -34,9 +34,9 @@ const TitleImageTextSlidePreview = () => {
           )
         }
       </div>
-      <Button variant='gray' className='text-xl w-full py-4 px-4'>
+      <FancyCard color='white' className='text-xl w-full py-4 px-4'>
         { properties.text }
-      </Button>
+      </FancyCard>
     </section>
   )
 }

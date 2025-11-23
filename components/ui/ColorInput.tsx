@@ -1,10 +1,10 @@
 import React from 'react'
 
-const ColorInput = ({ value, onChange }: { value: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
+const ColorInput = ({ value, className, onChange }: { value: string, className?: string, onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) => {
   return (
     <input 
       type='color'
-      className=''
+      className={ className }
       onChange={(e) => { onChange(e) }} 
       defaultValue={ value }
     />

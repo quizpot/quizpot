@@ -2,14 +2,17 @@
 import React, { useEffect } from 'react'
 import QRCode from 'react-qr-code'
 import PlayerKickButton from '../ui/PlayerKickButton'
-import Button from '../../ui/Button'
 import { useWebSocket } from '../../providers/WebSocketProvider'
-import { useToast } from '../../ui/Toaster'
+import { useToast } from '../../ui/toaster'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
-import Card from '@/components/ui/Card'
+import { useTranslations } from 'next-intl'
+import FancyButton from '@/components/ui/fancy-button'
+import FancyCard from '@/components/ui/fancy-card'
 
 const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
+  const t = useTranslations('LobbyWaitingPage')
+  const btn = useTranslations('Buttons')
   const toast = useToast() 
   const { sendEvent, onEvent } = useWebSocket()
 
@@ -29,26 +32,26 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
       style={ getBackgroundStyles(hostLobbyState.theme.background) }
     >
       <div className='w-full flex gap-4 justify-between'>
-        <Card className='flex flex-col gap-4 p-4'>
-          <h1 className='text-4xl lg:text-6xl'>Lobby Code: <span className='font-semibold'>{ hostLobbyState.code }</span></h1>
-          <Button onClick={() => {
+        <FancyCard color='white' className='flex flex-col gap-4 p-4 mb-auto'>
+          <h1 className='text-4xl lg:text-6xl'>{ t('code') }: <span className='font-semibold'>{ hostLobbyState.code }</span></h1>
+          <FancyButton onClick={() => {
             sendEvent('startLobby', {})
-          }} variant='green' className='text-2xl' >
-            Start
-          </Button>
-        </Card>
-        <Card>
+          }} color='green' className='text-2xl' >
+            { btn('start') }
+          </FancyButton>
+        </FancyCard>
+        <FancyButton color='white'>
           <QRCode value={ window.location.host + `/play?code=${ hostLobbyState.code }` } className='p-4' />
-        </Card>
+        </FancyButton>
       </div>
-      <Card className='w-full flex gap-4 p-4 flex-wrap items-center'>
-        <p className='text-2xl'>Players: <span className='font-semibold select-text'>{ hostLobbyState.players.length }</span></p>
+      <FancyCard className='w-full flex gap-4 p-4 flex-wrap items-center'>
+        <p className='text-2xl'>{ t('players') }: <span className='font-semibold select-text'>{ hostLobbyState.players.length }</span></p>
         {
           hostLobbyState.players.length > 0 && hostLobbyState.players.map((player, index) => (
-            <PlayerKickButton key={ index } player={ player } variant={ 'blue' } />
+            <PlayerKickButton key={ index } player={ player } color={ 'blue' } />
           ))
         }
-      </Card>
+      </FancyCard>
     </section>
   )
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import FancyCard from '@/components/ui/fancy-card'
 
 const ScorePage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   return (
@@ -8,9 +9,9 @@ const ScorePage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState })
       className='flex flex-col gap-4 items-center justify-center h-screen w-full'
       style={ getBackgroundStyles(playerLobbyState.theme.background) }
     >
-      <h1 className='text-4xl bg-white text-black w-full p-4 text-center'>
+      <FancyCard color='white' className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>
         { playerLobbyState.player.name }: <span className="font-semiBold">{ playerLobbyState.player.score }</span>
-      </h1>
+      </FancyCard>
     </section>
   )
 }

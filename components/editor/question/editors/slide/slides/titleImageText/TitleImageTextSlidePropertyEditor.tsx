@@ -1,13 +1,15 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import ImageInput from '@/components/ui/ImageInput'
-import TextAreaInput from '@/components/ui/TextAreaInput'
+import TextAreaInput from '@/components/ui/textarea-input'
 import TextInput from '@/components/ui/TextInput'
-import { useToast } from '@/components/ui/Toaster'
-import { TitleImageTextSlideLayout } from '@/lib/misc/QuizFile'
+import { useToast } from '@/components/ui/toaster'
+import { TitleImageTextSlideLayout } from '@/lib/QuizFile'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
 const TitleImageTextSlidePropertyEditor = () => {
+  const t = useTranslations('SlideEditor')
   const toast = useToast()
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
@@ -97,15 +99,15 @@ const TitleImageTextSlidePropertyEditor = () => {
   return (
     <section className='w-96 max-h-[calc(100vh-58px)] h-[calc(100vh-58px)] flex flex-col gap-4 p-4'>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-xl'>Title</h1>
+        <h1 className='text-xl'>{ t('title') }</h1>
         <TextInput onChange={ onTitleChange } value={ properties.title } className='w-full' />
       </div>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-xl'>Image</h1>
+        <h1 className='text-xl'>{ t('image') }</h1>
         <ImageInput onChange={ onImageChange } />
       </div>
       <div className='flex flex-col gap-2'>
-        <h1 className='text-xl'>Text</h1>
+        <h1 className='text-xl'>{ t('text') }</h1>
         <TextAreaInput onChange={ onTextChange } value={ properties.text } className='w-full' />
       </div>
     </section>

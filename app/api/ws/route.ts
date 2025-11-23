@@ -36,7 +36,8 @@ export function UPGRADE(client: WebSocketClient) {
     }
 
     if (getLobbyByPlayerId(client.id)) {
-      leaveLobby(client)
+      // Give player time to reconnect
+      setTimeout(() => leaveLobby(client), 60 * 1000)
     }
 
     deleteWSClient(client)

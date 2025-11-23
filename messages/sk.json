@@ -1,0 +1,165 @@
+{
+  "meta": {
+    "title": "Quizpot",
+    "description": "Vytvárajte zabavné kvízy, bez obmedzení"
+  },
+  "Locales": {
+    "en": "Angličtina",
+    "sk": "Slovenčina",
+    "cs": "Čeština"
+  },
+  "Buttons": {
+    "home": "Domov",
+    "quizFileInput": "Nahrať súbor s kvízom",
+    "close" : "Zavrieť",
+    "save": "Uložiť",
+    "delete": "Vymazať",
+    "edit": "Upraviť",
+    "retry": "Skúsiť znova",
+    "exit": "Zavrieť",
+    "download": "Stiahnuť",
+    "sure": "Ste si istý?",
+    "goHome": "Ísť domov",
+    "removeImage": "Odstrániť Obrázok",
+    "true": "Pravda",
+    "false": "Nepravda",
+    "addAnswer": "Pridať Odpoveď",
+    "removeAnswer": "Odstrániť Odpoveď",
+    "host": "Hostuj",
+    "start": "Začať",
+    "kick": "Vyhodiť",
+    "submit": "Odoslať"
+  },
+  "Header": {
+    "stats": {
+      "label": "Domov",
+      "href": "/"
+    },
+    "github": {
+      "label": "GitHub",
+      "href": "https://github.com/quizpot"
+    }
+  },
+  "HomePage": {
+    "menu": {
+      "Play": {
+        "label": "Hrať",
+        "href": "/play"
+      },
+      "Host": {
+        "label": "Hostovať",
+        "href": "/host"
+      },
+      "Edit": {
+        "label": "Editor",
+        "href": "/quizzes"
+      },
+      "Stats": {
+        "label": "Štatistiky",
+        "href": "/stats"
+      }
+    }
+  },
+  "StatsPage": {
+    "title": "Štatistiky",
+    "clients": "Klienti",
+    "lobbies": "Skupiny",
+    "players": "Hráči",
+    "home": "Domov"
+  },
+  "UnsupportedSizePage": {
+    "title": "Nepodporované zariadenie",
+    "description": "Tento zariadenie nie je podporované kvôli jeho veľkosti obrazovky. Prosím, použite iné zariadenie na prístup k tejto stránke."
+  },
+  "QuizzesPage": {
+    "title": "Vaše Kvízy",
+    "createNew": "Vytvoriť Nový Kvíz",
+    "generate": "Vygenerovať Kvíz"
+  },
+  "GenerateQuizPage": {
+    "title": "Vygenerovať Kvíz",
+    "generate": "Vygenerovať",
+    "prompt": "Vytvor mi kvíz o psoch a mačkách s titulným slajdom a 10 otázkami",
+    "generating": "Generovanie...",
+    "description": "Budete presmerovaní na editor čoskoro."
+  },
+  "QuizSettings": {
+    "button": "Nastavenia",
+    "dialogTitle": "Nastavenia Kvízu",
+    "thumbnail": "Náhľad",
+    "title": "Názov",
+    "description": "Popis",
+    "background": "Pozadie"
+  },
+  "SelectImageInput": {
+    "button": "Vyberte obrázok",
+    "title": "Vyberte obrázok",
+    "fromFile": "Zo súboru",
+    "fromPixabay": "Z Pixabay",
+    "selectFromPixabay": "Vyberte z Pixabay",
+    "search": "Vyhľadať"
+  },
+  "NewQuestionDialog": {
+    "button": "Nová Otázka",
+    "title": "Vyberte typ otázky"
+  },
+  "NewSlideDialog": {
+    "button": "Nový Slajd",
+    "title": "Vyberte typ slajdu"
+  },
+  "Questions": {
+    "multipleChoice": "Viacero Na Výber",
+    "trueFalse": "Pravda Nepravda",
+    "shortAnswer": "Krátka Odpoveď"
+  },
+  "Slides": {
+    "title": "Názov",
+    "titleImageText": "Nadpis a Text"
+  },
+  "MultipleChoiceEditor": {
+    "addChoice": "Pridať Voľbu",
+    "removeChoice": "Odstrániť Voľbu"
+  },
+  "QuestionSettings": {
+    "displayTimeout": "Čas Zobrazenia",
+    "answerTimeout": "Čas Na Odpoveď",
+    "points": "Body",
+    "normal": "Normálne",
+    "double": "Dvojnásobné",
+    "none": "Žiadne"
+  },
+  "SlideEditor": {
+    "title": "Nadpis",
+    "subtitle": "Podnadpis",
+    "image": "Obrázok",
+    "text": "Text"
+  },
+  "HostPage": {
+    "title": "Hostuj Kvíz",
+    "customNames": "Vlastné mená"
+  },
+  "LobbyWaitingPage": {
+    "players": "Hráči",
+    "code": "Lobby Kód"
+  },
+  "PlayPage": {
+    "title": "Lobby Kód",
+    "continue": "Pokračovať",
+    "setName": "Zadaj svoje meno"
+  },
+  "WaitingInLobbyPage": {
+    "title": "Čakám na lobby",
+    "lobbyCode": "Lobby Kód",
+    "leave": "Opustiť lobby"
+  },
+  "SlidePage": {
+    "title": "Pozri sa na slajd"
+  },
+  "AnsweredPage": {
+    "title": "Odpovedal"
+  },
+  "AnswersPage": {
+    "correct": "Správne",
+    "incorrect": "Nesprávne"
+  }
+}

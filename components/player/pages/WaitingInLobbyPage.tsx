@@ -1,10 +1,14 @@
 import React from 'react'
-import Button from '../../ui/Button'
 import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
-import Card from '@/components/ui/Card'
+import { useTranslations } from 'next-intl'
+import FancyCard from '@/components/ui/fancy-card'
+import FancyButton from '@/components/ui/fancy-button'
+import Link from 'next/link'
 
 const WaitingInLobbyPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
+  const t = useTranslations('WaitingInLobbyPage')
+
   if (!playerLobbyState) {
     return <></>
   }
@@ -14,16 +18,18 @@ const WaitingInLobbyPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobb
       className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'
       style={ getBackgroundStyles(playerLobbyState.theme.background) }
     >
-      <Card className='p-4 flex flex-col gap-4 text-center'>
-        <h1 className='text-2xl font-semibold'>Waiting in Lobby</h1>
+      <FancyCard color='white' className='p-4 flex flex-col gap-4 text-center'>
+        <h1 className='text-2xl font-semibold'>{ t('title') }</h1>
         <div className='flex flex-col gap-2 items-center'>
-          <p>Lobby code: <span className='font-semibold'>{ playerLobbyState.code }</span></p>
+          <p>{ t('lobbyCode') }: <span className='font-semibold'>{ playerLobbyState.code }</span></p>
           <p>{ playerLobbyState.player.name }: <span className='font-semibold'>{ playerLobbyState.player.score }</span></p>
         </div>
-        <Button href='/' variant='red' >
-          Leave
-        </Button>
-      </Card>
+        <FancyButton color='red'>
+          <Link href='/'>
+            { t('leave') }
+          </Link>
+        </FancyButton>
+      </FancyCard>
     </section>
   )
 }

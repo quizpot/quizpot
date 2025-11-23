@@ -1,10 +1,10 @@
 "use client"
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/Dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import QuizFileInput from '@/components/ui/QuizFileInput'
 import SelectInput from '@/components/ui/SelectInput'
-import { useToast } from '@/components/ui/Toaster'
+import { useToast } from '@/components/ui/toaster'
 import { getAllQuizzes } from '@/lib/client/IndexedDB'
-import { QuizFile } from '@/lib/misc/QuizFile'
+import { QuizFile } from '@/lib/QuizFile'
 import React, { useEffect, useState } from 'react'
 
 const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (quiz: QuizFile) => void }) => {
@@ -46,19 +46,20 @@ const SetQuizDialog = ({ quizName, setQuiz }: { quizName?: string, setQuiz: (qui
 
   return (
     <Dialog open={ openedSetQuizDialog } onOpenChange={ (open) => { setOpenedSetQuizDialog(open) } }>
-      <DialogTrigger variant='gray' className='font-semibold w-full'>
+      <DialogTrigger className='font-semibold w-full'>
         { quizName || 'Select Quiz' }
       </DialogTrigger>
       <DialogContent>
         <DialogHeader title='Select Quiz' />
         <div className='p-4 flex flex-col gap-4'>
           <QuizFileInput 
+            className='w-full'
             onChange={ (e) => { 
               onFile(e); 
               setOpenedSetQuizDialog(false) 
             } } 
           />
-          <SelectInput onChange={ onSelectChange } className='w-full'>
+          <SelectInput onChange={ onSelectChange }>
             <option value="">Select a quiz from editor</option>
             {
               quizzes.map((quiz, index) => {

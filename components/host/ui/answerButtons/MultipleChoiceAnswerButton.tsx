@@ -1,14 +1,14 @@
-import Button from '@/components/ui/Button'
-import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
+import FancyButton from '@/components/ui/fancy-button'
+import { Color } from '@/lib/Colors'
 import React from 'react'
 
-const MultipleChoiceAnswerButton = ({ label, variant }: { label: string, variant: ColorVariants }) => {
+const MultipleChoiceAnswerButton = ({ label, color }: { label: string, color: Color }) => {
   return (
-    <Button variant={ variant }>
+    <FancyButton color={ color } className='w-full'>
       <div className='flex justify-between items-center w-full h-full p-8 text-4xl'>
         { label }
       </div>
-    </Button>
+    </FancyButton>
   )
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-var */
 import { WebSocketClient } from "./WSClientManager"
-import { MultipleChoiceAnswer, QuizFile, ShortAnswerAnswer, SlideQuestion, TrueFalseAnswer } from "../../misc/QuizFile"
+import { MultipleChoiceAnswer, QuizFile, ShortAnswerAnswer, SlideQuestion, TrueFalseAnswer } from "../../QuizFile"
 import { sendEvent } from "./EventManager"
 import { generateUniqueName } from "../../misc/name/NameUtil"
 import { startGame } from "../handlers/GameHandler"
@@ -132,7 +132,7 @@ export const deleteLobby = (host: WebSocketClient, reason?: string): true | Erro
   })
 
   sendEvent(host, 'lobbyDeleted', { reason: reason || 'Unknown reason' })
-  
+
   getLobbies().delete(lobby.code)
   getHostLobbyMap().delete(host.id)
 
@@ -418,6 +418,36 @@ export const resetLobbyAnswers = (code: number): true | Error => {
   lobby.players.forEach(player => {
     sendEvent(player.client, 'correctAnswerUpdate', { correctAnswer: false })
   })
+
+  return true
+}
+
+// reassign player client and update player lobby map
+export const reassignPlayer = (oldId: string, newId: string, client: WebSocketClient): true | Error => {
+  const lobby = getLobbyByPlayerId(oldId)
+
+  if (!lobby) return new Error("Lobby not found")
+
+  const player = lobby.players.find(p => p.client.id === oldId)
+
+  if (!player) return new Error("Player not found")
+
+  const payload = {
+    player: {
+      id: player.client.id,
+      name: player.name,
+      score: player.score,
+      streak: player.streak,
+    },
+    newId: client.id
+  }
+
+  sendEvent(lobby.host, 'playerUpdate', payload)
+
+  player.client = client
+
+  getPlayerLobbyMap().delete(oldId)
+  getPlayerLobbyMap().set(newId, lobby)
 
   return true
 }

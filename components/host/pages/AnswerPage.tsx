@@ -4,8 +4,8 @@ import CurrentQuestionAnswers from '../ui/CurrentQuestionAnswers'
 import Timer from '../ui/Timer'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import QuestionImage from '../ui/QuestionImage'
-import Button from '@/components/ui/Button'
 import InvalidPage from './InvalidPage'
+import FancyCard from '@/components/ui/fancy-card'
 
 const AnswerPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   let question: string
@@ -24,9 +24,9 @@ const AnswerPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
       className='flex flex-col gap-4 items-center justify-between max-h-screen h-screen w-full p-4'
       style={ getBackgroundStyles(hostLobbyState.theme.background) }
     >
-      <Button variant='gray' className='text-center text-4xl font-semibold w-full py-4 px-4'>
+      <FancyCard color='white' className='text-center text-4xl font-semibold w-full py-4 px-4'>
         { question }
-      </Button>
+      </FancyCard>
       <div className='flex items-center justify-between p-4 w-full h-full'>
         { hostLobbyState.timeout ? <Timer from={ hostLobbyState.timeout / 1000 } /> : <Timer from={ 0 } /> }
         <QuestionImage src={ hostLobbyState.currentQuestion?.image } />

@@ -1,4 +1,4 @@
-import { QuizFile } from "../misc/QuizFile"
+import { QuizFile } from "../QuizFile"
 import { LobbySettings } from "../server/managers/LobbyManager"
 import { ClientAnswer } from "./ClientAnswer"
 
@@ -8,6 +8,7 @@ import { ClientAnswer } from "./ClientAnswer"
 export interface ClientEvents {
   'createLobby': CreateLobbyPayload
   'joinLobby': JoinLobbyPayload
+  'joinLobbyWithId': JoinLobbyWithIdPayload
   'playerKick': PlayerKickPayload
   'startLobby': EmptyPayload
   'submitAnswer': SubmitAnswerPayload
@@ -26,6 +27,11 @@ interface CreateLobbyPayload {
 interface JoinLobbyPayload {
   code: number
   name?: string
+}
+
+interface JoinLobbyWithIdPayload {
+  code: number
+  id: string
 }
 
 interface PlayerKickPayload {

@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "title": "Quizpot",
+    "description": "Create entertaining quizzes, without limits"
+  },
+  "Locales": {
+    "en": "English",
+    "sk": "Slovak",
+    "cs": "Czech"
+  },
+  "Buttons": {
+    "home": "Home",
+    "quizFileInput": "Upload quiz file",
+    "close" : "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "retry": "Retry",
+    "exit": "Exit",
+    "download": "Download",
+    "sure": "Are you sure?",
+    "goHome": "Go Home",
+    "removeImage": "Remove Image",
+    "true": "True",
+    "false": "False",
+    "addAnswer": "Add Answer",
+    "removeAnswer": "Remove Answer",
+    "host": "Host",
+    "start": "Start",
+    "kick": "Kick",
+    "submit": "Submit"
+  },
+  "Header": {
+    "stats": {
+      "label": "Home",
+      "href": "/"
+    },
+    "github": {
+      "label": "GitHub",
+      "href": "https://github.com/quizpot"
+    }
+  },
+  "HomePage": {
+    "menu": {
+      "Play": {
+        "label": "Play",
+        "href": "/play"
+      },
+      "Host": {
+        "label": "Host",
+        "href": "/host"
+      },
+      "Edit": {
+        "label": "Edit",
+        "href": "/quizzes"
+      },
+      "Stats": {
+        "label": "Stats",
+        "href": "/stats"
+      }
+    }
+  },
+  "StatsPage": {
+    "title": "Instance Stats",
+    "clients": "Clients",
+    "lobbies": "Lobbies",
+    "players": "Players"
+  },
+  "UnsupportedSizePage": {
+    "title": "Unsupported Device",
+    "description": "This device is not supported due to its screen size. Please use another device to access this page."
+  },
+  "QuizzesPage": {
+    "title": "Your Quizzes",
+    "createNew": "Create New Quiz",
+    "generate": "Generate Quiz"
+  },
+  "GenerateQuizPage": {
+    "title": "Generate Quiz",
+    "generate": "Generate",
+    "prompt": "Generate me a quiz about dogs and cats with a title slide and 10 questions",
+    "generating": "Generating...",
+    "description": "You will be redirected to the editor shortly."
+  },
+  "QuizSettings": {
+    "button": "Settings",
+    "dialogTitle": "Quiz Settings",
+    "thumbnail": "Thumbnail",
+    "title": "Title",
+    "description": "Description",
+    "background": "Background"
+  },
+  "SelectImageInput": {
+    "button": "Select Image",
+    "title": "Select Image",
+    "fromFile": "From file",
+    "fromPixabay": "From Pixabay",
+    "selectFromPixabay": "Select From Pixabay",
+    "search": "Search"
+  },
+  "NewQuestionDialog": {
+    "button": "New Question",
+    "title": "Choose Question Type"
+  },
+  "NewSlideDialog": {
+    "button": "New Slide",
+    "title": "Choose Slide Type"
+  },
+  "Questions": {
+    "multipleChoice": "Multiple Choice",
+    "trueFalse": "True False",
+    "shortAnswer": "Short Answer"
+  },
+  "Slides": {
+    "title": "Title",
+    "titleImageText": "Title and Text"
+  },
+  "MultipleChoiceEditor": {
+    "addChoice": "Add Choice",
+    "removeChoice": "Remove Choice"
+  },
+  "QuestionSettings": {
+    "displayTimeout": "Display Timeout",
+    "answerTimeout": "Answer Timeout",
+    "points": "Points",
+    "normal": "Normal",
+    "double": "Double",
+    "none": "None"
+  },
+  "SlideEditor": {
+    "title": "Title",
+    "subtitle": "Subtitle",
+    "image": "Image",
+    "text": "Text"
+  },
+  "HostPage": {
+    "title": "Host Quiz",
+    "customNames": "Custom names"
+  },
+  "LobbyWaitingPage": {
+    "players": "Players",
+    "code": "Lobby Code"
+  },
+  "PlayPage": {
+    "title": "Lobby Code",
+    "continue": "Continue",
+    "setName": "Set your name"
+  },
+  "WaitingInLobbyPage": {
+    "title": "Waiting in lobby",
+    "lobbyCode": "Lobby Code",
+    "leave": "Leave"
+  },
+  "SlidePage": {
+    "title": "Slide"
+  },
+  "AnsweredPage": {
+    "title": "Answered"
+  },
+  "AnswersPage": {
+    "correct": "Correct",
+    "incorrect": "Incorrect"
+  }
+}

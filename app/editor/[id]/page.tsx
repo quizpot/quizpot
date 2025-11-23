@@ -1,7 +1,7 @@
 import { EditorPage } from '@/components/editor/EditorPage'
 import { EditorCurrentQuestionProvider } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { EditorQuizFileProvider } from '@/components/editor/providers/EditorQuizFileProvider'
-import DeviceScreenUnsupported from '@/components/ui/DeviceScreenUnsupported'
+import DeviceScreenUnsupported from '@/components/ui/unsupported-device-overlay'
 import React from 'react'
 
 const EditQuizPage = async ({ params }: { params: { id: string } }) => {

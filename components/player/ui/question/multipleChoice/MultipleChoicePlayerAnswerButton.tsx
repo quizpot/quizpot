@@ -1,11 +1,13 @@
 import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
-import Button from '@/components/ui/Button'
-import { ColorVariants } from '@/lib/client/colorVariants/ColorVariants'
-import { Choice } from '@/lib/misc/QuizFile'
+import FancyButton from '@/components/ui/fancy-button'
+import { Color } from '@/lib/Colors'
+import { Choice } from '@/lib/QuizFile'
 import React from 'react'
 
-const MultipleChoicePlayerAnswerButton = ({ choice, index, variant }: { choice: Omit<Choice, 'correct'>, index: number, variant: ColorVariants }) => {
+// TODO: Show answer on device?
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const MultipleChoicePlayerAnswerButton = ({ choice, index, color }: { choice: Omit<Choice, 'correct'>, index: number, color: Color }) => {
   const { setPlayerLobbyState } = usePlayerLobbyState()
   const { sendEvent } = useWebSocket()
 
@@ -28,11 +30,11 @@ const MultipleChoicePlayerAnswerButton = ({ choice, index, variant }: { choice: 
   }
 
   return (
-    <Button variant={ variant } onClick={ sendAnswer } className='w-full h-full'>
-      <div className='flex justify-between items-center w-full h-full p-8 text-2xl lg:text-4xl'>
+    <FancyButton color={ color } onClick={ sendAnswer } className='w-full h-full'>
+      {/* <div className='flex justify-between items-center w-full h-full p-8 text-2xl lg:text-4xl'>
         { choice.text }
-      </div>
-    </Button>
+      </div> */}
+    </FancyButton>
   )
 }
 

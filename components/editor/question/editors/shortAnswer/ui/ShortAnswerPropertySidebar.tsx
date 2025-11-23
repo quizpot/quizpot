@@ -1,8 +1,8 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
-import NumberInput from '@/components/ui/NumberInput'
+import NumberInput from '@/components/ui/number-input'
 import SelectInput from '@/components/ui/SelectInput'
-import { QuestionPoints, ShortAnswerQuestion } from '@/lib/misc/QuizFile'
+import { QuestionPoints, ShortAnswerQuestion } from '@/lib/QuizFile'
 
 const ShortAnswerPropertySidebar = () => {
   const { quizFile, setQuizFile } = useEditorQuizFile()
@@ -61,7 +61,7 @@ const ShortAnswerPropertySidebar = () => {
       </div>
       <div className='flex flex-col gap-2'>
         <h1 className='text-xl'>Points</h1>
-        <SelectInput onChange={ onQuestionPointsChange } value={ currentQuestion.points } className='w-full'>
+        <SelectInput onChange={ onQuestionPointsChange } value={ currentQuestion.points }>
           <option value='normalPoints'>Normal</option>
           <option value='doublePoints'>Double</option>
           <option value='noPoints'>None</option>

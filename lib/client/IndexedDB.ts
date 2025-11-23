@@ -1,4 +1,4 @@
-import { QuizFile } from "../misc/QuizFile"
+import { QuizFile } from "../QuizFile"
 
 let db: IDBDatabase
 
@@ -37,7 +37,6 @@ export const saveQuiz = (quiz: QuizFile, quizId: string): Promise<void> => {
       const transaction: IDBTransaction = db.transaction(['quizzes'], 'readwrite')
       const quizzesStore: IDBObjectStore = transaction.objectStore('quizzes')
       
-      // @ts-expect-error db stored id
       quiz.id = quizId
 
       const request = quizzesStore.put(quiz)

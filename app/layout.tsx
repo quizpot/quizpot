@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
 import "./globals.css"
-import Toaster, { ToastProvider } from "@/components/ui/Toaster"
+import Toaster, { ToastProvider } from "@/components/ui/toaster"
 import Script from "next/script";
+import { ThemeProvider } from "@/components/ui/theme-provider";
+import { NextIntlClientProvider } from "next-intl";
 
 export const metadata: Metadata = {
   title: "Quizpot",
@@ -20,15 +22,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`antialiased`}
       >
-        { process.env.NEXT_PUBLIC_UMAMI_URL ? <Script defer src={ process.env.NEXT_PUBLIC_UMAMI_URL ? process.env.NEXT_PUBLIC_UMAMI_URL : '' } data-website-id={ process.env.NEXT_PUBLIC_UMAMI_ID ? process.env.NEXT_PUBLIC_UMAMI_ID : '' } /> : <></> }
-        <ToastProvider>
-          { children }
-          <Toaster />
-        </ToastProvider>
+        { process.env.NEXT_PUBLIC_UMAMI_URL && process.env.NEXT_PUBLIC_UMAMI_ID && <Script defer src={ process.env.NEXT_PUBLIC_UMAMI_URL } data-website-id={ process.env.NEXT_PUBLIC_UMAMI_ID } /> }
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider>
+            <ToastProvider>
+              { children }
+              <Toaster />
+            </ToastProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

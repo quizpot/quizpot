@@ -1,12 +1,19 @@
-import { QuizFile } from '@/lib/misc/QuizFile'
+import { QuizFile } from '@/lib/QuizFile'
 import React from 'react'
-import Button from '../ui/Button'
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/Dialog'
+import Button from '../ui/ButtonOld'
+import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/dialog'
 import { deleteQuiz } from '@/lib/client/IndexedDB'
+import FancyButton from '../ui/fancy-button'
+import Link from 'next/link'
+import FancyCard from '../ui/fancy-card'
+import { useTranslations } from 'next-intl'
 
 const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
+  const t = useTranslations('Buttons')
+  const dev = process.env.NODE_ENV === 'development'
+
   return (
-    <div className='bg-neutral-100 rounded-lg'>
+    <FancyCard className='p-0 mb-auto'>
       {
         quiz.thumbnail ?
           <div className='w-full h-48 rounded-t-lg'
@@ -23,21 +30,37 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             }}
           ></div>
       }
-      <div className='p-4 bg-neutral-200 rounded-b-lg'>
-        <p className='text-xs font-semibold'>{ new Date(quiz.createdAt).toLocaleString(undefined, {
-          minute: 'numeric',
-          hour: 'numeric',
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        }) }</p>
-        <h2 className='text-xl font-bold'>{ quiz.title }</h2>
-        <p className='text-sm'>{ quiz.description }</p>
-        <div className='mt-4 flex gap-4'>
-          <Button href={`/editor/${id.replace('quiz:', '')}`} className='font-semibold' variant='green'>
-            Edit
-          </Button>
-          <Button variant='blue' className='font-semibold' onClick={() => {
+      <div className='p-4 pb-6 bg-neutral-200 dark:bg-neutral-800 rounded-b-lg flex flex-col gap-4'>
+        <div className='flex gap-2 select-none'>
+          <FancyCard className='text-xs font-semibold' size='sm'>{ 
+            new Date(quiz.createdAt).toLocaleString(undefined, {
+              minute: 'numeric',
+              hour: 'numeric',
+              day: 'numeric',
+              month: 'long',
+              year: 'numeric',
+            }) 
+          }</FancyCard>
+          <FancyCard className='text-xs font-semibold' size='sm'>
+            { quiz.language }
+          </FancyCard>
+          {
+            dev && <FancyCard className='text-xs font-semibold mr-auto' size='sm'>
+              v{ quiz.version }
+            </FancyCard>
+          }
+        </div>
+        <div>
+          <h1 className='text-xl font-bold'>{ quiz.title }</h1>
+          <p className='text-sm'>{ quiz.description }</p>
+        </div>
+        <div className='flex gap-4'>
+          <FancyButton color='green' asChild>
+            <Link href={`/editor/${id.replace('quiz:', '')}`}>
+              { t('edit') }
+            </Link>
+          </FancyButton>
+          <FancyButton color='blue' onClick={() => {
             const a = document.createElement("a")
             const jsonString = JSON.stringify(quiz, null, 2)
             const file = new Blob([jsonString], {type: 'text/json'})
@@ -45,21 +68,21 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             a.download = quiz.title + '.qp'
             a.click()
           }}>
-            Download
-          </Button>
+            { t('download') }
+          </FancyButton>
           <Dialog>
-            <DialogTrigger variant='red' className='font-semibold'>
-              Delete
+            <DialogTrigger color='red'>
+              { t('delete') }
             </DialogTrigger>
             <DialogContent>
-              <DialogHeader title="Are you sure?" />
+              <DialogHeader title={ t('sure') } />
               <section className="relative flex-grow overflow-y-auto">
                 <div className='w-full h-full p-4 flex flex-col gap-4'>
                   <Button variant='red' onClick={async () => {
                     await deleteQuiz(id)
                     window.location.reload()
                   }}>
-                    Delete
+                    { t('delete') }
                   </Button>
                 </div>
               </section>
@@ -67,7 +90,7 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
           </Dialog>
         </div>
       </div>
-    </div>
+    </FancyCard>
   )
 }
 

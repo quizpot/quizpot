@@ -1,6 +1,7 @@
 import React from 'react'
 import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import FancyCard from '@/components/ui/fancy-card'
 
 const QuestionPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   return (
@@ -8,7 +9,9 @@ const QuestionPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState
       className='flex flex-col gap-4 items-center justify-center h-screen w-full'
       style={ getBackgroundStyles(playerLobbyState.theme.background) }
     >
-      <h1 className='text-4xl font-semibold bg-white text-black w-full p-4 text-center'>Question { playerLobbyState.currentQuestionNumber }</h1>
+      <FancyCard color='white' className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>
+        { playerLobbyState.currentQuestionNumber }
+      </FancyCard>
     </section>
   )
 }

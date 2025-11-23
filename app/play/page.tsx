@@ -8,13 +8,16 @@ import { useSearchParams } from 'next/navigation'
 import React from 'react'
 import ScorePage from '@/components/player/pages/ScorePage'
 import EndPage from '@/components/player/pages/EndPage'
-import Button from '@/components/ui/Button'
 import AnswersPage from '@/components/player/pages/AnswersPage'
 import SetCodePage from '@/components/player/pages/SetCodePage'
 import AnsweredPage from '@/components/player/pages/AnsweredPage'
 import SlidePage from '@/components/player/pages/SlidePage'
+import FancyButton from '@/components/ui/fancy-button'
+import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 const PlayPage = () => {
+  const t = useTranslations('Buttons')
   const queryCode = useSearchParams().get('code')
   const playerLobbyState = usePlayerLobbyState().playerLobbyState
   let parsedCode
@@ -66,9 +69,11 @@ const PlayPage = () => {
   return (
     <section className='flex flex-col items-center justify-center gap-4 h-screen w-full p-4'>
       <h1 className='text-2xl font-semibold'>Unknown Lobby State</h1>
-      <Button href='/' variant='yellow'>
-        Home
-      </Button>
+      <FancyButton color='yellow' asChild>
+        <Link href='/'>
+          { t('home') }
+        </Link>
+      </FancyButton>
     </section>
   )
 }

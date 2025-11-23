@@ -1,6 +1,6 @@
 "use client"
-import Header from '@/components/home/Header'
-import Button from '@/components/ui/Button'
+import Header from '@/components/nav/Header'
+import Button from '@/components/ui/ButtonOld'
 import React, { useEffect } from 'react'
 
 const DebugPageClient = () => {

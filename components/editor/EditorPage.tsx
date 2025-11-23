@@ -1,18 +1,17 @@
 "use client"
 import React, { useEffect } from "react"
-import { useToast } from "../ui/Toaster"
+import { useToast } from "../ui/toaster"
 import { redirect } from "next/navigation"
 import EditorHeader from "./header/EditorHeader"
-import EditorLeftBar from "./leftbar/EditorLeftBar"
-import QuestionEditor from "./question/QuestionEditor"
 import { useEditorQuizFile } from "./providers/EditorQuizFileProvider"
 import { getQuiz, saveQuiz } from "@/lib/client/IndexedDB"
 import { useEditorCurrentQuestion } from "./providers/EditorCurrentQuestionProvider"
+import Editor from "./question/Editor"
+import EditorNavigation from "./leftbar/EditorNavigation"
 
 export const EditorPage = ({ quizId }: { quizId: string }) => {
   const toast = useToast() 
-  const { quizFile: quiz, setQuizFile: setQuiz } = useEditorQuizFile()
-  const { currentQuestionIndex, setCurrentQuestionIndex } = useEditorCurrentQuestion()
+  const { setQuizFile: setQuiz } = useEditorQuizFile()
 
   useEffect(() => {
     const loadQuiz = async () => {
@@ -28,8 +27,7 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
         }
 
         setQuiz(quizFile)
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (ignored) {
+      } catch {
         toast('Error loading quiz', { variant: 'error' })
         return redirect('/quizzes')
       }
@@ -37,6 +35,25 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
 
     loadQuiz()
   }, [toast, quizId, setQuiz])
+
+  return (
+    <>
+      <AutoSave quizId={ quizId } />
+      <SlideArrowKeybind />
+      <main className='flex flex-col h-screen overflow-hidden'>
+        <EditorHeader quizId={ quizId } />
+        <section className='flex flex-row h-[calc(100vh_-_56px)] overflow-hidden'>
+          <EditorNavigation />
+          <Editor />
+        </section>
+      </main>
+    </>
+  )
+}
+
+const AutoSave = ({ quizId }: { quizId: string }) => {
+  const toast = useToast()
+  const { quizFile: quiz } = useEditorQuizFile()
 
   useEffect(() => {
     const autoSaveHandler = setTimeout(async () => {
@@ -56,6 +73,13 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
     }
   }, [quiz, quizId, toast])
 
+  return <></>
+}
+
+const SlideArrowKeybind = () => {
+  const { quizFile } = useEditorQuizFile()
+  const { currentQuestionIndex, setCurrentQuestionIndex } = useEditorCurrentQuestion()
+
   useEffect(() => {
     const handleUp = (e: KeyboardEvent) => {
       if (e.key !== 'ArrowUp') return
@@ -64,7 +88,7 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
 
     const handleDown = (e: KeyboardEvent) => {
       if (e.key !== 'ArrowDown') return
-      if (currentQuestionIndex < quiz?.questions.length - 1) setCurrentQuestionIndex(currentQuestionIndex + 1)
+      if (currentQuestionIndex < quizFile.questions.length - 1) setCurrentQuestionIndex(currentQuestionIndex + 1)
     }
 
     document.addEventListener('keydown', handleUp)
@@ -74,17 +98,7 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
       document.removeEventListener('keydown', handleUp)
       document.removeEventListener('keydown', handleDown)
     }
-  }, [currentQuestionIndex, quiz?.questions.length, setCurrentQuestionIndex])
+  }, [currentQuestionIndex, quizFile.questions.length, setCurrentQuestionIndex])
 
-  return (
-    <>
-      <main className='flex flex-col h-screen overflow-hidden'>
-        <EditorHeader quizId={ quizId } />
-        <section className='flex flex-row h-[calc(100vh_-_56px)] overflow-hidden'>
-          <EditorLeftBar />
-          <QuestionEditor />
-        </section>
-      </main>
-    </>
-  )
+  return <></>
 }

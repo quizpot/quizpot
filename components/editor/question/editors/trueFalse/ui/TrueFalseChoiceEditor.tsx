@@ -1,12 +1,14 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
-import Button from '@/components/ui/Button'
-import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
-import { TrueFalseQuestion } from '@/lib/misc/QuizFile'
+import FancyCard from '@/components/ui/fancy-card'
+import { TrueFalseQuestion } from '@/lib/QuizFile'
+import { Check, X } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import React from 'react'
 
-const TrueFalseChoiceInput = ({ v }: { v: boolean }) => {
+const TrueFalseChoiceEditor = ({ v }: { v: boolean }) => {
+  const t = useTranslations('Buttons')
   const { quizFile, setQuizFile } = useEditorQuizFile()
   const { currentQuestionIndex } = useEditorCurrentQuestion()
   const currentQuestion = quizFile.questions[currentQuestionIndex] as TrueFalseQuestion
@@ -28,17 +30,15 @@ const TrueFalseChoiceInput = ({ v }: { v: boolean }) => {
   }
 
   return (
-    <Button variant={ trueFalseVariants[v ? 0 : 1] }>
-      <div className='w-full flex justify-between items-center p-4 text-2xl'> 
-        <h1 className='w-full h-full focus:outline-0'>
-          { v ? 'True' : 'False' }
-        </h1>
-        <div className='rounded-full border-2 border-current'>
-          <BooleanInput onChange={ onCheckboxChange } value={ currentQuestion.answer === v } />
-        </div>
-      </div>
-    </Button>
+    <div className='flex gap-4'>
+      <FancyCard className='text-2xl px-8 py-4 w-full' color={ v ? 'red' : 'blue' }>
+        { v ? t('true') : t('false') }
+      </FancyCard>
+      <BooleanInput onChange={ onCheckboxChange } value={ currentQuestion.answer === v }>
+        { currentQuestion.answer === v ? <Check /> : <X /> }
+      </BooleanInput>
+    </div>
   )
 }
 
-export default TrueFalseChoiceInput
+export default TrueFalseChoiceEditor

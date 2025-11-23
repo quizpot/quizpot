@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { LobbyStatus } from '@/lib/misc/LobbyStatus'
 import { PlayerState } from '@/lib/misc/PlayerState'
 import { SanitizedQuestion } from '@/lib/server/QuestionSanitizer'
-import { QuizTheme } from '@/lib/misc/QuizFile'
+import { QuizTheme } from '@/lib/QuizFile'
 
 export interface PlayerLobbyState {
   code: number

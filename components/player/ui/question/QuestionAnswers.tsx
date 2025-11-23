@@ -2,9 +2,8 @@ import { SanitizedQuestion } from '@/lib/server/QuestionSanitizer'
 import React from 'react'
 import MultipleChoicePlayerAnswerButton from './multipleChoice/MultipleChoicePlayerAnswerButton'
 import TrueFalsePlayerAnswerButton from './trueFalse/TrueFalsePlayerAsnwerButton'
-import { multipleChoiceVariants } from '@/lib/client/colorVariants/MultipleChoiceVariants'
-import { trueFalseVariants } from '@/lib/client/colorVariants/TrueFalseVariants'
 import ShortAnswerPlayerInput from './shortAnswer/ShortAnswerPlayerInput'
+import { colorKeys } from '@/lib/Colors'
 
 const QuestionAnswers = ({ question }: { question: SanitizedQuestion }) => {
   if (question.questionType === 'multipleChoice') {
@@ -17,7 +16,7 @@ const QuestionAnswers = ({ question }: { question: SanitizedQuestion }) => {
                 choice={ choice } 
                 index={ index } 
                 key={ index } 
-                variant={ multipleChoiceVariants[index % multipleChoiceVariants.length] } 
+                color={ colorKeys[index % 10] } 
               />
             )
           })
@@ -29,8 +28,8 @@ const QuestionAnswers = ({ question }: { question: SanitizedQuestion }) => {
   if (question.questionType === 'trueFalse') {
     return (
       <section className='grid grid-cols-2 gap-4 grid-flow-row w-full h-full p-4'>
-        <TrueFalsePlayerAnswerButton value={ true } variant={ trueFalseVariants[0] } />
-        <TrueFalsePlayerAnswerButton value={ false } variant={ trueFalseVariants[1] } />
+        <TrueFalsePlayerAnswerButton value={ true } color='red' />
+        <TrueFalsePlayerAnswerButton value={ false } color='blue' />
       </section>
     )
   }

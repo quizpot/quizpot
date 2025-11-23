@@ -4,8 +4,8 @@ import NextQuestionButton from '../ui/NextQuestionButton'
 import CurrentQuestionAnswers from '../ui/CurrentQuestionAnswers'
 import CurrentQuestionAnswersDisplay from '../ui/answerDisplay/CurrentQuestionAnswersDisplay'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
-import Button from '@/components/ui/Button'
 import InvalidPage from './InvalidPage'
+import FancyCard from '@/components/ui/fancy-card'
 
 const AnswersPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   let question: string
@@ -25,9 +25,9 @@ const AnswersPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => 
       style={ getBackgroundStyles(hostLobbyState.theme.background) }
     >
       <div className='flex gap-4 w-full'>
-        <Button variant='gray' className='text-center text-4xl font-semibold w-full py-4 px-4'>
+        <FancyCard color='white' className='text-center text-4xl font-semibold w-full py-4 px-4'>
           { question }
-        </Button>
+        </FancyCard>
         <NextQuestionButton className='h-full flex items-center font-semibold justify-center px-4 text-2xl' />
       </div>
       <div className='flex items-center justify-center p-4 w-full h-full'>

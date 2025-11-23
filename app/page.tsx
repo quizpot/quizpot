@@ -13,26 +13,26 @@ const HomePage = () => {
       <Header />
       <div className='h-32'></div>
       <section className='flex flex-col gap-8 items-center justify-center'>
-        <FancyButton className='text-4xl lg:text-6xl font-semibold' size='lg'>
+        <FancyButton className='text-6xl font-semibold' size='lg'>
           Quizpot
         </FancyButton>
-        <div className='flex gap-4 items-center justify-center'>
-          <FancyButton color='red' className='text-2xl' asChild>
+        <div className='grid grid-cols-2 lg:flex gap-4 items-center justify-center text-center'>
+          <FancyButton color='red' className='text-2xl px-8 py-4 lg:px-4 lg:py-2' asChild>
             <Link href={ t('menu.Edit.href') }>
               { t('menu.Edit.label') }
             </Link>
           </FancyButton>
-          <FancyButton color='blue' className='text-2xl' asChild>
+          <FancyButton color='blue' className='text-2xl px-8 py-4 lg:px-4 lg:py-2' asChild>
             <Link href={ t('menu.Host.href') }>
               { t('menu.Host.label') }
             </Link>
           </FancyButton>
-          <FancyButton color='green' className='text-2xl' asChild>
+          <FancyButton color='green' className='text-2xl px-8 py-4 lg:px-4 lg:py-2' asChild>
             <Link href={ t('menu.Play.href') }>
               { t('menu.Play.label') }
             </Link>
           </FancyButton>
-          <FancyButton color='yellow' className='text-2xl' asChild>
+          <FancyButton color='yellow' className='text-2xl px-8 py-4 lg:px-4 lg:py-2' asChild>
             <Link href={ t('menu.Stats.href') }>
               { t('menu.Stats.label') }
             </Link>

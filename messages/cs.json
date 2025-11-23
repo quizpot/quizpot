@@ -80,7 +80,7 @@
     "title": "Vygenerovat Kvíz",
     "generate": "Vygenerovat",
     "prompt": "Vytvor mi kvíz o psoch a mačkách s titulným slajdom a 10 otázkami",
-    "generating":cz "Generování...",
+    "generating": "Generování...",
     "description": "Budete přesměrováni na editor zkráceně."
   },
   "QuizSettings": {

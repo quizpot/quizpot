@@ -32,7 +32,7 @@ const ShortAnswerPlayerInput = () => {
 
   return (
     <>
-      <TextInput onChange={ e => setAnswer(e.target.value) } value={ answer } className='w-full text-center' />
+      <TextInput onChange={ e => setAnswer(e.target.value) } color='white' value={ answer } className='w-full text-center' />
       <FancyButton onClick={ onSubmit } color='green' className='w-full text-center'>
         { t('submit') }
       </FancyButton>

@@ -75,6 +75,7 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
       data.set(answer.answer.answer, { count: (currentCount + 1), correct: answer.isCorrect})
     })
 
+    // TODO: Fix not displaying correct answer...
     // answers.filter(a => a.isCorrect).map(a => {
     //   if (a.answer.answerType !== 'shortAnswer') return
       

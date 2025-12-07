@@ -31,10 +31,6 @@
     "submit": "Submit"
   },
   "Header": {
-    "stats": {
-      "label": "Home",
-      "href": "/"
-    },
     "github": {
       "label": "GitHub",
       "href": "https://github.com/quizpot"

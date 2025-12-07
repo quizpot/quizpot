@@ -51,7 +51,7 @@
         "href": "/host"
       },
       "Edit": {
-        "label": "Edit",
+        "label": "Editor",
         "href": "/quizzes"
       },
       "Stats": {

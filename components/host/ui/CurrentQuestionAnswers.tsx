@@ -59,6 +59,7 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
   }
 
   if (currentQuestion.questionType === 'shortAnswer') {
+    return <></>
     return (
       <div className='flex items-center justify-center p-8'>
         <FancyCard color="white" className='flex items-center justify-center p-8 mx-auto text-2xl'>

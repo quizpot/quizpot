@@ -4,8 +4,12 @@ import MultipleChoiceAnswerButtonWithAnswer from './answerButtons/MultipleChoice
 import { Question } from '@/lib/QuizFile'
 import { colorKeys } from '@/lib/Colors'
 import FancyCard from '@/components/ui/fancy-card'
+import AnswerCard from './answerDisplay/AnswerCard'
+import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
 
 const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuestion: Question, showAnswers?: boolean }) => {
+  const hostLobbyState = useHostLobbyState().hostLobbyState
+
   if (currentQuestion.questionType === 'multipleChoice') {
     return (
       <section className='grid grid-cols-2 gap-4 grid-flow-row w-full'>
@@ -59,9 +63,35 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
   }
 
   if (currentQuestion.questionType === 'shortAnswer') {
-    return <></>
+    if (showAnswers) {
+      const answerCounter: number[] = []
+
+      hostLobbyState?.answers.filter(a => a.isCorrect).map((answer, index) => {
+        answerCounter[index] = answerCounter[index] + 1 || 1
+      })
+
+      return (
+        <div className='flex items-center justify-center p-8 gap-4'>
+          {
+            currentQuestion.answers.map((answer, index) => {
+              if (answerCounter[index] !== 0) return null
+
+              return (
+                <AnswerCard
+                  key={ index }
+                  answer={ answer }
+                  answers={ answerCounter[index] }
+                  correct={ true }
+                />
+              )
+            })
+          }
+        </div>
+      )
+    }
+
     return (
-      <div className='flex items-center justify-center p-8'>
+      <div className='flex items-center justify-center p-8 gap-4'>
         <FancyCard color="white" className='flex items-center justify-center p-8 mx-auto text-2xl'>
           Send your answer!
         </FancyCard>

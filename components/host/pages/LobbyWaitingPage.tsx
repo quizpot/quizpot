@@ -44,7 +44,7 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
           <QRCode value={ window.location.host + `/play?code=${ hostLobbyState.code }` } className='p-4' />
         </FancyButton>
       </div>
-      <FancyCard className='w-full flex gap-4 p-4 flex-wrap items-center'>
+      <FancyCard color='white' className='w-full flex gap-4 p-4 flex-wrap items-center'>
         <p className='text-2xl'>{ t('players') }: <span className='font-semibold select-text'>{ hostLobbyState.players.length }</span></p>
         {
           hostLobbyState.players.length > 0 && hostLobbyState.players.map((player, index) => (

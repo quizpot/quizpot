@@ -75,8 +75,17 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
       data.set(answer.answer.answer, { count: (currentCount + 1), correct: answer.isCorrect})
     })
 
+    // TODO: Fix not displaying correct answer...
+    // answers.filter(a => a.isCorrect).map(a => {
+    //   if (a.answer.answerType !== 'shortAnswer') return
+      
+    //   if (data.get(a.answer.answer) !== undefined) {
+    //     data.set(a.answer.answer, { count: 0, correct: true })
+    //   }
+    // })
+
     return (
-      <div className='flex gap-8 items-center justify-center flex-wrap h-full'>
+      <div className='flex flex-row gap-8 items-center justify-center h-full w-full'>
         { 
           Array.from(data.entries()).map(([answerText, obj]) => {
             return (

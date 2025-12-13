@@ -31,10 +31,6 @@
     "submit": "Odeslat"
   },
   "Header": {
-    "stats": {
-      "label": "Domov",
-      "href": "/"
-    },
     "github": {
       "label": "GitHub",
       "href": "https://github.com/quizpot"

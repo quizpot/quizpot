@@ -140,17 +140,17 @@
   },
   "LobbyWaitingPage": {
     "players": "Hráči",
-    "code": "Lobby Kód"
+    "code": "Kód Skupiny"
   },
   "PlayPage": {
-    "title": "Lobby Kód",
+    "title": "Kód Skupiny",
     "continue": "Pokračovať",
     "setName": "Zadaj svoje meno"
   },
   "WaitingInLobbyPage": {
-    "title": "Čakám na lobby",
-    "lobbyCode": "Lobby Kód",
-    "leave": "Opustiť lobby"
+    "title": "Čakám na skupinu",
+    "lobbyCode": "Kód Skupiny",
+    "leave": "Opustiť Skupinu"
   },
   "SlidePage": {
     "title": "Pozri sa na slajd"

@@ -22,7 +22,7 @@ export const validateAnswer = (answer: any, question: Question): boolean => {
     const typedAnswer = answer as ShortAnswerAnswer
     const lowercasedAnswers = question.answers.map(ans => ans.toLowerCase())
 
-    if (lowercasedAnswers.includes(typedAnswer.answer.toLowerCase())) {
+    if (lowercasedAnswers.includes(typedAnswer.answer.trimEnd().toLowerCase())) {
       return true
     }
   }

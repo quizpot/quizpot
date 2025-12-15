@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_KEY })
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.0-flash-001',
+    model: 'gemini-2.5-flash',
     config: {
       systemInstruction: sysPrompt(),
     },

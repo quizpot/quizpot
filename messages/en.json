@@ -39,19 +39,23 @@
   "HomePage": {
     "menu": {
       "Play": {
-        "label": "Play",
+        "title": "Play",
+        "subtitle": "Join a lobby",
         "href": "/play"
       },
       "Host": {
-        "label": "Host",
+        "title": "Host",
+        "subtitle": "Host a lobby",
         "href": "/host"
       },
       "Edit": {
-        "label": "Editor",
+        "title": "Editor",
+        "subtitle": "Edit your quizzes",
         "href": "/quizzes"
       },
       "Stats": {
-        "label": "Stats",
+        "title": "Stats",
+        "subtitle": "View stats of this instance",
         "href": "/stats"
       }
     }

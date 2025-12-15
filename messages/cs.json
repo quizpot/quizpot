@@ -39,19 +39,23 @@
   "HomePage": {
     "menu": {
       "Play": {
-        "label": "Hrát",
+        "title": "Hrát",
+        "subtitle": "Připoj se k skupine",
         "href": "/play"
       },
       "Host": {
-        "label": "Hostit",
+        "title": "Hostit",
+        "subtitle": "Hostit skupinu",
         "href": "/host"
       },
       "Edit": {
-        "label": "Editor",
+        "title": "Editor",
+        "subtitle": "Uprav své kvízy",
         "href": "/quizzes"
       },
       "Stats": {
-        "label": "Statistiky",
+        "title": "Statistiky",
+        "subtitle": "Zobrazit statistiky této instance",
         "href": "/stats"
       }
     }

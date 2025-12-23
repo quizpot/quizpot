@@ -8,7 +8,7 @@ const FancyButton = ({
 }: React.ComponentProps<"button"> & { 
   color?: Color, size?: 'sm' | 'lg', className?: string, asChild?: boolean 
 }) => {
-  if (!color) color = 'ghost'
+  if (!color) color = 'dynamic'
   const { cls } = colors[color]
 
   let padding = 'px-4 py-2'

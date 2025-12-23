@@ -39,19 +39,23 @@
   "HomePage": {
     "menu": {
       "Play": {
-        "label": "Hrát",
+        "title": "Hrát",
+        "subtitle": "Připoj se k skupine",
         "href": "/play"
       },
       "Host": {
-        "label": "Hostit",
+        "title": "Hostit",
+        "subtitle": "Hostit skupinu",
         "href": "/host"
       },
       "Edit": {
-        "label": "Editor",
+        "title": "Editor",
+        "subtitle": "Uprav své kvízy",
         "href": "/quizzes"
       },
       "Stats": {
-        "label": "Statistiky",
+        "title": "Statistiky",
+        "subtitle": "Zobrazit statistiky této instance",
         "href": "/stats"
       }
     }
@@ -136,17 +140,17 @@
   },
   "LobbyWaitingPage": {
     "players": "Hráči",
-    "code": "Lobby Kód"
+    "code": "Kód Skupiny"
   },
   "PlayPage": {
-    "title": "Lobby Kód",
+    "title": "Kód Skupiny",
     "continue": "Pokračovať",
     "setName": "Zadaj svoje meno"
   },
   "WaitingInLobbyPage": {
-    "title": "Čakám na lobby",
-    "lobbyCode": "Lobby Kód",
-    "leave": "Opustiť lobby"
+    "title": "Čakám na skupinu",
+    "lobbyCode": "Kód Skupiny",
+    "leave": "Opustiť Skupinu"
   },
   "SlidePage": {
     "title": "Pozri sa na slajd"

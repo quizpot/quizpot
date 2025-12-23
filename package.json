@@ -1,6 +1,6 @@
 {
   "name": "quizpot",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -10,7 +10,7 @@
     "prepare": "next-ws patch"
   },
   "dependencies": {
-    "@google/genai": "^1.21.0",
+    "@google/genai": "^1.33.0",
     "@hello-pangea/dnd": "^18.0.1",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-slot": "^1.2.4",

@@ -1,6 +1,7 @@
 import Footer from '@/components/nav/Footer'
 import Header from '@/components/nav/Header'
 import FancyButton from '@/components/ui/fancy-button'
+import { Cog, Pen, Play, User } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
 import React from 'react'
@@ -13,25 +14,41 @@ const HomePage = () => {
       <Header />
       <div className='h-32'></div>
       <section className='flex flex-col gap-8 p-4 items-center justify-center'>
-        <div className='h-96 lg:h-64 grid grid-cols-2 lg:grid-cols-4 gap-4 text-center'>
-          <FancyButton color='red' className='text-2xl w-full h-full aspect-square flex items-center justify-center' asChild>
+        <div className='grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6'>
+          <FancyButton color='red' className='w-full flex items-center gap-4 my-auto p-6' asChild>
             <Link href={ t('menu.Edit.href') }>
-              { t('menu.Edit.label') }
+              <Pen size={ 32 } />
+              <div className='flex flex-col text-left justify-center'>
+                <h1 className='text-2xl font-semibold'>{ t('menu.Edit.title') }</h1>
+                <p>{ t('menu.Edit.subtitle') }</p>
+              </div>
             </Link>
           </FancyButton>
-          <FancyButton color='blue' className='text-2xl w-full h-full aspect-square flex items-center justify-center' asChild>
+          <FancyButton color='blue' className='w-full flex items-center gap-4 my-auto p-6' asChild>
             <Link href={ t('menu.Host.href') }>
-              { t('menu.Host.label') }
+              <User size={ 32 } />
+              <div className='flex flex-col text-left justify-center'>
+                <h1 className='text-2xl font-semibold'>{ t('menu.Host.title') }</h1>
+                <p>{ t('menu.Host.subtitle') }</p>
+              </div>
             </Link>
           </FancyButton>
-          <FancyButton color='green' className='text-2xl w-full h-full aspect-square flex items-center justify-center' asChild>
+          <FancyButton color='green' className='w-full flex items-center gap-4 my-auto p-6' asChild>
             <Link href={ t('menu.Play.href') }>
-              { t('menu.Play.label') }
+              <Play size={ 32 } />
+              <div className='flex flex-col text-left justify-center'>
+                <h1 className='text-2xl font-semibold'>{ t('menu.Play.title') }</h1>
+                <p>{ t('menu.Play.subtitle') }</p>
+              </div>
             </Link>
           </FancyButton>
-          <FancyButton color='yellow' className='text-2xl w-full h-full aspect-square flex items-center justify-center' asChild>
+          <FancyButton color='yellow' className='w-full flex items-center gap-4 my-auto p-6' asChild>
             <Link href={ t('menu.Stats.href') }>
-              { t('menu.Stats.label') }
+              <Cog size={ 32 } />
+              <div className='flex flex-col text-left justify-center'>
+                <h1 className='text-2xl font-semibold'>{ t('menu.Stats.title') }</h1>
+                <p>{ t('menu.Stats.subtitle') }</p>
+              </div>
             </Link>
           </FancyButton>
         </div>
@@ -40,6 +57,5 @@ const HomePage = () => {
     </section>
   )
 }
-
 
 export default HomePage

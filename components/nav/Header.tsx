@@ -25,7 +25,7 @@ const Header = () => {
 
   return (
     <>
-      <header className='fixed top-0 left-0 w-full z-10 bg-white/60 dark:bg-black/60 backdrop-blur-sm'>
+      <header className='fixed top-0 left-0 w-full z-10 backdrop-blur-sm'>
         <Notification>
           This is an early version of Quizpot under active development. <b>Expect frequent changes.</b> Download quizzes as a file for long term storage.
         </Notification>

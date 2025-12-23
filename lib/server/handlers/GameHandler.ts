@@ -244,6 +244,7 @@ export const handleNextQuestion = ({ client }: HandlerContext) => {
   }
 
   const skippableStates = [
+    LobbyStatus.answer,
     LobbyStatus.slide, 
     LobbyStatus.answers,
     LobbyStatus.score
@@ -258,6 +259,9 @@ export const handleNextQuestion = ({ client }: HandlerContext) => {
   }
 
   switch (lobby.status) {
+    case LobbyStatus.answer:
+      handleAnswersState(lobby)
+      break
     case LobbyStatus.answers:
       if (lobby.currentQuestionIndex === lobby.quiz.questions.length - 1) {
         handleEndState(lobby)

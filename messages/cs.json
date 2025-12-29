@@ -34,6 +34,10 @@
     "github": {
       "label": "GitHub",
       "href": "https://github.com/quizpot"
+    },
+    "stats": {
+      "label": "Statistiky",
+      "href": "/stats"
     }
   },
   "HomePage": {
@@ -53,10 +57,10 @@
         "subtitle": "Uprav své kvízy",
         "href": "/quizzes"
       },
-      "Stats": {
-        "title": "Statistiky",
-        "subtitle": "Zobrazit statistiky této instance",
-        "href": "/stats"
+      "Results": {
+        "title": "Výsledky",
+        "subtitle": "Zobrazit uložené výsledky",
+        "href": "/results"
       }
     }
   },

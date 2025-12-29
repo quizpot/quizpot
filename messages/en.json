@@ -34,6 +34,10 @@
     "github": {
       "label": "GitHub",
       "href": "https://github.com/quizpot"
+    },
+    "stats": {
+      "label": "Stats",
+      "href": "/stats"
     }
   },
   "HomePage": {
@@ -53,10 +57,10 @@
         "subtitle": "Edit your quizzes",
         "href": "/quizzes"
       },
-      "Stats": {
-        "title": "Stats",
-        "subtitle": "View stats of this instance",
-        "href": "/stats"
+      "Results": {
+        "title": "Results",
+        "subtitle": "View saved results",
+        "href": "/results"
       }
     }
   },

@@ -77,7 +77,13 @@
   "QuizzesPage": {
     "title": "Your Quizzes",
     "createNew": "Create New Quiz",
-    "generate": "Generate Quiz"
+    "generate": "Generate Quiz",
+    "newQuizBtn": "New Quiz",
+    "search": "Search",
+    "latest": "Latest",
+    "oldest": "Oldest",
+    "biggest": "Biggest",
+    "smallest": "Smallest"
   },
   "GenerateQuizPage": {
     "title": "Generate Quiz",

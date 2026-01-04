@@ -14,8 +14,8 @@ const HomePage = () => {
       <Header />
       <div className='h-32'></div>
       <section className='w-full flex flex-col gap-8 p-4 items-center justify-center'>
-        <div className='container w-full mx-auto p-4 grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6'>
-          <FancyButton color='red' className='w-full flex items-center gap-4 my-auto p-6' asChild>
+        <div className='container w-full mx-auto p-4 flex lg:grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-6'>
+          <FancyButton color='red' className='hidden lg:flex w-full items-center gap-4 my-auto p-6' asChild>
             <Link href={ t('menu.Edit.href') }>
               <Pen size={ 32 } />
               <div className='flex flex-col text-left justify-center'>
@@ -24,7 +24,7 @@ const HomePage = () => {
               </div>
             </Link>
           </FancyButton>
-          <FancyButton color='blue' className='w-full flex items-center gap-4 my-auto p-6' asChild>
+          <FancyButton color='blue' className='hidden lg:flex w-full items-center gap-4 my-auto p-6' asChild>
             <Link href={ t('menu.Host.href') }>
               <User size={ 32 } />
               <div className='flex flex-col text-left justify-center'>
@@ -42,7 +42,7 @@ const HomePage = () => {
               </div>
             </Link>
           </FancyButton>
-          <FancyButton color='yellow' className='w-full flex items-center gap-4 my-auto p-6' asChild>
+          <FancyButton disabled={true} color='yellow' className='hidden lg:flex w-full items-center gap-4 my-auto p-6' asChild>
             <Link href={ t('menu.Results.href') }>
               <Book size={ 32 } />
               <div className='flex flex-col text-left justify-center'>

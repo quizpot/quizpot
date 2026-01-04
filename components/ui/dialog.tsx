@@ -27,12 +27,12 @@ export const Dialog = ({ children, open, onOpenChange }: { children: React.React
   )
 }
 
-export const DialogTrigger = ({ children, color, className }: { children: React.ReactNode, color?: Color, className?: string }) => {
+export const DialogTrigger = ({ children, color, size, className }: { children: React.ReactNode, color?: Color, size?: 'sm' | 'lg', className?: string }) => {
   const context = useContext(DialogContext)
   if (!context) throw new Error("DialogTrigger must be used within a Dialog")
 
   return (
-    <FancyButton color={ color } onClick={() => context.setOpened(!context.opened)} className={ className }>
+    <FancyButton size={ size } color={ color } onClick={() => context.setOpened(!context.opened)} className={ className }>
       { children }
     </FancyButton>
   )

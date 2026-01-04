@@ -11,12 +11,17 @@ import FancyButton from '@/components/ui/fancy-button'
 import Link from 'next/link'
 import Header from '@/components/nav/Header'
 import Footer from '@/components/nav/Footer'
+import TextInput from '@/components/ui/TextInput'
+import FancyCard from '@/components/ui/fancy-card'
+import NewQuizDialog from '@/components/quizzes/NewQuizDialog'
 
 const QuizzesPage = () => {
   const t = useTranslations('QuizzesPage')
   const toast = useToast()
   
+  const [query, setQuery] = React.useState('')
   const [quizzes, setQuizzes] = React.useState<QuizFile[]>([])
+  const [sortOrder, setSortOrder] = React.useState<'latest' | 'oldest' | 'biggest' | 'smallest'>('latest')
 
   useEffect(() => {
     const loadQuizzes = async () => {
@@ -35,51 +40,104 @@ const QuizzesPage = () => {
     loadQuizzes()
   }, [toast]) 
 
-  const onFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files === null || e.target.files.length === 0) {
-      toast('No file selected', { variant: 'error' })
-      return
-    }
-
-    const file = e.target.files[0]
-    const fileText = await file.text()
-
-    try {
-      const jsonObj = JSON.parse(fileText)
-      const newQuizId = crypto.randomUUID()
-      await saveQuiz(jsonObj, newQuizId)
-      window.location.href = '/editor/' + newQuizId
-    } catch (e) {
-      console.error(e)
-      toast('Error parsing quiz file', { variant: 'error' })
-    }
+  const onSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value)
   }
+
+  const filteredQuizzes = [...quizzes]
+    .filter((quiz) => {
+      const searchTerm = query.toLowerCase()
+      const date = new Date(quiz.createdAt)
+
+      const monthLong = date.toLocaleString('default', { month: 'long' }).toLowerCase()
+      const monthShort = date.toLocaleString('default', { month: 'short' }).toLowerCase()
+      const fullDateString = date.toLocaleDateString().toLowerCase()
+      
+      const searchableContent = [
+        quiz.title,
+        quiz.description,
+        quiz.version,
+        quiz.language,
+        monthLong,
+        monthShort,
+        fullDateString
+      ].join(' ').toLowerCase()
+
+      return searchableContent.includes(searchTerm)
+    })
+    .sort((a, b) => {
+      switch (sortOrder) {
+        case 'latest':
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        case 'oldest':
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        case 'biggest':
+          return (b.questions?.length || 0) - (a.questions?.length || 0)
+        case 'smallest':
+          return (a.questions?.length || 0) - (b.questions?.length || 0)
+        default:
+          return 0
+      }
+    })
 
   return (
     <>
       <DeviceScreenUnsupported />
       <Header />
-      <section className='w-full mt-32'>
-        <h1 className='text-2xl lg:text-4xl font-bold text-center p-4'>{ t('title') }</h1>
-        <div className='max-w-sm mx-auto text-center p-4 flex flex-col gap-4'>
-          <FancyButton color='green' asChild>
-            <Link href='/editor/new'>
-              { t('createNew') }
-            </Link>
-          </FancyButton>
-          <FancyButton color='yellow' asChild>
-            <Link href='/quizzes/generate'>
-              { t('generate') }
-            </Link>
-          </FancyButton>
-          <QuizFileInput onChange={ onFile } className='w-full text-center' />
+      <section className='container mx-auto w-full mt-32 flex flex-col gap-4 p-4'>
+        <h1 className='text-2xl lg:text-4xl font-bold text-center p-4 py-16'>{ t('title') }</h1>
+        <div className='w-full mx-auto text-center flex flex-col gap-4'>
+          <NewQuizDialog />
+          <div className='grid grid-cols-8 gap-4'>
+            <TextInput 
+              value={query} 
+              onChange={onSearch} 
+              placeholder={t('search')} 
+              className={'col-span-4 w-full text-center ' + (query ? '' : 'opacity-50')}
+            />
+            <FancyButton 
+              onClick={() => setSortOrder('latest')}
+              className={sortOrder !== 'latest' ? 'opacity-50' : ''}
+            >
+              {t('latest')}
+            </FancyButton>
+            <FancyButton 
+              onClick={() => setSortOrder('oldest')}
+              className={sortOrder !== 'oldest' ? 'opacity-50' : ''}
+            >
+              {t('oldest')}
+            </FancyButton>
+            <FancyButton 
+              onClick={() => setSortOrder('biggest')}
+              className={sortOrder !== 'biggest' ? 'opacity-50' : ''}
+            >
+              {t('biggest')}
+            </FancyButton>
+            <FancyButton 
+              onClick={() => setSortOrder('smallest')}
+              className={sortOrder !== 'smallest' ? 'opacity-50' : ''}
+            >
+              {t('smallest')}
+            </FancyButton>
+          </div>
         </div>
-        <div className='container mx-auto w-full grid gap-4 p-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-          {
-            quizzes.map((quiz) => (
-              <QuizCard key={ quiz.id } quiz={ quiz } id={ quiz.id } />
+        <div className='container mx-auto w-full grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+          {filteredQuizzes.length > 0 ? (
+            filteredQuizzes.map((quiz) => (
+              <QuizCard key={quiz.id} quiz={quiz} id={quiz.id} />
             ))
-          }
+          ) : (
+            <div className='col-span-full flex flex-col items-center justify-center py-20 gap-4'>
+              <p className='text-xl font-medium'>
+                {query ? `No quizzes found for "${query}"` : "You haven't created any quizzes yet."}
+              </p>
+              {query && (
+                <FancyButton size='sm' onClick={() => setQuery('')}>
+                  Clear search
+                </FancyButton>
+              )}
+            </div>
+          )}
         </div>
         <Footer />
       </section>

@@ -30,9 +30,9 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             }}
           ></div>
       }
-      <div className='p-4 pb-6 bg-neutral-200 dark:bg-neutral-800 rounded-b-lg flex flex-col gap-4'>
+      <div className='p-4 pb-6 rounded-b-lg flex flex-col gap-4'>
         <div className='flex gap-2 select-none'>
-          <FancyCard className='text-xs font-semibold' size='sm'>{ 
+          <FancyCard color='ghost' className='text-xs font-semibold' size='sm'>{ 
             new Date(quiz.createdAt).toLocaleString(undefined, {
               minute: 'numeric',
               hour: 'numeric',
@@ -41,11 +41,11 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
               year: 'numeric',
             }) 
           }</FancyCard>
-          <FancyCard className='text-xs font-semibold' size='sm'>
+          <FancyCard color='ghost' className='text-xs font-semibold' size='sm'>
             { quiz.language }
           </FancyCard>
           {
-            dev && <FancyCard className='text-xs font-semibold mr-auto' size='sm'>
+            dev && <FancyCard color='ghost' className='text-xs font-semibold mr-auto' size='sm'>
               v{ quiz.version }
             </FancyCard>
           }
@@ -54,13 +54,13 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
           <h1 className='text-xl font-bold'>{ quiz.title }</h1>
           <p className='text-sm'>{ quiz.description }</p>
         </div>
-        <div className='flex gap-4'>
-          <FancyButton color='green' asChild>
+        <div className='grid grid-cols-3 gap-4'>
+          <FancyButton color='green' size='sm' className='w-full text-center' asChild>
             <Link href={`/editor/${id.replace('quiz:', '')}`}>
               { t('edit') }
             </Link>
           </FancyButton>
-          <FancyButton color='blue' onClick={() => {
+          <FancyButton color='blue' size='sm' className='w-full' onClick={() => {
             const a = document.createElement("a")
             const jsonString = JSON.stringify(quiz, null, 2)
             const file = new Blob([jsonString], {type: 'text/json'})
@@ -71,8 +71,8 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             { t('download') }
           </FancyButton>
           <Dialog>
-            <DialogTrigger color='red'>
-              { t('delete') }
+            <DialogTrigger size='sm' className='w-full' color='red'>
+              { t('delete') } 
             </DialogTrigger>
             <DialogContent>
               <DialogHeader title={ t('sure') } />

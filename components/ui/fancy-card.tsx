@@ -8,7 +8,7 @@ const FancyCard = ({
 }: React.ComponentProps<"div"> & { 
   color?: Color, size?: 'sm' | 'lg', className?: string, asChild?: boolean 
 }) => {
-  if (!color) color = 'ghost'
+  if (!color) color = 'gray'
   const { cls } = colors[color]
 
   let padding = 'px-4 py-2'
@@ -17,6 +17,10 @@ const FancyCard = ({
     padding = 'px-2 py-1'
   } else if (size === 'lg') {
     padding = 'px-8 py-4'
+  }
+
+  if (color === 'gray') {
+    className += ' dark:shadow-neutral-900! bg-neutral-200! dark:bg-neutral-800!'
   }
 
   const Comp = asChild ? Slot : 'div'

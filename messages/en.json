@@ -34,6 +34,10 @@
     "github": {
       "label": "GitHub",
       "href": "https://github.com/quizpot"
+    },
+    "stats": {
+      "label": "Stats",
+      "href": "/stats"
     }
   },
   "HomePage": {
@@ -53,10 +57,10 @@
         "subtitle": "Edit your quizzes",
         "href": "/quizzes"
       },
-      "Stats": {
-        "title": "Stats",
-        "subtitle": "View stats of this instance",
-        "href": "/stats"
+      "Results": {
+        "title": "Results",
+        "subtitle": "View saved results",
+        "href": "/results"
       }
     }
   },
@@ -73,7 +77,13 @@
   "QuizzesPage": {
     "title": "Your Quizzes",
     "createNew": "Create New Quiz",
-    "generate": "Generate Quiz"
+    "generate": "Generate Quiz",
+    "newQuizBtn": "New Quiz",
+    "search": "Search",
+    "latest": "Latest",
+    "oldest": "Oldest",
+    "biggest": "Biggest",
+    "smallest": "Smallest"
   },
   "GenerateQuizPage": {
     "title": "Generate Quiz",

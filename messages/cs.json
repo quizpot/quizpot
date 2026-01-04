@@ -34,6 +34,10 @@
     "github": {
       "label": "GitHub",
       "href": "https://github.com/quizpot"
+    },
+    "stats": {
+      "label": "Statistiky",
+      "href": "/stats"
     }
   },
   "HomePage": {
@@ -53,10 +57,10 @@
         "subtitle": "Uprav své kvízy",
         "href": "/quizzes"
       },
-      "Stats": {
-        "title": "Statistiky",
-        "subtitle": "Zobrazit statistiky této instance",
-        "href": "/stats"
+      "Results": {
+        "title": "Výsledky",
+        "subtitle": "Zobrazit uložené výsledky",
+        "href": "/results"
       }
     }
   },
@@ -74,7 +78,13 @@
   "QuizzesPage": {
     "title": "Vaše Kvízy",
     "createNew": "Vytvořit Nový Kvíz",
-    "generate": "Vygenerovat Kvíz"
+    "generate": "Vygenerovat Kvíz",
+    "newQuizBtn": "Nový Kvíz",
+    "search": "Hledat",
+    "latest": "Nejnovější",
+    "oldest": "Nejstarší",
+    "biggest": "Největší",
+    "smallest": "Nejmenší"
   },
   "GenerateQuizPage": {
     "title": "Vygenerovat Kvíz",

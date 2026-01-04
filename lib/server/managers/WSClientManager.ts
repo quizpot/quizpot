@@ -1,4 +1,3 @@
-/* eslint-disable no-var */
 import { randomUUID } from "crypto"
 
 declare global {

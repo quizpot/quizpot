@@ -1,4 +1,3 @@
-/* eslint-disable no-var */
 import { WebSocketClient } from "./WSClientManager"
 import { MultipleChoiceAnswer, QuizFile, ShortAnswerAnswer, SlideQuestion, TrueFalseAnswer } from "../../QuizFile"
 import { sendEvent } from "./EventManager"

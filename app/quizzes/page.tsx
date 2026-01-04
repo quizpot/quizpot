@@ -1,18 +1,15 @@
 "use client"
 import QuizCard from '@/components/quizzes/QuizCard'
 import DeviceScreenUnsupported from '@/components/ui/unsupported-device-overlay'
-import QuizFileInput from '@/components/ui/QuizFileInput'
 import { useToast } from '@/components/ui/toaster'
-import { getAllQuizzes, saveQuiz } from '@/lib/client/IndexedDB'
+import { getAllQuizzes } from '@/lib/client/IndexedDB'
 import { QuizFile } from '@/lib/QuizFile'
 import React, { useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
-import Link from 'next/link'
 import Header from '@/components/nav/Header'
 import Footer from '@/components/nav/Footer'
 import TextInput from '@/components/ui/TextInput'
-import FancyCard from '@/components/ui/fancy-card'
 import NewQuizDialog from '@/components/quizzes/NewQuizDialog'
 
 const QuizzesPage = () => {

@@ -6,25 +6,24 @@
   Quizpot
 </h1>
 
-An open-source quiz application that allows you to create entertaining quizzes, without limits. 
+<p align="center">
+  <strong>The open-source, real-time quiz application.</strong><br>
+  <a href="https://quizpot.app"><strong>Visit quizpot.app »</strong></a>
+</p>
 
-Based on Next.js, it uses the latest web technologies so it's accessible from your phone to your tv, and it's easy to run anywhere from your local machine or the cloud.
+Quizpot is a high-performance, interactive web application that allows you to create and host entertaining quizzes without limits. Built with Next.js and a dedicated WebSocket server, it delivers a seamless, real-time playing experience across all modern devices.
+
+---
 
 ## Why Quizpot?
 
-Quizpot is open-source and free to use, no strings attached. Aiming to be the best in class and easy to use, it's built with the latest technologies and is user oriented.
+Quizpot is designed to be a best-in-class, open-source alternative to proprietary quiz platforms. Quizpot is trying to be a professional-grade tool without "on-premise" subscription fees, data mining, or arbitrary paywalls.
 
-## Deploy
-
-Deploying Quizpot is as easy as cloning the repository with `git clone https://github.com/quizpot/quizpot` and running `npm i && npm run build && npm run start` then visit it at `http://localhost:3000`. 
-
-Disclaimer: Make sure it's not running in a serverless environment like Vercel since it's running a Websocket server under the hood which will not work in such environments.
-
-## Preview
-
-<img width="1864" height="1009" alt="0" src="https://github.com/user-attachments/assets/5e0e1ab8-5c06-4ef0-b4b1-5f40a2c7d8c5" />
-<img width="1862" height="1009" alt="1" src="https://github.com/user-attachments/assets/bdbb30b7-9ead-4e97-b857-7f4b35221ddb" />
-<img width="1862" height="1009" alt="2" src="https://github.com/user-attachments/assets/5453f5ee-018f-4592-9b20-da95abf0aedf" />
-<img width="1862" height="1009" alt="3" src="https://github.com/user-attachments/assets/72570bf5-5127-4b60-ab37-9326daca0f8f" />
-<img width="1862" height="1009" alt="4" src="https://github.com/user-attachments/assets/b3a05918-f2d4-47b2-98a1-34888749fc29" />
-<img width="1862" height="1009" alt="5" src="https://github.com/user-attachments/assets/ec2f117c-3b75-41b1-a524-7d74b73468ee" />
+* **Familiar Experience:** If you’ve ever used Kahoot, you’ll feel right at home. Quizpot is built to be intuitive for both hosts and players, but without limits.
+* **Your Hardware, Your Rules:** Take it to the next level by hosting it on your own infrastructure. Whether it's a Raspberry Pi or a high-end cloud server, Quizpot scales with your hardware, not your subscription tier.
+* **Real-time Interaction:** Powered by a dedicated WebSocket server for instant, low-latency question delivery.
+* **Privacy by Design:** Quizpot is built with a "zero-persistence" philosophy. 
+    * **No Data Collection:** We don't store your personal info or quiz data on the server long-term.
+    * **Client-Side Storage:** Everything is saved directly in your browser. Once the session is over, the server holds nothing.
+* **Device Agnostic:** A seamless, responsive experience for players on mobile, tablet, or desktop browsers — no app downloads required.
+* **Unlimited Freedom:** Create as many quizzes and host as many players as your hardware can handle. No hidden limits on participant counts.

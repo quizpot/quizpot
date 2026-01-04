@@ -78,7 +78,13 @@
   "QuizzesPage": {
     "title": "Vaše Kvízy",
     "createNew": "Vytvořit Nový Kvíz",
-    "generate": "Vygenerovat Kvíz"
+    "generate": "Vygenerovat Kvíz",
+    "newQuizBtn": "Nový Kvíz",
+    "search": "Hledat",
+    "latest": "Nejnovější",
+    "oldest": "Nejstarší",
+    "biggest": "Největší",
+    "smallest": "Nejmenší"
   },
   "GenerateQuizPage": {
     "title": "Vygenerovat Kvíz",

@@ -71,7 +71,7 @@
     "players": "Players",
     "cpu": "CPU Usage (%)",
     "memory": "Memory Usage (MB)",
-    "max": "Max (All Time)",
+    "max": "Max (1 Hour)",
     "10min": "Last 10 Minutes",
     "1min": "Last 1 Minute"
   },

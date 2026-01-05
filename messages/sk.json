@@ -71,7 +71,7 @@
     "players": "Hráči",
     "cpu": "CPU Využitie (%)",
     "memory": "Pamäť Využitia (MB)",
-    "max": "Max (Všetky Časy)",
+    "max": "Max (1 Hodina)",
     "10min": "Posledných 10 Minút",
     "1min": "Posledná Minúta"
   },

@@ -74,7 +74,7 @@ const getPlayerLobbyMap = () => {
   return globalThis.lobbyManager.playerLobbyMap
 }
 
-export const getLobbiesSize = () => getLobbies().size
+export const getInstanceLobbyCount = () => getLobbies().size
 
 export const getLobbyByHostId = (hostId: string) => getHostLobbyMap().get(hostId)
 
@@ -82,7 +82,7 @@ export const getLobbyByCode = (code: number) => getLobbies().get(code)
 
 export const getLobbyByPlayerId = (playerId: string) => getPlayerLobbyMap().get(playerId)
 
-export const getGlobalPlayerCount = () => getPlayerLobbyMap().size
+export const getInstancePlayerCount = () => getPlayerLobbyMap().size
 
 export const getLobbySettings = (code: number): LobbySettings | Error => {
   const lobby = getLobbyByCode(code)

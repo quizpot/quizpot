@@ -1,47 +1,107 @@
 "use client"
+import Footer from '@/components/nav/Footer'
 import Header from '@/components/nav/Header'
-import Button from '@/components/ui/ButtonOld'
-import React, { useEffect } from 'react'
+import StatCountChart from '@/components/stats/StatCountChart'
+import FancyButton from '@/components/ui/fancy-button'
+import { useTranslations } from 'next-intl'
+import React, { useEffect, useMemo } from 'react'
+
+type TimeFilter = 'max' | 10 | 1
 
 const DebugPageClient = () => {
-  const [clients, setClients] = React.useState(0)
-  const [lobbies, setLobbies] = React.useState(0)
-  const [players, setPlayers] = React.useState(0)
-  const [memory, setMemory] = React.useState<NodeJS.MemoryUsage | null>(null)
+  const t = useTranslations('StatsPage')
+
+  const [timeFilter, setTimeFilter] = React.useState<TimeFilter>('max')
+  const [stats, setStats] = React.useState<{
+    clients: { timestamp: Date, value: number }[],
+    players: { timestamp: Date, value: number }[],
+    lobbies: { timestamp: Date, value: number }[],
+    processCPU: { timestamp: Date, value: number }[],
+    processMemory: { timestamp: Date, value: number }[],
+  }>({ clients: [], players: [], lobbies: [], processCPU: [], processMemory: [] })
 
   useEffect(() => {
-    setInterval(() => {
+    const fetchStats = () => {
       fetch('/api/debug')
         .then(res => res.json())
         .then(data => {
-          setClients(data.clients)
-          setLobbies(data.lobbies)
-          setPlayers(data.players)
-          setMemory(data.memory)
+          const formattedData = {
+            clients: data.clients.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
+            players: data.players.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
+            lobbies: data.lobbies.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
+            processCPU: data.processCPU.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
+            processMemory: data.processMemory.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
+          }
+          setStats(formattedData)
         })
-    }, 1000)
+        .catch(err => console.error("Stats fetch failed", err))
+    }
+
+    fetchStats()
+    const interval = setInterval(fetchStats, 1000 * 5)
+    return () => clearInterval(interval)
   }, [])
+
+  const filteredStats = useMemo(() => {
+    if (timeFilter === 'max') return stats
+
+    const now = new Date().getTime()
+    const cutoff = now - (timeFilter * 60 * 1000)
+
+    const filterFn = (data: { timestamp: Date, value: number }[]) => 
+      data.filter(item => item.timestamp.getTime() >= cutoff)
+
+    return {
+      clients: filterFn(stats.clients),
+      players: filterFn(stats.players),
+      lobbies: filterFn(stats.lobbies),
+      processCPU: filterFn(stats.processCPU),
+      processMemory: filterFn(stats.processMemory),
+    }
+  }, [stats, timeFilter])
 
   return (
     <>
       <Header />
-      <section className='w-full min-h-screen flex flex-col items-center justify-center p-4'>
-        <div className='p-4 flex flex-col gap-4 text-center'>
-          <h1 className='text-2xl font-semibold'>Debug</h1>
-          <p>Clients: { clients }</p>
-          <p>Lobbies: { lobbies }</p>
-          <p>Players: { players }</p>
-          {
-            memory ?
-              <p>Memory: { Math.floor(memory.heapUsed / 1000000) } / { Math.floor(memory.heapTotal / 1000000) }MB</p>
-              :
-              <p>Memory: Loading...</p>
-          }
-          <Button href={'/'} variant='gray' className='mt-4'>
-            Home
-          </Button>
-        </div>
+      <h1 className='text-4xl font-semibold text-center mt-32 py-16'>Debug</h1>
+      <section className='container w-full mx-auto grid grid-cols-1 lg:grid-cols-3 gap-4 p-4'>
+        <FancyButton 
+          onClick={() => setTimeFilter('max')}
+          className={timeFilter !== 'max' ? 'opacity-50' : ''}
+        >
+          {t('max')}
+        </FancyButton>
+        <FancyButton 
+          onClick={() => setTimeFilter(10)}
+          className={timeFilter !== 10 ? 'opacity-50' : ''}
+        >
+          {t('10min')}
+        </FancyButton>
+        <FancyButton 
+          onClick={() => setTimeFilter(1)}
+          className={timeFilter !== 1 ? 'opacity-50' : ''}
+        >
+          {t('1min')}
+        </FancyButton>
       </section>
+      <section className='container w-full mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4'>
+        <StatCountChart title={ t('clients') } data={filteredStats.clients}
+          chartConfig={{ value: { label: t('clients'), color: "var(--chart-1)" } }}
+        />
+        <StatCountChart title={ t('players') } data={filteredStats.players}
+          chartConfig={{ value: { label: t('players'), color: "var(--chart-2)" } }}
+        />
+        <StatCountChart title={ t('lobbies') } data={filteredStats.lobbies}
+          chartConfig={{ value: { label: t('lobbies'), color: "var(--chart-3)" } }}
+        />
+        <StatCountChart title= {t('cpu')} data={filteredStats.processCPU}
+          chartConfig={{ value: { label: t('cpu'), color: "var(--chart-4)" } }}
+        />
+        <StatCountChart title={ t('memory') } data={filteredStats.processMemory}
+          chartConfig={{ value: { label: t('memory'), color: "var(--chart-5)" } }}
+        />
+      </section>
+      <Footer />
     </>
   )
 }

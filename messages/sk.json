@@ -69,7 +69,11 @@
     "clients": "Klienti",
     "lobbies": "Skupiny",
     "players": "Hráči",
-    "home": "Domov"
+    "cpu": "CPU Využitie (%)",
+    "memory": "Pamäť Využitia (MB)",
+    "max": "Max (Všetky Časy)",
+    "10min": "Posledných 10 Minút",
+    "1min": "Posledná Minúta"
   },
   "UnsupportedSizePage": {
     "title": "Nepodporované zariadenie",

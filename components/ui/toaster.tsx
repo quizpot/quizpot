@@ -106,7 +106,7 @@ export const ToasterCard = ({ toast, onRemove }: { toast: Toast; onRemove: (id: 
           <p className="text-sm font-semibold">{ toast.message }</p>
           <p className='text-sm'>{ toast.props.description }</p>
         </div>
-        <FancyButton size='sm' color={ variant() }
+        <FancyButton size='sm' color='gray'
           onClick={() => {
             onRemove(toast.id)
             toast.props.action?.onClick()

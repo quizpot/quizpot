@@ -18,7 +18,6 @@
     "retry": "Retry",
     "exit": "Exit",
     "download": "Download",
-    "sure": "Are you sure?",
     "goHome": "Go Home",
     "removeImage": "Remove Image",
     "true": "True",
@@ -178,5 +177,9 @@
   },
   "NotFoundPage": {
     "title": "404 - Not Found"
+  },
+  "QuizCard": {
+    "deleteQuizTitle": "Delete Quiz",
+    "deleteQuizDescription": "Are you sure you want to delete:"
   }
 }

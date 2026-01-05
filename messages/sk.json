@@ -18,7 +18,6 @@
     "retry": "Skúsiť znova",
     "exit": "Zavrieť",
     "download": "Stiahnuť",
-    "sure": "Ste si istý?",
     "goHome": "Ísť domov",
     "removeImage": "Odstrániť Obrázok",
     "true": "Pravda",
@@ -178,5 +177,9 @@
   },
   "NotFoundPage": {
     "title": "404 - Nenájdené"
+  },
+  "QuizCard": {
+    "deleteQuizTitle": "Vymazať Kvíz",
+    "deleteQuizDescription": "Naozaj chcete vymazať:"
   }
 }

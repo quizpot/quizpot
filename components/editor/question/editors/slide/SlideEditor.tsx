@@ -4,10 +4,10 @@ import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import { SlideQuestion } from '@/lib/QuizFile'
 import React from 'react'
 import TitleSlidePreview from './slides/title/TitleSlidePreview'
-import Button from '@/components/ui/ButtonOld'
 import TitleSlidePropertyEditor from './slides/title/TitleSlidePropertyEditor'
 import TitleImageTextSlidePreview from './slides/titleImageText/TitleImageTextSlidePreview'
 import TitleImageTextSlidePropertyEditor from './slides/titleImageText/TitleImageTextSlidePropertyEditor'
+import FancyButton from '@/components/ui/fancy-button'
 
 const SlideEditor = () => {
   const { quizFile } = useEditorQuizFile()
@@ -31,9 +31,9 @@ const SlideEditor = () => {
     return (
       <section className='h-[calc(100vh-58px)] w-full overflow-hidden'>
         <div className='h-full w-full flex flex-col items-center justify-center p-4' style={ getBackgroundStyles(quizFile.theme.background) }>
-          <Button variant='gray' className='text-2xl w-full text-center'>
+          <FancyButton color='gray' className='text-2xl w-full text-center'>
             Unsupported slide type: <span className='font-semibold'>{ currentQuestion.layout.slideType }</span>
-          </Button>
+          </FancyButton>
         </div>
       </section>
     )

@@ -17,11 +17,11 @@ const DebugPageSecret = () => {
   return (
     <>
       <Header />
-      <section className='flex items-center justify-center gap-4 flex-col'>
+      <section className='flex flex-col items-center justify-center gap-4 h-dvh w-full p-4'>
         <PasswordInput value={ secret } onChange={(e) => { setSecret(e.target.value) }} />
         <FancyButton onClick={ onSubmit }>Submit</FancyButton>
-      </section> 
-      <Footer />
+      </section>
+      <Footer className='absolute bottom-4 w-full left-0' />
     </>
   )
 }

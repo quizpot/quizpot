@@ -27,7 +27,8 @@
     "host": "Host",
     "start": "Start",
     "kick": "Kick",
-    "submit": "Submit"
+    "submit": "Submit",
+    "clearSearch": "Clear search"
   },
   "Header": {
     "github": {
@@ -87,7 +88,9 @@
     "latest": "Latest",
     "oldest": "Oldest",
     "biggest": "Biggest",
-    "smallest": "Smallest"
+    "smallest": "Smallest",
+    "noneFound": "You haven't created any quizzes yet.",
+    "notFoundFor": "No quizzes found for "
   },
   "GenerateQuizPage": {
     "title": "Generate Quiz",

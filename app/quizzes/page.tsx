@@ -14,6 +14,7 @@ import NewQuizDialog from '@/components/quizzes/NewQuizDialog'
 
 const QuizzesPage = () => {
   const t = useTranslations('QuizzesPage')
+  const btn = useTranslations('Buttons')
   const toast = useToast()
   
   const [query, setQuery] = React.useState('')
@@ -126,11 +127,11 @@ const QuizzesPage = () => {
           ) : (
             <div className='col-span-full flex flex-col items-center justify-center py-20 gap-4'>
               <p className='text-xl font-medium'>
-                {query ? `No quizzes found for "${query}"` : "You haven't created any quizzes yet."}
+                {query ? t('notFoundFor') + query : t('noneFound')}
               </p>
               {query && (
                 <FancyButton size='sm' onClick={() => setQuery('')}>
-                  Clear search
+                  { btn('clearSearch') }
                 </FancyButton>
               )}
             </div>

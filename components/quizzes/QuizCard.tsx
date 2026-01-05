@@ -1,6 +1,5 @@
 import { QuizFile } from '@/lib/QuizFile'
 import React from 'react'
-import Button from '../ui/ButtonOld'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '../ui/dialog'
 import { deleteQuiz } from '@/lib/client/IndexedDB'
 import FancyButton from '../ui/fancy-button'
@@ -9,7 +8,8 @@ import FancyCard from '../ui/fancy-card'
 import { useTranslations } from 'next-intl'
 
 const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
-  const t = useTranslations('Buttons')
+  const t = useTranslations('QuizCard')
+  const btn = useTranslations('Buttons')
   const dev = process.env.NODE_ENV === 'development'
 
   return (
@@ -57,7 +57,7 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
         <div className='grid grid-cols-3 gap-4'>
           <FancyButton color='green' size='sm' className='w-full text-center' asChild>
             <Link href={`/editor/${id.replace('quiz:', '')}`}>
-              { t('edit') }
+              { btn('edit') }
             </Link>
           </FancyButton>
           <FancyButton color='blue' size='sm' className='w-full' onClick={() => {
@@ -68,22 +68,25 @@ const QuizCard = ({ quiz, id }: { quiz: QuizFile, id: string }) => {
             a.download = quiz.title + '.qp'
             a.click()
           }}>
-            { t('download') }
+            { btn('download') }
           </FancyButton>
           <Dialog>
             <DialogTrigger size='sm' className='w-full' color='red'>
-              { t('delete') } 
+              { btn('delete') } 
             </DialogTrigger>
             <DialogContent>
-              <DialogHeader title={ t('sure') } />
-              <section className="relative flex-grow overflow-y-auto">
+              <DialogHeader title={ t('deleteQuizTitle') } />
+              <section className="relative flex-grow overflow-y-auto max-w-md">
                 <div className='w-full h-full p-4 flex flex-col gap-4'>
-                  <Button variant='red' onClick={async () => {
+                  <p>
+                    { t('deleteQuizDescription') } <span className='font-bold'>{ quiz.title }</span>
+                  </p>
+                  <FancyButton color='red' size='sm' onClick={async () => {
                     await deleteQuiz(id)
                     window.location.reload()
                   }}>
-                    { t('delete') }
-                  </Button>
+                    { btn('delete') }
+                  </FancyButton>
                 </div>
               </section>
             </DialogContent>

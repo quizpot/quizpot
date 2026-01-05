@@ -1,9 +1,12 @@
 "use client"
-import Button from '@/components/ui/ButtonOld'
+import FancyButton from '@/components/ui/fancy-button'
+import { useTranslations } from 'next-intl'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const MessagePage = () => {
+  const btn = useTranslations('Buttons')
   const [messageTitle, setMessageTitle] = useState<string | null>(null)
   const [messageDescription, setMessageDescription] = useState<string | null>(null)
 
@@ -29,9 +32,11 @@ const MessagePage = () => {
     <div className='flex flex-col items-center justify-center gap-4 h-screen w-full p-4'>
       <h1 className='text-2xl font-semibold'>Message - { messageTitle }</h1>
       <p className='text-center max-w-md'>{ messageDescription }</p>
-      <Button href='/' variant='gray'>
-        Home
-      </Button>
+      <FancyButton color='gray' asChild>
+        <Link href='/'>
+          { btn('home') }
+        </Link>
+      </FancyButton>
     </div>
   )
 }

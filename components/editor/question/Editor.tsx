@@ -42,7 +42,7 @@ const Editor = () => {
   }
 
   return (
-    <section className='h-[calc(100vh-58px)] w-full overflow-hidden'>
+    <section className='h-[calc(100vh-60px)] w-full overflow-hidden'>
       <div className='h-full w-full flex flex-col items-center justify-center p-4' style={ getBackgroundStyles(quizFile.theme.background) }>
         <FancyButton className='text-2xl w-full text-center'>
           {/** @ts-expect-error may contain unknown type */}
@@ -55,7 +55,7 @@ const Editor = () => {
 
 const NoQuestion = ({ quizFile }: { quizFile: QuizFile }) => {
   return (
-    <section className='h-[calc(100vh-144px-128px)] md:h-[calc(100vh-58px)] w-full overflow-hidden'>
+    <section className='h-[calc(100vh-60px)] w-full overflow-hidden'>
       <div className='h-full w-full flex flex-col justify-between p-4' style={ getBackgroundStyles(quizFile.theme.background) }>
         <FancyButton className='text-2xl w-full text-center'>
           No questions found... Add one.

@@ -42,7 +42,7 @@ export const EditorPage = ({ quizId }: { quizId: string }) => {
       <SlideArrowKeybind />
       <main className='flex flex-col h-screen overflow-hidden'>
         <EditorHeader quizId={ quizId } />
-        <section className='flex flex-row h-[calc(100vh_-_56px)] overflow-hidden'>
+        <section className='flex flex-row h-[calc(100vh_-_60px)] overflow-hidden'>
           <EditorNavigation />
           <Editor />
         </section>

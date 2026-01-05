@@ -1,10 +1,5 @@
-import { getLobbiesSize, getGlobalPlayerCount } from "@/lib/server/managers/LobbyManager"
-import { getWSClientsSize } from "@/lib/server/managers/WSClientManager"
+import { getStats } from "@/lib/server/managers/StatManager"
 
 export async function GET() {
-  return Response.json({ 
-    lobbies: getLobbiesSize(), 
-    clients: getWSClientsSize(),
-    players: getGlobalPlayerCount(),
-  })
+  return Response.json(getStats())
 }

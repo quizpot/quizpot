@@ -62,13 +62,13 @@ const GenerateQuizPage = () => {
       <section className='min-h-screen w-full flex flex-col items-center justify-center p-4'>
         <FancyCard className='flex flex-col items-center justify-center gap-4 p-4 max-w-md w-full'>
           <h1 className='text-2xl font-semibold w-full text-center'>{ t('title') }</h1>
-          <TextAreaInput onChange={ (e) => { setPrompt(e.target.value) } } value={ prompt } className='w-full' />
+          <TextAreaInput color='ghost' onChange={ (e) => { setPrompt(e.target.value) } } value={ prompt } className='w-full' />
           <FancyButton onClick={ onGenerate } color='green' className='w-full'>
             { t('generate') }
           </FancyButton>
         </FancyCard>
-        <Footer />
       </section>
+      <Footer className='absolute bottom-4 left-0 w-full' />
     </>
   )
 }

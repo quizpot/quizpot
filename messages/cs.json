@@ -18,7 +18,6 @@
     "retry": "Zkusit znovu",
     "exit": "Ukončit",
     "download": "Stáhnout",
-    "sure": "Jsi si jistý?",
     "goHome": "Jít domů",
     "removeImage": "Odstranit obrázek",
     "true": "Pravda",
@@ -69,7 +68,11 @@
     "clients": "Klienti",
     "lobbies": "Skupiny",
     "players": "Hráči",
-    "home": "Domov"
+    "cpu": "CPU Využití (%)",
+    "memory": "Paměť Využití (MB)",
+    "max": "Max (Všechny Časy)",
+    "10min": "Posledních 10 Minut",
+    "1min": "Poslední Minuta"
   },
   "UnsupportedSizePage": {
     "title": "Nepodporované zařízení",
@@ -171,5 +174,12 @@
   "AnswersPage": {
     "correct": "Správne",
     "incorrect": "Nesprávne"
+  },
+  "NotFoundPage": {
+    "title": "404 - Nenalezeno"
+  },
+  "QuizCard": {
+    "deleteQuizTitle": "Smazat kvíz",
+    "deleteQuizDescription": "Opravdu chcete smazat:"
   }
 }

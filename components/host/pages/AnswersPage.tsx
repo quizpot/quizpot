@@ -6,6 +6,7 @@ import CurrentQuestionAnswersDisplay from '../ui/answerDisplay/CurrentQuestionAn
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import InvalidPage from './InvalidPage'
 import FancyCard from '@/components/ui/fancy-card'
+import HostStatusBar from '../ui/HostStatusBar'
 
 const AnswersPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   let question: string
@@ -34,6 +35,7 @@ const AnswersPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => 
         { hostLobbyState.currentQuestion ? <CurrentQuestionAnswersDisplay currentQuestion={ hostLobbyState.currentQuestion } answers={ hostLobbyState.answers } /> : null }
       </div>
       { hostLobbyState.currentQuestion ? <CurrentQuestionAnswers currentQuestion={ hostLobbyState.currentQuestion } showAnswers={ true } /> : null }
+      <HostStatusBar />
     </section>
   )
 }

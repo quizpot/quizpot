@@ -4,6 +4,7 @@ import NextQuestionButton from '../ui/NextQuestionButton'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import FancyCard from '@/components/ui/fancy-card'
 import { Color } from '@/lib/Colors'
+import HostStatusBar from '../ui/HostStatusBar'
 
 const ScoreboardPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   return (
@@ -34,6 +35,7 @@ const ScoreboardPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) 
           })
         }
       </div>
+      <HostStatusBar />
     </section>
   )
 }

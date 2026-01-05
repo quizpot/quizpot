@@ -27,7 +27,8 @@
     "host": "Hostit",
     "start": "Začít",
     "kick": "Vyhodit",
-    "submit": "Odeslat"
+    "submit": "Odeslat",
+    "clearSearch": "Vymazat hledání"
   },
   "Header": {
     "github": {
@@ -87,7 +88,9 @@
     "latest": "Nejnovější",
     "oldest": "Nejstarší",
     "biggest": "Největší",
-    "smallest": "Nejmenší"
+    "smallest": "Nejmenší",
+    "noneFound": "Zatím jste nevytvořili žádné kvízy.",
+    "notFoundFor": "Nenalezeny žádné kvízy pro "
   },
   "GenerateQuizPage": {
     "title": "Vygenerovat Kvíz",

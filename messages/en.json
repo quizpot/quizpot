@@ -175,5 +175,8 @@
   "AnswersPage": {
     "correct": "Correct",
     "incorrect": "Incorrect"
+  },
+  "NotFoundPage": {
+    "title": "404 - Not Found"
   }
 }

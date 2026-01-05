@@ -6,7 +6,7 @@ import PasswordInput from '@/components/ui/password-input'
 import { setCookie } from 'cookies-next'
 import React from 'react'
 
-const PageSecret = () => {
+const DebugPageSecret = () => {
   const [secret, setSecret] = React.useState('')
 
   const onSubmit = () => {
@@ -26,4 +26,4 @@ const PageSecret = () => {
   )
 }
 
-export default PageSecret
+export default DebugPageSecret

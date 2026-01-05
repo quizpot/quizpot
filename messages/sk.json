@@ -175,5 +175,8 @@
   "AnswersPage": {
     "correct": "Správne",
     "incorrect": "Nesprávne"
+  },
+  "NotFoundPage": {
+    "title": "404 - Nenájdené"
   }
 }

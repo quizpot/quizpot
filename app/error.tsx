@@ -14,7 +14,7 @@ const ErrorPage = ({
   const t = useTranslations('Buttons')
 
   return (
-    <div className='flex flex-col items-center justify-center gap-4 h-screen w-full p-4'>
+    <div className='flex flex-col items-center justify-center gap-4 h-dvh w-full p-4'>
       <h1 className='text-2xl font-semibold'>000 - Error</h1>
       <p className='text-center max-w-md'>{ error.message }</p>
       <div className='flex gap-4 items-center justify-center'>

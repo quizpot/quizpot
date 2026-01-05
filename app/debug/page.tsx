@@ -1,7 +1,8 @@
-import { notFound } from 'next/navigation'
 import React from 'react'
 import DebugPageClient from './pageClient'
 import { cookies } from 'next/headers'
+import DebugPageSecret from './pageSecret'
+import { notFound } from 'next/navigation'
 
 const DebugPage = async () => {
   const isDev = process.env.NODE_ENV === 'development'
@@ -9,9 +10,12 @@ const DebugPage = async () => {
   if (!isDev) {
     const cookieStore = await cookies()
     const debugCookie = cookieStore.get('debug')?.value
+    const secret = process.env.DEBUG_SECRET
 
-    if (debugCookie !== process.env.DEBUG_SECRET) {
-      notFound()
+    if (!secret) notFound()
+
+    if (debugCookie !== secret) {
+      return <DebugPageSecret />
     }
   }
 

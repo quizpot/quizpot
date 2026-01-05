@@ -1,7 +1,7 @@
 import React, { useId } from 'react'
 import FancyCard from '../ui/fancy-card'
 import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '../ui/chart'
-import { Area, AreaChart, CartesianGrid, XAxis } from 'recharts'
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 
 const StatCountChart = ({ 
   title, 
@@ -36,6 +36,12 @@ const StatCountChart = ({
             axisLine={ false }
             tickMargin={ 8 }
             tickFormatter={(value) => value.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+          />
+          <YAxis
+            tickLine={false}
+            axisLine={false}
+            tickMargin={8}
+            tickCount={3}
           />
           <ChartTooltip
             cursor={ false }

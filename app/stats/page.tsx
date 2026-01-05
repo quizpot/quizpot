@@ -17,21 +17,17 @@ const DebugPageClient = () => {
     clients: { timestamp: Date, value: number }[],
     players: { timestamp: Date, value: number }[],
     lobbies: { timestamp: Date, value: number }[],
-    processCPU: { timestamp: Date, value: number }[],
-    processMemory: { timestamp: Date, value: number }[],
-  }>({ clients: [], players: [], lobbies: [], processCPU: [], processMemory: [] })
+  }>({ clients: [], players: [], lobbies: [] })
 
   useEffect(() => {
     const fetchStats = () => {
-      fetch('/api/debug')
+      fetch('/api/stats')
         .then(res => res.json())
         .then(data => {
           const formattedData = {
             clients: data.clients.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
             players: data.players.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
             lobbies: data.lobbies.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
-            processCPU: data.processCPU.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
-            processMemory: data.processMemory.map((s: any) => ({ ...s, timestamp: new Date(s.timestamp) })),
           }
           setStats(formattedData)
         })

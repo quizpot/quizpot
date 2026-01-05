@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import Footer from '@/components/nav/Footer'
 import Header from '@/components/nav/Header'

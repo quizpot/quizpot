@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 import Footer from '@/components/nav/Footer'
 import Header from '@/components/nav/Header'
 import StatCountChart from '@/components/stats/StatCountChart'
 import FancyButton from '@/components/ui/fancy-button'
 import { useTranslations } from 'next-intl'
-import Link from 'next/link'
 import React, { useEffect, useMemo } from 'react'
 
 type TimeFilter = 'max' | 10 | 1

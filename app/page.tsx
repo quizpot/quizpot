@@ -2,12 +2,11 @@ import Footer from '@/components/nav/Footer'
 import Header from '@/components/nav/Header'
 import FancyButton from '@/components/ui/fancy-button'
 import { Book, Pen, Play, User } from 'lucide-react'
-import { useTranslations } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
-import React from 'react'
 
-const HomePage = () => {
-  const t = useTranslations('HomePage')
+const HomePage = async () => {
+  const t = await getTranslations('HomePage')
 
   return (
     <section className='h-screen w-full flex flex-col justify-between'>

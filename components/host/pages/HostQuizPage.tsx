@@ -4,21 +4,27 @@ import { useWebSocket } from '@/components/providers/WebSocketProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
 import { useToast } from '@/components/ui/toaster'
 import { QuizFile } from '@/lib/QuizFile'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import SetQuizDialog from '../ui/SetQuizDialog'
 import Header from '@/components/nav/Header'
 import FancyButton from '@/components/ui/fancy-button'
 import { useTranslations } from 'next-intl'
+import FancyCard from '@/components/ui/fancy-card'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 const HostQuizPage = () => {
-  const btn = useTranslations('Buttons')
   const t = useTranslations('HostPage')
+  const btn = useTranslations('Buttons')
+
   const toast = useToast() 
+
   const { sendEvent, clientId, isConnected, onEvent } = useWebSocket()
   const setHostLobbyState = useHostLobbyState().setHostLobbyState
 
   const [customNames, setCustomNames] = useState(true)
-  // const [questionsOnDevice, setQuestionsOnDevice] = useState(false)
+  const [statusBar, setStatusBar] = useState(true)
+  const [questionsOnDevice, setQuestionsOnDevice] = useState(false)
+
   const [quiz, setQuiz] = useState<QuizFile | null>(null)
 
   useEffect(() => {
@@ -69,17 +75,19 @@ const HostQuizPage = () => {
       <section className='min-h-screen w-full flex flex-col items-center justify-center'>
         <div className='flex flex-col items-center justify-center gap-4 p-4 max-w-md w-full'>
           <h1 className='text-4xl font-semibold w-full text-center'>{ t('title') }</h1>
-          <div className='p-4 max-w-md w-full flex flex-col gap-4'>
-            <div className='flex px-4 justify-between'>
-              <p>{ t('customNames') }:</p>
-              <BooleanInput onChange={ (v) => { setCustomNames(v) } } value={ customNames } />
-            </div>
-            {/* <div className='flex px-4 justify-between'>
-              <p>Questions on device:</p>
-              <BooleanInput onChange={ (v) => { setQuestionsOnDevice(v) } } value={ questionsOnDevice } />
-            </div> */}
-          </div>
-          <div className='w-full flex flex-col gap-4 px-4'>
+          <FancyCard className='p-4 max-w-md w-full flex flex-col gap-4'>
+            <h1 className='text-2xl text-center'>{ t('settings') }</h1>
+            <BooleanInput className='w-full' onChange={ (v) => { setCustomNames(v) } } value={ customNames }>
+              { t('customNames') }
+            </BooleanInput>
+            <BooleanInput onChange={ (v) => { setStatusBar(v) } } value={ statusBar }>
+              { t('statusBar') }
+            </BooleanInput>
+            <BooleanInput onChange={ (v) => { setQuestionsOnDevice(v) } } value={ questionsOnDevice }>
+              { t('questionsOnDevice') }
+            </BooleanInput>
+          </FancyCard>
+          <div className='w-full flex flex-col gap-4'>
             <div className='flex gap-4 items-center justify-center'>
               <SetQuizDialog quizName={ quiz ? quiz.title : undefined } setQuiz={ setQuiz } />
             </div>

@@ -9,7 +9,7 @@ import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
 import FancyCard from '@/components/ui/fancy-card'
-import HostLayout from './HostLayout'
+import HostStatusLayout from '../layouts/HostStatusLayout'
 
 const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const t = useTranslations('LobbyWaitingPage')
@@ -28,9 +28,9 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
   }, [toast, onEvent])
 
   return (
-    <HostLayout>
+    <HostStatusLayout>
       lobbywaitingpage
-    </HostLayout>
+    </HostStatusLayout>
   )
 
   return (

@@ -152,7 +152,13 @@
   },
   "HostPage": {
     "title": "Host Quiz",
-    "customNames": "Custom names"
+    "settings": "Settings",
+    "customNames": "Custom names",
+    "customNameTooltip": "Let players set their own name, or the name will be randomly generated",
+    "statusBar": "Status Bar",
+    "statusBarTooltip": "Show a status bar at the bottom of the screen",
+    "questionsOnDevice": "Questions on Device",
+    "questionsOnDeviceTooltip": "Also show questions on the player's device"
   },
   "LobbyWaitingPage": {
     "players": "Players",

@@ -2,7 +2,7 @@ import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import HostStatusBar from '../ui/HostStatusBar'
 
-const HostLayout = ({ children }: { children: React.ReactNode }) => {
+const HostStatusLayout = ({ children }: { children: React.ReactNode }) => {
   const { hostLobbyState } = useHostLobbyState()
 
   if (!hostLobbyState) return null
@@ -18,4 +18,4 @@ const HostLayout = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default HostLayout
+export default HostStatusLayout

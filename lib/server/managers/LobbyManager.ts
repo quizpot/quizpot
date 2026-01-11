@@ -8,6 +8,7 @@ import { devLog } from "@/lib/misc/Log"
 import { log } from "console"
 import { LobbyStatusUpdatePayload } from "../ServerEvents"
 import { sanitizeQuestion } from "@/lib/server/QuestionSanitizer"
+import { deleteImage, saveImage } from "./ImageManager"
 
 export interface Lobby {
   code: number
@@ -20,6 +21,7 @@ export interface Lobby {
   settings: LobbySettings
   answerTimeout: NodeJS.Timeout | null
   answerTimestamp: number | null
+  images: string[]
 }
 
 export interface LobbySettings {
@@ -92,23 +94,24 @@ export const getLobbySettings = (code: number): LobbySettings | Error => {
   return lobby.settings
 }
 
-export const createLobby = (host: WebSocketClient, quiz: QuizFile, settings: LobbySettings): number | Error => {
-  if (getHostLobbyMap().has(host.id)) {
-    return new Error("You already have a lobby")
-  }
+export const createLobby = (host: WebSocketClient, quiz: QuizFile, settings: LobbySettings): number => {
+  if (getHostLobbyMap().has(host.id)) throw new Error("You already have a lobby")
+
+  const { images, quiz: parsedQuiz } = parseImages(quiz)
 
   const code = generateLobbyCode()
 
   const lobby: Lobby = {
     code,
     host,
-    quiz,
+    quiz: parsedQuiz,
     players: [],
     status: LobbyStatus.waiting,
     currentQuestionIndex: 0,
     answers: [],
     answerTimeout: null,
     answerTimestamp: null,
+    images,
     settings
   }
 
@@ -120,10 +123,38 @@ export const createLobby = (host: WebSocketClient, quiz: QuizFile, settings: Lob
   return code
 }
 
+const parseImages = (quiz: QuizFile): { images: string[], quiz: QuizFile } => {
+  const images: string[] = []
+
+  if (quiz.theme.background.length > 10) {
+    const id = saveImage(quiz.theme.background)
+    images.push(id)
+    quiz.theme.background = '/img/' + id
+  }
+
+  const updatedQuestions = quiz.questions.map((question) => {
+    if (question.questionType !== 'slide' && question.image) {
+      const id = saveImage(question.image)
+      images.push(id)
+      
+      return { ...question, image: '/img/' + id }
+    }
+    
+    return question
+  })
+
+  return {
+    images,
+    quiz: { ...quiz, questions: updatedQuestions }
+  }
+}
+
 export const deleteLobby = (host: WebSocketClient, reason?: string): true | Error => {
   const lobby = getHostLobbyMap().get(host.id)
 
   if (!lobby) return new Error("Lobby not found")
+
+  lobby.images.forEach(id => deleteImage(id))
 
   lobby.players.forEach(player => {
     sendEvent(player.client, 'lobbyDeleted', { reason: reason || 'Unknown reason' })

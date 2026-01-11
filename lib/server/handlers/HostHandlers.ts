@@ -13,11 +13,11 @@ export function handleCreateLobby({ client, ctx }: HandlerContext) {
 
   const newLobbyCode = createLobby(client, file, settings)
 
-  if (typeof newLobbyCode !== 'number') {
-    return sendEvent(client, 'createLobbyError', {
-      message: "Couldn't create lobby: " + newLobbyCode.message,
-    })
-  }
+  // if (typeof newLobbyCode !== 'number') {
+  //   return sendEvent(client, 'createLobbyError', {
+  //     message: "Couldn't create lobby: " + newLobbyCode.message,
+  //   })
+  // }
 
   const lobby = getLobbyByCode(newLobbyCode)
 
@@ -31,6 +31,7 @@ export function handleCreateLobby({ client, ctx }: HandlerContext) {
     lobbyState: {
       code: lobby.code,
       status: lobby.status,
+      lobbySettings: lobby.settings,
       players: [],
       answers: [],
       currentQuestionNumber: 0,

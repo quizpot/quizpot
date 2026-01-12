@@ -9,6 +9,7 @@ import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
 import FancyCard from '@/components/ui/fancy-card'
+import HostStatusLayout from '../layouts/HostStatusLayout'
 
 const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const t = useTranslations('LobbyWaitingPage')
@@ -25,6 +26,12 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
       unsubscribeStartLobbyError()
     }
   }, [toast, onEvent])
+
+  return (
+    <HostStatusLayout>
+      lobbywaitingpage
+    </HostStatusLayout>
+  )
 
   return (
     <section 

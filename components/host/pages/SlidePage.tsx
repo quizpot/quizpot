@@ -5,6 +5,7 @@ import TitleSlide from '../slides/TitleSlide'
 import SkipSlide from '../slides/SkipSlide'
 import TitleImageTextSlide from '../slides/TitleImageTextSlide'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import HostStatusBar from '../ui/HostStatusBar'
 
 const SlidePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   if (hostLobbyState.currentQuestion?.questionType !== 'slide') 
@@ -15,11 +16,12 @@ const SlidePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   if (slide.layout.slideType === 'title') {
     return (
       <section 
-        className='max-h-screen h-screen w-full'
+        className='max-h-dvh h-screen w-full'
         style={ getBackgroundStyles(hostLobbyState.theme.background) }
       >
         <TitleSlide slide={ slide.layout } />
         <SkipSlide />
+        <HostStatusBar />
       </section>
     )
   }
@@ -32,6 +34,7 @@ const SlidePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
       >
         <TitleImageTextSlide slide={ slide.layout } />
         <SkipSlide />
+        <HostStatusBar />
       </section>
     )
   }
@@ -40,6 +43,7 @@ const SlidePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
     <>
       <InvalidPage hostLobbyState={ hostLobbyState } message='Unsupported slide type. Press Space to skip.' />
       <SkipSlide />
+      <HostStatusBar />
     </>
   )
 }

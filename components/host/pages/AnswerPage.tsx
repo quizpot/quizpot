@@ -7,6 +7,7 @@ import QuestionImage from '../ui/QuestionImage'
 import InvalidPage from './InvalidPage'
 import FancyCard from '@/components/ui/fancy-card'
 import NextQuestionButton from '../ui/NextQuestionButton'
+import HostStatusBar from '../ui/HostStatusBar'
 
 const AnswerPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   let question: string
@@ -32,7 +33,7 @@ const AnswerPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
         <NextQuestionButton className='h-full flex items-center font-semibold justify-center px-4 text-2xl' />
       </div>
       <div className='flex items-center justify-between p-4 w-full h-full'>
-        { hostLobbyState.timeout ? <Timer from={ hostLobbyState.timeout / 1000 } /> : <Timer from={ 0 } /> }
+        { hostLobbyState.questionTimeout ? <Timer from={ hostLobbyState.questionTimeout / 1000 } /> : <Timer from={ 0 } /> }
         <QuestionImage src={ hostLobbyState.currentQuestion?.image } />
         <div className='flex flex-col gap-2'>
           <div className='h-24 w-24 p-4 flex items-center justify-center rounded-full bg-white text-black font-semibold text-4xl'>
@@ -44,6 +45,7 @@ const AnswerPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
         </div>
       </div>
       { hostLobbyState.currentQuestion ? <CurrentQuestionAnswers currentQuestion={ hostLobbyState.currentQuestion } showAnswers={ false } /> : null }
+      <HostStatusBar />
     </section>
   )
 }

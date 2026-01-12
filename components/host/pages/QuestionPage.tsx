@@ -4,17 +4,18 @@ import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import InvalidPage from './InvalidPage'
 import FancyCard from '@/components/ui/fancy-card'
+import HostStatusBar from '../ui/HostStatusBar'
 
 const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    if (!hostLobbyState.timeout) {
+    if (!hostLobbyState.questionTimeout) {
       setProgress(0)
       return
     }
 
-    const endTime = Date.now() + hostLobbyState.timeout
+    const endTime = Date.now() + hostLobbyState.questionTimeout
     const startTime = Date.now()
     const totalDuration = endTime - startTime
     
@@ -30,7 +31,7 @@ const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) =>
     }, 15)
 
     return () => clearInterval(interval)
-  }, [hostLobbyState.timeout])
+  }, [hostLobbyState.questionTimeout])
 
   if (hostLobbyState.currentQuestion?.questionType === 'slide') 
     return <InvalidPage hostLobbyState={ hostLobbyState } message='Invalid question type for question page.' />
@@ -57,6 +58,7 @@ const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) =>
           style={{ width: `${progress}%` }}
         ></div> 
       </div>
+      <HostStatusBar />
     </section>
   )
 }

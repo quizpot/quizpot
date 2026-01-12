@@ -29,7 +29,11 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
 
   return (
     <HostStatusLayout>
-      lobbywaitingpage
+      <FancyButton onClick={() => {
+            sendEvent('startLobby', {})
+          }} color='green' className='text-2xl' >
+            { btn('start') }
+          </FancyButton>
     </HostStatusLayout>
   )
 

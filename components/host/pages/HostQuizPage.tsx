@@ -90,12 +90,12 @@ const HostQuizPage = () => {
             <BooleanInput className='w-full' onChange={ (v) => { setCustomNames(v) } } value={ customNames }>
               { t('customNames') }
             </BooleanInput>
-            <BooleanInput onChange={ (v) => { setStatusBar(v) } } value={ statusBar }>
+            {/* <BooleanInput onChange={ (v) => { setStatusBar(v) } } value={ statusBar }>
               { t('statusBar') }
             </BooleanInput>
             <BooleanInput onChange={ (v) => { setQuestionsOnDevice(v) } } value={ questionsOnDevice }>
               { t('questionsOnDevice') }
-            </BooleanInput>
+            </BooleanInput> */}
           </FancyCard>
           <div className='w-full flex flex-col gap-4'>
             <div className='flex gap-4 items-center justify-center'>

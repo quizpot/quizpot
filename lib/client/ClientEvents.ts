@@ -13,6 +13,7 @@ export interface ClientEvents {
   'startLobby': EmptyPayload
   'submitAnswer': SubmitAnswerPayload
   'nextQuestion': EmptyPayload
+  'hostLobbyWithId': HostLobbyWithIdPayload
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -40,4 +41,8 @@ interface PlayerKickPayload {
 
 interface SubmitAnswerPayload {
   answer: ClientAnswer
+}
+
+interface HostLobbyWithIdPayload {
+  id: string
 }

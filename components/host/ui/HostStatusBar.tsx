@@ -1,20 +1,23 @@
 "use client"
 import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
 import FancyCard from '@/components/ui/fancy-card'
+import { LobbyStatus } from '@/lib/misc/LobbyStatus'
 
 const HostStatusBar = () => {
   const { hostLobbyState } = useHostLobbyState()
 
   if (!hostLobbyState) return null
 
-  
-
   return (
     <section className='p-2 pb-4 w-full flex h-fit justify-between'>
       <FancyCard size='sm' className='select-none'>{ window.location.href.replace('/host', '') }/play?code={ hostLobbyState.code }</FancyCard>
-      <div>
+      <div className='flex gap-2'>
         <SkipSlideNotification />
-        <FancyCard size='sm' className='select-none'>{ hostLobbyState.currentQuestionNumber } of { hostLobbyState.totalQuestions }</FancyCard>
+        {
+          hostLobbyState.status !== LobbyStatus.waiting && (
+            <FancyCard size='sm' className='select-none'>{ hostLobbyState.currentQuestionNumber } of { hostLobbyState.totalQuestions }</FancyCard>
+          )
+        }
       </div>
     </section>
   )

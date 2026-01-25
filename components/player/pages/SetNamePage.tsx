@@ -20,14 +20,14 @@ const SetNamePage = ({ queryCode }: { queryCode: number }) => {
     if (!isConnected) return
     
     const unsubscribeJoinLobby = onEvent('lobbyJoined', (ctx) => {
-      localStorage.setItem('playerId', ctx.lobby.player.id)
+      localStorage.setItem('wsId', ctx.lobby.player.id)
       setPlayerLobbyState(ctx.lobby)
     })
 
-    const playerId = localStorage.getItem('playerId')
+    const wsId = localStorage.getItem('wsId')
 
-    if (typeof playerId === 'string') {
-      sendEvent('joinLobbyWithId', { code: queryCode, id: playerId })
+    if (typeof wsId === 'string') {
+      sendEvent('joinLobbyWithId', { code: queryCode, id: wsId })
     } else {
       sendEvent('joinLobby', { code: queryCode })
     }
@@ -45,7 +45,7 @@ const SetNamePage = ({ queryCode }: { queryCode: number }) => {
         return
       }
 
-      localStorage.removeItem('playerId')
+      localStorage.removeItem('wsId')
       toast(ctx.message, { variant: 'error' })
     })
 

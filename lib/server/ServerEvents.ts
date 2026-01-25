@@ -28,6 +28,8 @@ export interface ServerEvents {
   'playerScoreUpdate': PlayerScoreUpdatePayload
   'correctAnswerUpdate': CorrectAnswerUpdatePayload
   'nextQuestionError': ErrorPayload
+  'hostLobbyByIdError': HostLobbyByIdError
+  'hostLobbyByIdJoin': HostLobbyByIdJoinPayload
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -97,4 +99,12 @@ interface PlayerScoreUpdatePayload {
 
 interface CorrectAnswerUpdatePayload {
   correctAnswer: boolean
+}
+
+interface HostLobbyByIdError {
+  message: string
+}
+
+interface HostLobbyByIdJoinPayload {
+  lobbyState: HostLobbyState
 }

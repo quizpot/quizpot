@@ -482,6 +482,15 @@ export const reassignPlayer = (oldId: string, newId: string, client: WebSocketCl
   return true
 }
 
+export const reassignHost = (lobby: Lobby, newHost: WebSocketClient): void => {
+  const oldHostId = lobby.host.id
+  
+  getHostLobbyMap().delete(oldHostId)
+  getHostLobbyMap().set(newHost.id, lobby)
+  
+  lobby.host = newHost
+}
+
 const generateLobbyCode = (): number => { 
   let code = 0
 

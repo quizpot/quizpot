@@ -1,5 +1,5 @@
 import { sendEvent } from "../managers/EventManager"
-import { createLobby, getLobbyByCode, getLobbyByHostId, leaveLobby, startLobby } from "@/lib/server/managers/LobbyManager"
+import { createLobby, getLobbyByCode, getLobbyByHostId, leaveLobby, reassignHost, startLobby } from "@/lib/server/managers/LobbyManager"
 import { HandlerContext } from "./HandlerContext"
 
 export function handleCreateLobby({ client, ctx }: HandlerContext) {
@@ -12,12 +12,6 @@ export function handleCreateLobby({ client, ctx }: HandlerContext) {
   }
 
   const newLobbyCode = createLobby(client, file, settings)
-
-  // if (typeof newLobbyCode !== 'number') {
-  //   return sendEvent(client, 'createLobbyError', {
-  //     message: "Couldn't create lobby: " + newLobbyCode.message,
-  //   })
-  // }
 
   const lobby = getLobbyByCode(newLobbyCode)
 
@@ -78,4 +72,38 @@ export function handleStartLobby({ client }: HandlerContext) {
       message: res.message
     })
   }
+}
+
+export function handleHostLobbyWithId({ client, ctx }: HandlerContext) {
+  const { id } = ctx
+
+  const lobby = getLobbyByHostId(id)
+
+  if (!lobby) {
+    return sendEvent(client, 'hostLobbyByIdError', {
+      message: "Lobby not found.",
+    })
+  }
+
+  reassignHost(lobby, client)
+
+  const payload = {
+    lobbyState: {
+      code: lobby.code,
+      status: lobby.status,
+      players: lobby.players.map(p => ({
+        id: p.client.id,
+        name: p.name,
+        score: p.score,
+        streak: p.streak
+      })),
+      currentQuestionNumber: lobby.currentQuestionIndex + 1,
+      totalQuestions: lobby.quiz.questions.length,
+      answers: lobby.answers,
+      lobbySettings: lobby.settings,
+      theme: lobby.quiz.theme,
+    }
+  }
+
+  sendEvent(client, 'hostLobbyByIdJoin', payload)
 }

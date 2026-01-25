@@ -12,7 +12,9 @@ const HostStatusLayout = ({ children }: { children: React.ReactNode }) => {
       className='h-dvh w-full grid grid-cols-1 grid-rows-[1fr_56px]'
       style={ getBackgroundStyles(hostLobbyState.theme.background) }
     >
-      { children }
+      <div className='w-full h-full overflow-y-hidden'>
+        { children }
+      </div>
       <HostStatusBar />
     </main>
   )

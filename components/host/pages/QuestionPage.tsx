@@ -1,10 +1,9 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
-import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import InvalidPage from './InvalidPage'
 import FancyCard from '@/components/ui/fancy-card'
-import HostStatusBar from '../ui/HostStatusBar'
+import HostStatusLayout from '../layouts/HostStatusLayout'
 
 const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const [progress, setProgress] = useState(0)
@@ -45,21 +44,21 @@ const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) =>
   }
 
   return (
-    <section 
-      className='flex flex-col gap-4 justify-between h-screen w-full'
-      style={ getBackgroundStyles(hostLobbyState.theme.background) }
-    >
-      <FancyCard color='white' className='absolute right-4 top-4 rounded-full p-4 px-6 text-2xl font-semibold'>{ hostLobbyState.currentQuestionNumber } of { hostLobbyState.totalQuestions }</FancyCard>
-      <div></div> {/** To center the question */}
-      <FancyCard color='white' className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>{ question }</FancyCard>
-      <div className='p-4'>
-        <div 
-          className='bg-green-500 p-2 rounded-full'
-          style={{ width: `${progress}%` }}
-        ></div> 
-      </div>
-      <HostStatusBar />
-    </section>
+    <HostStatusLayout>
+      <section className='flex flex-col gap-4 justify-between h-full w-full'>
+        <FancyCard color='white' className='absolute right-4 top-4 rounded-full p-4 px-6 text-2xl font-semibold'>{ hostLobbyState.currentQuestionNumber } of { hostLobbyState.totalQuestions }</FancyCard>
+        <div></div> {/** To center the question */}
+        <div className='p-4'>
+          <FancyCard color='white' className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>{ question }</FancyCard>
+        </div>
+        <div className='p-4'>
+          <div 
+            className='bg-green-500 p-2 rounded-full'
+            style={{ width: `${progress}%` }}
+          ></div> 
+        </div>
+      </section>
+    </HostStatusLayout>
   )
 }
 

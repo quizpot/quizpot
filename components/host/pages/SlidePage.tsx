@@ -1,11 +1,9 @@
 import { HostLobbyState } from '@/components/providers/HostLobbyStateProvider'
-import React from 'react'
 import InvalidPage from './InvalidPage'
 import TitleSlide from '../slides/TitleSlide'
 import SkipSlide from '../slides/SkipSlide'
 import TitleImageTextSlide from '../slides/TitleImageTextSlide'
-import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
-import HostStatusBar from '../ui/HostStatusBar'
+import HostStatusLayout from '../layouts/HostStatusLayout'
 
 const SlidePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   if (hostLobbyState.currentQuestion?.questionType !== 'slide') 
@@ -15,36 +13,31 @@ const SlidePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
 
   if (slide.layout.slideType === 'title') {
     return (
-      <section 
-        className='max-h-dvh h-screen w-full'
-        style={ getBackgroundStyles(hostLobbyState.theme.background) }
-      >
-        <TitleSlide slide={ slide.layout } />
-        <SkipSlide />
-        <HostStatusBar />
-      </section>
+      <HostStatusLayout>
+        <section className='h-full w-full'>
+          <TitleSlide slide={ slide.layout } />
+          <SkipSlide />
+        </section>
+      </HostStatusLayout>
     )
   }
 
   if (slide.layout.slideType === 'titleImageText') {
     return (
-      <section 
-        className='max-h-screen h-screen w-full'
-        style={ getBackgroundStyles(hostLobbyState.theme.background) }
-      >
-        <TitleImageTextSlide slide={ slide.layout } />
-        <SkipSlide />
-        <HostStatusBar />
-      </section>
+      <HostStatusLayout>
+        <section className='h-full w-full'>
+          <TitleImageTextSlide slide={ slide.layout } />
+          <SkipSlide />
+        </section>
+      </HostStatusLayout>
     )
   }
 
   return (
-    <>
+    <HostStatusLayout>
       <InvalidPage hostLobbyState={ hostLobbyState } message='Unsupported slide type. Press Space to skip.' />
       <SkipSlide />
-      <HostStatusBar />
-    </>
+    </HostStatusLayout>
   )
 }
 

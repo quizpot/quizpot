@@ -5,7 +5,7 @@ import { PlayerState } from '@/lib/misc/PlayerState'
 import FancyButton from '@/components/ui/fancy-button'
 import { Color } from '@/lib/Colors'
 
-const PlayerKickButton = ({ player, color }: { player: PlayerState, color: Color }) => {
+const PlayerKickButton = ({ player, color }: { player: PlayerState, color?: Color }) => {
   const { sendEvent } = useWebSocket()
 
   if (!player.id) {
@@ -18,7 +18,7 @@ const PlayerKickButton = ({ player, color }: { player: PlayerState, color: Color
   }
 
   return (
-    <FancyButton color={ color } onClick={ onClick }>
+    <FancyButton className='text-2xl' color={ color } onClick={ onClick }>
       { player.name }
     </FancyButton>
   )

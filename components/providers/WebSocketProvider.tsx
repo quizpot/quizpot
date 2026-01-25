@@ -160,7 +160,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   return (
     <WebSocketContext.Provider value={{ isConnected: readyState === WebSocket.OPEN, clientId, readyState, onEvent, sendEvent }}>
       <Disconnected />
-      {children}
+      { children }
     </WebSocketContext.Provider>
   )
 }

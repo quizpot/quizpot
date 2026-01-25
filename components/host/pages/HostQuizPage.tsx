@@ -4,7 +4,7 @@ import { useWebSocket } from '@/components/providers/WebSocketProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
 import { useToast } from '@/components/ui/toaster'
 import { QuizFile } from '@/lib/QuizFile'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SetQuizDialog from '../ui/SetQuizDialog'
 import Header from '@/components/nav/Header'
 import FancyButton from '@/components/ui/fancy-button'
@@ -19,7 +19,7 @@ const HostQuizPage = () => {
 
   const toast = useToast() 
 
-  const { clientId } = useWebSocket()
+  const { clientId, sendEvent, onEvent } = useWebSocket()
   const setHostLobbyState = useHostLobbyState().setHostLobbyState
 
   const [customNames, setCustomNames] = useState(true)
@@ -65,6 +65,8 @@ const HostQuizPage = () => {
           toast(data.error, { variant: 'error' })
           return
         }
+
+        localStorage.setItem('wsId', clientId)
         
         setHostLobbyState({
           code: data.code,
@@ -78,6 +80,23 @@ const HostQuizPage = () => {
         })
       })
   }
+
+  useEffect(() => {
+    // Try to reconnect to the lobby if still valid
+    const wsId = localStorage.getItem('wsId')
+
+    if (typeof wsId === 'string') {
+      sendEvent('hostLobbyWithId', { id: wsId })
+    }
+
+    const unsubscribeHostLobbyByIdJoin = onEvent('hostLobbyByIdJoin', (ctx) => {
+      setHostLobbyState(ctx.lobbyState)
+    })
+
+    return () => {
+      unsubscribeHostLobbyByIdJoin()
+    }
+  }, [])
 
   return (
     <>

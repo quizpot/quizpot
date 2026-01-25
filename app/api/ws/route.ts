@@ -32,12 +32,12 @@ export function UPGRADE(client: WebSocketClient) {
 
   const handleClose = () => {
     if (getLobbyByHostId(client.id)) {
-      deleteLobby(client)
+      setTimeout(() => deleteLobby(client), 30 * 1000)
     }
 
     if (getLobbyByPlayerId(client.id)) {
       // Give player time to reconnect
-      setTimeout(() => leaveLobby(client), 60 * 1000)
+      setTimeout(() => leaveLobby(client), 30 * 1000)
     }
 
     deleteWSClient(client)

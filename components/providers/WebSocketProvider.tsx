@@ -3,6 +3,7 @@ import { ClientEvents } from "@/lib/client/ClientEvents"
 import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
 import { ServerEvents } from "@/lib/server/ServerEvents"
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react"
+import Disconnected from "../ui/disconnected"
 
 const WebSocketContext = createContext<{
   isConnected: boolean
@@ -61,6 +62,8 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     didConnectRef.current = true
 
     const connectWebSocket = () => {
+      if (!didConnectRef.current) return
+
       if (wsRef.current && (wsRef.current.readyState === WebSocket.OPEN || wsRef.current.readyState === WebSocket.CONNECTING)) {
         console.log("[WebSocketProvider] Already connected or connecting, skipping new connection attempt.")
         return
@@ -91,6 +94,13 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
       socket.onclose = (event) => {
         console.log("[WebSocketProvider] Disconnected:", event.code, event.reason)
         setReadyState(WebSocket.CLOSED)
+
+        if (event.code !== 1000) {
+          console.log("[WebSocketProvider] Unexpected close. Reconnecting in 2s...")
+          setTimeout(() => {
+            connectWebSocket()
+          }, 2000)
+        }
       }
 
       socket.onerror = (error) => {
@@ -117,7 +127,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
         }
 
         const handlers = handlersRef.current
-  
+
         if (handlers && (event in handlers)) {
           const typedEvent = event as keyof ServerEvents
           const typedCtx = ctx as ServerEvents[typeof typedEvent]
@@ -138,6 +148,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
 
       if (wsRef.current) {
         if (wsRef.current.readyState === WebSocket.OPEN) {
+          wsRef.current.onclose = null
           wsRef.current.close(1000, "Component unmount")
         }
 
@@ -148,6 +159,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <WebSocketContext.Provider value={{ isConnected: readyState === WebSocket.OPEN, clientId, readyState, onEvent, sendEvent }}>
+      <Disconnected />
       {children}
     </WebSocketContext.Provider>
   )

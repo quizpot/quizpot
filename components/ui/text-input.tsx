@@ -8,21 +8,27 @@ const TextInput = ({
   color,
   className,
   placeholder,
+  required,
+  name
 }: { 
-  value: string, 
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void 
+  value?: string, 
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void 
   color?: Color,
   className?: string,
-  placeholder?: string
+  placeholder?: string,
+  required?: boolean,
+  name?: string
 }) => {
   return (
     <FancyButton color={ color } asChild>
       <input 
         type='text'
         className={ className }
-        onChange={ (e) => { onChange(e) } } 
+        onChange={ onChange } 
         placeholder={ placeholder }
         value={ value }
+        required={ required }
+        name={ name }
       />
     </FancyButton>
   )

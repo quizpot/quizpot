@@ -1,6 +1,6 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
-import TextInput from '@/components/ui/TextInput'
+import TextInput from '@/components/ui/text-input'
 import { ShortAnswerQuestion } from '@/lib/QuizFile'
 import React from 'react'
 

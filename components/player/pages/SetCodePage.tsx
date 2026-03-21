@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
 import Link from 'next/link'
 import Header from '@/components/nav/Header'
-import TextInput from '@/components/ui/TextInput'
+import TextInput from '@/components/ui/text-input'
 
 const SetCodePage = () => {
   const t = useTranslations('PlayPage')

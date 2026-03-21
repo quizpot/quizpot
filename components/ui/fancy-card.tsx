@@ -8,7 +8,7 @@ const FancyCard = ({
 }: React.ComponentProps<"div"> & { 
   color?: Color, size?: 'sm' | 'lg', className?: string, asChild?: boolean 
 }) => {
-  if (!color) color = 'gray'
+  if (!color) color = 'ghost'
   const { cls } = colors[color]
 
   let padding = 'px-4 py-2'

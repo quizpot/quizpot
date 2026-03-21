@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from './dialog'
-import TextInput from './TextInput'
+import TextInput from './text-input'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import FancyButton from './fancy-button'

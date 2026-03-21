@@ -1,4 +1,4 @@
-import TextInput from "@/components/ui/TextInput"
+import TextInput from "@/components/ui/text-input"
 import { useEditorCurrentQuestion } from "../../providers/EditorCurrentQuestionProvider"
 import { useEditorQuizFile } from "../../providers/EditorQuizFileProvider"
 

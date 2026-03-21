@@ -8,6 +8,7 @@ const EmailInput = ({
   color,
   className,
   placeholder,
+  required,
   name
 }: { 
   value?: string, 
@@ -15,6 +16,7 @@ const EmailInput = ({
   color?: Color,
   className?: string,
   placeholder?: string,
+  required?: boolean,
   name?: string
 }) => {
   return (
@@ -25,6 +27,7 @@ const EmailInput = ({
         className={ className }
         onChange={ onChange } 
         placeholder={ placeholder }
+        required={ required }
         value={ value }
       />
     </FancyButton>

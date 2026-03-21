@@ -9,7 +9,7 @@ import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
 import Header from '@/components/nav/Header'
 import Footer from '@/components/nav/Footer'
-import TextInput from '@/components/ui/TextInput'
+import TextInput from '@/components/ui/text-input'
 import NewQuizDialog from '@/components/quizzes/NewQuizDialog'
 
 const QuizzesPage = () => {

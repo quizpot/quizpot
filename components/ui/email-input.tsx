@@ -2,7 +2,7 @@ import { Color } from '@/lib/Colors'
 import React from 'react'
 import FancyButton from './fancy-button'
 
-const PasswordInput = ({ 
+const EmailInput = ({ 
   value, 
   onChange,
   color,
@@ -11,7 +11,7 @@ const PasswordInput = ({
   name
 }: { 
   value?: string, 
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void 
   color?: Color,
   className?: string,
   placeholder?: string,
@@ -20,15 +20,15 @@ const PasswordInput = ({
   return (
     <FancyButton color={ color } asChild>
       <input 
-        type='password'
+        type='email'
         name={ name }
         className={ className }
         onChange={ onChange } 
-        value={ value }
         placeholder={ placeholder }
+        value={ value }
       />
     </FancyButton>
   )
 }
 
-export default PasswordInput
+export default EmailInput

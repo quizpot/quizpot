@@ -4,7 +4,6 @@ import Toaster, { ToastProvider } from "@/components/ui/toaster"
 import Script from "next/script";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
-import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
   title: "Quizpot",
@@ -34,14 +33,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SessionProvider>
-            <NextIntlClientProvider>
-              <ToastProvider>
-                { children }
-                <Toaster />
-              </ToastProvider>
-            </NextIntlClientProvider>
-          </SessionProvider>
+          <NextIntlClientProvider>
+            <ToastProvider>
+              { children }
+              <Toaster />
+            </ToastProvider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

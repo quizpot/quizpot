@@ -47,7 +47,7 @@ function DropdownMenuContent({
           className,
           `
             p-2 duration-200 rounded-lg border-0
-            shadow-[0_8px] mt-2
+            shadow-[0_8px] m-4
           `,
           colors['gray'].cls
         )}

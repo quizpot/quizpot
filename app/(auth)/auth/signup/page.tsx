@@ -5,17 +5,54 @@ import FancyCard from '@/components/ui/fancy-card'
 import InputLabel from '@/components/ui/input-label'
 import PasswordInput from '@/components/ui/password-input'
 import TextInput from '@/components/ui/text-input'
+import { useToast } from '@/components/ui/toaster'
+import { authClient } from '@/lib/auth-client'
+import { signUpSchema } from '@/lib/zod'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 const SignUpPage = () => {
-  const handleSubmit = (formData: any) => {
-    console.log(formData)
+  const toast = useToast()
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    
+    const formData = new FormData(e.currentTarget)
+    const obj = Object.fromEntries(formData.entries())
+
+    const validation = signUpSchema.safeParse(obj)
+
+    if (!validation.success) {
+      toast(validation.error.message, { variant: 'error' })
+      return
+    }
+
+    const { username, email, password, confirm } = validation.data
+
+    if (password !== confirm) {
+      toast('Passwords do not match', { variant: 'error' })
+      return
+    }
+
+    const { error } = await authClient.signUp.email({
+      name: username,
+      email: email,
+      password: password,
+    })
+
+    if (error) {
+      toast(error.message || "Error creating account", { variant: 'error' })
+      return
+    }
+
+    redirect('/dashboard')
   }
 
   return (
-    <FancyCard className='py-4 flex items-center justify-center rounded-none md:rounded-2xl w-full md:max-w-fit' color='gray'>
-      <form 
-        action={ handleSubmit } 
+    <FancyCard className='py-4 flex flex-col items-center justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' color='gray'>
+      <form
+        action={() => {}}
+        onSubmit={ handleSubmit } 
         className='flex flex-col gap-4 text-center'
       >
         <div>

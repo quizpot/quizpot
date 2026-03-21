@@ -1,13 +1,13 @@
-import { useSession } from '@/lib/auth-client'
+import { auth } from "@/lib/auth"
+import DashboardPageClient from "./page.client"
+import { headers } from "next/headers"
 
-const DashboardPage = () => {
-  const { data: session } = useSession()
+const DashboardPage = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
 
-  return (
-    <div>
-      { session?.user.name }
-    </div>
-  )
+  return <DashboardPageClient session={ session } />
 }
 
 export default DashboardPage

@@ -18,7 +18,7 @@ export const user = pgTable("user", {
   banned: boolean("banned").default(false),
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
-  icon: text("icon").default("star").notNull(),
+  icon: text("icon").default("user").notNull(),
   color: text("color").default("#ff9900").notNull(),
   nickname: text("nickname"),
 });

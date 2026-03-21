@@ -8,8 +8,11 @@ import { Menu } from 'lucide-react'
 import { useMessages } from 'next-intl'
 import LocaleSwitch from '../ui/locale-switch'
 import Notification from './Notification'
+import { useSession } from 'next-auth/react'
+import { DropdownMenu, DropdownMenuTrigger } from '../ui/dropdown-menu'
 
 const Header = () => {
+  const { data: session } = useSession()
   const [isOpen, setIsOpen] = useState(false)
 
   const menu: { label: string, href: string }[] = []
@@ -47,6 +50,16 @@ const Header = () => {
             }
             <LocaleSwitch size='sm' align='end' />
             <ThemeSwitch />
+            { 
+              session &&
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <FancyButton size='sm'>
+                      { session.user?.name }
+                    </FancyButton>
+                  </DropdownMenuTrigger>
+                </DropdownMenu>
+            }
           </div>
           <div className='flex md:hidden items-center justify-between'>
             <FancyButton className='block' onClick={ () => setIsOpen(true) }>

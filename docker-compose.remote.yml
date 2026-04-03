@@ -1,0 +1,4 @@
+services:
+  app:
+    environment:
+      DATABASE_URL: ${DATABASE_URL}

@@ -1,19 +1,15 @@
 import { QuestionType } from '@/lib/QuizFile'
-import React from 'react'
-import { FaKeyboard } from 'react-icons/fa'
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
-import { PiSlideshow } from 'react-icons/pi'
-import { TbCards } from 'react-icons/tb'
+import { Check, Copy, Keyboard, RectangleHorizontal } from 'lucide-react'
 
 const QuestionCardIcon = ({ questionType }: { questionType: QuestionType }) => {
   if (questionType === 'multipleChoice') {
-    return <TbCards size={24} />
+    return <Copy size={24} />
   } else if (questionType === 'trueFalse') {
-    return <IoMdCheckmarkCircleOutline size={24} />
+    return <Check size={24} />
   } else if (questionType === 'slide') {
-    return <PiSlideshow size={24} />
+    return <RectangleHorizontal size={24} />
   } else if (questionType === 'shortAnswer') {
-    return <FaKeyboard size={24} />
+    return <Keyboard size={24} />
   } else {
     return questionType
   }

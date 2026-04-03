@@ -1,7 +1,6 @@
 import FancyCard from '@/components/ui/fancy-card'
 import { Color } from '@/lib/Colors'
-import React from 'react'
-import { FaCheck } from 'react-icons/fa6'
+import { Check } from 'lucide-react'
 
 const MultipleChoiceGraph = ({ color, answers, maxAnswers, correctAnswer }: { color: Color, answers: number, maxAnswers: number, correctAnswer: boolean }) => {
   const columnHeight = answers / maxAnswers * 100 
@@ -13,7 +12,7 @@ const MultipleChoiceGraph = ({ color, answers, maxAnswers, correctAnswer }: { co
         { answers }
         { 
           correctAnswer ? 
-            <FaCheck size={ 20 } />
+            <Check size={ 20 } />
             : 
             null 
         }

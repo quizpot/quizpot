@@ -1,6 +1,7 @@
 import Footer from '@/components/nav/Footer'
 import Header from '@/components/nav/Header'
 import FancyButton from '@/components/ui/fancy-button'
+import Icon from '@/components/ui/icon'
 import { Book, Pen, Play, User } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'

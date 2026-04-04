@@ -2,7 +2,7 @@
 import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
 import FancyButton from '@/components/ui/fancy-button'
-import TextInput from '@/components/ui/TextInput'
+import TextInput from '@/components/ui/text-input'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 

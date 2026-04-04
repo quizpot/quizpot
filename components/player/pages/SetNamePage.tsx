@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
-import TextInput from '../../ui/TextInput'
+import TextInput from '../../ui/text-input'
 import { useToast } from '../../ui/toaster'
 import { useWebSocket } from '../../providers/WebSocketProvider'
 import { usePlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'

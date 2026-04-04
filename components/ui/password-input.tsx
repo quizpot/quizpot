@@ -6,20 +6,29 @@ const PasswordInput = ({
   value, 
   onChange,
   color,
-  className
+  className,
+  placeholder,
+  name,
+  required
 }: { 
-  value: string, 
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  value?: string, 
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
   color?: Color,
-  className?: string
+  className?: string,
+  placeholder?: string,
+  name?: string,
+  required?: boolean
 }) => {
   return (
     <FancyButton color={ color } asChild>
       <input 
         type='password'
+        name={ name }
         className={ className }
-        onChange={ (e) => { onChange(e) } } 
+        onChange={ onChange } 
         value={ value }
+        placeholder={ placeholder }
+        required={ required }
       />
     </FancyButton>
   )

@@ -1,12 +1,10 @@
 "use client"
 import { Question } from '@/lib/QuizFile'
-import React from 'react'
 import QuestionCardIcon from './QuestionCardIcon'
-import { PiCards } from 'react-icons/pi'
-import { BiTrash } from 'react-icons/bi'
 import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
 import { useEditorCurrentQuestion } from '../../providers/EditorCurrentQuestionProvider'
 import FancyCard from '@/components/ui/fancy-card'
+import { Copy, Trash } from 'lucide-react'
 
 const QuestionCard = ({ question, index }: { question: Question, index: number }) => {
   const { quizFile, setQuizFile } = useEditorQuizFile()
@@ -51,7 +49,7 @@ const QuestionCard = ({ question, index }: { question: Question, index: number }
             }}
             className={'p-1 hover:bg-black/20 hover:dark:bg-white/10 rounded-full'}
           >
-            <PiCards />
+            <Copy />
           </div>
           <div
             onClick={() => {
@@ -61,7 +59,7 @@ const QuestionCard = ({ question, index }: { question: Question, index: number }
             }}
             className={'p-1 hover:bg-black/20 hover:dark:bg-white/10 rounded-full' + (length > 1 ? '' : ' hidden')}
           >
-            <BiTrash />
+            <Trash />
           </div>
         </div>
         <FancyCard className='mb-2 aspect-video h-full md:w-full bg-neutral-200 border-neutral-400 rounded flex items-center justify-center'>

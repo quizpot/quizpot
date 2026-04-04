@@ -1,8 +1,8 @@
 dev:
-	docker compose -f docker-compose.yml -f docker-compose.dev.yml up --watch
+	docker compose -f docker/docker-compose.dev.yml up
 
 local:
-	docker compose -f docker-compose.yml -f docker-compose.local.yml up
+	docker compose -f docker/docker-compose.yml -f docker/docker-compose.local.yml up
 
 remote:
-	docker compose -f docker-compose.yml -f docker-compose.remote.yml up
+	docker compose -f docker/docker-compose.yml -f docker/docker-compose.remote.yml up

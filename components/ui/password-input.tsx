@@ -9,7 +9,8 @@ const PasswordInput = ({
   className,
   placeholder,
   name,
-  required
+  required,
+  disabled
 }: { 
   value?: string, 
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -17,10 +18,11 @@ const PasswordInput = ({
   className?: string,
   placeholder?: string,
   name?: string,
-  required?: boolean
+  required?: boolean,
+  disabled?: boolean
 }) => {
   return (
-    <FancyButton color={ color } asChild>
+    <FancyButton color={ color } disabled={ disabled } asChild>
       <input 
         type='password'
         name={ name }
@@ -29,6 +31,7 @@ const PasswordInput = ({
         value={ value }
         placeholder={ placeholder }
         required={ required }
+        disabled={ disabled }
       />
     </FancyButton>
   )

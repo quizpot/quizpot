@@ -9,6 +9,7 @@ const TextInput = ({
   className,
   placeholder,
   required,
+  disabled,
   name
 }: { 
   value?: string, 
@@ -17,10 +18,11 @@ const TextInput = ({
   className?: string,
   placeholder?: string,
   required?: boolean,
+  disabled?: boolean,
   name?: string
 }) => {
   return (
-    <FancyButton color={ color } asChild>
+    <FancyButton color={ color } disabled={ disabled } asChild>
       <input 
         type='text'
         className={ className }
@@ -28,6 +30,7 @@ const TextInput = ({
         placeholder={ placeholder }
         value={ value }
         required={ required }
+        disabled={ disabled }
         name={ name }
       />
     </FancyButton>

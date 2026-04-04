@@ -1,4 +1,3 @@
-import React from 'react'
 import FancyCard from './fancy-card'
 import { cn } from '@/lib/utils'
 import { Color } from '@/lib/Colors'

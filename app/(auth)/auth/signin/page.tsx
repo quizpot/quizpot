@@ -1,4 +1,6 @@
 "use client"
+
+import { useState } from 'react'
 import EmailInput from '@/components/ui/email-input'
 import FancyButton from '@/components/ui/fancy-button'
 import FancyCard from '@/components/ui/fancy-card'
@@ -8,10 +10,12 @@ import { useToast } from '@/components/ui/toaster'
 import { authClient } from '@/lib/auth-client'
 import { signInSchema } from '@/lib/zod'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 const SignInPage = () => {
   const toast = useToast()
+  const router = useRouter()
+  const [isPending, setIsPending] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -27,6 +31,7 @@ const SignInPage = () => {
     }
 
     const { email, password } = validation.data
+    setIsPending(true)
 
     const { error } = await authClient.signIn.email({
       email: email,
@@ -35,16 +40,16 @@ const SignInPage = () => {
 
     if (error) {
       toast(error.message || "Error signing in", { variant: 'error' })
+      setIsPending(false)
       return
     }
 
-    redirect('/dashboard')
+    router.push('/dashboard')
   }
 
   return (
-    <FancyCard className='py-4 flex flex-col items-center justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' color='gray'>
+    <FancyCard className='py-4 flex flex-col items-center justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' color='darkgray'>
       <form
-        action={() => {}}
         onSubmit={ handleSubmit }
         className='flex flex-col gap-4 text-center'
       >
@@ -53,14 +58,17 @@ const SignInPage = () => {
           <p>Sign in to your account</p>
         </div>
         <InputLabel label='Email' />
-        <EmailInput color='ghost' name='email' placeholder='user@example.com' required />
+        <EmailInput color='ghost' name='email' placeholder='user@example.com' required disabled={isPending} />
         <InputLabel label='Password' />
-        <PasswordInput color='ghost' name='password' placeholder='Password' required />
-        <FancyButton size='sm' color='green'>
-          Sign In
+        <PasswordInput color='ghost' name='password' placeholder='Password' required disabled={isPending} />
+        
+        <FancyButton size='sm' color='green' disabled={isPending}>
+          {isPending ? 'Signing In...' : 'Sign In'}
         </FancyButton>
+        
         <p>or</p>
-        <FancyButton size='sm' color='blue' asChild>
+        
+        <FancyButton size='sm' color='blue' className='mb-2' asChild disabled={isPending}>
           <Link href={'/auth/signup/'}>
             Sign Up
           </Link>

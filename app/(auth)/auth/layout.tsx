@@ -7,7 +7,7 @@ const AuthLayout = ({ children }: { children: React.ReactNode }) => {
     <main className='h-dvh w-full flex flex-col md:items-center md:justify-center'>
       <HeroIcons />
       { children }
-      <Footer className='absolute bottom-0 w-full left-0' color='ghost' />
+      <Footer className='absolute bottom-0 w-full left-0' color='darkgray' />
     </main>
   )
 }

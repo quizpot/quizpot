@@ -1,4 +1,6 @@
 "use client"
+
+import { useState } from 'react'
 import EmailInput from '@/components/ui/email-input'
 import FancyButton from '@/components/ui/fancy-button'
 import FancyCard from '@/components/ui/fancy-card'
@@ -9,10 +11,12 @@ import { useToast } from '@/components/ui/toaster'
 import { authClient } from '@/lib/auth-client'
 import { signUpSchema } from '@/lib/zod'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 const SignUpPage = () => {
   const toast = useToast()
+  const router = useRouter()
+  const [isPending, setIsPending] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -23,7 +27,7 @@ const SignUpPage = () => {
     const validation = signUpSchema.safeParse(obj)
 
     if (!validation.success) {
-      toast(validation.error.message, { variant: 'error' })
+      toast("Please check your input", { variant: 'error' })
       return
     }
 
@@ -34,6 +38,8 @@ const SignUpPage = () => {
       return
     }
 
+    setIsPending(true)
+
     const { error } = await authClient.signUp.email({
       name: username,
       email: email,
@@ -42,16 +48,16 @@ const SignUpPage = () => {
 
     if (error) {
       toast(error.message || "Error creating account", { variant: 'error' })
+      setIsPending(false)
       return
     }
 
-    redirect('/dashboard')
+    router.push('/dashboard')
   }
 
   return (
-    <FancyCard className='py-4 flex flex-col items-center justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' color='gray'>
+    <FancyCard className='py-4 flex flex-col items-center justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' color='darkgray'>
       <form
-        action={() => {}}
         onSubmit={ handleSubmit } 
         className='flex flex-col gap-4 text-center'
       >
@@ -60,18 +66,21 @@ const SignUpPage = () => {
           <p>Sign up to this instance</p>
         </div>
         <InputLabel label='Username' />
-        <TextInput color='ghost' name='username' placeholder='Username' required />
+        <TextInput color='ghost' name='username' placeholder='Username' required disabled={isPending} />
         <InputLabel label='Email' />
-        <EmailInput color='ghost' name='email' placeholder='user@example.com' required />
+        <EmailInput color='ghost' name='email' placeholder='user@example.com' required disabled={isPending} />
         <InputLabel label='Password' />
-        <PasswordInput color='ghost' name='password' placeholder='Password' required />
+        <PasswordInput color='ghost' name='password' placeholder='Password' required disabled={isPending} />
         <InputLabel label='Confirm Password' />
-        <PasswordInput color='ghost' name='confirm' placeholder='Password' required />
-        <FancyButton size='sm' color='green'>
-          Sign Up
+        <PasswordInput color='ghost' name='confirm' placeholder='Password' required disabled={isPending} />
+        
+        <FancyButton size='sm' color='green' disabled={isPending}>
+          {isPending ? 'Creating Account...' : 'Sign Up'}
         </FancyButton>
+        
         <p>or</p>
-        <FancyButton size='sm' color='blue' asChild>
+        
+        <FancyButton size='sm' color='blue' className='mb-2' asChild disabled={isPending}>
           <Link href={'/auth/signin/'}>
             Sign In
           </Link>

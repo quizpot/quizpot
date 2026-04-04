@@ -9,6 +9,7 @@ const EmailInput = ({
   className,
   placeholder,
   required,
+  disabled,
   name
 }: { 
   value?: string, 
@@ -17,10 +18,11 @@ const EmailInput = ({
   className?: string,
   placeholder?: string,
   required?: boolean,
+  disabled?: boolean,
   name?: string
 }) => {
   return (
-    <FancyButton color={ color } asChild>
+    <FancyButton color={ color } disabled={ disabled } asChild>
       <input 
         type='email'
         name={ name }
@@ -28,6 +30,7 @@ const EmailInput = ({
         onChange={ onChange } 
         placeholder={ placeholder }
         required={ required }
+        disabled={ disabled }
         value={ value }
       />
     </FancyButton>

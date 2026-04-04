@@ -54,6 +54,8 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   useEffect(() => {
+    console.log("[WebSocketProvider] useEffect")
+
     if (!wsUrl || didConnectRef.current) {
       return
     }
@@ -91,6 +93,13 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
       socket.onclose = (event) => {
         console.log("[WebSocketProvider] Disconnected:", event.code, event.reason)
         setReadyState(WebSocket.CLOSED)
+        wsRef.current = null
+        didConnectRef.current = false
+
+        if (event.code !== 1000) {
+          console.log("[WebSocketProvider] Reconnecting in 2s...")
+          setTimeout(() => connectWebSocket(), 2000)
+        }
       }
 
       socket.onerror = (error) => {
@@ -134,9 +143,11 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     connectWebSocket()
     
     return () => {
+      console.log("[WebSocketProvider] useEffect return")
       didConnectRef.current = false
 
       if (wsRef.current) {
+        console.log("[WebSocketProvider] Closing WebSocket")
         if (wsRef.current.readyState === WebSocket.OPEN) {
           wsRef.current.close(1000, "Component unmount")
         }
@@ -154,6 +165,7 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
 }
 
 export const useWebSocket = () => {
+  console.log("[WebSocketProvider] useWebSocket")
   const context = useContext(WebSocketContext)
   
   if (context === null) {

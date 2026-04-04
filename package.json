@@ -17,7 +17,7 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
-    "@google/genai": "^1.33.0",
+    "@google/genai": "^1.48.0",
     "@hello-pangea/dnd": "^18.0.1",
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-slot": "^1.2.4",
@@ -30,10 +30,10 @@
     "drizzle-orm": "^0.45.1",
     "lucide-react": "^0.553.0",
     "lucide-static": "^0.577.0",
-    "next": "^16.1.1",
-    "next-intl": "^4.5.3",
+    "next": "^16.2.2",
+    "next-intl": "^4.9.0",
     "next-themes": "^0.4.6",
-    "next-ws": "^2.2.1",
+    "next-ws": "^2.2.3",
     "pg": "^8.20.0",
     "radix-ui": "^1.4.3",
     "react": "19.2.3",
@@ -41,7 +41,7 @@
     "react-qr-code": "^2.0.18",
     "recharts": "^2.15.4",
     "tailwind-merge": "^3.4.0",
-    "ws": "^8.18.3",
+    "ws": "^8.20.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

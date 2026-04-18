@@ -1,7 +1,7 @@
 import { useEditorCurrentQuestion } from '@/components/editor/providers/EditorCurrentQuestionProvider'
 import { useEditorQuizFile } from '@/components/editor/providers/EditorQuizFileProvider'
 import BooleanInput from '@/components/ui/BooleanInput'
-import TextInput from '@/components/ui/TextInput'
+import TextInput from '@/components/ui/text-input'
 import { colorKeys } from '@/lib/Colors'
 import { MultipleChoiceQuestion } from '@/lib/QuizFile'
 import { Check, X } from 'lucide-react'

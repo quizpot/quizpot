@@ -8,6 +8,7 @@ import { Menu } from 'lucide-react'
 import { useMessages } from 'next-intl'
 import LocaleSwitch from '../ui/locale-switch'
 import Notification from './Notification'
+import { DropdownMenu, DropdownMenuTrigger } from '../ui/dropdown-menu'
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)

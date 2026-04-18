@@ -19,10 +19,6 @@ const FancyCard = ({
     padding = 'px-8 py-4'
   }
 
-  if (color === 'gray') {
-    className += ' dark:shadow-neutral-900! bg-neutral-200! dark:bg-neutral-800!'
-  }
-
   const Comp = asChild ? Slot : 'div'
 
   return (

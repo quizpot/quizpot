@@ -1,7 +1,7 @@
 "use client"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import React from 'react'
-import TextInput from '@/components/ui/TextInput'
+import TextInput from '@/components/ui/text-input'
 import ColorInput from '@/components/ui/ColorInput'
 import ImageInput from '@/components/ui/ImageInput'
 import { useToast } from '@/components/ui/toaster'

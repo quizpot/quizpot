@@ -2,12 +2,17 @@
 import { ClientEvents } from "@/lib/client/ClientEvents"
 import { WebSocketClient } from "@/lib/server/managers/WSClientManager"
 import { ServerEvents } from "@/lib/server/ServerEvents"
+import { Loader2, LoaderCircle } from "lucide-react"
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react"
+import FancyButton from "../ui/fancy-button"
+import Link from "next/link"
+import FancyCard from "../ui/fancy-card"
 
 const WebSocketContext = createContext<{
   isConnected: boolean
   clientId: string | null
   readyState: number
+  error: string | null
   onEvent: <T extends keyof ServerEvents>(event: T, handler: (ctx: ServerEvents[T]) => void) => () => void
   sendEvent: <T extends keyof ClientEvents>(event: T, ctx: ClientEvents[T]) => void
 } | null>(null)
@@ -20,10 +25,14 @@ type ServerEventHandlers = {
 export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   const [clientId, setClientId] = useState<string | null>(null)
   const [readyState, setReadyState] = useState<number>(WebSocket.CLOSED)
+  const [error, setError] = useState<string | null>(null)
   
   const wsRef = useRef<WebSocketClient | null>(null)
   const handlersRef = useRef<ServerEventHandlers>({})
   const didConnectRef = useRef(false)
+
+  const isMountedRef = useRef(true)
+  const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const wsUrl = process.env.NEXT_PUBLIC_WS_URL
 
@@ -54,15 +63,15 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   useEffect(() => {
-    console.log("[WebSocketProvider] useEffect")
+    isMountedRef.current = true
+    setError(null)
 
-    if (!wsUrl || didConnectRef.current) {
-      return
-    }
-
+    if (!wsUrl || didConnectRef.current) return
     didConnectRef.current = true
 
     const connectWebSocket = () => {
+      if (!isMountedRef.current) return
+
       if (wsRef.current && (wsRef.current.readyState === WebSocket.OPEN || wsRef.current.readyState === WebSocket.CONNECTING)) {
         console.log("[WebSocketProvider] Already connected or connecting, skipping new connection attempt.")
         return
@@ -85,28 +94,36 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
       wsRef.current = socket
 
       socket.onopen = () => {
+        if (!isMountedRef.current) return
         console.log("[WebSocketProvider] Connected!")
         setClientId(null)
         setReadyState(WebSocket.OPEN)
       }
 
       socket.onclose = (event) => {
+        if (!isMountedRef.current) return
         console.log("[WebSocketProvider] Disconnected:", event.code, event.reason)
         setReadyState(WebSocket.CLOSED)
         wsRef.current = null
         didConnectRef.current = false
 
         if (event.code !== 1000) {
-          console.log("[WebSocketProvider] Reconnecting in 2s...")
-          setTimeout(() => connectWebSocket(), 2000)
+          setError("Lost connection to server.")
+          
+          if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current)
+          reconnectTimerRef.current = setTimeout(() => {
+            connectWebSocket()
+          }, 2000)
         }
       }
 
       socket.onerror = (error) => {
+        if (!isMountedRef.current) return
         console.error("[WebSocketProvider] Error:", error)
       }
 
       socket.onmessage = (e) => {
+        if (!isMountedRef.current) return
         let message
 
         try {
@@ -143,22 +160,50 @@ export const WebSocketProvider = ({ children }: { children: ReactNode }) => {
     connectWebSocket()
     
     return () => {
-      console.log("[WebSocketProvider] useEffect return")
+      console.log("[WebSocketProvider] Cleaning up...")
+      isMountedRef.current = false
       didConnectRef.current = false
 
-      if (wsRef.current) {
-        console.log("[WebSocketProvider] Closing WebSocket")
-        if (wsRef.current.readyState === WebSocket.OPEN) {
-          wsRef.current.close(1000, "Component unmount")
-        }
+      if (reconnectTimerRef.current) {
+        clearTimeout(reconnectTimerRef.current)
+        reconnectTimerRef.current = null
+      }
 
+      if (wsRef.current) {
+        wsRef.current.onopen = null
+        wsRef.current.onclose = null
+        wsRef.current.onerror = null
+        wsRef.current.onmessage = null
+        
+        wsRef.current.close(1000, "Component unmount")
         wsRef.current = null
       }
     }
   }, [wsUrl])
 
+  if (error && readyState !== WebSocket.OPEN) {
+    return (
+      <div className="h-dvh w-full flex flex-col items-center justify-center gap-4">
+        <FancyCard className="flex gap-4">
+          <LoaderCircle size={24} className="animate-spin" />
+          <h1>Connecting to server...</h1>
+        </FancyCard>
+        <div className="flex gap-4">
+          <FancyButton asChild>
+            <Link href="/">
+              Home
+            </Link>
+          </FancyButton>
+          <FancyButton color="yellow" onClick={ () => { window.location.reload() } }>
+            Retry
+          </FancyButton>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <WebSocketContext.Provider value={{ isConnected: readyState === WebSocket.OPEN, clientId, readyState, onEvent, sendEvent }}>
+    <WebSocketContext.Provider value={{ isConnected: readyState === WebSocket.OPEN, error, clientId, readyState, onEvent, sendEvent }}>
       {children}
     </WebSocketContext.Provider>
   )

@@ -11,6 +11,7 @@ import DashboardSidebarButton from "./DashboardSidebarButton"
 import { auth } from "@/lib/auth"
 import { useDashboardSidebar } from "./DashboardSidebarProvider"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 type Session = Awaited<ReturnType<typeof auth.api.getSession>>
 
@@ -32,8 +33,10 @@ const DashboardSidebar = ({ session }: { session: Session }) => {
       <div className="flex justify-between p-4">
         {
           open && (
-            <FancyButton className="font-semibold text-xl">
-              Quizpot
+            <FancyButton className="font-semibold text-xl" asChild>
+              <Link href="/">
+                Quizpot
+              </Link>
             </FancyButton>
           )
         }

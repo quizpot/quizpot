@@ -1,6 +1,6 @@
 import { Car, Carrot, Droplet, Gem, Leaf, Sun } from "lucide-react"
 
-export const HeroIcons = () => {
+export const FancyIcons = () => {
   const iconStyle = "absolute pointer-events-none select-none"
   
   return (

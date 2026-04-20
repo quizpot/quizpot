@@ -3,7 +3,7 @@ import React from 'react'
 import { useWebSocket } from '../../providers/WebSocketProvider'
 import { PlayerState } from '@/lib/misc/PlayerState'
 import FancyButton from '@/components/ui/fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 
 const PlayerKickButton = ({ player, color }: { player: PlayerState, color?: Color }) => {
   const { sendEvent } = useWebSocket()

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
 import Link from 'next/link'
-import Header from '@/components/nav/Header'
+import Header from '@/components/nav/header'
 import TextInput from '@/components/ui/text-input'
 
 const SetCodePage = () => {

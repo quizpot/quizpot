@@ -3,7 +3,7 @@ import { Answer } from '@/lib/server/managers/LobbyManager'
 import React from 'react'
 import MultipleChoiceGraph from './MultipleChoiceGraph'
 import AnswerCard from './AnswerCard'
-import { colorKeys } from '@/lib/Colors'
+import { colorKeys } from '@/lib/colors'
 
 const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQuestion: Question, answers: Answer[] }) => {
   if (currentQuestion.questionType === 'multipleChoice') {

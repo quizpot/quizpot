@@ -1,5 +1,5 @@
 import FancyButton from '@/components/ui/fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 import { Check, X } from 'lucide-react'
 const MultipleChoiceAnswerButtonWithAnswer = ({ label, color, isCorrect }: { label: string, color: Color, isCorrect: boolean }) => {
   return (

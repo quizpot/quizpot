@@ -56,7 +56,10 @@ const SignUpPage = () => {
   }
 
   return (
-    <FancyCard className='py-4 flex flex-col items-center justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' color='darkgray'>
+    <FancyCard 
+      className='py-4 flex flex-col items-center justify-end pb-12 md:pb-4 md:justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' 
+      color='background'
+    >
       <form
         onSubmit={ handleSubmit } 
         className='flex flex-col gap-4 text-center'

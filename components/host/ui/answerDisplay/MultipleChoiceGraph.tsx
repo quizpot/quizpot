@@ -1,5 +1,5 @@
 import FancyCard from '@/components/ui/fancy-card'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 import { Check } from 'lucide-react'
 
 const MultipleChoiceGraph = ({ color, answers, maxAnswers, correctAnswer }: { color: Color, answers: number, maxAnswers: number, correctAnswer: boolean }) => {

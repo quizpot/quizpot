@@ -3,7 +3,7 @@ import React from 'react'
 import MultipleChoicePlayerAnswerButton from './multipleChoice/MultipleChoicePlayerAnswerButton'
 import TrueFalsePlayerAnswerButton from './trueFalse/TrueFalsePlayerAsnwerButton'
 import ShortAnswerPlayerInput from './shortAnswer/ShortAnswerPlayerInput'
-import { colorKeys } from '@/lib/Colors'
+import { colorKeys } from '@/lib/colors'
 
 const QuestionAnswers = ({ question }: { question: SanitizedQuestion }) => {
   if (question.questionType === 'multipleChoice') {

@@ -1,5 +1,5 @@
 import Footer from '@/components/nav/Footer'
-import Header from '@/components/nav/Header'
+import Header from '@/components/nav/header'
 import FancyButton from '@/components/ui/fancy-button'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'

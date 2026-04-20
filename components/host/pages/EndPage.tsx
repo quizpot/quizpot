@@ -3,7 +3,7 @@ import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
 import FancyCard from '@/components/ui/fancy-card'
 import FancyButton from '@/components/ui/fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 
 const EndPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const onExitFullscreen = () => {

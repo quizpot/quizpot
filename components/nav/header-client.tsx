@@ -5,13 +5,14 @@ import Link from 'next/link'
 import { ThemeSwitch } from '../ui/theme-switch'
 import { createPortal } from 'react-dom'
 import { Menu } from 'lucide-react'
-import { useMessages } from 'next-intl'
+import { _Translator, useMessages, useTranslations } from 'next-intl'
 import LocaleSwitch from '../ui/locale-switch'
 import Notification from './Notification'
-import { DropdownMenu, DropdownMenuTrigger } from '../ui/dropdown-menu'
+import { User } from 'better-auth'
 
-const Header = () => {
+const HeaderClient = ({ user }: { user?: User }) => {
   const [isOpen, setIsOpen] = useState(false)
+  const t = useTranslations()
 
   const menu: { label: string, href: string }[] = []
   const messages = useMessages()
@@ -31,37 +32,43 @@ const Header = () => {
           This is an early version of Quizpot under active development. <b>Expect frequent changes.</b> Download quizzes as a file for long term storage.
         </Notification>
         <div className='container w-full mx-auto p-4 flex justify-between select-none'>
-          <FancyButton asChild>
+          <FancyButton color='background' asChild>
             <Link href={'/'} className='text-2xl font-semibold'>
               Quizpot
             </Link>
           </FancyButton>
           <div className='hidden md:flex gap-8 items-center justify-center text-lg'>
             {
-              menu.map(({ href, label }, index) => (
-                <FancyButton key={ index } size='sm' asChild>
-                  <Link href={ href }>
-                    { label }
+              user ? (
+                <FancyButton color='background' size='sm' asChild>
+                  <Link href={ `/dashboard` }>
+                    { user.name }
                   </Link>
                 </FancyButton>
-              ))
+              ) : (
+                <FancyButton color='background' size='sm' asChild>
+                  <Link href={ `/auth/signin` }>
+                    { t('Header.login.label') }
+                  </Link>
+                </FancyButton>
+              )
             }
-            <LocaleSwitch size='sm' align='end' />
-            <ThemeSwitch />
+            <LocaleSwitch color="background" size='sm' align='end' />
+            <ThemeSwitch color='background' />
           </div>
           <div className='flex md:hidden items-center justify-between'>
-            <FancyButton className='block' onClick={ () => setIsOpen(true) }>
+            <FancyButton color='background' className='block' onClick={ () => setIsOpen(true) }>
               <Menu size={ 20 } />
             </FancyButton>
           </div>
         </div>
       </header>
-      { isOpen && <MobileMenu menu={ menu } setIsOpen={ setIsOpen } /> }
+      { isOpen && <MobileMenu t={ t } user={ user } setIsOpen={ setIsOpen } /> }
     </>
   )
 }
 
-const MobileMenu = ({ menu, setIsOpen }: { menu: { label: string, href: string }[], setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const MobileMenu = ({ user, t, setIsOpen }: { user?: User, t: _Translator, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
   return createPortal(
     <section 
       className='
@@ -71,20 +78,24 @@ const MobileMenu = ({ menu, setIsOpen }: { menu: { label: string, href: string }
       onClick={ () => setIsOpen(false) }
     >
       {
-        menu.map(({ href, label }, index) => (
-          <FancyButton key={ index } className='w-full text-center text-2xl' asChild>
-            <Link href={ href }>
-              { label }
+        user ? (
+          <FancyButton className='w-full text-center text-2xl' asChild>
+            <Link href={ `/dashboard` }>
+              { user.name }
             </Link>
           </FancyButton>
-        ))
+        ) : (
+          <FancyButton className='w-full text-center text-2xl' asChild>
+            <Link href={ `/auth/signin` }>
+              { t('Header.login.label') }
+            </Link>
+          </FancyButton>
+        )
       }
-      <div className='flex items-center justify-center gap-4 mt-8 text-2xl'>
-        <LocaleSwitch align='center' />
-        <ThemeSwitch />
-      </div>
+      <LocaleSwitch className='w-full text-2xl' align='center' />
+      <ThemeSwitch className='w-full items-center justify-center' />
     </section>
   , document.body)
 }
 
-export default Header
+export default HeaderClient

@@ -29,11 +29,11 @@ const DashboardSidebar = ({ session }: { session: Session }) => {
   }, [expanded])
 
   return (
-    <section className={ cn("h-dvh bg-neutral-900 flex duration-300 flex-col overflow-hidden", expanded ? "min-w-screen md:min-w-80" : "min-w-22") }>
+    <section className={ cn("h-dvh bg-neutral-800 flex duration-300 flex-col overflow-hidden", expanded ? "min-w-screen md:min-w-80" : "min-w-22") }>
       <div className="flex justify-between p-4">
         {
           open && (
-            <FancyButton className="font-semibold text-xl" asChild>
+            <FancyButton color="foreground" className="font-semibold text-xl" asChild>
               <Link href="/">
                 Quizpot
               </Link>
@@ -64,7 +64,7 @@ const DashboardSidebar = ({ session }: { session: Session }) => {
         <div className="flex flex-col gap-4">
           <DashboardSidebarLabel icon={ <Home size={16} /> } label="Home" />
           <DashboardSidebarButton href="/dashboard" icon={ <PanelsTopLeft /> } label="Dashboard" />
-          <DashboardSidebarButton href="/dashboard/profile" icon={ <User /> } label="Profile" />
+          <DashboardSidebarButton href="/dashboard/user" icon={ <User /> } label="User" />
         </div>
         {
           session?.user.role === 'admin' && (
@@ -85,7 +85,7 @@ const DashboardSidebar = ({ session }: { session: Session }) => {
             </FancyButton>
           </div>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent color="foreground">
           <DropdownMenuItem onClick={ () => { signOut({ fetchOptions: { onSuccess: () => { window.location.reload() } } }) } }>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

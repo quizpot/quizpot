@@ -1,4 +1,4 @@
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 import React from 'react'
 import FancyButton from './fancy-button'
 

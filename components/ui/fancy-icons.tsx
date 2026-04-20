@@ -4,9 +4,9 @@ export const FancyIcons = () => {
   const iconStyle = "absolute pointer-events-none select-none"
   
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none -z-5">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none duration-300 transition-all -z-5">
       <Car
-        className={`${iconStyle} text-red-500 top-[10%] left-[8%] -rotate-12`} 
+        className={`${iconStyle} text-red-500 top-[2.5%] lg:top-[10%] left-[8%] -rotate-12`} 
         size={140} 
       />
       
@@ -16,17 +16,17 @@ export const FancyIcons = () => {
       />
       
       <Leaf
-        className={`${iconStyle} text-green-500 top-[50%] right-[8%] rotate-45`} 
+        className={`${iconStyle} text-green-500 top-[45%] right-[8%] rotate-45`} 
         size={130} 
       />
       
       <Sun
-        className={`${iconStyle} text-yellow-500 top-[45%] left-[5%]`} 
+        className={`${iconStyle} text-yellow-500 top-[30%] lg:top-[45%] left-[5%]`} 
         size={160} 
       />
 
       <Carrot
-        className={`${iconStyle} text-orange-500 bottom-[10%] left-[15%] -rotate-30deg`} 
+        className={`${iconStyle} text-orange-500 bottom-[25%] lg:bottom-[10%]  left-[15%] -rotate-30deg`} 
         size={130} 
       />
       

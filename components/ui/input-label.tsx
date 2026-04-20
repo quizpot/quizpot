@@ -1,11 +1,11 @@
 import FancyCard from './fancy-card'
 import { cn } from '@/lib/utils'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 
 const InputLabel = ({
   label,
   className,
-  color
+  color = "foreground"
 }: {
   label: string,
   className?: string,

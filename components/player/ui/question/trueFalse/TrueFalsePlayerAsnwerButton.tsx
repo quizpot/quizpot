@@ -1,7 +1,7 @@
 import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
 import { useWebSocket } from '@/components/providers/WebSocketProvider'
 import FancyButton from '@/components/ui/fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 import React from 'react'
 
 const TrueFalsePlayerAnswerButton = ({ value, color }: { value: boolean, color: Color }) => {

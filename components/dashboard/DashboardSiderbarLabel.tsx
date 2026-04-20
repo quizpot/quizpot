@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils"
 import FancyCard from "../ui/fancy-card"
-import { Color } from "@/lib/Colors"
+import { Color } from "@/lib/colors"
 import { useDashboardSidebar } from "./DashboardSidebarProvider"
 
 const DashboardSidebarLabel = ({
   icon,
   label,
   className,
-  color
+  color = "foreground"
 }: {
   icon: React.ReactNode,
   label: string,

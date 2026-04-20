@@ -27,9 +27,14 @@ export const auth = betterAuth({
         input: false,
 			},
 		},
+    changeEmail: {
+      enabled: true,
+      updateEmailWithoutVerification: true,
+    }
 	},
   emailAndPassword: { 
-    enabled: true, 
+    enabled: true,
+    minPasswordLength: 7,
   },
   plugins: [
     admin()

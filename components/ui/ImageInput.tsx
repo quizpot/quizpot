@@ -5,7 +5,7 @@ import TextInput from './text-input'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import FancyButton from './fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 
 const ImageInput = ({ 
   onChange,

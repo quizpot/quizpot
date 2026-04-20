@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [new URL('https://pixabay.com/get/**')],
   },
+  transpilePackages: ["@quizpot/quizcore"],
 }
 
 const withNextIntl = createNextIntlPlugin()

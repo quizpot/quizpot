@@ -38,6 +38,10 @@
     "stats": {
       "label": "Stats",
       "href": "/stats"
+    },
+    "login": {
+      "label": "Sign In",
+      "href": "/signin"
     }
   },
   "HomePage": {
@@ -190,5 +194,9 @@
   "QuizCard": {
     "deleteQuizTitle": "Delete Quiz",
     "deleteQuizDescription": "Are you sure you want to delete:"
+  },
+  "JoinLobby": {
+    "placeholder": "Enter lobby code",
+    "button": "Join"
   }
 }

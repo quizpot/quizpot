@@ -1,7 +1,7 @@
 import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import NextQuestionButton from '../ui/NextQuestionButton'
 import FancyCard from '@/components/ui/fancy-card'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 import HostStatusLayout from '../layouts/HostStatusLayout'
 
 const ScoreboardPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {

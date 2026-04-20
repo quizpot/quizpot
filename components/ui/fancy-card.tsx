@@ -1,4 +1,4 @@
-import { Color, colors } from '@/lib/Colors'
+import { Color, colors } from '@/lib/colors'
 import { cn } from '@/lib/utils'
 import { Slot } from '@radix-ui/react-slot'
 import React from 'react'
@@ -8,7 +8,7 @@ const FancyCard = ({
 }: React.ComponentProps<"div"> & { 
   color?: Color, size?: 'sm' | 'lg', className?: string, asChild?: boolean 
 }) => {
-  if (!color) color = 'gray'
+  if (!color) color = 'background'
   const { cls } = colors[color]
 
   let padding = 'px-4 py-2'

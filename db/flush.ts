@@ -1,6 +1,6 @@
 import { is, sql } from "drizzle-orm";
 import { db } from ".";
-import * as schema from "./schema";
+import * as schema from "../../quizcore/src/db/schema";
 import { getTableConfig, PgTable } from "drizzle-orm/pg-core";
 
 const main = async () => {

@@ -4,16 +4,19 @@ const ColorInput = ({
   value, 
   className, 
   onChange,
-  name
+  name,
+  disabled
 }: { 
   value?: string, 
   className?: string, 
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  name?: string
+  name?: string,
+  disabled?: boolean
 }) => {
   return (
     <input 
       type='color'
+      disabled={ disabled }
       className={ className }
       onChange={ onChange } 
       defaultValue={ value }

@@ -1,6 +1,6 @@
 import React from 'react'
 import FancyButton from '../ui/fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 import Link from 'next/link'
 import { useDashboardSidebar } from './DashboardSidebarProvider'
 

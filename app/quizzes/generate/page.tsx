@@ -1,6 +1,6 @@
 "use client"
 import Footer from '@/components/nav/Footer'
-import Header from '@/components/nav/Header'
+import Header from '@/components/nav/header'
 import FancyButton from '@/components/ui/fancy-button'
 import FancyCard from '@/components/ui/fancy-card'
 import TextAreaInput from '@/components/ui/textarea-input'

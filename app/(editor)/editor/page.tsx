@@ -14,7 +14,11 @@ const EditorPage = async ({ searchParams }: { searchParams: Promise<{ quizId: st
   const { quizId } = await searchParams
 
   if (!quizId) {
-    return <EditorPageClient quiz={ {} as Quiz } />
+    return <EditorPageClient quiz={ { 
+      theme: {
+        color: '#737373',
+      }
+    } as Quiz } />
   }
 
   const q = (await db.select().from(quiz).where(eq(quiz.id, quizId)))[0]

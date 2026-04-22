@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
+import { setCookie } from "cookies-next";
 
 interface SidebarContextValue {
   open: boolean;
@@ -10,9 +11,14 @@ interface SidebarContextValue {
 
 const SidebarContext = createContext<SidebarContextValue | null>(null);
 
-export function DashboardSidebarProvider({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
-  const [isContentVisible, setIsContentVisible] = useState(false);
+export function DashboardSidebarProvider({ children, initialOpen = true }: { children: React.ReactNode; initialOpen?: boolean }) {
+  const [open, setOpenState] = useState(initialOpen);
+  const [isContentVisible, setIsContentVisible] = useState(initialOpen);
+
+  const setOpen = useCallback((value: boolean) => {
+    setOpenState(value);
+    setCookie('dashboard_sidebar_state', value, { maxAge: 60 * 60 * 24 * 365, path: '/' });
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -23,8 +29,10 @@ export function DashboardSidebarProvider({ children }: { children: React.ReactNo
     }
   }, [open]);
 
+  const contextValue = useMemo(() => ({ open, setOpen, isContentVisible }), [open, setOpen, isContentVisible]);
+
   return (
-    <SidebarContext.Provider value={{ open, setOpen, isContentVisible }}>
+    <SidebarContext.Provider value={contextValue}>
       {children}
     </SidebarContext.Provider>
   );

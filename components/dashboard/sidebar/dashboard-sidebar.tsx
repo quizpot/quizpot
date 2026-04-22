@@ -1,15 +1,15 @@
 "use client"
-import FancyButton from "../ui/fancy-button"
-import { Book, ChartArea, Home, PanelLeftClose, PanelLeftOpen, PanelsTopLeft, Shield, User, Users } from "lucide-react"
+import FancyButton from "../../ui/fancy-button"
+import { Book, ChartArea, Home, PanelLeftClose, PanelLeftOpen, PanelsTopLeft, Shield, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
-import DynamicIcon from "../ui/icon"
-import DashboardSidebarLabel from "./DashboardSiderbarLabel"
 import DashboardSidebarButton from "./dashboard-sidebar-button"
 import { auth } from "@/lib/auth"
-import { useDashboardSidebar } from "./DashboardSidebarProvider"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import Link from "next/link"
 import { useTranslations } from "next-intl"
+import { useDashboardSidebar } from "./dashboard-sidebar-provider"
+import DashboardSidebarLabel from "./dashboard-sidebar-label"
+import DynamicIcon from "@/components/ui/icon"
 
 type Session = Awaited<ReturnType<typeof auth.api.getSession>>
 
@@ -18,13 +18,13 @@ const DashboardSidebar = ({ session }: { session: Session }) => {
   const t = useTranslations('DashboardSidebar')
 
   useEffect(() => {
-    if (window.innerWidth >= 768) {
-      setOpen(true)
+    if (window.innerWidth < 768) {
+      setOpen(false)
     }
   }, [setOpen])
 
   return (
-    <section className={ cn("h-dvh bg-neutral-800 flex duration-300 flex-col overflow-hidden", open ? "min-w-screen md:min-w-80" : "min-w-22") }>
+    <section className={ cn("h-dvh bg-neutral-200 dark:bg-neutral-800 flex duration-300 flex-col overflow-hidden", open ? "min-w-screen md:min-w-80" : "min-w-22") }>
       <div className="flex justify-between p-4">
         {
           isContentVisible && (

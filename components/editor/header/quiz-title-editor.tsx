@@ -1,5 +1,5 @@
 import TextInput from '@/components/ui/text-input'
-import { useEditorQuiz } from '../providers/EditorQuizProvider'
+import { useEditorQuiz } from '../providers/editor-quiz-provider'
 
 const QuizTitleEditor = ({ className }: { className?: string }) => {
   const { quiz, setQuiz } = useEditorQuiz()

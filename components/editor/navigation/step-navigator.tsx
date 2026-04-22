@@ -1,5 +1,5 @@
 import { QuizStep } from "@quizpot/quizcore"
-import { useEditorQuiz } from "../providers/EditorQuizProvider"
+import { useEditorQuiz } from "../providers/editor-quiz-provider"
 import { DragDropContext, Draggable, Droppable, DropResult, Direction } from "@hello-pangea/dnd"
 import StepNavigatorCard from "./step-navigation-card"
 import NewQuestionDialog from "./new-question-dialog"

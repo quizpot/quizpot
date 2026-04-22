@@ -2,7 +2,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import FancyButton from '@/components/ui/fancy-button'
 import { Question } from '@quizpot/quizcore'
-import { useEditorQuiz } from '../providers/EditorQuizProvider'
+import { useEditorQuiz } from '../providers/editor-quiz-provider'
 import { useState } from 'react'
 
 const NewQuestionDialog = () => {

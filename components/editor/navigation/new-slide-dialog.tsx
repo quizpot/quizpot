@@ -1,8 +1,9 @@
 "use client"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
 import FancyButton from '@/components/ui/fancy-button'
-import { useEditorQuiz } from '../providers/EditorQuizProvider'
+import { useEditorQuiz } from '../providers/editor-quiz-provider'
 import { useState } from 'react'
+import { SlideLayout } from '@quizpot/quizcore'
 
 const NewSlideDialog = () => {
   const { quiz, setQuiz } = useEditorQuiz()
@@ -10,7 +11,7 @@ const NewSlideDialog = () => {
   const [open, setOpen] = useState(false)
 
   const newSlide = (type: 'title' | 'content') => {
-    let slide: any
+    let slide: SlideLayout
 
     switch (type) {
       case 'title':
@@ -21,8 +22,9 @@ const NewSlideDialog = () => {
         break
       case 'content':
         slide = {
-          slideType: 'titleImageText',
+          slideType: 'content',
           title: 'What is the difference?',
+          text: ''
         }
         break
     }

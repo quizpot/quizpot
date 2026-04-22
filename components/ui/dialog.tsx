@@ -79,7 +79,7 @@ export const DialogContent = ({ children, className }: { children: React.ReactNo
       >
         <FancyCard
           color="background"
-          className={ cn('p-0', className) }
+          className={ cn('p-0 min-w-sm', className) }
           onClick={(e) => e.stopPropagation()}
         >
           { children }

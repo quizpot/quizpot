@@ -12,9 +12,11 @@ import { authClient } from '@/lib/auth-client'
 import { signUpSchema } from '@/lib/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 const SignUpPage = () => {
   const toast = useToast()
+  const t = useTranslations('SignUpPage')
   const router = useRouter()
   const [isPending, setIsPending] = useState(false)
 
@@ -27,14 +29,14 @@ const SignUpPage = () => {
     const validation = signUpSchema.safeParse(obj)
 
     if (!validation.success) {
-      toast("Please check your input", { variant: 'error' })
+      toast(t('errorCheckInput'), { variant: 'error' })
       return
     }
 
     const { username, email, password, confirm } = validation.data
 
     if (password !== confirm) {
-      toast('Passwords do not match', { variant: 'error' })
+      toast(t('errorPasswordsMatch'), { variant: 'error' })
       return
     }
 
@@ -47,7 +49,7 @@ const SignUpPage = () => {
     })
 
     if (error) {
-      toast(error.message || "Error creating account", { variant: 'error' })
+      toast(error.message || t('errorGeneric'), { variant: 'error' })
       setIsPending(false)
       return
     }
@@ -57,37 +59,47 @@ const SignUpPage = () => {
 
   return (
     <FancyCard 
-      className='py-4 flex flex-col items-center justify-end pb-12 md:pb-4 md:justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' 
+      className='py-8 md:py-4 flex flex-col items-center justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' 
       color='background'
     >
       <form
         onSubmit={ handleSubmit } 
-        className='flex flex-col gap-4 text-center'
+        className='flex flex-col gap-4'
       >
-        <div>
-          <h1 className='text-2xl font-semibold'>Sign Up</h1>
-          <p>Sign up to this instance</p>
+        <div className='text-center'>
+          <h1 className='text-2xl font-semibold'>{ t('title') }</h1>
+          <p>{ t('subtitle') }</p>
         </div>
-        <InputLabel label='Username' />
-        <TextInput color='ghost' name='username' placeholder='Username' required disabled={isPending} />
-        <InputLabel label='Email' />
-        <EmailInput color='ghost' name='email' placeholder='user@example.com' required disabled={isPending} />
-        <InputLabel label='Password' />
-        <PasswordInput color='ghost' name='password' placeholder='Password' required disabled={isPending} />
-        <InputLabel label='Confirm Password' />
-        <PasswordInput color='ghost' name='confirm' placeholder='Password' required disabled={isPending} />
+        <div className='flex flex-col gap-2'>
+          <InputLabel label={ t('usernameLabel') } />
+          <TextInput color='ghost' name='username' placeholder={ t('usernamePlaceholder') } required disabled={isPending} />
+        </div>
+        <div className='flex flex-col gap-2'>
+          <InputLabel label={ t('emailLabel') } />
+          <EmailInput color='ghost' name='email' placeholder={ t('emailPlaceholder') } required disabled={isPending} />
+        </div>
+        <div className='flex flex-col gap-2'>
+          <InputLabel label={ t('passwordLabel') } />
+          <PasswordInput color='ghost' name='password' placeholder={ t('passwordPlaceholder') } required disabled={isPending} />
+        </div>
+        <div className='flex flex-col gap-2 mb-1'>
+          <InputLabel label={ t('confirmPasswordLabel') } />
+          <PasswordInput color='ghost' name='confirm' placeholder={ t('confirmPasswordPlaceholder') } required disabled={isPending} />
+        </div>
         
-        <FancyButton size='sm' color='green' disabled={isPending}>
-          {isPending ? 'Creating Account...' : 'Sign Up'}
-        </FancyButton>
-        
-        <p>or</p>
-        
-        <FancyButton size='sm' color='blue' className='mb-2' asChild disabled={isPending}>
-          <Link href={'/auth/signin/'}>
-            Sign In
-          </Link>
-        </FancyButton>
+        <div className='flex flex-col gap-2'>
+          <FancyButton size='sm' color='green' disabled={isPending}>
+            {isPending ? t('creatingAccount') : t('button')}
+          </FancyButton>
+          
+          <p className='text-center mt-1'>{ t('or') }</p>
+          
+          <FancyButton size='sm' color='blue' className='mb-2 text-center' asChild disabled={isPending}>
+            <Link href={'/auth/signin/'}>
+              { t('signInLink') }
+            </Link>
+          </FancyButton>
+        </div>
       </form>
     </FancyCard>
   )

@@ -11,9 +11,11 @@ import { authClient } from '@/lib/auth-client'
 import { signInSchema } from '@/lib/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 const SignInPage = () => {
   const toast = useToast()
+  const t = useTranslations('SignInPage')
   const router = useRouter()
   const [isPending, setIsPending] = useState(false)
 
@@ -26,7 +28,7 @@ const SignInPage = () => {
     const validation = signInSchema.safeParse(obj)
 
     if (!validation.success) {
-      toast("Invalid credentials", { variant: 'error' })
+      toast(t('errorInvalid'), { variant: 'error' })
       return
     }
 
@@ -39,7 +41,7 @@ const SignInPage = () => {
     })
 
     if (error) {
-      toast(error.message || "Error signing in", { variant: 'error' })
+      toast(error.message || t('errorGeneric'), { variant: 'error' })
       setIsPending(false)
       return
     }
@@ -54,28 +56,34 @@ const SignInPage = () => {
     >
       <form
         onSubmit={ handleSubmit }
-        className='flex flex-col gap-4 text-center'
+        className='flex flex-col gap-4'
       >
-        <div>
-          <h1 className='text-2xl font-semibold'>Sign In</h1>
-          <p>Sign in to your account</p>
+        <div className='text-center'>
+          <h1 className='text-2xl font-semibold'>{ t('title') }</h1>
+          <p>{ t('subtitle') }</p>
         </div>
-        <InputLabel label='Email' />
-        <EmailInput color='ghost' name='email' placeholder='user@example.com' required disabled={isPending} />
-        <InputLabel label='Password' />
-        <PasswordInput color='ghost' name='password' placeholder='Password' required disabled={isPending} />
+        <div className='flex flex-col gap-2'>
+          <InputLabel label={ t('emailLabel') } />
+          <EmailInput color='ghost' name='email' placeholder={ t('emailPlaceholder') } required disabled={isPending} />
+        </div>
+        <div className='flex flex-col gap-2 mb-1'>
+          <InputLabel label={ t('passwordLabel') } />
+          <PasswordInput color='ghost' name='password' placeholder={ t('passwordPlaceholder') } required disabled={isPending} />
+        </div>
         
-        <FancyButton size='sm' color='green' disabled={isPending}>
-          {isPending ? 'Signing In...' : 'Sign In'}
-        </FancyButton>
-        
-        <p>or</p>
-        
-        <FancyButton size='sm' color='blue' className='mb-2' asChild disabled={isPending}>
-          <Link href={'/auth/signup/'}>
-            Sign Up
-          </Link>
-        </FancyButton>
+        <div className='flex flex-col gap-2'>
+          <FancyButton size='sm' color='green' disabled={isPending}>
+            {isPending ? t('signingIn') : t('button')}
+          </FancyButton>
+          
+          <p className='text-center mt-1'>{ t('or') }</p>
+          
+          <FancyButton size='sm' color='blue' className='mb-2 text-center' asChild disabled={isPending}>
+            <Link href={'/auth/signup/'}>
+              { t('signUpLink') }
+            </Link>
+          </FancyButton>
+        </div>
       </form>
     </FancyCard>
   )

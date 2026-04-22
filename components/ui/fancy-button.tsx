@@ -33,7 +33,7 @@ const FancyButton = ({
 
   return (
     <Comp data-slot="button" disabled={ disabled } onClick={ handleClick } className={ cn(`
-      font-medium px-4 py-2 duration-200 rounded-lg
+      font-medium px-4 py-2 duration-200 rounded-lg mb-2
       shadow-[0_8px] hover:shadow-[0_12px] hover:-translate-y-1 active:translate-y-1 active:shadow-[0_4px]
     `, padding, className, cls,
       disabled && "opacity-50 cursor-not-allowed select-none hover:translate-y-0 active:translate-y-0 hover:shadow-[0_8px] active:shadow-[0_8px]",

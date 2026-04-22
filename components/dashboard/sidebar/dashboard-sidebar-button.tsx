@@ -16,13 +16,20 @@ const DashboardSidebarButton = ({
   href: string,
   label: string
 }) => {
-  const { open } = useDashboardSidebar()
+  const { setOpen, isContentVisible } = useDashboardSidebar()
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (window.innerWidth < 768) {
+      setOpen(false)
+    }
+    props.onClick?.(e)
+  }
   
   return (
-    <FancyButton className='flex gap-4' { ...props } asChild>
+    <FancyButton className="flex gap-4" { ...props } asChild onClick={handleClick}>
       <Link href={ href }>
         { icon }
-        { open && label }
+        { isContentVisible && label }
       </Link>
     </FancyButton>
   )

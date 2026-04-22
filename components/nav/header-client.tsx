@@ -7,12 +7,15 @@ import { createPortal } from 'react-dom'
 import { Menu } from 'lucide-react'
 import { _Translator, useMessages, useTranslations } from 'next-intl'
 import LocaleSwitch from '../ui/locale-switch'
+import { useRouter } from 'next/navigation'
 import Notification from './Notification'
 import { User } from 'better-auth'
+import { signOut } from "@/lib/auth-client"
 
 const HeaderClient = ({ user }: { user?: User }) => {
   const [isOpen, setIsOpen] = useState(false)
   const t = useTranslations()
+  const router = useRouter()
 
   const menu: { label: string, href: string }[] = []
   const messages = useMessages()
@@ -40,11 +43,19 @@ const HeaderClient = ({ user }: { user?: User }) => {
           <div className='hidden md:flex gap-8 items-center justify-center text-lg'>
             {
               user ? (
-                <FancyButton color='background' size='sm' asChild>
-                  <Link href={ `/dashboard` }>
-                    { user.name }
-                  </Link>
-                </FancyButton>
+                <>
+                  <FancyButton color='background' size='sm' onClick={async () => {
+                    await signOut()
+                    router.refresh()
+                  }}>
+                    { t('Header.logout.label') }
+                  </FancyButton>
+                  <FancyButton color='background' size='sm' asChild>
+                    <Link href="/dashboard">
+                      { t('Header.dashboard.label') }
+                    </Link>
+                  </FancyButton>
+                </>
               ) : (
                 <FancyButton color='background' size='sm' asChild>
                   <Link href={ `/auth/signin` }>
@@ -63,12 +74,12 @@ const HeaderClient = ({ user }: { user?: User }) => {
           </div>
         </div>
       </header>
-      { isOpen && <MobileMenu t={ t } user={ user } setIsOpen={ setIsOpen } /> }
+      { isOpen && <MobileMenu router={ router } t={ t } user={ user } setIsOpen={ setIsOpen } /> }
     </>
   )
 }
 
-const MobileMenu = ({ user, t, setIsOpen }: { user?: User, t: _Translator, setIsOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const MobileMenu = ({ user, t, setIsOpen, router }: { user?: User, t: _Translator, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>, router: ReturnType<typeof useRouter> }) => {
   return createPortal(
     <section 
       className='
@@ -79,11 +90,20 @@ const MobileMenu = ({ user, t, setIsOpen }: { user?: User, t: _Translator, setIs
     >
       {
         user ? (
-          <FancyButton className='w-full text-center text-2xl' asChild>
-            <Link href={ `/dashboard` }>
-              { user.name }
-            </Link>
-          </FancyButton>
+          <>
+            <FancyButton className='w-full text-center text-2xl' onClick={async () => {
+              await signOut()
+              router.refresh()
+              setIsOpen(false)
+            }}>
+              { t('Header.logout.label') }
+            </FancyButton>
+            <FancyButton className='w-full text-center text-2xl' asChild>
+              <Link href="/dashboard" className='text-2xl'>
+                { t('Header.dashboard.label') }
+              </Link>
+            </FancyButton>
+          </>
         ) : (
           <FancyButton className='w-full text-center text-2xl' asChild>
             <Link href={ `/auth/signin` }>

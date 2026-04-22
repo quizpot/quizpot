@@ -1,9 +1,9 @@
 import Footer from '@/components/nav/Footer'
 import Header from '@/components/nav/header'
 import FancyButton from '@/components/ui/fancy-button'
+import { FancyIcons } from '@/components/ui/fancy-icons'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
-import React from 'react'
 
 const NotFoundPage = () => {
   const t = useTranslations('NotFoundPage')
@@ -12,6 +12,7 @@ const NotFoundPage = () => {
   return (
     <>
       <Header />
+      <FancyIcons />
       <section className='flex flex-col items-center justify-center gap-4 h-dvh w-full p-4'>
         <h1 className='text-2xl font-semibold'>{ t('title') }</h1>
         <FancyButton color='gray' asChild>

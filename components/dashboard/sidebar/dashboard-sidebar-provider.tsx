@@ -1,18 +1,30 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface SidebarContextValue {
   open: boolean;
   setOpen: (open: boolean) => void;
+  isContentVisible: boolean;
 }
 
 const SidebarContext = createContext<SidebarContextValue | null>(null);
 
 export function DashboardSidebarProvider({ children }: { children: React.ReactNode }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [isContentVisible, setIsContentVisible] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      const t = setTimeout(() => setIsContentVisible(true), 100);
+      return () => clearTimeout(t);
+    } else {
+      setIsContentVisible(false);
+    }
+  }, [open]);
+
   return (
-    <SidebarContext.Provider value={{ open, setOpen }}>
+    <SidebarContext.Provider value={{ open, setOpen, isContentVisible }}>
       {children}
     </SidebarContext.Provider>
   );

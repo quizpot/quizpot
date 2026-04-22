@@ -27,6 +27,9 @@ export const auth = betterAuth({
         input: false,
 			},
 		},
+    deleteUser: {
+      enabled: true,
+    },
     changeEmail: {
       enabled: true,
       updateEmailWithoutVerification: true,

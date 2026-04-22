@@ -28,7 +28,8 @@
     "start": "Start",
     "kick": "Kick",
     "submit": "Submit",
-    "clearSearch": "Clear search"
+    "clearSearch": "Clear search",
+    "cancel": "Cancel"
   },
   "Header": {
     "github": {
@@ -42,6 +43,14 @@
     "login": {
       "label": "Sign In",
       "href": "/signin"
+    },
+    "dashboard": {
+      "label": "Dashboard",
+      "href": "/dashboard"
+    },
+    "logout": {
+      "label": "Logout",
+      "href": "#"
     }
   },
   "HomePage": {
@@ -195,8 +204,59 @@
     "deleteQuizTitle": "Delete Quiz",
     "deleteQuizDescription": "Are you sure you want to delete:"
   },
+  "UserDangerZone": {
+    "title": "Danger Zone",
+    "description": "Once you delete your account, there is no going back. All your data, progress, and settings will be permanently removed.",
+    "button": "Delete Account",
+    "dialogTitle": "Confirm Deletion",
+    "dialogDescription": "Are you absolutely sure? This action cannot be undone. All your progress, quizzes, and data will be permanently deleted.",
+    "confirmButton": "Yes, delete my account",
+    "deleting": "Deleting ...",
+    "success": "Account deleted successfully"
+  },
   "JoinLobby": {
     "placeholder": "Enter lobby code",
     "button": "Join"
+  },
+  "SignInPage": {
+    "title": "Sign In",
+    "subtitle": "Sign in to your account",
+    "emailLabel": "Email",
+    "emailPlaceholder": "user@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "button": "Sign In",
+    "signingIn": "Signing In ...",
+    "or": "or",
+    "signUpLink": "Sign Up",
+    "errorInvalid": "Invalid credentials",
+    "errorGeneric": "Error signing in"
+  },
+  "SignUpPage": {
+    "title": "Sign Up",
+    "subtitle": "Sign up to this instance",
+    "usernameLabel": "Username",
+    "usernamePlaceholder": "Username",
+    "emailLabel": "Email",
+    "emailPlaceholder": "user@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Password",
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPasswordPlaceholder": "Password",
+    "button": "Sign Up",
+    "creatingAccount": "Creating Account ...",
+    "or": "or",
+    "signInLink": "Sign In",
+    "errorCheckInput": "Please check your input",
+    "errorPasswordsMatch": "Passwords do not match",
+    "errorGeneric": "Error signing in"
+  },
+  "DashboardSidebar": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "quizzes": "Quizzes",
+    "admin": "Admin",
+    "stats": "Stats",
+    "users": "Users"
   }
 }

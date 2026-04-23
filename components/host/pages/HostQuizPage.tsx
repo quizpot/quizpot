@@ -6,7 +6,7 @@ import { useToast } from '@/components/ui/toaster'
 import { QuizFile } from '@/lib/QuizFile'
 import { useEffect, useState } from 'react'
 import SetQuizDialog from '../ui/SetQuizDialog'
-import Header from '@/components/nav/header'
+import HeaderClientWrapper from '@/components/nav/header-client-wrapper'
 import FancyButton from '@/components/ui/fancy-button'
 import { useTranslations } from 'next-intl'
 import FancyCard from '@/components/ui/fancy-card'
@@ -100,7 +100,7 @@ const HostQuizPage = () => {
 
   return (
     <>
-      <Header />
+      <HeaderClientWrapper />
       <section className='min-h-screen w-full flex flex-col items-center justify-center'>
         <div className='flex flex-col items-center justify-center gap-4 p-4 max-w-md w-full'>
           <h1 className='text-4xl font-semibold w-full text-center'>{ t('title') }</h1>

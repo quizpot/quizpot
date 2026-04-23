@@ -6,6 +6,7 @@ import NewQuestionDialog from "./new-question-dialog"
 import NewSlideDialog from "./new-slide-dialog"
 import FancyCard from "@/components/ui/fancy-card"
 import { useState, useEffect } from 'react'
+import { useEditorCurrentStep } from "../providers/editor-current-step-provider"
 
 const reorder = (list: QuizStep[], startIndex: number, endIndex: number) => {
   const result = Array.from(list)
@@ -16,6 +17,7 @@ const reorder = (list: QuizStep[], startIndex: number, endIndex: number) => {
 
 const StepNavigator = () => {
   const { quiz, setQuiz } = useEditorQuiz()
+  const { setCurrentStep } = useEditorCurrentStep()
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -40,6 +42,7 @@ const StepNavigator = () => {
     )
 
     setQuiz({ ...quiz, steps: newSteps })
+    setCurrentStep(result.destination.index)
   }
 
   const droppableDirection: Direction = isMobile ? 'horizontal' : 'vertical'

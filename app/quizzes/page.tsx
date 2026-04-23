@@ -7,7 +7,7 @@ import { QuizFile } from '@/lib/QuizFile'
 import React, { useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
-import Header from '@/components/nav/header'
+import HeaderClientWrapper from '@/components/nav/header-client-wrapper'
 import Footer from '@/components/nav/Footer'
 import TextInput from '@/components/ui/text-input'
 import NewQuizDialog from '@/components/quizzes/NewQuizDialog'
@@ -81,7 +81,7 @@ const QuizzesPage = () => {
   return (
     <>
       <DeviceScreenUnsupported />
-      <Header />
+      <HeaderClientWrapper />
       <section className='container mx-auto w-full mt-32 flex flex-col gap-4 p-4'>
         <h1 className='text-2xl lg:text-4xl font-bold text-center p-4 py-16'>{ t('title') }</h1>
         <div className='w-full mx-auto text-center flex flex-col gap-4'>

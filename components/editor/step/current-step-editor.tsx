@@ -1,8 +1,10 @@
 import { useEditorCurrentStep } from '../providers/editor-current-step-provider'
 import { useEditorQuiz } from '../providers/editor-quiz-provider'
+import { EditorStepProvider } from '../providers/editor-step-provider'
 import EmptyEditor from './empty-editor'
-import { EditorStepProvider } from './question/editor-step-provider'
-import MultipleChoiceEditor from './question/multiple-choice-editor'
+import MultipleChoiceEditor from './question/multiple-choice/multiple-choice-editor'
+import ShortAnswerEditor from './question/short-answer/short-answer-editor'
+import TrueFalseEditor from './question/true-false/true-false-editor'
 
 const CurrentStepEditor = () => {
   const { quiz } = useEditorQuiz()
@@ -20,9 +22,9 @@ const CurrentStepEditor = () => {
         case 'multipleChoice':
           return <MultipleChoiceEditor />
         case 'trueFalse':
-          return <h1>True/false editor ...</h1>
+          return <TrueFalseEditor />
         case 'shortAnswer':
-          return <h1>Short answer editor ...</h1>
+          return <ShortAnswerEditor />
       }
     } else if (step.type === 'slide') {
       switch (step.data.slideType) {

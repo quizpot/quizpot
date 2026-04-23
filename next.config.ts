@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       ignore: [
         /\api\/stats/,
         /\api\/debug/,
+        /undefined/,
       ],
     },
   },

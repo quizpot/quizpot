@@ -1,5 +1,6 @@
+"use client"
 import Footer from '@/components/nav/Footer'
-import Header from '@/components/nav/header'
+import HeaderClientWrapper from '@/components/nav/header-client-wrapper'
 import FancyButton from '@/components/ui/fancy-button'
 import { FancyIcons } from '@/components/ui/fancy-icons'
 import { useTranslations } from 'next-intl'
@@ -11,7 +12,7 @@ const NotFoundPage = () => {
 
   return (
     <>
-      <Header />
+      <HeaderClientWrapper />
       <FancyIcons />
       <section className='flex flex-col items-center justify-center gap-4 h-dvh w-full p-4'>
         <h1 className='text-2xl font-semibold'>{ t('title') }</h1>

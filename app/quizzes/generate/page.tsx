@@ -1,6 +1,6 @@
 "use client"
 import Footer from '@/components/nav/Footer'
-import Header from '@/components/nav/header'
+import HeaderClientWrapper from '@/components/nav/header-client-wrapper'
 import FancyButton from '@/components/ui/fancy-button'
 import FancyCard from '@/components/ui/fancy-card'
 import TextAreaInput from '@/components/ui/textarea-input'
@@ -58,7 +58,7 @@ const GenerateQuizPage = () => {
 
   return (
     <>
-      <Header />
+      <HeaderClientWrapper />
       <section className='min-h-screen w-full flex flex-col items-center justify-center p-4'>
         <FancyCard className='flex flex-col items-center justify-center gap-4 p-4 max-w-md w-full'>
           <h1 className='text-2xl font-semibold w-full text-center'>{ t('title') }</h1>

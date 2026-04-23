@@ -10,9 +10,9 @@ const EditorPageClient = ({ quiz }: { quiz: Quiz }) => {
   return (
     <EditorCurrentStepProvider>
       <EditorQuizProvider quiz={ quiz }>
-        <main className='flex flex-col h-dvh w-full'>
+        <main className="flex-1 min-h-0 w-full flex flex-col">
           <EditorHeader />
-          <section className='flex h-[calc(100vh_-_4rem)] flex-col-reverse md:flex-row'>
+          <section className="flex-1 flex flex-col-reverse md:flex-row min-h-0 overflow-hidden">
             <StepNavigator />
             <main className='w-full h-full flex'>
               <CurrentStepEditor />

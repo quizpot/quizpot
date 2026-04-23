@@ -1,7 +1,7 @@
 "use client"
 import { createContext, useContext, ReactNode } from "react"
-import { useEditorQuiz } from "../../providers/editor-quiz-provider"
-import { useEditorCurrentStep } from "../../providers/editor-current-step-provider"
+import { useEditorCurrentStep } from "./editor-current-step-provider"
+import { useEditorQuiz } from "./editor-quiz-provider"
 
 interface EditorStepContextValue<T = any> {
   data: T
@@ -38,8 +38,10 @@ export const EditorStepProvider = ({ children }: { children: ReactNode }) => {
 
 export function useEditorStep<T>() {
   const context = useContext(EditorStepContext)
+  
   if (!context) {
     throw new Error("useEditorStep must be used within an EditorStepProvider")
   }
+
   return context as EditorStepContextValue<T>
 }

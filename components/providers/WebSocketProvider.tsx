@@ -5,6 +5,9 @@ import { ServerEvents } from "@/lib/server/ServerEvents"
 import { Loader2, LoaderCircle } from "lucide-react"
 import { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from "react"
 import Disconnected from "../ui/disconnected"
+import FancyCard from "../ui/fancy-card"
+import FancyButton from "../ui/fancy-button"
+import Link from "next/link"
 
 const WebSocketContext = createContext<{
   isConnected: boolean

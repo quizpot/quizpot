@@ -31,6 +31,7 @@ const NewQuestionDialog = () => {
           question: 'Can cats bark?',
           answer: true,
           displayTime: 5,
+          labels: ['True', 'False'],
           points: 'normalPoints',
           timeLimit: 20
         }

@@ -1,4 +1,12 @@
-export type Color = "foreground" | "background" | "red" | "blue" | "yellow" | "green" | "purple" | "orange" | "pink" | "gray" | "black" | "white" | "ghost"
+import { Car, Carrot, Droplet, Gem, Leaf, LucideProps, Sun } from "lucide-react"
+import { ForwardRefExoticComponent, RefAttributes } from "react"
+
+export type Color = 
+  | "red" | "blue" | "yellow" | "green" | "purple" | "orange" 
+  | "pink" | "gray" | "black" | "white" | "ghost" | "foreground" | "background"
+
+// Specifically define the 6 colors that have unique icons
+export type IconicColor = "red" | "blue" | "yellow" | "green" | "purple" | "orange"
 
 export const colors: Record<Color, { cls: string }> = {
   'foreground': { cls: 'bg-neutral-300 shadow-neutral-400 dark:bg-neutral-600 dark:shadow-neutral-700 text-neutral-900 dark:text-neutral-100' },
@@ -16,4 +24,15 @@ export const colors: Record<Color, { cls: string }> = {
   'ghost': { cls: 'bg-neutral-300 shadow-neutral-400 dark:bg-neutral-600 dark:shadow-neutral-700 text-neutral-900 dark:text-neutral-100' },
 }
 
-export const colorKeys = Object.keys(colors) as (keyof typeof colors)[]
+export const colorKeys = Object.keys(colors) as Color[]
+
+type IconComponent = ForwardRefExoticComponent<Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>>
+
+export const colorIcons: Record<IconicColor, IconComponent> = {
+  "red": Car,
+  "blue": Droplet,
+  "yellow": Sun,
+  "green": Leaf,
+  "orange": Carrot,
+  "purple": Gem,
+}

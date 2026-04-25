@@ -11,7 +11,7 @@
   "Buttons": {
     "home": "Home",
     "quizFileInput": "Upload quiz file",
-    "close" : "Close",
+    "close": "Close",
     "save": "Save",
     "delete": "Delete",
     "edit": "Edit",
@@ -103,7 +103,11 @@
     "biggest": "Biggest",
     "smallest": "Smallest",
     "noneFound": "You haven't created any quizzes yet.",
-    "notFoundFor": "No quizzes found for "
+    "notFoundFor": "No quizzes found for",
+    "createFirstPrompt": "Create your first quiz to get started!",
+    "loading": "Loading...",
+    "searching": "Searching...",
+    "loadMore": "Load More"
   },
   "GenerateQuizPage": {
     "title": "Generate Quiz",
@@ -113,12 +117,13 @@
     "description": "You will be redirected to the editor shortly."
   },
   "QuizSettings": {
-    "button": "Settings",
-    "dialogTitle": "Quiz Settings",
+    "title": "Quiz Settings",
+    "quizTitleLabel": "Quiz Title",
+    "placeholderTitle": "Enter quiz title...",
+    "themeColorLabel": "Theme Color",
+    "themeBackgroundLabel": "Theme Background",
     "thumbnail": "Thumbnail",
-    "title": "Title",
-    "description": "Description",
-    "background": "Background"
+    "description": "Description"
   },
   "SelectImageInput": {
     "button": "Select Image",

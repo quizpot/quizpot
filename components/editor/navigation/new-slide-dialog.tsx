@@ -35,7 +35,7 @@ const NewSlideDialog = () => {
 
   return (
     <Dialog open={ open } onOpenChange={ setOpen }>
-      <DialogTrigger>
+      <DialogTrigger className='w-full'>
         New Slide
       </DialogTrigger>
       <DialogContent>

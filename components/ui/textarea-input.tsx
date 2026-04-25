@@ -6,18 +6,21 @@ const TextAreaInput = ({
   value, 
   onChange,
   color,
-  className
+  className,
+  placeholder,
 }: { 
   value: string, 
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void 
   color?: Color,
-  className?: string
+  className?: string,
+  placeholder?: string,
 }) => {
   return (
     <FancyButton color={ color } asChild>
       <textarea
         className={ className }
-        onChange={(e) => { onChange(e) }} 
+        onChange={(e) => { onChange(e) }}
+        placeholder={ placeholder }
         defaultValue={ value }
       />
     </FancyButton>

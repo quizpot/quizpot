@@ -5,6 +5,8 @@ import EmptyEditor from './empty-editor'
 import MultipleChoiceEditor from './question/multiple-choice/multiple-choice-editor'
 import ShortAnswerEditor from './question/short-answer/short-answer-editor'
 import TrueFalseEditor from './question/true-false/true-false-editor'
+import TitleSlideEditor from './slide/title/title-slide-editor'
+import ContentSlideEditor from './slide/content/content-slide-editor'
 
 const CurrentStepEditor = () => {
   const { quiz } = useEditorQuiz()
@@ -29,12 +31,12 @@ const CurrentStepEditor = () => {
     } else if (step.type === 'slide') {
       switch (step.data.slideType) {
         case 'title':
-          return <h1>Title slide editor ...</h1>
+          return <TitleSlideEditor />
         case 'content':
-          return <h1>Content slide editor ...</h1>
+          return <ContentSlideEditor />
       }
     }
-    return null
+    return <EmptyEditor />
   }
 
   return (

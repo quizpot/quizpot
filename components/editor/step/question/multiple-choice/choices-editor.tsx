@@ -31,7 +31,7 @@ const ChoicesEditor = () => {
   }
 
   return (
-    <section className='flex flex-col gap-4 max-h-96'>
+    <section className='flex flex-col gap-4 max-h-64'>
       <div className='grid grid-cols-1 md:grid-cols-2 gap-4 overflow-x-clip overflow-y-auto p-1'>
         {
           data.choices.map((choice, index) => (

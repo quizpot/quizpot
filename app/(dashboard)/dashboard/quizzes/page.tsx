@@ -30,7 +30,7 @@ const DashboardQuizzesPage = async () => {
       <FancyCard className='p-4'>
         <h1 className="text-4xl font-semibold">{ t('title') }</h1>
       </FancyCard>
-      <QuizzesPageClient quizzes={ userQuizzes } />
+      <QuizzesPageClient initialQuizzes={ userQuizzes } />
     </section>
   )
 }

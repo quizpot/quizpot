@@ -54,7 +54,7 @@ const NewQuestionDialog = () => {
 
   return (
     <Dialog open={ open } onOpenChange={ setOpen }>
-      <DialogTrigger>
+      <DialogTrigger className='w-full'>
         New Question
       </DialogTrigger>
       <DialogContent>

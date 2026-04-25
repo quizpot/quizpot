@@ -1,115 +1,121 @@
 'use client'
 
 import FancyButton from '@/components/ui/fancy-button'
-import FancyCard from '@/components/ui/fancy-card'
 import TextInput from '@/components/ui/text-input'
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@/components/ui/dialog'
-import { quiz } from '@quizpot/quizcore/db/schema'
-import { type InferSelectModel } from 'drizzle-orm'
 import { useTranslations } from 'next-intl'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useMemo, useState } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { QuizCard } from '@/components/dashboard/quizzes/quiz-card'
+import { InferSelectModel } from 'drizzle-orm'
+import { quiz } from '@quizpot/quizcore/db/schema'
+import FancyCard from '@/components/ui/fancy-card'
 
 type Quiz = InferSelectModel<typeof quiz>
 
 const QuizzesPageClient = ({
-  quizzes
+  initialQuizzes
 }: {
-  quizzes: Quiz[]
+  initialQuizzes: Quiz[]
 }) => {
   const t = useTranslations('QuizzesPage')
+  const [quizzes, setQuizzes] = useState<Quiz[]>(initialQuizzes)
   const [searchQuery, setSearchQuery] = useState('')
+  const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const [hasMore, setHasMore] = useState(initialQuizzes.length >= 9)
+  
+  const isFirstRender = useRef(true)
 
-  const filteredQuizzes = useMemo(() => {
-    return quizzes.filter((q) =>
-      q.title.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-  }, [searchQuery, quizzes])
+  const fetchQuizzes = useCallback(async (query: string, pageNum: number, append: boolean) => {
+    setLoading(true);
+    const limit = 9;
+    
+    try {
+      const res = await fetch('/api/dashboard/quizzes/search', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query, page: pageNum, limit }),
+      });
+
+      if (!res.ok) throw new Error('Search failed');
+
+      const data: Quiz[] = await res.json();
+
+      setHasMore(data.length === limit);
+      setQuizzes((prev) => (append ? [...prev, ...data] : data));
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      setPage(1);
+      fetchQuizzes(searchQuery, 1, false);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery, fetchQuizzes]);
+
+  const loadMore = () => {
+    if (loading || !hasMore) return;
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchQuizzes(searchQuery, nextPage, true);
+  };
+
+  // The missing link: update local state when a quiz is deleted
+  const onDeleteSuccess = useCallback((id: string) => {
+    setQuizzes((prev) => prev.filter((q) => q.id !== id));
+  }, []);
 
   return (
     <>
       <FancyButton color='green' className='text-center' asChild>
-        <Link href={'/editor'}>
-          { t('createNew') }
-        </Link>
+        <Link href={'/editor'}>{ t('createNew') }</Link>
       </FancyButton>
-      <TextInput placeholder={ t('search') } onChange={(e) => setSearchQuery(e.target.value)} />
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-6">
-        {
-          filteredQuizzes.map((q) => (
-            <QuizCard key={q.id} quiz={q} />
-          ))
-        }
-      </div>
+      
+      <TextInput 
+        placeholder={ t('search') } 
+        onChange={(e) => setSearchQuery(e.target.value)} 
+      />
+
+      {quizzes.length === 0 && !loading ? (
+        <FancyCard className="mt-6">
+          <div className="flex flex-col items-center justify-center py-20 text-center">
+            <p className="text-lg text-gray-500 font-medium">
+              {searchQuery ? `${t('notFoundFor')} "${searchQuery}"` : t('noneFound')}
+            </p>
+          </div>
+        </FancyCard>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 mt-6">
+          {quizzes.map((q) => (
+            <QuizCard 
+              key={q.id} 
+              quiz={q} 
+              onDeleteSuccess={onDeleteSuccess} 
+            />
+          ))}
+        </div>
+      )}
+ 
+      {quizzes.length > 0 && hasMore && (
+        <div className="flex justify-center mt-8">
+          <FancyButton onClick={loadMore} disabled={loading}>
+            {loading ? t('loading') : t('loadMore')}
+          </FancyButton>
+        </div>
+      )}
     </>
   )
 }
-
-export const QuizCard = ({ quiz }: { quiz: Quiz }) => {
-  const router = useRouter()
-  const t = useTranslations('QuizCard')
-  const bt = useTranslations('Buttons')
-  const [open, setOpen] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false)
-
-  const deleteQuiz = async () => {
-    setIsDeleting(true)
-    await fetch('/api/dashboard/quizzes/delete', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ quizId: quiz.id })
-    })
-    setOpen(false)
-    router.refresh()
-    setIsDeleting(false)
-  }
-
-  return (
-    <FancyCard className='flex flex-col p-0 overflow-hidden'>
-      <div className='aspect-video h-fit w-full' style={{ background: quiz.theme.color }}></div>
-      <div className='p-4 flex flex-col gap-2'>
-        <h1 className='text-2xl'>{quiz.title}</h1>
-        <div className='flex gap-4 pb-2 flex-wrap'>
-          <FancyButton color='green' disabled={ true }>
-            {/* <Link href={'/host?id=' + quiz.id}> */}
-              { bt('host') }
-            {/* </Link> */}
-          </FancyButton>
-          <FancyButton color='yellow' asChild>
-            <Link href={'/editor?quizId=' + quiz.id}>
-              { bt('edit') }
-            </Link>
-          </FancyButton>
-          <FancyButton color='blue' disabled={ true }>
-            { bt('download') }
-          </FancyButton>
-          <Dialog open={ open } onOpenChange={ setOpen }>
-            <DialogTrigger color='red'>
-              { bt('delete') }
-            </DialogTrigger>
-            <DialogContent className='max-w-md'>
-              <DialogHeader title={ t('deleteQuizTitle') } />
-              <div className='p-4 flex flex-col gap-6'>
-                <p>{ t('deleteQuizDescription') } <strong>{ quiz.title }</strong></p>
-                <div className='flex justify-end gap-2'>
-                  <FancyButton onClick={ () => setOpen(false) }>
-                    { bt('cancel') }
-                  </FancyButton>
-                  <FancyButton color='red' onClick={ deleteQuiz } disabled={ isDeleting }>
-                    { bt('delete') }
-                  </FancyButton>
-                </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-    </FancyCard>
-  )
-}
-
 
 export default QuizzesPageClient

@@ -1,16 +1,18 @@
+"use client"
+
 import ImageInput from '@/components/ui/ImageInput'
 import React, { useState, useEffect } from 'react'
-import { useEditorStep } from '../../providers/editor-step-provider'
-import { Question } from '@quizpot/quizcore'
-import { useEditorQuiz } from '../../providers/editor-quiz-provider'
+import { ContentSlideLayout } from '@quizpot/quizcore'
 import FancyButton from '@/components/ui/fancy-button'
 import { Loader2 } from 'lucide-react'
-import { useEditorCurrentStep } from '../../providers/editor-current-step-provider'
+import { useEditorQuiz } from '@/components/editor/providers/editor-quiz-provider'
+import { useEditorCurrentStep } from '@/components/editor/providers/editor-current-step-provider'
+import { useEditorStep } from '@/components/editor/providers/editor-step-provider'
 
-const QuestionImageEditor = () => {
+const ContentSlideImageEditor = () => {
   const { quiz, setQuiz } = useEditorQuiz();
   const { currentStep } = useEditorCurrentStep();
-  const { data } = useEditorStep<Question>();
+  const { data } = useEditorStep<ContentSlideLayout>();
   const [isUploading, setIsUploading] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -20,15 +22,17 @@ const QuestionImageEditor = () => {
 
   if (currentStep === undefined || currentStep === null) return null;
 
-  const updateQuizImage = (hash?: string, url?: string) => {
+  const updateSlideImage = (hash?: string, url?: string) => {
     const updatedSteps = [...quiz.steps];
     const targetStep = updatedSteps[currentStep];
 
-    if (targetStep.type === 'question') {
-      updatedSteps[currentStep] = {
-        ...targetStep,
-        data: { ...targetStep.data, imageHash: hash }
-      };
+    if (targetStep.type === 'slide') {
+      if (targetStep.data.slideType === 'content') {
+        updatedSteps[currentStep] = {
+          ...targetStep,
+          data: { ...targetStep.data, imageHash: hash }
+        };
+      }
     }
 
     setQuiz({
@@ -52,9 +56,9 @@ const QuestionImageEditor = () => {
         body: formData
       });
       const { hash, url } = await res.json();
-      if (hash && url) updateQuizImage(hash, url);
+      if (hash && url) updateSlideImage(hash, url);
     } catch (err) {
-      console.error('Upload error:', err);
+      console.error('Image upload failed', err);
     } finally {
       setIsUploading(false);
     }
@@ -73,7 +77,7 @@ const QuestionImageEditor = () => {
 
   if (!imageUrl || imageUrl === "undefined") {
     return (
-      <section className='flex flex-col gap-4 items-center justify-center w-full h-full min-h-0 flex-1'>
+      <section className='flex items-center justify-center w-full h-full min-h-0 flex-1'>
         <ImageInput onChange={imageChange} />
       </section>
     );
@@ -84,18 +88,15 @@ const QuestionImageEditor = () => {
       <div className='flex-1 w-full min-h-0 flex items-center justify-center p-2'>
         <img 
           src={imageUrl}
-          alt='Question' 
-          className='h-full w-auto max-w-full object-contain rounded-lg'
-          onError={(e) => {
-            e.currentTarget.style.display = 'none';
-          }}
+          alt='Slide' 
+          className='h-full w-auto max-w-full object-contain rounded-lg shadow-lg'
         />
       </div>
       <div className='shrink-0 py-2'>
         <FancyButton 
           color='red' 
           size='sm'
-          onClick={() => updateQuizImage(undefined)}
+          onClick={() => updateSlideImage(undefined)}
         >
           Remove Image
         </FancyButton>
@@ -104,4 +105,4 @@ const QuestionImageEditor = () => {
   );
 };
 
-export default QuestionImageEditor;
+export default ContentSlideImageEditor;

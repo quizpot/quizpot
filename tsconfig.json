@@ -35,7 +35,7 @@
     ".next/types/**/*.ts",
     "app/play/page.client.tsx.old",
     ".next/dev/types/**/*.ts"
-  ],
+, "components/providers/WebSocketProvider.tsx"  ],
   "exclude": [
     "node_modules"
   ]

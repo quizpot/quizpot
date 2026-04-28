@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import HostQuizDialog from "./host-quiz-dialog"
 
 type Quiz = InferSelectModel<typeof quiz>
 
@@ -59,9 +60,7 @@ export const QuizCard = ({
       <div className='p-4 flex flex-col gap-2'>
         <h1 className='text-2xl font-semibold'>{quiz.title}</h1>
         <div className='flex gap-4 pb-2 flex-wrap'>
-          <FancyButton color='green' disabled={ true }>
-            { bt('host') }
-          </FancyButton>
+          <HostQuizDialog quizId={ quiz.id } />
           
           <FancyButton color='yellow' asChild>
             <Link href={'/editor?quizId=' + quiz.id}>

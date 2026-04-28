@@ -2,13 +2,13 @@
 import { useEffect } from 'react'
 import QRCode from 'react-qr-code'
 import PlayerKickButton from '../ui/PlayerKickButton'
-import { useWebSocket } from '../../providers/WebSocketProvider'
 import { useToast } from '../../ui/toaster'
-import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
 import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
 import FancyCard from '@/components/ui/fancy-card'
 import HostStatusLayout from '../layouts/HostStatusLayout'
+import { HostLobbyState } from '@quizpot/quizcore'
+import { useWebSocket } from '@/components/providers/ws-provider'
 
 const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const t = useTranslations('LobbyWaitingPage')
@@ -17,8 +17,8 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
   const { sendEvent, onEvent } = useWebSocket()
 
   useEffect(() => {
-    const unsubscribeStartLobbyError = onEvent('startLobbyError', (ctx) => {
-      toast(ctx.message, { variant: 'error' })
+    const unsubscribeStartLobbyError = onEvent('SERVER_ERROR', (ctx) => {
+      toast(ctx.payload.message, { variant: 'error' })
     })
 
     return () => {
@@ -35,7 +35,7 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
               <h1 className='text-4xl lg:text-6xl'>{ t('code') }: <span className='font-semibold'>{ hostLobbyState.code }</span></h1>
             </FancyCard>
             <FancyButton onClick={() => {
-              sendEvent('startLobby', {})
+              sendEvent('START_LOBBY', {})
             }} color='green' className='text-2xl' >
               { btn('start') }
             </FancyButton>

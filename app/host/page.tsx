@@ -1,61 +1,29 @@
-"use client"
-import AnswerPage from '@/components/host/pages/AnswerPage'
-import AnswersPage from '@/components/host/pages/AnswersPage'
-import EndPage from '@/components/host/pages/EndPage'
-import LobbyWaitingPage from '@/components/host/pages/LobbyWaitingPage'
-import HostQuizPage from '@/components/host/pages/HostQuizPage'
-import QuestionPage from '@/components/host/pages/QuestionPage'
-import ScoreboardPage from '@/components/host/pages/ScoreboardPage'
-import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
-import SlidePage from '@/components/host/pages/SlidePage'
-import FancyButton from '@/components/ui/fancy-button'
-import Link from 'next/link'
+import { auth } from "@/lib/auth"
+import { headers, cookies } from "next/headers" // Use native cookies
+import { redirect } from "next/navigation"
+import HostPageClient from "./page.client"
 
-const HostPage = () => {
-  const hostLobbyState = useHostLobbyState().hostLobbyState
+const HostPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ code?: string }>
+}) => {
+  const { code } = await searchParams
 
-  if (!hostLobbyState) {
-    return <HostQuizPage />
+  const session = await auth.api.getSession({ headers: await headers() })
+  if (!session) redirect("/auth/signin")
+
+  if (!code) redirect("/dashboard/quizzes")
+
+  const cookieStore = await cookies()
+  const hostIdCookie = cookieStore.get(`quizpot:host:${code}`)
+  const hostId = hostIdCookie?.value
+
+  if (!hostId) {
+    redirect("/dashboard/quizzes")
   }
 
-  if (hostLobbyState.status === 'waiting') {
-    return <LobbyWaitingPage hostLobbyState={ hostLobbyState } />
-  }
-
-  if (hostLobbyState.status === 'slide') {
-    return <SlidePage hostLobbyState={ hostLobbyState } />
-  }
-
-  if (hostLobbyState.status === 'question') {
-    return <QuestionPage hostLobbyState={ hostLobbyState } />
-  }
-
-  if (hostLobbyState.status === 'answer') {
-    return <AnswerPage hostLobbyState={ hostLobbyState } />
-  }
-
-  if (hostLobbyState.status === 'answers') {
-    return <AnswersPage hostLobbyState={ hostLobbyState } />
-  }
-
-  if (hostLobbyState.status === 'score') {
-    return <ScoreboardPage hostLobbyState={ hostLobbyState } />
-  }
-
-  if (hostLobbyState.status === 'end') {
-    return <EndPage hostLobbyState={ hostLobbyState } />
-  }
-
-  return (
-    <section className='flex flex-col items-center justify-center gap-4 h-screen w-full p-4'>
-      <h1 className='text-2xl font-semibold'>Unknown Lobby State</h1>
-      <FancyButton color='yellow' asChild>
-        <Link href='/'>
-          Leave
-        </Link>
-      </FancyButton>
-    </section>
-  )
+  return <HostPageClient code={code} hostId={hostId} />
 }
 
 export default HostPage

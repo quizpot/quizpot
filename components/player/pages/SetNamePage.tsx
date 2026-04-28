@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react'
 import TextInput from '../../ui/text-input'
 import { useToast } from '../../ui/toaster'
-import { useWebSocket } from '../../providers/WebSocketProvider'
+import { useWebSocket } from '../../providers/WebSocketProvider.tsx'
 import { usePlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
 import { redirect } from 'next/navigation'
 import { useTranslations } from 'next-intl'

@@ -1,14 +1,16 @@
-export const getBackgroundStyles = (background: string) => {
-  if (background.startsWith('/img')) {
+import { QuizTheme } from "@quizpot/quizcore"
+
+export const getBackgroundStyles = (theme: QuizTheme) => {
+  if (theme.background) {
     return {
-      backgroundImage: `url(${background})`,
+      backgroundImage: `url(${theme.background})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }
   }
   else {
     return {
-      backgroundColor: background,
+      backgroundColor: theme.color,
     }
   }
 }

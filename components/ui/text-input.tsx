@@ -10,7 +10,8 @@ const TextInput = ({
   placeholder,
   required,
   disabled,
-  name
+  name,
+  onKeyDown,
 }: { 
   value?: string, 
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void 
@@ -19,7 +20,8 @@ const TextInput = ({
   placeholder?: string,
   required?: boolean,
   disabled?: boolean,
-  name?: string
+  name?: string,
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void,
 }) => {
   return (
     <FancyButton color={ color } disabled={ disabled } asChild>
@@ -32,6 +34,7 @@ const TextInput = ({
         required={ required }
         disabled={ disabled }
         name={ name }
+        onKeyDown={ onKeyDown }
       />
     </FancyButton>
   )

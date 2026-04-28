@@ -71,7 +71,6 @@ const QuizzesPageClient = ({
     fetchQuizzes(searchQuery, nextPage, true);
   };
 
-  // The missing link: update local state when a quiz is deleted
   const onDeleteSuccess = useCallback((id: string) => {
     setQuizzes((prev) => prev.filter((q) => q.id !== id));
   }, []);

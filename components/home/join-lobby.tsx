@@ -12,19 +12,19 @@ const JoinLobby = () => {
 
   return (
     <FancyCard className='p-6 max-w-sm w-full'>
-      <Form action='/play' className='flex flex-col items-center gap-4'>
-        <InputOTP name='code' maxLength={6} pattern={ REGEXP_ONLY_DIGITS } className='flex gap-2 w-full'>
-          <InputOTPGroup className='flex gap-2'>
+      <Form action='/play' className='flex flex-col items-baseline w-full gap-4'>
+        <InputOTP name='code' maxLength={6} pattern={ REGEXP_ONLY_DIGITS } containerClassName='flex gap-2 w-full justify-evenly'>
+          {/* <InputOTPGroup className='flex gap-2'> */}
             <FancyOTPSlot index={0} />
             <FancyOTPSlot index={1} />
             <FancyOTPSlot index={2} />
-          </InputOTPGroup>
-          <InputOTPSeparator className='mx-auto w-full' />
-          <InputOTPGroup className='flex gap-2'>
+          {/* </InputOTPGroup> */}
+          {/* <InputOTPSeparator className='mx-auto w-full' /> */}
+          {/* <InputOTPGroup className='flex gap-2'> */}
             <FancyOTPSlot index={3} />
             <FancyOTPSlot index={4} />
             <FancyOTPSlot index={5} />
-          </InputOTPGroup>
+          {/* </InputOTPGroup> */}
         </InputOTP>
         <FancyButton color='green' type='submit' className='w-full'>
           { t('button') }

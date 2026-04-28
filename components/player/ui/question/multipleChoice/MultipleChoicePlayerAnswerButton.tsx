@@ -1,9 +1,8 @@
-import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
-import { useWebSocket } from '@/components/providers/WebSocketProvider'
+import { usePlayerLobbyState } from '@/components/providers/player-ls-provider'
+import { useWebSocket } from '@/components/providers/ws-provider'
 import FancyButton from '@/components/ui/fancy-button'
 import { Color } from '@/lib/colors'
-import { Choice } from '@/lib/QuizFile'
-import React from 'react'
+import { Choice } from '@quizpot/quizcore'
 
 // TODO: Show answer on device?
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -12,11 +11,11 @@ const MultipleChoicePlayerAnswerButton = ({ choice, index, color }: { choice: Om
   const { sendEvent } = useWebSocket()
 
   const sendAnswer = () => {
-    sendEvent('submitAnswer', { 
-      answer: { 
-        answerType: 'multipleChoice', 
-        choiceIndex: index
-      } 
+    sendEvent('SUBMIT_ANSWER', {
+      submission: {
+        type: 'multipleChoice',
+        choices: [ index ]
+      },
     })
 
     setPlayerLobbyState(prevPlayerLobbyState => {

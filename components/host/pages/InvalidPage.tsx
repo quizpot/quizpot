@@ -1,6 +1,6 @@
 import { HostLobbyState } from '@/components/providers/HostLobbyStateProvider'
 import FancyCard from '@/components/ui/fancy-card'
-import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/background-styles'
 import React from 'react'
 
 const InvalidPage = ({ hostLobbyState, message }: { hostLobbyState: HostLobbyState, message: string }) => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
-import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/background-styles'
 import FancyCard from '@/components/ui/fancy-card'
 import { useTranslations } from 'next-intl'
 

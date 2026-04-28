@@ -1,4 +1,4 @@
-import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/background-styles'
 import HostStatusBar from '../ui/HostStatusBar'
 import { useHostLobbyState } from '@/components/providers/host-ls-provder'
 

@@ -1,6 +1,6 @@
 "use client"
-import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
-import { useWebSocket } from '@/components/providers/WebSocketProvider'
+import { usePlayerLobbyState } from '@/components/providers/player-ls-provider'
+import { useWebSocket } from '@/components/providers/ws-provider'
 import FancyButton from '@/components/ui/fancy-button'
 import TextInput from '@/components/ui/text-input'
 import { useTranslations } from 'next-intl'
@@ -13,11 +13,11 @@ const ShortAnswerPlayerInput = () => {
   const { setPlayerLobbyState } = usePlayerLobbyState()
 
   const onSubmit = () => {
-    sendEvent('submitAnswer', { 
-      answer: { 
-        answerType: 'shortAnswer', 
+    sendEvent('SUBMIT_ANSWER', { 
+      submission: {
+        type: 'shortAnswer',
         answer
-      } 
+      }
     })
 
     setPlayerLobbyState(prevPlayerLobbyState => {

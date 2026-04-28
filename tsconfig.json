@@ -33,7 +33,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/play/page.client.tsx.old",
+    "app/(game)/play/page.client.tsx.old",
     ".next/dev/types/**/*.ts"
 , "components/providers/WebSocketProvider.tsx"  ],
   "exclude": [

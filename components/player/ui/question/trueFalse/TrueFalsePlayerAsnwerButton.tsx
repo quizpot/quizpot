@@ -1,26 +1,24 @@
-import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
-import { useWebSocket } from '@/components/providers/WebSocketProvider'
+import { usePlayerLobbyState } from '@/components/providers/player-ls-provider'
+import { useWebSocket } from '@/components/providers/ws-provider'
 import FancyButton from '@/components/ui/fancy-button'
 import { Color } from '@/lib/colors'
-import React from 'react'
 
 const TrueFalsePlayerAnswerButton = ({ value, color }: { value: boolean, color: Color }) => {
   const { setPlayerLobbyState } = usePlayerLobbyState()
   const sendEvent = useWebSocket().sendEvent
 
   const sendAnswer = () => {
-    sendEvent('submitAnswer', { 
-      answer: { 
-        answerType: 'trueFalse',
-        answer: value,
-      } 
+    sendEvent('SUBMIT_ANSWER', { 
+      submission: {
+        type: 'trueFalse',
+        answer: value
+      }
     })
 
-    setPlayerLobbyState(prevPlayerLobbyState => {
-      if (!prevPlayerLobbyState) return null
-
+    setPlayerLobbyState(prev => {
+      if (!prev) return null
       return {
-        ...prevPlayerLobbyState,
+        ...prev,
         hasAnswered: true,
       }
     })

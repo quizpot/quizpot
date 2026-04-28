@@ -1,5 +1,5 @@
 import React from 'react'
-import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/background-styles'
 import FancyCard from '@/components/ui/fancy-card'
 import FancyButton from '@/components/ui/fancy-button'
 import { Color } from '@/lib/colors'

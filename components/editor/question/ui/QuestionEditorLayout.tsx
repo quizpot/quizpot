@@ -1,7 +1,7 @@
 import React from 'react'
 import QuestionImage from './QuestionImage'
 import QuestionQuestionEditor from './QuestionQuestionEditor'
-import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/background-styles'
 import { useEditorQuizFile } from '../../providers/EditorQuizFileProvider'
 import QuestionSettings from './QuestionSettings'
 

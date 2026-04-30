@@ -1,42 +1,18 @@
 import { QuizStep } from '@quizpot/quizcore'
-import { Copy, Diff, Grid2X2Plus, LayoutPanelTop, LayoutTemplate, TextCursorInput, Trash } from 'lucide-react';
+import { Copy, Trash } from 'lucide-react';
 import FancyCard from '@/components/ui/fancy-card';
 import { useEditorCurrentStep } from '../providers/editor-current-step-provider';
 import FancyButton from '@/components/ui/fancy-button';
 import { useEditorQuiz } from '../providers/editor-quiz-provider';
+import StepIcon from '@/components/ui/step-icon';
 
 const StepNavigatorCard = ({ step, index }: { step: QuizStep, index: number }) => {
   const { quiz, setQuiz } = useEditorQuiz()
   const { setCurrentStep, currentStep } = useEditorCurrentStep()
 
-  let Icon = null;
-
   const truncate = (text: string, limit: number) => {
     return text.length > limit ? `${text.substring(0, limit)}...` : text;
   };
-
-  if (step.type === 'question') {
-    switch (step.data.questionType) {
-      case 'multipleChoice':
-        Icon = Grid2X2Plus
-        break
-      case 'trueFalse':
-        Icon = Diff
-        break
-      case 'shortAnswer':
-        Icon = TextCursorInput
-        break
-    }
-  } else if (step.type === 'slide') {
-    switch (step.data.slideType) {
-      case 'title':
-        Icon = LayoutTemplate
-        break
-      case 'content':
-        Icon = LayoutPanelTop
-        break
-    }
-  }
 
   const copyStep = () => {
     const updatedSteps = [...quiz.steps];
@@ -68,7 +44,7 @@ const StepNavigatorCard = ({ step, index }: { step: QuizStep, index: number }) =
         <span className='absolute top-2 left-0 overflow-ellipsis text-center w-full px-2'>
           { step.type === 'question' ? truncate(step.data.question || "", 20) : truncate(step.data.title || "", 20) }
         </span>
-        { Icon && <Icon size={24} /> }
+        { <StepIcon step={ step } size={24} /> }
         <span className='absolute bottom-2 right-2 text-sm opacity-50'>{ index + 1 }</span>
       </FancyCard>
     </div>

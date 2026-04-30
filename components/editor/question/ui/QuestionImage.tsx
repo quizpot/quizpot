@@ -70,7 +70,7 @@ const QuestionImage = () => {
   if (imageURL === undefined || !imageURL) {
     return (
       <section className='flex items-center justify-center'>
-        <ImageInput color='white' onChange={ onChange } />
+        <ImageInput onChange={ onChange } />
       </section>
     )
   }
@@ -87,7 +87,7 @@ const QuestionImage = () => {
           />
         </div>
         <div className='flex gap-4 p-4'>
-          <ImageInput color="white" className='w-full' onChange={ onChange } />
+          <ImageInput className='w-full' onChange={ onChange } />
           <FancyButton color='red' className='text-nowrap' onClick={ onRemoveImage }>
             { t('removeImage') }
           </FancyButton>

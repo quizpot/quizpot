@@ -1,13 +1,12 @@
-import { useWebSocket } from '@/components/providers/WebSocketProvider'
+import { useWebSocket } from '@/components/providers/ws-provider'
 import FancyButton from '@/components/ui/fancy-button'
-import React from 'react'
 
 const NextQuestionButton = ({ className }: { className?: string }) => {
   const { sendEvent } = useWebSocket()
   
   return (
     <FancyButton color='green' className={ className } onClick={() => {
-      sendEvent('nextQuestion', {})
+      sendEvent('NEXT_STEP')
     }}>
       Next
     </FancyButton>

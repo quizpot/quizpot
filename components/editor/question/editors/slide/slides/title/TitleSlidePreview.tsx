@@ -12,12 +12,12 @@ const TitleSlidePreview = () => {
 
   return (
     <section className='h-full w-full flex flex-col items-center justify-center gap-4 p-4'>
-      <FancyCard color='white' className='text-4xl px-4 py-4 text-center font-semibold mx-auto'>
+      <FancyCard className='text-4xl px-4 py-4 text-center font-semibold mx-auto'>
         { properties.title }
       </FancyCard>
       {
         properties.subtitle && (
-          <FancyCard color='white' className='text-xl text-center mx-auto'>
+          <FancyCard className='text-xl text-center mx-auto'>
             { properties.subtitle }
           </FancyCard>
         )

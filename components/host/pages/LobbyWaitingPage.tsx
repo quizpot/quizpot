@@ -40,7 +40,7 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
               { btn('start') }
             </FancyButton>
           </div>
-          <FancyCard color='white' className='p-4'>
+          <FancyCard color='white' className='p-4 bg-white'>
             <QRCode value={ window.location.host + `/play?code=${ hostLobbyState.code }` } />
           </FancyCard>
         </div>

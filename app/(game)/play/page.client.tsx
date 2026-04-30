@@ -13,6 +13,7 @@ import QuestionPage from '@/components/player/pages/QuestionPage'
 import WaitingInLobbyPage from '@/components/player/pages/WaitingInLobbyPage'
 import FancyButton from '@/components/ui/fancy-button'
 import Link from 'next/link'
+import PlayerStatusLayout from '@/components/player/player-layout'
 
 const PlaySwitch = () => {
   const { playerLobbyState } = usePlayerLobbyState()
@@ -53,7 +54,9 @@ const PlayPageClient = ({ code }: { code: string }) => {
     <WebSocketProvider role='player' code={ code }>
       <Disconnected />
       <PlayerLobbyStateProvider>
-        <PlaySwitch />
+        <PlayerStatusLayout>
+          <PlaySwitch />
+        </PlayerStatusLayout>
       </PlayerLobbyStateProvider>
     </WebSocketProvider>
   )

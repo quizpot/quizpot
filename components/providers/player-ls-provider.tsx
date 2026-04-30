@@ -1,9 +1,9 @@
 "use client"
-
 import React, { createContext, useContext, useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { LobbyStatus, PlayerLobbyState } from '@quizpot/quizcore'
 import { useWebSocket } from './ws-provider'
+import MessagePage from '../ui/message-page'
 
 interface PlayerLobbyContextValue {
   playerLobbyState: PlayerLobbyState | null
@@ -17,9 +17,11 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
   const { onEvent } = useWebSocket()
   const router = useRouter()
 
+  const [message, setMessage] = useState<string | null>(null)
+
   const stateRef = useRef(state)
-  useEffect(() => { 
-    stateRef.current = state 
+  useEffect(() => {
+    stateRef.current = state
   }, [state])
 
   useEffect(() => {
@@ -40,48 +42,107 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
         setState(prev => prev ? { ...prev, hostConnected: ctx.payload.connected } : null)
       }),
 
+      // Called when the host's answer is correct/incorrect — updates hasAnswered,
+      // wasCorrect, and syncs the player's own score/streak from the server.
+      onEvent('PLAYER_ANSWER_RESULT', (ctx) => {
+        setState(prev => {
+          if (!prev) return null
+          return {
+            ...prev,
+            me: ctx.payload.player,
+            hasAnswered: true,
+            wasCorrect: ctx.payload.isCorrect,
+          }
+        })
+      }),
+
       onEvent('LOBBY_STATUS_UPDATE', (ctx) => {
         setState(prev => {
           if (!prev) return null
           const base: PlayerLobbyState = { ...prev, stepNumber: ctx.stepNumber }
 
-          if (ctx.payload.status === LobbyStatus.question) {
-            return {
-              ...base,
-              status: ctx.payload.status,
-              currentQuestion: ctx.payload.question,
-              timeout: ctx.payload.timeoutStartedAt 
-                ? new Date(ctx.payload.timeoutStartedAt).toISOString() 
-                : undefined,
-              hasAnswered: false // Reset answer state for new questions
-            }
-          }
+          switch (ctx.payload.status) {
+            case LobbyStatus.question:
+              return {
+                ...base,
+                status: ctx.payload.status,
+                currentStep: { type: 'question', data: ctx.payload.question },
+                timeout: new Date(ctx.payload.timeoutStartedAt).toISOString(),
+                hasAnswered: false,
+                wasCorrect: false,
+              }
 
-          return {
-            ...base,
-            status: ctx.payload.status,
-            currentQuestion: undefined,
-            timeout: undefined,
+            case LobbyStatus.slide:
+              return {
+                ...base,
+                status: ctx.payload.status,
+                currentStep: { type: 'slide', data: ctx.payload.slide },
+                timeout: undefined,
+                hasAnswered: false,
+                wasCorrect: false,
+              }
+
+            case LobbyStatus.answer:
+              // Players are now in the answering window — show the countdown.
+              return {
+                ...base,
+                status: ctx.payload.status,
+                timeout: new Date(ctx.payload.timeoutStartedAt).toISOString(),
+              }
+
+            case LobbyStatus.answers:
+              // Review phase. Players don't receive the answers array,
+              // their individual result comes via PLAYER_ANSWER_RESULT.
+              return {
+                ...base,
+                status: ctx.payload.status,
+                timeout: undefined,
+              }
+
+            case LobbyStatus.score:
+              // Leaderboard phase. Update the player's own score from the
+              // leaderboard so their displayed score is always accurate.
+              return {
+                ...base,
+                status: ctx.payload.status,
+                me: ctx.payload.leaderboard.find(p => p.id === prev.me.id) ?? prev.me,
+                timeout: undefined,
+              }
+
+            case LobbyStatus.end:
+              return {
+                ...base,
+                status: ctx.payload.status,
+                timeout: undefined,
+              }
+
+            case LobbyStatus.waiting:
+              return {
+                ...base,
+                status: ctx.payload.status,
+                timeout: undefined,
+              }
+
+            default:
+              return base
           }
         })
       }),
 
       onEvent('PLAYER_KICKED', () => {
-        sessionStorage.setItem('messageTitle', 'You were kicked')
-        sessionStorage.setItem('messageDescription', 'The host removed you from the lobby.')
-        router.push('/message')
+        setMessage('You were kicked')
       }),
 
       onEvent('LOBBY_DELETED', (ctx) => {
         if (stateRef.current?.status === LobbyStatus.end) return
-        sessionStorage.setItem('messageTitle', 'Lobby Deleted')
-        sessionStorage.setItem('messageDescription', ctx.payload.reason)
-        router.push('/message')
+        setMessage(ctx.payload.reason)
       }),
     ]
 
     return () => unsubs.forEach(unsub => unsub())
   }, [onEvent, router])
+
+  if (message) return <MessagePage message={message} />
 
   return (
     <PlayerLobbyContext.Provider value={{ playerLobbyState: state, setPlayerLobbyState: setState }}>

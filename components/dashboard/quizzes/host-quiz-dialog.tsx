@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog"
 import FancyButton from "@/components/ui/fancy-button"
 import { useState, useTransition } from "react"
-import { createLobbyAction } from "@/app/(game)/play/host/action"
+import { createLobbyAction } from "@/app/(game)/host/action"
 
 const HostQuizDialog = ({ quizId }: { quizId: string }) => {
   const [open, setOpen] = useState(false)

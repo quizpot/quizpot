@@ -1,7 +1,7 @@
 "use client"
 import { useHostLobbyState } from '@/components/providers/host-ls-provder'
 import FancyCard from '@/components/ui/fancy-card'
-import { LobbyStatus } from '@/lib/misc/LobbyStatus'
+import { LobbyStatus } from '@quizpot/quizcore'
 
 const HostStatusBar = () => {
   const { hostLobbyState } = useHostLobbyState()
@@ -10,12 +10,12 @@ const HostStatusBar = () => {
 
   return (
     <section className='p-2 pb-4 w-full flex h-fit justify-between'>
-      <FancyCard size='sm' className='select-none'>{ window.location.href.replace('/host', '/play') }</FancyCard>
+      <FancyCard size='sm' className='select-none flex items-center justify-center'>{ window.location.href.replace('/host', '/play') }</FancyCard>
       <div className='flex gap-2'>
         <SkipSlideNotification />
         {
           hostLobbyState.status !== LobbyStatus.waiting && (
-            <FancyCard size='sm' className='select-none'>{ hostLobbyState.stepNumber } of { hostLobbyState.quizInfo.stepCount }</FancyCard>
+            <FancyCard size='sm' className='select-none flex items-center justify-center'>{ hostLobbyState.stepNumber } of { hostLobbyState.quizInfo.stepCount }</FancyCard>
           )
         }
       </div>

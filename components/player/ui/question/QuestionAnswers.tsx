@@ -1,11 +1,10 @@
-import { SanitizedQuestion } from '@/lib/server/QuestionSanitizer'
-import React from 'react'
 import MultipleChoicePlayerAnswerButton from './multipleChoice/MultipleChoicePlayerAnswerButton'
 import TrueFalsePlayerAnswerButton from './trueFalse/TrueFalsePlayerAsnwerButton'
 import ShortAnswerPlayerInput from './shortAnswer/ShortAnswerPlayerInput'
 import { colorKeys } from '@/lib/colors'
+import { SafeQuestion } from '@quizpot/quizcore'
 
-const QuestionAnswers = ({ question }: { question: SanitizedQuestion }) => {
+const QuestionAnswers = ({ question }: { question: SafeQuestion }) => {
   if (question.questionType === 'multipleChoice') {
     return (
       <section className='grid grid-cols-2 gap-4 grid-flow-row w-full h-full p-4'>

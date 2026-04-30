@@ -1,9 +1,7 @@
-import { Question } from '@/lib/QuizFile'
-import { Answer } from '@/lib/server/managers/LobbyManager'
-import React from 'react'
 import MultipleChoiceGraph from './MultipleChoiceGraph'
 import AnswerCard from './AnswerCard'
 import { colorKeys } from '@/lib/colors'
+import { Answer, Question } from '@quizpot/quizcore'
 
 const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQuestion: Question, answers: Answer[] }) => {
   if (currentQuestion.questionType === 'multipleChoice') {
@@ -12,8 +10,10 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
     currentQuestion.choices.forEach(() => { pillars.push([]) })
 
     answers.forEach(answer => {
-      if (answer.answer.answerType !== 'multipleChoice') return console.log("Answer is not multiple choice")
-      pillars[answer.answer.choiceIndex].push(answer)
+      if (answer.submission.type !== 'multipleChoice') return console.log("Answer is not multiple choice")
+      answer.submission.choices.map(choice => {
+        pillars[choice].push(answer)
+      })
     })
 
     const maxAnswers = Math.max(...pillars.map(pillar => pillar.length))
@@ -41,9 +41,9 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
     const pillars: Answer[][] = [[], []]
 
     answers.forEach(answer => {
-      if (answer.answer.answerType !== 'trueFalse') return console.log("Answer is not multiple choice")
+      if (answer.submission.type !== 'trueFalse') return console.log("Answer is not multiple choice")
       
-      if (answer.answer.answer) {
+      if (answer.submission.answer) {
         pillars[0].push(answer)
       } else {
         pillars[1].push(answer)
@@ -70,9 +70,9 @@ const CurrentQuestionAnswersDisplay = ({ currentQuestion, answers }: { currentQu
     const data = new Map<string, { count: number, correct: boolean }>()
 
     answers.forEach(answer => {
-      if (answer.answer.answerType !== 'shortAnswer') return
-      const currentCount = data.get(answer.answer.answer)?.count || 0
-      data.set(answer.answer.answer, { count: (currentCount + 1), correct: answer.isCorrect})
+      if (answer.submission.type !== 'shortAnswer') return
+      const currentCount = data.get(answer.submission.answer)?.count || 0
+      data.set(answer.submission.answer, { count: (currentCount + 1), correct: answer.isCorrect})
     })
 
     // TODO: Fix not displaying correct answer...

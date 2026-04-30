@@ -84,6 +84,7 @@ export const WebSocketProvider = ({
 
   const wsRef = useRef<WebSocket | null>(null)
   const handlersRef = useRef<ServerEventHandlers>({})
+  const replayBufferRef = useRef<Partial<Record<ServerEventName, AllServerEvents[]>>>({})
   const isMountedRef = useRef(true)
   const reconnectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const connectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -101,6 +102,12 @@ export const WebSocketProvider = ({
       const handlers = handlersRef.current
       if (!handlers[event]) handlers[event] = [] as ServerEventHandlers[T]
       ;(handlers[event] as ((ctx: ServerEventByName<T>) => void)[]).push(handler)
+
+      const buffered = replayBufferRef.current[event]
+      if (buffered && buffered.length > 0) {
+        replayBufferRef.current[event] = []
+        buffered.forEach((msg) => handler(msg as ServerEventByName<T>))
+      }
 
       return () => {
         if (handlers[event]) {
@@ -193,6 +200,7 @@ export const WebSocketProvider = ({
         setReadyState(WebSocket.OPEN)
         setNeedsName(false)
         setError(null)
+        replayBufferRef.current = {}
       }
 
       socket.onclose = (event) => {
@@ -237,18 +245,20 @@ export const WebSocketProvider = ({
         let message: AllServerEvents
         try {
           message = JSON.parse(e.data.toString())
-        } catch (parseErr) {
+        } catch {
           return
         }
 
         const { event } = message
-        const handlers = handlersRef.current
-        if (event in handlers) {
-          const eventHandlers = handlers[event] as
-            | ((ctx: AllServerEvents) => void)[]
-            | undefined
-          eventHandlers?.forEach((h) => h(message))
+        const eventHandlers = (handlersRef.current[event] as ((ctx: AllServerEvents) => void)[] | undefined)
+
+        if (!eventHandlers || eventHandlers.length === 0) {
+          if (!replayBufferRef.current[event]) replayBufferRef.current[event] = []
+          replayBufferRef.current[event]!.push(message)
+          return
         }
+
+        eventHandlers.forEach((h) => h(message))
       }
     } catch (err) {
       if (!isMountedRef.current) return

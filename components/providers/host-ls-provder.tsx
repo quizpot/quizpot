@@ -1,81 +1,133 @@
 "use client"
 
-import React, { createContext, useContext, useEffect, useReducer, useRef } from 'react'
-import { useRouter } from 'next/navigation'
-import { HostLobbyState, LobbyStatus } from '@quizpot/quizcore'
-import { useWebSocket } from './ws-provider'
+import React, { createContext, useContext, useEffect, useReducer, useRef, useState } from "react"
+import { useRouter } from "next/navigation"
+import { AllHostServerEvents, HostLobbyState, HostLobbyStatusUpdate, LobbyStatus } from "@quizpot/quizcore"
+import { useWebSocket } from "./ws-provider"
+import MessagePage from "../ui/message-page"
 
-type ReducerAction =
-  | { type: 'SET_STATE'; state: HostLobbyState | null }
-  | { type: 'PLAYER_JOINED'; player: HostLobbyState['players'][number] }
-  | { type: 'PLAYER_LEFT'; playerId: string }
-  | { type: 'PLAYER_UPDATE'; player: HostLobbyState['players'][number] }
-  | { type: 'UPDATE_ANSWER_COUNT'; count: number }
-  | { type: 'STATUS_UPDATE'; payload: any; stepNumber: number }
+type InitAction = { event: "INIT"; state: HostLobbyState | null }
+type ReducerAction = AllHostServerEvents | InitAction
 
-const lobbyReducer = (state: HostLobbyState | null, action: ReducerAction): HostLobbyState | null => {
-  if (!state && action.type !== 'SET_STATE') return null
+interface HostProviderState {
+  lobby: HostLobbyState | null
+  answerCount: number
+}
 
-  switch (action.type) {
-    case 'SET_STATE':
-      return action.state
+const INITIAL: HostProviderState = { lobby: null, answerCount: 0 }
 
-    case 'PLAYER_JOINED':
-      return { ...state!, players: [...state!.players, action.player] }
+function reducer(state: HostProviderState, action: ReducerAction): HostProviderState {
+  if (state.lobby === null && action.event !== "INIT") return state
 
-    case 'PLAYER_LEFT':
-      return { ...state!, players: state!.players.filter(p => p.id !== action.playerId) }
+  switch (action.event) {
+    case "INIT":
+      return { lobby: action.state, answerCount: 0 }
 
-    case 'PLAYER_UPDATE': {
-      const players = state!.players.map(p => p.id === action.player.id ? action.player : p)
-      return { ...state!, players: players.sort((a, b) => b.score - a.score) }
+    case "PLAYER_JOINED":
+      return {
+        ...state,
+        lobby: {
+          ...state.lobby!,
+          players: [...state.lobby!.players, action.payload.player],
+        },
+      }
+
+    case "PLAYER_LEFT":
+      return {
+        ...state,
+        lobby: {
+          ...state.lobby!,
+          players: state.lobby!.players.filter(
+            (p) => p.id !== action.payload.playerId
+          ),
+        },
+      }
+
+    case "PLAYER_UPDATE": {
+      const updated = state.lobby!.players.map((p) =>
+        p.id === action.payload.player.id ? action.payload.player : p
+      )
+      return {
+        ...state,
+        lobby: {
+          ...state.lobby!,
+          players: updated.sort((a, b) => b.score - a.score),
+        },
+      }
     }
 
-    case 'UPDATE_ANSWER_COUNT':
-      return state
+    case "UPDATE_LOBBY_ANSWERS":
+      return { ...state, answerCount: action.payload.count }
 
-    case 'STATUS_UPDATE': {
+    case "LOBBY_STATUS_UPDATE": {
       const { payload, stepNumber } = action
-      const base = { ...state!, stepNumber }
+      const base: HostLobbyState = { ...state.lobby!, stepNumber }
+      let nextAnswerCount = state.answerCount
 
-      if (payload.status === LobbyStatus.question) {
-        return {
-          ...base,
-          status: payload.status,
-          currentQuestion: payload.question,
-          timeout: new Date(payload.timeoutStartedAt).toISOString(),
-          answers: [],
-        }
+      const nextLobby: HostLobbyState = {
+        ...base,
+        status: payload.status,
       }
 
-      if (payload.status === LobbyStatus.slide) {
-        return {
-          ...base,
-          status: payload.status,
-          currentQuestion: undefined,
-          timeout: undefined,
-          answers: [],
-        }
+      switch (payload.status) {
+        case LobbyStatus.question:
+          nextAnswerCount = 0
+          nextLobby.currentStep = { type: "question", data: payload.question }
+          nextLobby.timeout = new Date(payload.timeoutStartedAt).toISOString()
+          nextLobby.answers = []
+          break
+
+        case LobbyStatus.slide:
+          nextAnswerCount = 0
+          nextLobby.currentStep = { type: "slide", data: payload.slide }
+          nextLobby.timeout = undefined
+          nextLobby.answers = []
+          break
+
+        case LobbyStatus.answer:
+          // Players are now answering — show the host a countdown.
+          // timeoutStartedAt is required in the schema so no guard needed.
+          nextLobby.timeout = new Date(payload.timeoutStartedAt).toISOString()
+          break
+
+        case LobbyStatus.answers:
+          // Review phase — store the answers so the host can highlight
+          // correct/incorrect choices. Fall back to existing answers if the
+          // server omits them (e.g. for slides with no answers).
+          nextLobby.answers = (payload.answers ?? state.lobby!.answers) as any[]
+          nextLobby.timeout = undefined
+          break
+
+        case LobbyStatus.score:
+          // Leaderboard phase — server sends the sorted leaderboard.
+          nextLobby.players = payload.leaderboard
+          nextLobby.timeout = undefined
+          break
+
+        case LobbyStatus.end:
+          // Game over — clear transient fields.
+          nextLobby.timeout = undefined
+          nextLobby.currentStep = undefined
+          break
+
+        case LobbyStatus.waiting:
+          // Shouldn't normally arrive mid-game but handle it cleanly.
+          nextLobby.timeout = undefined
+          nextLobby.currentStep = undefined
+          break
       }
 
-      if (payload.status === LobbyStatus.answers) {
-        return {
-          ...base,
-          status: payload.status,
-          answers: payload.answers ?? state!.answers,
-        }
-      }
-
-      if (payload.status === LobbyStatus.score) {
-        return {
-          ...base,
-          status: payload.status,
-          players: payload.leaderboard,
-        }
-      }
-
-      return { ...base, status: payload.status }
+      return { lobby: nextLobby, answerCount: nextAnswerCount }
     }
+
+    // Events the host receives but that don't affect host lobby state.
+    case "LOBBY_JOINED":
+    case "PLAYER_ANSWER_RESULT":
+    case "PLAYER_KICKED":
+    case "HOST_STATUS":
+    case "SERVER_ERROR":
+    case "LOBBY_DELETED":
+      return state
 
     default:
       return state
@@ -84,60 +136,54 @@ const lobbyReducer = (state: HostLobbyState | null, action: ReducerAction): Host
 
 const HostLobbyContext = createContext<{
   hostLobbyState: HostLobbyState | null
+  answerCount: number
   setHostLobbyState: (state: HostLobbyState | null) => void
 } | null>(null)
 
 export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode }) => {
-  const [state, dispatch] = useReducer(lobbyReducer, null)
+  const [{ lobby, answerCount }, dispatch] = useReducer(reducer, INITIAL)
   const { onEvent } = useWebSocket()
   const router = useRouter()
 
-  const stateRef = useRef(state)
-  useEffect(() => { stateRef.current = state }, [state])
+  const [message, setMessage] = useState<string | null>(null)
+
+  const lobbyRef = useRef(lobby)
+  useEffect(() => {
+    lobbyRef.current = lobby
+  }, [lobby])
 
   useEffect(() => {
-    const unsubs = [
-      onEvent('LOBBY_JOINED', (ctx) => {
-        if (ctx.payload.role !== 'host') return
-        dispatch({ type: 'SET_STATE', state: ctx.payload.state })
+    const unsubs: Array<() => void> = [
+      onEvent("LOBBY_JOINED", (ctx) => {
+        if (ctx.payload.role !== "host") return
+        dispatch({ event: "INIT", state: ctx.payload.state })
       }),
 
-      onEvent('PLAYER_JOINED', (ctx) => {
-        dispatch({ type: 'PLAYER_JOINED', player: ctx.payload.player })
-      }),
+      onEvent("PLAYER_JOINED", (ctx) => dispatch(ctx)),
+      onEvent("PLAYER_LEFT", (ctx) => dispatch(ctx)),
+      onEvent("PLAYER_UPDATE", (ctx) => dispatch(ctx)),
+      onEvent("UPDATE_LOBBY_ANSWERS", (ctx) => dispatch(ctx)),
+      onEvent("LOBBY_STATUS_UPDATE", (ctx) => dispatch(ctx as unknown as HostLobbyStatusUpdate)),
 
-      onEvent('PLAYER_LEFT', (ctx) => {
-        dispatch({ type: 'PLAYER_LEFT', playerId: ctx.payload.playerId })
-      }),
-
-      onEvent('PLAYER_UPDATE', (ctx) => {
-        dispatch({ type: 'PLAYER_UPDATE', player: ctx.payload.player })
-      }),
-
-      onEvent('UPDATE_LOBBY_ANSWERS', (ctx) => {
-        dispatch({ type: 'UPDATE_ANSWER_COUNT', count: ctx.payload.count })
-      }),
-
-      onEvent('LOBBY_STATUS_UPDATE', (ctx) => {
-        dispatch({ type: 'STATUS_UPDATE', payload: ctx.payload, stepNumber: ctx.stepNumber })
-      }),
-
-      onEvent('LOBBY_DELETED', (ctx) => {
-        if (stateRef.current?.status === LobbyStatus.end) return
-        sessionStorage.setItem('messageTitle', 'Lobby Deleted')
-        sessionStorage.setItem('messageDescription', ctx.payload.reason)
-        router.push('/message')
+      onEvent("LOBBY_DELETED", (ctx) => {
+        if (lobbyRef.current?.status === LobbyStatus.end) return
+        setMessage(ctx.payload.reason)
       }),
     ]
 
-    return () => unsubs.forEach(unsub => unsub())
+    return () => unsubs.forEach((unsub) => unsub())
   }, [onEvent, router])
 
-  const setHostLobbyState = (newState: HostLobbyState | null) =>
-    dispatch({ type: 'SET_STATE', state: newState })
+  if (message) return <MessagePage message={message} />
 
   return (
-    <HostLobbyContext.Provider value={{ hostLobbyState: state, setHostLobbyState }}>
+    <HostLobbyContext.Provider
+      value={{
+        hostLobbyState: lobby,
+        answerCount,
+        setHostLobbyState: (state) => dispatch({ event: "INIT", state }),
+      }}
+    >
       {children}
     </HostLobbyContext.Provider>
   )
@@ -145,6 +191,7 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
 
 export const useHostLobbyState = () => {
   const context = useContext(HostLobbyContext)
-  if (!context) throw new Error("useHostLobbyState must be used within HostLobbyStateProvider")
+  if (!context)
+    throw new Error("useHostLobbyState must be used within HostLobbyStateProvider")
   return context
 }

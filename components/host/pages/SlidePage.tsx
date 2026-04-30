@@ -1,45 +1,46 @@
 import InvalidPage from './InvalidPage'
 import TitleSlide from '../slides/TitleSlide'
-import SkipSlide from '../slides/SkipSlide'
 import TitleImageTextSlide from '../slides/TitleImageTextSlide'
 import HostStatusLayout from '../layouts/HostStatusLayout'
-import { HostLobbyState } from '@quizpot/quizcore'
+import { HostLobbyState, isQuestion, SlideLayout } from '@quizpot/quizcore'
+import MessagePage from '@/components/ui/message-page'
 
 const SlidePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
-  return <>Slide Page</>
-  // if (hostLobbyState.currentQuestion?.questionType !== 'slide') 
-  //   return <InvalidPage hostLobbyState={ hostLobbyState } message='Invalid question type for slide page.' />
+  const step = hostLobbyState.currentStep
 
-  // const slide = hostLobbyState.currentQuestion
+  console.log(step?.type)
 
-  // if (slide.layout.slideType === 'title') {
-  //   return (
-  //     <HostStatusLayout>
-  //       <section className='h-full w-full'>
-  //         <TitleSlide slide={ slide.layout } />
-  //         <SkipSlide />
-  //       </section>
-  //     </HostStatusLayout>
-  //   )
-  // }
+  if (!step || isQuestion(step)) {
+    return <MessagePage message='No slide to display. Press Space to skip.' />
+  }
 
-  // if (slide.layout.slideType === 'titleImageText') {
-  //   return (
-  //     <HostStatusLayout>
-  //       <section className='h-full w-full'>
-  //         <TitleImageTextSlide slide={ slide.layout } />
-  //         <SkipSlide />
-  //       </section>
-  //     </HostStatusLayout>
-  //   )
-  // }
+  const slideData = step.data as SlideLayout
 
-  // return (
-  //   <HostStatusLayout>
-  //     <InvalidPage hostLobbyState={ hostLobbyState } message='Unsupported slide type. Press Space to skip.' />
-  //     <SkipSlide />
-  //   </HostStatusLayout>
-  // )
+  if (slideData.slideType === 'title') {
+    return (
+      <HostStatusLayout>
+        <section className='h-full w-full'>
+          <TitleSlide slide={ slideData } />
+        </section>
+      </HostStatusLayout>
+    )
+  }
+
+  if (slideData.slideType === 'content') {
+    return (
+      <HostStatusLayout>
+        <section className='h-full w-full'>
+          <TitleImageTextSlide slide={ slideData } />
+        </section>
+      </HostStatusLayout>
+    )
+  }
+
+  return (
+    <HostStatusLayout>
+      <InvalidPage hostLobbyState={ hostLobbyState } message='Unsupported slide type. Press Space to skip.' />
+    </HostStatusLayout>
+  )
 }
 
 export default SlidePage

@@ -13,7 +13,7 @@ const TitleImageTextSlidePreview = () => {
 
   return (
     <section className='h-full w-full flex flex-col items-center justify-center gap-4 p-4'>
-      <FancyCard color='white' className='text-center text-4xl font-semibold w-full py-4 px-4'>
+      <FancyCard className='text-center text-4xl font-semibold w-full py-4 px-4'>
         { properties.title }
       </FancyCard>
       <div className='flex items-center justify-center p-4 w-full h-full'>
@@ -34,7 +34,7 @@ const TitleImageTextSlidePreview = () => {
           )
         }
       </div>
-      <FancyCard color='white' className='text-xl w-full py-4 px-4'>
+      <FancyCard className='text-xl w-full py-4 px-4'>
         { properties.text }
       </FancyCard>
     </section>

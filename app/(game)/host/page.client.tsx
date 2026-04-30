@@ -16,6 +16,7 @@ import FancyButton from "@/components/ui/fancy-button"
 import Link from "next/link"
 import LoadingPage from "@/components/ui/loading-page"
 import Disconnected from "@/components/ui/disconnected"
+import SkipSlide from "@/components/host/slides/SkipSlide"
 
 const HostLobbySwitch = () => {
   const { hostLobbyState } = useHostLobbyState()
@@ -56,6 +57,7 @@ const HostPageClient = ({ code, hostId }: { code: string; hostId: string }) => {
       <Disconnected />
       <HostLobbyStateProvider>
         <HostLobbySwitch />
+        <SkipSlide />
       </HostLobbyStateProvider>
     </WebSocketProvider>
   )

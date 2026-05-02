@@ -9,13 +9,18 @@ const HostStatusBar = () => {
   if (!hostLobbyState) return null
 
   return (
-    <section className='p-2 pb-4 w-full flex h-fit justify-between'>
-      <FancyCard size='sm' className='select-none flex items-center justify-center'>{ window.location.href.replace('/host', '/play') }</FancyCard>
+    <section className='px-4 pb-4 w-full flex h-fit justify-between'>
+      { 
+        hostLobbyState.lobbySettings.showLink ?
+          <FancyCard className='select-none flex items-center justify-center'>{ window.location.href.replace('/host', '/play') }</FancyCard>
+        :
+          <div></div>
+      }
       <div className='flex gap-2'>
         <SkipSlideNotification />
         {
           hostLobbyState.status !== LobbyStatus.waiting && (
-            <FancyCard size='sm' className='select-none flex items-center justify-center'>{ hostLobbyState.stepNumber } of { hostLobbyState.quizInfo.stepCount }</FancyCard>
+            <FancyCard className='select-none flex items-center justify-center'>{ hostLobbyState.stepNumber } of { hostLobbyState.quizInfo.stepCount }</FancyCard>
           )
         }
       </div>

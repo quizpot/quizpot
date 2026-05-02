@@ -3,7 +3,6 @@ import FancyCard from '@/components/ui/fancy-card'
 import { Color } from '@/lib/colors'
 import HostStatusLayout from '../layouts/HostStatusLayout'
 import { HostLobbyState } from '@quizpot/quizcore'
-import MessagePage from '@/components/ui/message-page'
 
 const ScoreboardPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   return (
@@ -24,7 +23,7 @@ const ScoreboardPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) 
               if (index === 0) color = 'yellow'
 
               return (
-                <FancyCard key={ index } color={ color } className='flex justify-between items-center p-6 rounded-lg text-4xl'>
+                <FancyCard key={ index } color={ color } className='flex font-semibold justify-between items-center p-6 rounded-lg text-4xl'>
                   <h1>{ player.name }</h1>
                   <span>{ player.score }</span>
                 </FancyCard>

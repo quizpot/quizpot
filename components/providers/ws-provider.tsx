@@ -16,6 +16,7 @@ import FancyCard from "../ui/fancy-card"
 import FancyButton from "../ui/fancy-button"
 import { AllClientEvents, AllServerEvents } from "@quizpot/quizcore"
 import TextInput from "../ui/text-input"
+import LoadingPage from "../ui/loading-page"
 
 const MAX_RECONNECT_ATTEMPTS = 5
 const MAX_RECONNECT_TIMEOUT_MS = 30000
@@ -271,13 +272,15 @@ export const WebSocketProvider = ({
     connectRef.current()
 
     return () => {
-      isMountedRef.current = false
-      if (connectTimeoutRef.current) clearTimeout(connectTimeoutRef.current)
-      if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current)
-      const ws = wsRef.current
-      if (ws && ws.readyState === WebSocket.OPEN) {
-        ws.close(1001, "Component unmount")
-      }
+      try {
+          isMountedRef.current = false
+        if (connectTimeoutRef.current) clearTimeout(connectTimeoutRef.current)
+        if (reconnectTimerRef.current) clearTimeout(reconnectTimerRef.current)
+        const ws = wsRef.current
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          ws.close(1001, "Component unmount")
+        }
+      } catch (ignored) { }
     }
   }, [])
 
@@ -315,9 +318,9 @@ export const WebSocketProvider = ({
     >
       {needsName ? (
         <div className="h-dvh w-full flex flex-col items-center justify-center gap-4">
-          <FancyCard className="flex flex-col gap-4 w-full max-w-sm">
-            <h1 className="text-lg font-medium">What&apos;s your name?</h1>
+          <FancyCard className="flex flex-col gap-4 p-4 w-full max-w-sm">
             <TextInput
+              className="text-center"
               placeholder="Your name"
               value={nameInput}
               onChange={(e) => setNameInput(e.target.value)}
@@ -325,21 +328,13 @@ export const WebSocketProvider = ({
                 if (e.key === "Enter") handleNameSubmit()
               }}
             />
-            <FancyButton disabled={!nameInput.trim()} onClick={handleNameSubmit}>
+            <FancyButton disabled={!nameInput.trim()} onClick={handleNameSubmit} color="green">
               Join
             </FancyButton>
           </FancyCard>
         </div>
       ) : readyState !== WebSocket.OPEN ? (
-        <div className="h-dvh w-full flex flex-col items-center justify-center gap-4">
-          <FancyCard className="flex gap-4">
-            <LoaderCircle size={24} className="animate-spin" />
-            <div className="flex flex-col">
-              <h1>Connecting to server...</h1>
-              {error && <p className="text-sm text-yellow-600 mt-2">{error}</p>}
-            </div>
-          </FancyCard>
-        </div>
+        <LoadingPage message="Connecting to server ..." />
       ) : (
         children
       )}

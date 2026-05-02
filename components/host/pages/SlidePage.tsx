@@ -1,7 +1,6 @@
 import InvalidPage from './InvalidPage'
 import TitleSlide from '../slides/TitleSlide'
 import TitleImageTextSlide from '../slides/TitleImageTextSlide'
-import HostStatusLayout from '../layouts/HostStatusLayout'
 import { HostLobbyState, isQuestion, SlideLayout } from '@quizpot/quizcore'
 import MessagePage from '@/components/ui/message-page'
 
@@ -18,29 +17,21 @@ const SlidePage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
 
   if (slideData.slideType === 'title') {
     return (
-      <HostStatusLayout>
-        <section className='h-full w-full'>
-          <TitleSlide slide={ slideData } />
-        </section>
-      </HostStatusLayout>
+      <section className='h-full w-full'>
+        <TitleSlide slide={ slideData } />
+      </section>
     )
   }
 
   if (slideData.slideType === 'content') {
     return (
-      <HostStatusLayout>
-        <section className='h-full w-full'>
-          <TitleImageTextSlide slide={ slideData } />
-        </section>
-      </HostStatusLayout>
+      <section className='h-full w-full'>
+        <TitleImageTextSlide slide={ slideData } />
+      </section>
     )
   }
 
-  return (
-    <HostStatusLayout>
-      <InvalidPage hostLobbyState={ hostLobbyState } message='Unsupported slide type. Press Space to skip.' />
-    </HostStatusLayout>
-  )
+  return <InvalidPage hostLobbyState={ hostLobbyState } message='Unsupported slide type. Press Space to skip.' />
 }
 
 export default SlidePage

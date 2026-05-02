@@ -41,20 +41,20 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
           showAnswers ?
             <>
               <MultipleChoiceAnswerButtonWithAnswer 
-                label="True"
+                label={ currentQuestion.labels[0] }
                 color='red'
                 isCorrect={ currentQuestion.answer } 
               />
               <MultipleChoiceAnswerButtonWithAnswer 
-                label="False"
+                label={ currentQuestion.labels[1] }
                 color='blue'
                 isCorrect={ !currentQuestion.answer } 
               />
             </>
             :
             <>
-              <MultipleChoiceAnswerButton label={ "True" } color='red' />
-              <MultipleChoiceAnswerButton label={ "False" } color='blue' />
+              <MultipleChoiceAnswerButton label={ currentQuestion.labels[0] } color='red' />
+              <MultipleChoiceAnswerButton label={ currentQuestion.labels[1] } color='blue' />
             </>
         }
       </section>

@@ -89,7 +89,7 @@ const ContentSlideImageEditor = () => {
         <img 
           src={imageUrl}
           alt='Slide' 
-          className='h-full w-auto max-w-full object-contain rounded-lg shadow-lg'
+          className='h-full w-auto max-w-full object-contain'
         />
       </div>
       <div className='shrink-0 py-2'>

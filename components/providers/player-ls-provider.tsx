@@ -42,8 +42,6 @@ export const PlayerLobbyStateProvider = ({ children }: { children: React.ReactNo
         setState(prev => prev ? { ...prev, hostConnected: ctx.payload.connected } : null)
       }),
 
-      // Called when the host's answer is correct/incorrect — updates hasAnswered,
-      // wasCorrect, and syncs the player's own score/streak from the server.
       onEvent('PLAYER_ANSWER_RESULT', (ctx) => {
         setState(prev => {
           if (!prev) return null

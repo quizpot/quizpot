@@ -14,31 +14,37 @@ const PlayerStatusLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <main
-      className='h-dvh w-full flex flex-col gap-2'
+      className='h-dvh w-full flex flex-col gap-2 select-none'
       style={ getBackgroundStyles(playerLobbyState.quizInfo.theme) }
     >
-      {
-        playerLobbyState.currentStep && (
-          <div className='flex gap-2 items-center justify-center p-2'>
-            <FancyCard>
-              { playerLobbyState.stepNumber }
-            </FancyCard>
-            <FancyCard>
-              <StepIcon step={ playerLobbyState.currentStep } />
-            </FancyCard>
-          </div>
-        )
-      }
       <div className='w-full h-full overflow-y-hidden'>
         { children }
       </div>
-      <div className='flex gap-2 p-4'>
-        <FancyCard>
-          { playerLobbyState.me.name }
-        </FancyCard>
-        <FancyCard>
-          { playerLobbyState.me.score }
-        </FancyCard>
+      <div className='flex gap-4 px-4 pb-4 justify-between'>
+        <div className='flex gap-2'>
+          <FancyCard className='font-semibold'>
+            { playerLobbyState.me.name }
+          </FancyCard>
+          <FancyCard className='font-semibold'>
+            { playerLobbyState.me.score }
+          </FancyCard>
+        </div>
+        {
+          playerLobbyState.status !== 'waiting' && (
+            <div className='flex gap-2'>
+              {
+                playerLobbyState.currentStep && (
+                  <FancyCard size='sm' className='flex items-center justify-center'>
+                    <StepIcon step={ playerLobbyState.currentStep } />
+                  </FancyCard>
+                )
+              }
+              <FancyCard>
+                { playerLobbyState.stepNumber } of { playerLobbyState.quizInfo.stepCount }
+              </FancyCard>
+            </div>
+          )
+        }
       </div>
     </main>
   )

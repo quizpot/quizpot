@@ -9,7 +9,7 @@ const AnswersPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState 
       className='flex flex-col gap-4 items-center justify-center h-screen w-full'
       style={ getBackgroundStyles(playerLobbyState.quizInfo.theme) }
     >
-      <FancyCard className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>
+      <FancyCard color={ playerLobbyState.wasCorrect ? "green" : "red" } className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>
         { playerLobbyState.wasCorrect ? <Check /> : <X /> }
       </FancyCard>
     </section>

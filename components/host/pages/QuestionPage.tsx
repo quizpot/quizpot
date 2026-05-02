@@ -39,21 +39,18 @@ const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) =>
     return <InvalidPage hostLobbyState={ hostLobbyState } message='Invalid question type for question page.' />
 
   return (
-    <HostStatusLayout>
-      <section className='flex flex-col gap-4 justify-between h-full w-full'>
-        <FancyCard className='absolute right-4 top-4 rounded-full p-4 px-6 text-2xl font-semibold'>{ hostLobbyState.stepNumber } of { hostLobbyState.quizInfo.stepCount }</FancyCard>
-        <div></div> {/** To center the question */}
-        <div className='p-4'>
-          <FancyCard className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>{ hostLobbyState.currentStep?.data.question }</FancyCard>
-        </div>
-        <div className='p-4'>
-          <div 
-            className='bg-green-500 p-2 rounded-full'
-            style={{ width: `${progress}%` }}
-          ></div> 
-        </div>
-      </section>
-    </HostStatusLayout>
+    <section className='flex flex-col gap-4 justify-between h-full w-full'>
+      <div></div> {/** To center the question */}
+      <div className='p-4'>
+        <FancyCard className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>{ hostLobbyState.currentStep?.data.question }</FancyCard>
+      </div>
+      <div className='p-4'>
+        <FancyCard color='green' 
+          className='rounded-full'
+          style={{ width: `${progress}%` }}
+        ></FancyCard> 
+      </div>
+    </section>
   )
 }
 

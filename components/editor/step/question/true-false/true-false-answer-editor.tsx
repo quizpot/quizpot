@@ -35,7 +35,8 @@ const TrueFalseAnswerEditor = ({ color, index }: { color: Color, index: number }
         />
       </FancyButton>
       <BooleanInput value={ index === 0 ? data.answer : !data.answer } onChange={ () => updateAnswer(!data.answer) }>
-        { index === 0 && data.answer ? <Check /> : <X /> }
+        { (index === 0) && (data.answer ? <Check /> : <X />) }
+        { (index === 1) && (data.answer ? <X /> : <Check />) }
       </BooleanInput>
     </section>
   )

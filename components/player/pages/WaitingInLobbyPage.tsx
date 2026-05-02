@@ -19,7 +19,7 @@ const WaitingInLobbyPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobb
         <div className='flex flex-col gap-2 items-center'>
           <p>{ t('lobbyCode') }: <span className='font-semibold'>{ playerLobbyState.code }</span></p>
         </div>
-        <FancyButton color='red'>
+        <FancyButton color='red' asChild>
           <Link href='/'>
             { t('leave') }
           </Link>

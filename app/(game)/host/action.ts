@@ -2,16 +2,11 @@
 
 import { db } from "@/db"
 import { auth } from "@/lib/auth"
+import { LobbySettings } from "@quizpot/quizcore"
 import { quiz } from "@quizpot/quizcore/db/schema"
 import { eq } from "drizzle-orm"
 import { headers, cookies } from "next/headers"
 import { redirect } from "next/navigation"
-
-export interface LobbySettings {
-  statusBar: boolean
-  questionsOnDevice: boolean
-  customNames: boolean
-}
 
 export async function createLobbyAction(
   quizId: string,

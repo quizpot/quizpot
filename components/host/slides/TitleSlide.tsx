@@ -9,7 +9,7 @@ const TitleSlide = ({ slide }: { slide: TitleSlideLayout }) => {
       </FancyButton>
       {
         slide.subtitle && (
-          <FancyButton className='text-2xl w-full text-center'>
+          <FancyButton color='background' className='text-2xl w-full text-center'>
             { slide.subtitle }
           </FancyButton>
         )

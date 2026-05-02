@@ -14,15 +14,16 @@ import ScoreboardPage from "@/components/host/pages/ScoreboardPage"
 import SlidePage from "@/components/host/pages/SlidePage"
 import FancyButton from "@/components/ui/fancy-button"
 import Link from "next/link"
-import LoadingPage from "@/components/ui/loading-page"
 import Disconnected from "@/components/ui/disconnected"
 import SkipSlide from "@/components/host/slides/SkipSlide"
+import GettingState from "@/components/host/pages/GettingState"
+import HostStatusLayout from "@/components/host/layouts/HostStatusLayout"
 
 const HostLobbySwitch = () => {
   const { hostLobbyState } = useHostLobbyState()
 
   if (!hostLobbyState)
-    return <LoadingPage message="Waiting for host lobby state..." />
+    return <GettingState />
 
   switch (hostLobbyState.status) {
     case "waiting":
@@ -56,8 +57,10 @@ const HostPageClient = ({ code, hostId }: { code: string; hostId: string }) => {
     <WebSocketProvider role="host" code={code} clientId={hostId}>
       <Disconnected />
       <HostLobbyStateProvider>
-        <HostLobbySwitch />
-        <SkipSlide />
+        <HostStatusLayout>
+          <HostLobbySwitch />
+          <SkipSlide />
+        </HostStatusLayout>
       </HostLobbyStateProvider>
     </WebSocketProvider>
   )

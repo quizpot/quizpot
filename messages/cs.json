@@ -1,34 +1,35 @@
 {
   "meta": {
     "title": "Quizpot",
-    "description": "Vytvářejte zabavné kvízy, bez omezení"
+    "description": "Vytvářejte zábavné kvízy bez omezení"
   },
   "Locales": {
     "en": "Angličtina",
-    "sk": "Slovenčina",
+    "sk": "Slovenština",
     "cs": "Čeština"
   },
   "Buttons": {
-    "home": "Domov",
-    "quizFileInput": "Nahrát soubor s kvízem",
-    "close" : "Zavřít",
+    "home": "Domů",
+    "quizFileInput": "Nahrát soubor kvízu",
+    "close": "Zavřít",
     "save": "Uložit",
     "delete": "Smazat",
     "edit": "Upravit",
     "retry": "Zkusit znovu",
     "exit": "Ukončit",
     "download": "Stáhnout",
-    "goHome": "Jít domů",
+    "goHome": "Domů",
     "removeImage": "Odstranit obrázek",
     "true": "Pravda",
     "false": "Nepravda",
     "addAnswer": "Přidat odpověď",
     "removeAnswer": "Odstranit odpověď",
-    "host": "Hostit",
-    "start": "Začít",
+    "host": "Hostovat",
+    "start": "Spustit",
     "kick": "Vyhodit",
     "submit": "Odeslat",
-    "clearSearch": "Vymazat hledání"
+    "clearSearch": "Vymazat hledání",
+    "cancel": "Zrušit"
   },
   "Header": {
     "github": {
@@ -38,23 +39,35 @@
     "stats": {
       "label": "Statistiky",
       "href": "/stats"
+    },
+    "login": {
+      "label": "Přihlásit se",
+      "href": "/signin"
+    },
+    "dashboard": {
+      "label": "Nástěnka",
+      "href": "/dashboard"
+    },
+    "logout": {
+      "label": "Odhlásit se",
+      "href": "#"
     }
   },
   "HomePage": {
     "menu": {
       "Play": {
         "title": "Hrát",
-        "subtitle": "Připoj se k skupine",
+        "subtitle": "Připojit se do lobby",
         "href": "/play"
       },
       "Host": {
-        "title": "Hostit",
-        "subtitle": "Hostit skupinu",
+        "title": "Hostovat",
+        "subtitle": "Hostovat lobby",
         "href": "/host"
       },
       "Edit": {
         "title": "Editor",
-        "subtitle": "Uprav své kvízy",
+        "subtitle": "Upravit vaše kvízy",
         "href": "/quizzes"
       },
       "Results": {
@@ -65,83 +78,88 @@
     }
   },
   "StatsPage": {
-    "title": "Statistiky",
+    "title": "Statistiky instance",
     "clients": "Klienti",
-    "lobbies": "Skupiny",
+    "lobbies": "Lobby",
     "players": "Hráči",
-    "cpu": "CPU Využití (%)",
-    "memory": "Paměť Využití (MB)",
-    "max": "Max (1 Hodina)",
-    "10min": "Posledních 10 Minut",
-    "1min": "Poslední Minuta"
+    "cpu": "Využití CPU (%)",
+    "memory": "Využití paměti (MB)",
+    "max": "Max (1 hodina)",
+    "10min": "Posledních 10 minut",
+    "1min": "Poslední 1 minuta"
   },
   "UnsupportedSizePage": {
     "title": "Nepodporované zařízení",
-    "description": "Tento zařízení není podporován kvůli jeho velikosti obrazovky. Prosím, použijte jiné zařízení k přístupu na této stránce."
+    "description": "Toto zařízení není podporováno kvůli velikosti obrazovky. Pro přístup k této stránce použijte jiné zařízení."
   },
   "QuizzesPage": {
-    "title": "Vaše Kvízy",
-    "createNew": "Vytvořit Nový Kvíz",
-    "generate": "Vygenerovat Kvíz",
-    "newQuizBtn": "Nový Kvíz",
+    "title": "Vaše kvízy",
+    "createNew": "Vytvořit nový kvíz",
+    "generate": "Generovat kvíz",
+    "newQuizBtn": "Nový kvíz",
     "search": "Hledat",
     "latest": "Nejnovější",
     "oldest": "Nejstarší",
     "biggest": "Největší",
     "smallest": "Nejmenší",
     "noneFound": "Zatím jste nevytvořili žádné kvízy.",
-    "notFoundFor": "Nenalezeny žádné kvízy pro "
+    "notFoundFor": "Nenalezeny žádné kvízy pro",
+    "createFirstPrompt": "Začněte vytvořením svého prvního kvízu!",
+    "loading": "Načítání...",
+    "searching": "Vyhledávání...",
+    "loadMore": "Načíst více"
   },
   "GenerateQuizPage": {
-    "title": "Vygenerovat Kvíz",
-    "generate": "Vygenerovat",
-    "prompt": "Vytvor mi kvíz o psoch a mačkách s titulným slajdom a 10 otázkami",
+    "title": "Generovat kvíz",
+    "generate": "Generovat",
+    "prompt": "Vygeneruj mi kvíz o psech a kočkách s úvodním slidem a 10 otázkami",
     "generating": "Generování...",
-    "description": "Budete přesměrováni na editor zkráceně."
+    "description": "Za malou chvíli budete přesměrováni do editoru."
   },
   "QuizSettings": {
-    "button": "Nastavení",
-    "dialogTitle": "Nastavení Kvízu",
-    "thumbnail": "Náhled",
-    "title": "Název",
-    "description": "Popis",
-    "background": "Pozadí"
+    "title": "Nastavení kvízu",
+    "quizTitleLabel": "Název kvízu",
+    "placeholderTitle": "Zadejte název kvízu...",
+    "themeColorLabel": "Barva motivu",
+    "themeBackgroundLabel": "Pozadí motivu",
+    "thumbnail": "Náhledový obrázek",
+    "description": "Popis"
   },
   "SelectImageInput": {
     "button": "Vybrat obrázek",
     "title": "Vybrat obrázek",
-    "fromFile": "Z souboru",
+    "fromFile": "Ze souboru",
     "fromPixabay": "Z Pixabay",
     "selectFromPixabay": "Vybrat z Pixabay",
     "search": "Hledat"
   },
   "NewQuestionDialog": {
-    "button": "Nová Otázka",
-    "title": "Vybrat typ otázky"
+    "button": "Nová otázka",
+    "title": "Vyberte typ otázky"
   },
   "NewSlideDialog": {
-    "button": "Nový Slajd",
-    "title": "Vybrat typ slajdu"
+    "button": "Nový slide",
+    "title": "Vyberte typ slidu"
   },
   "Questions": {
-    "multipleChoice": "Více voleb",
-    "trueFalse": "Pravda Nepravda",
-    "shortAnswer": "Krátká Odpověď"
+    "multipleChoice": "Více možností",
+    "trueFalse": "Pravda / Nepravda",
+    "shortAnswer": "Krátká odpověď"
   },
   "Slides": {
-    "title": "Název",
-    "titleImageText": "Nadpis a Text"
+    "title": "Nadpis",
+    "titleImageText": "Nadpis a text"
   },
   "MultipleChoiceEditor": {
-    "addChoice": "Přidat Volbu",
-    "removeChoice": "Odstranit Volbu"
+    "addChoice": "Přidat možnost",
+    "removeChoice": "Odstranit možnost"
   },
   "QuestionSettings": {
-    "displayTimeout": "Čas Zobrazení",
-    "answerTimeout": "Čas Na Odpověď",
+    "displayTimeout": "Čas zobrazení",
+    "answerTimeout": "Čas na odpověď",
     "points": "Body",
     "normal": "Normální",
-    "double": "Dvojnásobné",
+    "double": "Dvojité",
     "none": "Žádné"
   },
   "SlideEditor": {
@@ -151,32 +169,38 @@
     "text": "Text"
   },
   "HostPage": {
-    "title": "Hostit Kvíz",
-    "customNames": "Vlastní mena"
+    "title": "Hostovat kvíz",
+    "settings": "Nastavení",
+    "customNames": "Vlastní jména",
+    "customNameTooltip": "Umožnit hráčům nastavit si vlastní jméno, jinak bude vygenerováno náhodně",
+    "statusBar": "Stavový řádek",
+    "statusBarTooltip": "Zobrazit stavový řádek v dolní části obrazovky",
+    "questionsOnDevice": "Otázky na zařízení",
+    "questionsOnDeviceTooltip": "Zobrazovat otázky také na zařízení hráče"
   },
   "LobbyWaitingPage": {
     "players": "Hráči",
-    "code": "Kód Skupiny"
+    "code": "Kód lobby"
   },
   "PlayPage": {
-    "title": "Kód Skupiny",
-    "continue": "Pokračovať",
-    "setName": "Zadaj svoje meno"
+    "title": "Kód lobby",
+    "continue": "Pokračovat",
+    "setName": "Nastavte si jméno"
   },
   "WaitingInLobbyPage": {
-    "title": "Čakám na skupinu",
-    "lobbyCode": "Kód Skupiny",
-    "leave": "Opustiť Skupinu"
+    "title": "Čekání v lobby",
+    "lobbyCode": "Kód lobby",
+    "leave": "Odejít"
   },
   "SlidePage": {
-    "title": "Pozri sa na slajd"
+    "title": "Podívejte se na obrazovku!"
   },
   "AnsweredPage": {
-    "title": "Odpovedal"
+    "title": "Zodpovězeno"
   },
   "AnswersPage": {
-    "correct": "Správne",
-    "incorrect": "Nesprávne"
+    "correct": "Správně",
+    "incorrect": "Špatně"
   },
   "NotFoundPage": {
     "title": "404 - Nenalezeno"
@@ -184,5 +208,63 @@
   "QuizCard": {
     "deleteQuizTitle": "Smazat kvíz",
     "deleteQuizDescription": "Opravdu chcete smazat:"
+  },
+  "UserDangerZone": {
+    "title": "Nebezpečná zóna",
+    "description": "Jakmile smažete svůj účet, není cesty zpět. Všechna vaše data, postup a nastavení budou trvale odstraněna.",
+    "button": "Smazat účet",
+    "dialogTitle": "Potvrdit smazání",
+    "dialogDescription": "Jste si naprosto jisti? Tuto akci nelze vzít zpět. Veškerý váš postup, kvízy a data budou trvale smazána.",
+    "confirmButton": "Ano, smazat můj účet",
+    "deleting": "Maže se...",
+    "success": "Účet byl úspěšně smazán"
+  },
+  "JoinLobby": {
+    "placeholder": "Zadejte kód lobby",
+    "button": "Připojit se"
+  },
+  "SignInPage": {
+    "title": "Přihlášení",
+    "subtitle": "Přihlaste se ke svému účtu",
+    "emailLabel": "Email",
+    "emailPlaceholder": "user@example.com",
+    "passwordLabel": "Heslo",
+    "passwordPlaceholder": "Heslo",
+    "button": "Přihlásit se",
+    "signingIn": "Přihlašování...",
+    "or": "nebo",
+    "signUpLink": "Zaregistrovat se",
+    "errorInvalid": "Neplatné údaje",
+    "errorGeneric": "Chyba při přihlašování"
+  },
+  "SignUpPage": {
+    "title": "Registrace",
+    "subtitle": "Zaregistrujte se do této instance",
+    "usernameLabel": "Uživatelské jméno",
+    "usernamePlaceholder": "Uživatelské jméno",
+    "emailLabel": "Email",
+    "emailPlaceholder": "user@example.com",
+    "passwordLabel": "Heslo",
+    "passwordPlaceholder": "Heslo",
+    "confirmPasswordLabel": "Potvrdit heslo",
+    "confirmPasswordPlaceholder": "Heslo",
+    "button": "Zaregistrovat se",
+    "creatingAccount": "Vytváření účtu...",
+    "or": "nebo",
+    "signInLink": "Přihlásit se",
+    "errorCheckInput": "Zkontrolujte prosím své údaje",
+    "errorPasswordsMatch": "Hesla se neshodují",
+    "errorGeneric": "Chyba při přihlašování"
+  },
+  "DashboardSidebar": {
+    "home": "Domů",
+    "dashboard": "Nástěnka",
+    "quizzes": "Kvízy",
+    "admin": "Admin",
+    "stats": "Statistiky",
+    "users": "Uživatelé"
+  },
+  "QuestionPage": {
+    "title": "Otázka"
   }
 }

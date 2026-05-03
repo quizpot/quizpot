@@ -32,8 +32,14 @@ const TrueFalsePlayerAnswerButton = ({ index, value, color }: { index: number, v
 
   return (
     <FancyButton color={ color } onClick={ sendAnswer } className='w-full h-full flex items-center gap-4 text-2xl'>
-      <Icon size={ 32 } />
-      { step.data.labels[index] }
+      {
+        playerLobbyState?.lobbySettings.displayOnDevice && (
+          <>
+            <Icon size={ 32 } />
+            { step.data.labels[index] }
+          </>
+        )
+      }
     </FancyButton>
   )
 }

@@ -193,7 +193,7 @@
     "leave": "Leave"
   },
   "SlidePage": {
-    "title": "Slide"
+    "title": "Look at the slide!"
   },
   "AnsweredPage": {
     "title": "Answered"
@@ -263,5 +263,8 @@
     "admin": "Admin",
     "stats": "Stats",
     "users": "Users"
+  },
+  "QuestionPage": {
+    "title": "Question"
   }
 }

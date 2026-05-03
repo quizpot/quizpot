@@ -1,10 +1,11 @@
 "use client"
-import { getBackgroundStyles } from '@/lib/client/background-styles'
 import FancyCard from '@/components/ui/fancy-card'
 import { PlayerLobbyState } from '@quizpot/quizcore'
+import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 const QuestionPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
+  const t = useTranslations('QuestionPage')
   const question = playerLobbyState.currentStep
   const [progress, setProgress] = useState(0)
   
@@ -41,7 +42,13 @@ const QuestionPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState
     <section className='flex flex-col gap-4 justify-between h-full w-full'>
       <div></div> {/** To center the question */}
       <div className='p-4'>
-        <FancyCard className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>{ question.data.question }</FancyCard>
+        {
+          playerLobbyState.lobbySettings.displayOnDevice ? (
+            <FancyCard className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>{ question.data.question }</FancyCard>
+          ) : (
+            <FancyCard className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>{ t('title') }</FancyCard>
+          )
+        }
       </div>
       <div className='p-4'>
         <FancyCard color='green' 

@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1035.0",
-    "@google/genai": "^1.48.0",
+    "@google/genai": "^1.51.0",
     "@hello-pangea/dnd": "^18.0.1",
     "@quizpot/quizcore": "^0.0.44",
     "@radix-ui/react-dropdown-menu": "^2.1.16",

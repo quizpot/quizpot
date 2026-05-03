@@ -58,7 +58,7 @@ const DashboardSidebar = ({ session }: { session: Session }) => {
       <div className="flex-1 w-full overflow-y-auto p-4 flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <DashboardSidebarLabel icon={ <Home size={16} /> } label={ t('home') } />
-          <DashboardSidebarButton href="/dashboard" icon={ <PanelsTopLeft /> } label={ t('dashboard') } />
+          {/* <DashboardSidebarButton href="/dashboard" icon={ <PanelsTopLeft /> } label={ t('dashboard') } /> */}
           <DashboardSidebarButton href="/dashboard/quizzes" icon={ <Book /> } label={ t('quizzes') } />
         </div>
         {

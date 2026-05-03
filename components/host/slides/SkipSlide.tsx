@@ -1,6 +1,6 @@
 "use client"
-import { useWebSocket } from '@/components/providers/WebSocketProvider'
-import React, { useEffect } from 'react'
+import { useWebSocket } from '@/components/providers/ws-provider'
+import { useEffect } from 'react'
 
 const SkipSlide = () => {
   const { sendEvent } = useWebSocket()
@@ -8,7 +8,7 @@ const SkipSlide = () => {
   useEffect(() => {
     const keyDown = (e: KeyboardEvent) => {
       if (e.key === ' ') {
-        sendEvent('nextQuestion', {})
+        sendEvent('NEXT_STEP')
       }
     }
 

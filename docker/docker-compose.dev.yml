@@ -1,0 +1,64 @@
+services:
+  db:
+    image: postgres:17
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: quizpot
+      POSTGRES_PASSWORD: quizpot
+      POSTGRES_DB: quizpot
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quizpot"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  master:
+    image: chrislusf/seaweedfs
+    restart: always
+    ports:
+      - "9333:9333"
+    command: "master -ip=master"
+
+  volume:
+    image: chrislusf/seaweedfs
+    restart: always
+    ports:
+      - "8080:8080"
+    volumes:
+      - seaweed_volume_data:/data
+    command: 'volume -mserver="master:9333" -port=8080'
+    depends_on:
+      - master
+
+  # The Filer is the "glue" that S3 needs
+  filer:
+    image: chrislusf/seaweedfs
+    restart: always
+    ports:
+      - "8888:8888"
+      - "18888:18888"
+    volumes:
+      - seaweed_filer_data:/data
+    command: 'filer -master="master:9333"'
+    depends_on:
+      - master
+      - volume
+
+  s3:
+    image: chrislusf/seaweedfs
+    restart: always
+    ports:
+      - "8333:8333"
+    # Use -filer instead of -master
+    command: 's3 -filer="filer:8888" -ip.bind=0.0.0.0'
+    depends_on:
+      - filer
+
+volumes:
+  postgres_data:
+  seaweed_volume_data:
+  seaweed_filer_data:

@@ -1,0 +1,27 @@
+services:
+  app:
+    environment:
+      DATABASE_URL: postgresql://quizpot:quizpot@db:5432/quizpot
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: quizpot
+      POSTGRES_PASSWORD: quizpot
+      POSTGRES_DB: quizpot
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-EXEC", "pg_isready -U quizpot"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

@@ -1,6 +1,6 @@
 import React from 'react'
 import FancyButton from './fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 import { useTranslations } from 'next-intl'
 
 const QuizFileInput = ({ 

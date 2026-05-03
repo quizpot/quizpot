@@ -1,9 +1,8 @@
-import React from 'react'
-import { HostLobbyState } from '../../providers/HostLobbyStateProvider'
-import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/background-styles'
 import FancyCard from '@/components/ui/fancy-card'
 import FancyButton from '@/components/ui/fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
+import { HostLobbyState } from '@quizpot/quizcore'
 
 const EndPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   const onExitFullscreen = () => {
@@ -14,10 +13,10 @@ const EndPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
   return (
     <section 
       className='flex flex-col gap-4 justify-between h-screen w-full p-4'
-      style={ getBackgroundStyles(hostLobbyState.theme.background) }
+      style={ getBackgroundStyles(hostLobbyState.quizInfo.theme) }
     >
       <div className='flex gap-4 w-full p-4'>
-        <FancyCard color='white' className='text-center text-4xl font-semibold w-full py-4 px-4'>
+        <FancyCard className='text-center text-4xl font-semibold w-full py-4 px-4'>
           Results
         </FancyCard>
         <FancyButton color='green' onClick={ onExitFullscreen } className='h-full flex items-center font-semibold justify-center px-4 text-2xl'>

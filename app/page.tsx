@@ -1,12 +1,23 @@
+import JoinLobby from '@/components/home/join-lobby'
 import Footer from '@/components/nav/Footer'
-import Header from '@/components/nav/Header'
+import Header from '@/components/nav/header'
 import FancyButton from '@/components/ui/fancy-button'
+import { FancyIcons } from '@/components/ui/fancy-icons'
 import { Book, Pen, Play, User } from 'lucide-react'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 
 const HomePage = async () => {
   const t = await getTranslations('HomePage')
+
+  return (
+    <main className='h-dvh w-full flex flex-col justify-center items-center p-4'>
+      <Header />
+      <FancyIcons />
+      <JoinLobby />
+      <Footer className='absolute bottom-0 left-0 w-full' color='background' />
+    </main>
+  )
 
   return (
     <section className='h-screen w-full flex flex-col justify-between'>

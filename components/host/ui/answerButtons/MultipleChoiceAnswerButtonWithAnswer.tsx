@@ -1,8 +1,6 @@
 import FancyButton from '@/components/ui/fancy-button'
-import { Color } from '@/lib/Colors'
-import React from 'react'
-import { FaCheck, FaX } from 'react-icons/fa6'
-
+import { Color } from '@/lib/colors'
+import { Check, X } from 'lucide-react'
 const MultipleChoiceAnswerButtonWithAnswer = ({ label, color, isCorrect }: { label: string, color: Color, isCorrect: boolean }) => {
   return (
     <div className={ (isCorrect ? 'opacity-100' : 'opacity-60') + ' w-full h-full' }>
@@ -11,9 +9,9 @@ const MultipleChoiceAnswerButtonWithAnswer = ({ label, color, isCorrect }: { lab
           { label }
           { 
             isCorrect ? 
-              <FaCheck size={32} /> 
+              <Check size={32} /> 
               :
-              <FaX size={32} />
+              <X size={32} />
           }
         </div>
       </FancyButton>

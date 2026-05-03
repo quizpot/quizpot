@@ -1,16 +1,15 @@
 import FancyButton from '@/components/ui/fancy-button'
-import { TitleSlideLayout } from '@/lib/QuizFile'
-import React from 'react'
+import { TitleSlideLayout } from '@quizpot/quizcore'
 
 const TitleSlide = ({ slide }: { slide: TitleSlideLayout }) => {
   return (
     <section className='h-full w-full flex flex-col items-center justify-center gap-4 p-4'>
-      <FancyButton color='white' className='text-4xl px-4 py-4 text-center font-semibold mx-auto'>
+      <FancyButton className='text-5xl font-bold w-full text-center py-6'>
         { slide.title }
       </FancyButton>
       {
         slide.subtitle && (
-          <FancyButton color='white' className='text-xl text-center mx-auto'>
+          <FancyButton color='background' className='text-2xl w-full text-center'>
             { slide.subtitle }
           </FancyButton>
         )

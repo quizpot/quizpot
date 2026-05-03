@@ -3,8 +3,8 @@ import React, { useEffect } from 'react'
 import { useTranslations } from 'next-intl'
 import FancyButton from '@/components/ui/fancy-button'
 import Link from 'next/link'
-import Header from '@/components/nav/Header'
-import TextInput from '@/components/ui/TextInput'
+import HeaderClientWrapper from '@/components/nav/header-client-wrapper'
+import TextInput from '@/components/ui/text-input'
 
 const SetCodePage = () => {
   const t = useTranslations('PlayPage')
@@ -33,7 +33,7 @@ const SetCodePage = () => {
 
   return (
     <>
-      <Header />
+      <HeaderClientWrapper />
       <section className='flex flex-col gap-4 items-center justify-center h-screen w-full p-4'>
         <h1 className='text-2xl font-semibold'>{ t('title') }</h1>
         <div className='max-w-md'>

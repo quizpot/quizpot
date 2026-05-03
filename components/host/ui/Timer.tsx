@@ -1,3 +1,4 @@
+import FancyCard from '@/components/ui/fancy-card'
 import React, { useEffect } from 'react'
 
 const Timer = ({ from }: { from: number }) => {
@@ -21,11 +22,10 @@ const Timer = ({ from }: { from: number }) => {
     return () => clearInterval(interval)
   }, [from])
 
-
   return (
-    <div className='h-24 w-24 p-4 flex items-center justify-center rounded-full bg-white text-black font-semibold text-4xl'>
+    <FancyCard className='h-24 w-24 rounded-full p-4 flex items-center justify-center font-semibold text-4xl'>
       { time }
-    </div>
+    </FancyCard>
   )
 }
 

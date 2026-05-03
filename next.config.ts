@@ -7,13 +7,24 @@ const nextConfig: NextConfig = {
       ignore: [
         /\api\/stats/,
         /\api\/debug/,
+        /undefined/,
       ],
     },
   },
   devIndicators: false,
   images: {
-    remotePatterns: [new URL('https://pixabay.com/get/**')],
+    dangerouslyAllowLocalIP: process.env.NODE_ENV === 'development' ? true : false,
+    remotePatterns: [
+      new URL('https://pixabay.com/get/**'),
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8333',
+        pathname: '/quizpot-uploads/**',
+      },
+    ],
   },
+  transpilePackages: ["@quizpot/quizcore"],
 }
 
 const withNextIntl = createNextIntlPlugin()

@@ -22,6 +22,9 @@ const StepNavigatorCard = ({ step, index }: { step: QuizStep, index: number }) =
   }
 
   const deleteStep = () => {
+    if (quiz.steps.length === 1) setCurrentStep(null)
+    if (currentStep === index) setCurrentStep(index - 1)
+
     const updatedSteps = quiz.steps.filter((_, i) => i !== index);
     setQuiz({ ...quiz, steps: updatedSteps });
   }

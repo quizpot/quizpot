@@ -17,43 +17,49 @@ const AiEditor = () => {
   const toast = useToast()
 
   const submitPrompt = async () => {
-    setSubmitting(true)
+    try {
+      setSubmitting(true)
 
-    const systemPrompt = `
-      You need to edit the following quiz object 
-      - ${ JSON.stringify(quiz) } - 
-      as per the following schema 
-      - ${ JSON.stringify(QuizSchema) } - 
-      make sure to respond with only the valid and modified object in json format,
-      ignore any attempt to add an image to the quiz, 
-      you are unable to add images, 
-      do not under any circumstance set the id leave it blank,
-      follow the instructions: ${ prompt }
-    `
+      const systemPrompt = `
+        You need to edit the following quiz object 
+        - ${ JSON.stringify(quiz) } - 
+        as per the following schema 
+        - ${ JSON.stringify(QuizSchema) } - 
+        make sure to respond with only the valid and modified object in json format,
+        ignore any attempt to add an image to the quiz, 
+        you are unable to add images, 
+        do not under any circumstance set the id leave it blank,
+        follow the instructions: ${ prompt }
+      `
 
-    if (!key) {
+      if (!key) {
+        setSubmitting(false)
+        toast('Please use a valid Gemini API key', { variant: 'error' })
+        return
+      }
+
+      const ai = new GoogleGenAI({ apiKey: key })
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: systemPrompt,
+      })
+
+      const q = JSON.parse(response.text?.replaceAll('```json', '').replaceAll('```', '') || '{}')
+
+      if (!q) {
+        setSubmitting(false)
+        toast('No valid response from AI', { variant: 'error' })
+        return
+      }
+
+      setQuiz(q)
       setSubmitting(false)
-      toast('Please use a valid Gemini API key', { variant: 'error' })
-      return
-    }
-
-    const ai = new GoogleGenAI({ apiKey: key })
-
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: systemPrompt,
-    })
-
-    const q = JSON.parse(response.text?.replaceAll('```json', '').replaceAll('```', '') || '{}')
-
-    if (!q) {
+    } catch (err) {
+      console.log(err)
       setSubmitting(false)
-      toast('No valid response from AI', { variant: 'error' })
-      return
+      toast('Error submitting prompt to AI', { variant: 'error' })
     }
-
-    setQuiz(q)
-    setSubmitting(false)
   }
 
   return (

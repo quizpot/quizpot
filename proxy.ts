@@ -5,7 +5,8 @@ import { auth } from "@/lib/auth";
 const publicRoutes = [
 	"/auth/signin", 
 	"/auth/signup", 
-	"/"
+	"/",
+	"/play"
 ];
 
 export async function proxy(request: NextRequest) {
@@ -38,6 +39,5 @@ export const config = {
 		 * - favicon.ico, robots.txt (metadata files)
 		 */
 		'/((?!api|_next/static|_next/image|favicon.ico|robots.txt).*)',
-		'!/play'
 	],
 };

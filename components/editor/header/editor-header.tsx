@@ -3,6 +3,7 @@ import QuizTitleEditor from './quiz-title-editor'
 import Link from 'next/link'
 import QuizSettings from './quiz-settings'
 import SaveQuiz from './save-quiz'
+import AiEditor from './ai-editor'
 
 const EditorHeader = () => {
   return (
@@ -15,6 +16,7 @@ const EditorHeader = () => {
         </FancyButton>
         <QuizTitleEditor className='hidden md:block' />
         <QuizSettings />
+        <AiEditor />
       </div>
       <div className='flex gap-2'>
         <SaveQuiz />

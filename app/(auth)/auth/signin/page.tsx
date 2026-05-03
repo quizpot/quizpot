@@ -51,12 +51,12 @@ const SignInPage = () => {
 
   return (
     <FancyCard 
-      className='py-4 flex flex-col items-center justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-fit' 
+      className='py-4 flex flex-col items-center justify-center rounded-none md:rounded-2xl h-dvh md:h-fit w-full md:max-w-sm' 
       color='background'
     >
       <form
         onSubmit={ handleSubmit }
-        className='flex flex-col gap-4'
+        className='flex flex-col gap-4 w-full'
       >
         <div className='text-center'>
           <h1 className='text-2xl font-semibold'>{ t('title') }</h1>

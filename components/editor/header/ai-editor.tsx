@@ -12,7 +12,7 @@ import PasswordInput from "@/components/ui/password-input"
 const AiEditor = () => {
   const [open, setOpen] = useState(false)
   const [key, setKey] = useState(localStorage.getItem('aiKey') || '')
-  const [prompt, setPrompt] = useState('Generate more steps for the quiz ...')
+  const [prompt, setPrompt] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const { quiz, setQuiz } = useEditorQuiz()
   const toast = useToast()
@@ -73,7 +73,7 @@ const AiEditor = () => {
         <DialogHeader title='AI Editor' />
         <div className="p-4 flex flex-col gap-4">
           <PasswordInput value={ key } onChange={ (e) => { setKey(e.target.value); localStorage.setItem('aiKey', e.target.value) } } />
-          <TextAreaInput value={ prompt } onChange={ (e) => { setPrompt(e.target.value) } } />
+          <TextAreaInput value={ prompt } onChange={ (e) => { setPrompt(e.target.value) } } placeholder="Give the Ai a task to do with the quiz ..." />
           <FancyButton color="green" onClick={ submitPrompt } disabled={ submitting }>
             Submit
           </FancyButton>

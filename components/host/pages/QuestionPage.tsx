@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react'
 import InvalidPage from './InvalidPage'
 import FancyCard from '@/components/ui/fancy-card'
-import HostStatusLayout from '../layouts/HostStatusLayout'
 import { HostLobbyState } from '@quizpot/quizcore'
 
 const QuestionPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {

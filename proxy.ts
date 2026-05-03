@@ -38,5 +38,6 @@ export const config = {
 		 * - favicon.ico, robots.txt (metadata files)
 		 */
 		'/((?!api|_next/static|_next/image|favicon.ico|robots.txt).*)',
+		'!/play'
 	],
 };

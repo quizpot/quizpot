@@ -8,10 +8,10 @@ const ScorePage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState })
       className='flex gap-4 p-4 items-center justify-center h-screen w-full'
       style={ getBackgroundStyles(playerLobbyState.quizInfo.theme) }
     >
-      <FancyCard className='text-center text-4xl font-semibold py-4 px-4'>
+      <FancyCard className='text-center text-2xl lg:text-4xl font-semibold py-4 px-4'>
         { playerLobbyState.me.name }
       </FancyCard>
-      <FancyCard className='text-center text-4xl font-semibold py-4 px-4'>
+      <FancyCard className='text-center text-2xl lg:text-4xl font-semibold py-4 px-4'>
         { playerLobbyState.me.score }
       </FancyCard>
     </section>

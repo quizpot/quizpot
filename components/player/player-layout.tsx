@@ -20,7 +20,7 @@ const PlayerStatusLayout = ({ children }: { children: React.ReactNode }) => {
       <div className='w-full h-full overflow-y-hidden'>
         { children }
       </div>
-      <div className='flex gap-4 px-4 pb-4 justify-between'>
+      <div className='flex gap-4 px-4 pb-4 justify-between text-sm md:text-base'>
         <div className='flex gap-2'>
           <FancyCard className='font-semibold'>
             { playerLobbyState.me.name }
@@ -39,7 +39,7 @@ const PlayerStatusLayout = ({ children }: { children: React.ReactNode }) => {
                   </FancyCard>
                 )
               }
-              <FancyCard>
+              <FancyCard className='break-keep whitespace-nowrap'>
                 { playerLobbyState.stepNumber } of { playerLobbyState.quizInfo.stepCount }
               </FancyCard>
             </div>

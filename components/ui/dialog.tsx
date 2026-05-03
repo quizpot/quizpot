@@ -1,8 +1,11 @@
 "use client"
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import FancyButton from './fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
 import { useTranslations } from 'next-intl'
+import FancyCard from './fancy-card'
+import { X } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export const DialogContext = createContext<{
   opened: boolean
@@ -32,13 +35,21 @@ export const DialogTrigger = ({ children, color, size, className }: { children: 
   if (!context) throw new Error("DialogTrigger must be used within a Dialog")
 
   return (
-    <FancyButton size={ size } color={ color } onClick={() => context.setOpened(!context.opened)} className={ className }>
+    <FancyButton 
+      size={ size } 
+      color={ color } 
+      onClick={(e) => { 
+        e.stopPropagation(); 
+        context.setOpened(!context.opened) 
+      }} 
+      className={ className }
+    >
       { children }
     </FancyButton>
   )
 }
 
-export const DialogContent = ({ children }: { children: React.ReactNode }) => {
+export const DialogContent = ({ children, className }: { children: React.ReactNode, className?: string }) => {
   const context = useContext(DialogContext)
   if (!context) throw new Error("DialogContent must be used within a Dialog")
 
@@ -61,14 +72,18 @@ export const DialogContent = ({ children }: { children: React.ReactNode }) => {
     <>
       <section
         className='fixed left-0 top-0 w-full h-screen bg-black/50 z-10 flex items-center justify-center'
-        onClick={() => { context.setOpened(false) }}
+        onClick={(e) => { 
+          e.stopPropagation(); 
+          context.setOpened(false) 
+        }}
       >
-        <div
-          className='bg-white shadow-neutral-100 dark:bg-neutral-900 dark:shadow-neutral-950 shadow-[0_8px] rounded-xl z-30 flex flex-col m-4'
+        <FancyCard
+          color="background"
+          className={ cn('p-0 min-w-sm', className) }
           onClick={(e) => e.stopPropagation()}
         >
           { children }
-        </div>
+        </FancyCard>
       </section>
     </>
   )
@@ -86,12 +101,10 @@ export const DialogHeader = ({ title }: { title: string }) => {
         { title }
       </h1>
       <div className='flex gap-1'>
-        <FancyButton size='sm' onClick={ () => context.setOpened(false) }>
-          { t('close') }
+        <FancyButton size='sm' className='mb-2' onClick={ () => context.setOpened(false) }>
+          <X />
         </FancyButton>
       </div>
     </header>
   )
 }
-
-

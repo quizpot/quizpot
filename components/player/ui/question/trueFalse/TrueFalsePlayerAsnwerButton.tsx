@@ -1,36 +1,45 @@
-import { usePlayerLobbyState } from '@/components/providers/PlayerLobbyStateProvider'
-import { useWebSocket } from '@/components/providers/WebSocketProvider'
+import { usePlayerLobbyState } from '@/components/providers/player-ls-provider'
+import { useWebSocket } from '@/components/providers/ws-provider'
 import FancyButton from '@/components/ui/fancy-button'
-import { Color } from '@/lib/Colors'
-import React from 'react'
+import { Color, colorIcons } from '@/lib/colors'
 
-const TrueFalsePlayerAnswerButton = ({ value, color }: { value: boolean, color: Color }) => {
-  const { setPlayerLobbyState } = usePlayerLobbyState()
+const TrueFalsePlayerAnswerButton = ({ index, value, color }: { index: number, value: boolean, color: Color }) => {
+  const { setPlayerLobbyState, playerLobbyState } = usePlayerLobbyState()
   const sendEvent = useWebSocket().sendEvent
 
   const sendAnswer = () => {
-    sendEvent('submitAnswer', { 
-      answer: { 
-        answerType: 'trueFalse',
-        answer: value,
-      } 
+    sendEvent('SUBMIT_ANSWER', { 
+      submission: {
+        type: 'trueFalse',
+        answer: value
+      }
     })
 
-    setPlayerLobbyState(prevPlayerLobbyState => {
-      if (!prevPlayerLobbyState) return null
-
+    setPlayerLobbyState(prev => {
+      if (!prev) return null
       return {
-        ...prevPlayerLobbyState,
+        ...prev,
         hasAnswered: true,
       }
     })
   }
 
+  const step = playerLobbyState?.currentStep
+
+  if (step?.type !== 'question' || step?.data.questionType !== 'trueFalse') return null
+
+  const Icon = colorIcons[color as keyof typeof colorIcons]
+
   return (
-    <FancyButton color={ color } onClick={ sendAnswer } className='w-full h-full'>
-      {/* <div className='flex justify-between items-center w-full h-full p-8 text-4xl'>
-        { value ? 'True' : 'False' }
-      </div> */}
+    <FancyButton color={ color } onClick={ sendAnswer } className='w-full h-full flex items-center gap-4 text-2xl'>
+      {
+        playerLobbyState?.lobbySettings.displayOnDevice && (
+          <>
+            <Icon size={ 32 } />
+            { step.data.labels[index] }
+          </>
+        )
+      }
     </FancyButton>
   )
 }

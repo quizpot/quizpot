@@ -1,14 +1,13 @@
-import React from 'react'
 import MultipleChoiceAnswerButton from './answerButtons/MultipleChoiceAnswerButton'
 import MultipleChoiceAnswerButtonWithAnswer from './answerButtons/MultipleChoiceAnswerButtonWithAnswer'
-import { Question } from '@/lib/QuizFile'
-import { colorKeys } from '@/lib/Colors'
+import { colorKeys } from '@/lib/colors'
 import FancyCard from '@/components/ui/fancy-card'
 import AnswerCard from './answerDisplay/AnswerCard'
-import { useHostLobbyState } from '@/components/providers/HostLobbyStateProvider'
+import { useHostLobbyState } from '@/components/providers/host-ls-provder'
+import { Question } from '@quizpot/quizcore'
 
 const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuestion: Question, showAnswers?: boolean }) => {
-  const hostLobbyState = useHostLobbyState().hostLobbyState
+  const { hostLobbyState } = useHostLobbyState()
 
   if (currentQuestion.questionType === 'multipleChoice') {
     return (
@@ -42,20 +41,20 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
           showAnswers ?
             <>
               <MultipleChoiceAnswerButtonWithAnswer 
-                label="True"
+                label={ currentQuestion.labels[0] }
                 color='red'
                 isCorrect={ currentQuestion.answer } 
               />
               <MultipleChoiceAnswerButtonWithAnswer 
-                label="False"
+                label={ currentQuestion.labels[1] }
                 color='blue'
                 isCorrect={ !currentQuestion.answer } 
               />
             </>
             :
             <>
-              <MultipleChoiceAnswerButton label={ "True" } color='red' />
-              <MultipleChoiceAnswerButton label={ "False" } color='blue' />
+              <MultipleChoiceAnswerButton label={ currentQuestion.labels[0] } color='red' />
+              <MultipleChoiceAnswerButton label={ currentQuestion.labels[1] } color='blue' />
             </>
         }
       </section>
@@ -66,7 +65,7 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
     if (showAnswers) {
       const answerCounter: number[] = []
 
-      hostLobbyState?.answers.filter(a => a.isCorrect).map((answer, index) => {
+      hostLobbyState?.answers.filter((a) => a.isCorrect).map((answer, index) => {
         answerCounter[index] = answerCounter[index] + 1 || 1
       })
 
@@ -92,7 +91,7 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
 
     return (
       <div className='flex items-center justify-center p-8 gap-4'>
-        <FancyCard color="white" className='flex items-center justify-center p-8 mx-auto text-2xl'>
+        <FancyCard className='flex items-center justify-center p-8 mx-auto text-2xl'>
           Send your answer!
         </FancyCard>
       </div>
@@ -100,7 +99,7 @@ const CurrentQuestionAnswers = ({ currentQuestion, showAnswers }: { currentQuest
   }
 
   return (
-    <></>
+    <>a</>
   )
 }
 

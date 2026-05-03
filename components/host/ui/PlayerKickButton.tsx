@@ -1,11 +1,10 @@
 "use client"
-import React from 'react'
-import { useWebSocket } from '../../providers/WebSocketProvider'
-import { PlayerState } from '@/lib/misc/PlayerState'
 import FancyButton from '@/components/ui/fancy-button'
-import { Color } from '@/lib/Colors'
+import { Color } from '@/lib/colors'
+import { useWebSocket } from '@/components/providers/ws-provider'
+import { Player } from '@quizpot/quizcore'
 
-const PlayerKickButton = ({ player, color }: { player: PlayerState, color: Color }) => {
+const PlayerKickButton = ({ player, color }: { player: Player, color?: Color }) => {
   const { sendEvent } = useWebSocket()
 
   if (!player.id) {
@@ -14,11 +13,11 @@ const PlayerKickButton = ({ player, color }: { player: PlayerState, color: Color
   }
 
   const onClick = () => {
-    sendEvent('playerKick', { playerId: player.id })
+    sendEvent('KICK_PLAYER', { playerId: player.id })
   }
 
   return (
-    <FancyButton color={ color } onClick={ onClick }>
+    <FancyButton className='text-2xl' color={ color } onClick={ onClick }>
       { player.name }
     </FancyButton>
   )

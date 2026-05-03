@@ -1,16 +1,18 @@
-import React from 'react'
-import { PlayerLobbyState } from '../../providers/PlayerLobbyStateProvider'
-import { getBackgroundStyles } from '@/lib/client/BackgroundStyles'
+import { getBackgroundStyles } from '@/lib/client/background-styles'
 import FancyCard from '@/components/ui/fancy-card'
+import { PlayerLobbyState } from '@quizpot/quizcore'
 
 const ScorePage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   return (
     <section 
-      className='flex flex-col gap-4 items-center justify-center h-screen w-full'
-      style={ getBackgroundStyles(playerLobbyState.theme.background) }
+      className='flex gap-4 p-4 items-center justify-center h-screen w-full'
+      style={ getBackgroundStyles(playerLobbyState.quizInfo.theme) }
     >
-      <FancyCard color='white' className='text-center text-4xl font-semibold py-4 px-4 mx-auto'>
-        { playerLobbyState.player.name }: <span className="font-semiBold">{ playerLobbyState.player.score }</span>
+      <FancyCard className='text-center text-2xl lg:text-4xl font-semibold py-4 px-4'>
+        { playerLobbyState.me.name }
+      </FancyCard>
+      <FancyCard className='text-center text-2xl lg:text-4xl font-semibold py-4 px-4'>
+        { playerLobbyState.me.score }
       </FancyCard>
     </section>
   )

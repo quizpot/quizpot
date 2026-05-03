@@ -4,8 +4,9 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useLocale, useMessages, useTranslations } from 'next-intl'
 import { setCookie } from 'cookies-next'
 import FancyButton from './fancy-button'
+import { Color } from '@/lib/colors'
 
-const LocaleSwitch = ({ align, size }: { align?: 'end' | 'center' | 'start', size?: 'sm' | 'lg' }) => {
+const LocaleSwitch = ({ className, color, align, size }: { className?: string, color?: Color, align?: 'end' | 'center' | 'start', size?: 'sm' | 'lg' }) => {
   const locale = useLocale()
   const t = useTranslations('Locales')
   const messages = useMessages()
@@ -19,11 +20,11 @@ const LocaleSwitch = ({ align, size }: { align?: 'end' | 'center' | 'start', siz
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <FancyButton size={ size }>
+        <FancyButton color={ color } className={ className } size={ size }>
           { t(`${locale}`) }
         </FancyButton>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align={ align || 'end' }>
+      <DropdownMenuContent color={ color } align={ align || 'end' }>
         {
           localeKeys.map((key, index) => {
             return (

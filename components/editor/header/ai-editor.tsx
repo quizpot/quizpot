@@ -14,12 +14,14 @@ const AiEditor = () => {
   const [key, setKey] = useState(localStorage.getItem('aiKey') || '')
   const [prompt, setPrompt] = useState('')
   const [submitting, setSubmitting] = useState(false)
-  const { quiz, setQuiz } = useEditorQuiz()
+  const { quiz, setQuiz, setSaved } = useEditorQuiz()
   const toast = useToast()
 
   const submitPrompt = async () => {
     try {
       setSubmitting(true)
+      
+      const oldId = quiz.id
 
       const systemPrompt = `
         You need to edit the following quiz object 
@@ -29,7 +31,7 @@ const AiEditor = () => {
         make sure to respond with only the valid and modified object in json format,
         ignore any attempt to add an image to the quiz, 
         you are unable to add images, 
-        do not under any circumstance set the id leave it blank,
+        do not under any circumstance set the quiz id leave it blank,
         follow the instructions: ${ prompt }
       `
 
@@ -54,8 +56,11 @@ const AiEditor = () => {
         return
       }
 
+      q.id = oldId
+
       setQuiz(q)
       setSubmitting(false)
+      setSaved(false)
       setOpen(false)
     } catch (err) {
       console.log(err)

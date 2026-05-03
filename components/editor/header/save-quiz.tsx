@@ -35,8 +35,6 @@ const SaveQuiz = () => {
         throw new Error(data.error || 'Failed to save quiz')
       }
 
-      const data = await response.json()
-      // Use the actual ID returned from the server if available
       const savedQuiz = { ...quiz, id: quizId }
       
       setQuiz(savedQuiz)

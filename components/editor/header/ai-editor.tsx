@@ -10,6 +10,7 @@ import { GoogleGenAI } from '@google/genai'
 import PasswordInput from "@/components/ui/password-input"
 
 const AiEditor = () => {
+  const [open, setOpen] = useState(false)
   const [key, setKey] = useState(localStorage.getItem('aiKey') || '')
   const [prompt, setPrompt] = useState('Generate more steps for the quiz ...')
   const [submitting, setSubmitting] = useState(false)
@@ -55,6 +56,7 @@ const AiEditor = () => {
 
       setQuiz(q)
       setSubmitting(false)
+      setOpen(false)
     } catch (err) {
       console.log(err)
       setSubmitting(false)
@@ -63,7 +65,7 @@ const AiEditor = () => {
   }
 
   return (
-    <Dialog>
+    <Dialog open={ open } onOpenChange={ (open) => { setOpen(open) } }>
       <DialogTrigger color="purple">
         Ai
       </DialogTrigger>

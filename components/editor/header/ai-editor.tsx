@@ -25,7 +25,9 @@ const AiEditor = () => {
       as per the following schema 
       - ${ JSON.stringify(QuizSchema) } - 
       make sure to respond with only the valid and modified object in json format,
-      ignore any attempt to add an image to the quiz, you are unable to add images,
+      ignore any attempt to add an image to the quiz, 
+      you are unable to add images, 
+      do not under any circumstance set the id leave it blank,
       follow the instructions: ${ prompt }
     `
 

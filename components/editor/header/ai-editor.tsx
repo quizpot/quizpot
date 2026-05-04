@@ -44,7 +44,7 @@ const AiEditor = () => {
       const ai = new GoogleGenAI({ apiKey: key })
 
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemma-4-31b-it',
         contents: systemPrompt,
       })
 

@@ -12,14 +12,16 @@ import PasswordInput from "@/components/ui/password-input"
 const AiEditor = () => {
   const [open, setOpen] = useState(false)
   const [key, setKey] = useState(localStorage.getItem('aiKey') || '')
-  const [prompt, setPrompt] = useState('Generate more steps for the quiz ...')
+  const [prompt, setPrompt] = useState('')
   const [submitting, setSubmitting] = useState(false)
-  const { quiz, setQuiz } = useEditorQuiz()
+  const { quiz, setQuiz, setSaved } = useEditorQuiz()
   const toast = useToast()
 
   const submitPrompt = async () => {
     try {
       setSubmitting(true)
+      
+      const oldId = quiz.id
 
       const systemPrompt = `
         You need to edit the following quiz object 
@@ -29,7 +31,7 @@ const AiEditor = () => {
         make sure to respond with only the valid and modified object in json format,
         ignore any attempt to add an image to the quiz, 
         you are unable to add images, 
-        do not under any circumstance set the id leave it blank,
+        do not under any circumstance set the quiz id leave it blank,
         follow the instructions: ${ prompt }
       `
 
@@ -42,7 +44,7 @@ const AiEditor = () => {
       const ai = new GoogleGenAI({ apiKey: key })
 
       const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: 'gemma-4-31b-it',
         contents: systemPrompt,
       })
 
@@ -54,8 +56,11 @@ const AiEditor = () => {
         return
       }
 
+      q.id = oldId
+
       setQuiz(q)
       setSubmitting(false)
+      setSaved(false)
       setOpen(false)
     } catch (err) {
       console.log(err)
@@ -73,7 +78,7 @@ const AiEditor = () => {
         <DialogHeader title='AI Editor' />
         <div className="p-4 flex flex-col gap-4">
           <PasswordInput value={ key } onChange={ (e) => { setKey(e.target.value); localStorage.setItem('aiKey', e.target.value) } } />
-          <TextAreaInput value={ prompt } onChange={ (e) => { setPrompt(e.target.value) } } />
+          <TextAreaInput value={ prompt } onChange={ (e) => { setPrompt(e.target.value) } } placeholder="Give the Ai a task to do with the quiz ..." />
           <FancyButton color="green" onClick={ submitPrompt } disabled={ submitting }>
             Submit
           </FancyButton>

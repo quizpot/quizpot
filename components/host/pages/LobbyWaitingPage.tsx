@@ -40,7 +40,7 @@ const LobbyWaitingPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }
           </FancyButton>
         </div>
         <FancyCard color='white' className='p-4 bg-white'>
-          <QRCode value={ window.location.toString().replace('play', 'host') } />
+          <QRCode value={ window.location.toString().replace('host', 'play') } />
         </FancyCard>
       </div>
       <div className='flex gap-x-4 gap-y-6 flex-wrap h-fit overflow-y-scroll pb-4'>

@@ -1,14 +1,18 @@
 import { QuizStep, SafeQuizStep } from '@quizpot/quizcore'
-import { Diff, FileQuestionMark, Grid2X2Plus, LayoutPanelTop, LayoutTemplate, LucideProps, TextCursorInput } from 'lucide-react'
+import { Diff, FileQuestionMark, Grid2X2Plus, LayoutPanelTop, LayoutTemplate, LucideProps, TextCursorInput, Users } from 'lucide-react'
 
 interface StepIconProps extends LucideProps {
-  step?: QuizStep | SafeQuizStep
+  step?: QuizStep | SafeQuizStep | "leaderboard"
 }
 
 const StepIcon = ({ step, ...props }: StepIconProps) => {
   let Icon = FileQuestionMark
 
   if (!step) return <Icon { ...props } />
+
+  if (step === 'leaderboard') {
+    return <Users { ...props } />
+  }
 
   if (step.type === 'question') {
     switch (step.data.questionType) {

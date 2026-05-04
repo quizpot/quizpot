@@ -1,3 +1,5 @@
+"use client"
+
 import { QuizStep } from "@quizpot/quizcore"
 import { useEditorQuiz } from "../providers/editor-quiz-provider"
 import { DragDropContext, Draggable, Droppable, DropResult, Direction } from "@hello-pangea/dnd"
@@ -58,10 +60,10 @@ const StepNavigator = () => {
               {...provided.droppableProps}
               ref={provided.innerRef}
               className={cn(
-                "flex px-2 min-h-0",
+                "flex p-2 min-h-0",
                 isMobile 
-                  ? "flex-row overflow-x-auto overflow-y-hidden py-2 items-center" 
-                  : "flex-col overflow-y-auto overflow-x-hidden h-full py-4"
+                  ? "flex-row overflow-x-auto overflow-y-hidden items-center" 
+                  : "flex-col overflow-y-auto overflow-x-hidden h-full"
               )}
             >
               {quiz.steps?.map((step, index) => (

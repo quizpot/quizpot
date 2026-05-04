@@ -1,6 +1,6 @@
 "use client"
 import FancyButton from "../../ui/fancy-button"
-import { Book, ChartArea, Home, PanelLeftClose, PanelLeftOpen, PanelsTopLeft, Shield, Users } from "lucide-react"
+import { Book, ChartArea, Home, LibraryBig, PanelLeftClose, PanelLeftOpen, PanelsTopLeft, Shield, Users } from "lucide-react"
 import { cn } from "@/lib/utils"
 import DashboardSidebarButton from "./dashboard-sidebar-button"
 import { auth } from "@/lib/auth"
@@ -60,6 +60,7 @@ const DashboardSidebar = ({ session }: { session: Session }) => {
           <DashboardSidebarLabel icon={ <Home size={16} /> } label={ t('home') } />
           {/* <DashboardSidebarButton href="/dashboard" icon={ <PanelsTopLeft /> } label={ t('dashboard') } /> */}
           <DashboardSidebarButton href="/dashboard/quizzes" icon={ <Book /> } label={ t('quizzes') } />
+          <DashboardSidebarButton href="/dashboard/results" icon={ <LibraryBig /> } label={ t('results') } />
         </div>
         {
           session?.user.role === 'admin' && (

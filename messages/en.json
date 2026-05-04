@@ -29,7 +29,8 @@
     "kick": "Kick",
     "submit": "Submit",
     "clearSearch": "Clear search",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "view": "View"
   },
   "Header": {
     "github": {
@@ -262,9 +263,22 @@
     "quizzes": "Quizzes",
     "admin": "Admin",
     "stats": "Stats",
-    "users": "Users"
+    "users": "Users",
+    "results": "Results"
   },
   "QuestionPage": {
     "title": "Question"
+  },
+  "ResultsPage": {
+    "title": "Results",
+    "search": "Search results...",
+    "notFoundFor": "No results found for",
+    "noneFound": "You don't have any results yet.",
+    "loading": "Loading...",
+    "loadMore": "Load more"
+  },
+  "ResultCard": {
+    "deleteResultTitle": "Delete result",
+    "deleteResultDescription": "Are you sure you want to permanently delete the result for"
   }
 }

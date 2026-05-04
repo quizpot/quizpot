@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
         port: '8333',
         pathname: '/quizpot-uploads/**',
       },
+      new URL(process.env.NEXT_PUBLIC_S3_PUBLIC_URL + '**'),
     ],
   },
   transpilePackages: ["@quizpot/quizcore"],

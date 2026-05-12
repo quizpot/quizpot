@@ -18,7 +18,7 @@ import PlayerStatusLayout from '@/components/player/player-layout'
 const PlaySwitch = () => {
   const { playerLobbyState } = usePlayerLobbyState()
 
-  if (!playerLobbyState) 
+  if (!playerLobbyState)
     return <LoadingPage message='Waiting for player lobby state...' />
 
   switch (playerLobbyState.status) {

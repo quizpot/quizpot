@@ -39,7 +39,7 @@ const AnswerPage = ({ hostLobbyState }: { hostLobbyState: HostLobbyState }) => {
         <QuestionImage src={question.data.imageHash} />
         <div className='flex flex-col gap-4'>
           <FancyCard className='h-24 w-24 p-4 flex items-center justify-center rounded-full font-semibold text-4xl'>
-            {hostLobbyState.answers.length}
+            {hostLobbyState.answerCount}
           </FancyCard>
           <FancyCard className='p-1 rounded-full font-semibold text-xs text-center'>
             Answers

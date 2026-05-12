@@ -3,9 +3,14 @@ import QuestionAnswers from '../ui/question/QuestionAnswers'
 import { getBackgroundStyles } from '@/lib/client/background-styles'
 import FancyCard from '@/components/ui/fancy-card'
 import QuestionImage from '@/components/host/ui/QuestionImage'
+import LoadingPage from '@/components/ui/loading-page'
 
 const AnswerPage = ({ playerLobbyState }: { playerLobbyState: PlayerLobbyState }) => {
   if (!playerLobbyState.currentStep) return null
+
+  if (playerLobbyState.hasAnswered) return (
+    <LoadingPage message='Answered ...' />
+  )
 
   const question = playerLobbyState.currentStep.data as SafeQuestion
 

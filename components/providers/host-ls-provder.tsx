@@ -9,23 +9,19 @@ import MessagePage from "../ui/message-page"
 type InitAction = { event: "INIT"; state: HostLobbyState | null }
 type ReducerAction = AllHostServerEvents | InitAction
 
-interface HostProviderState {
-  lobby: HostLobbyState | null
-  answerCount: number
-}
+type HostProviderState = { lobby: HostLobbyState | null }
 
-const INITIAL: HostProviderState = { lobby: null, answerCount: 0 }
+const INITIAL: HostProviderState = { lobby: null }
 
 function reducer(state: HostProviderState, action: ReducerAction): HostProviderState {
   if (state.lobby === null && action.event !== "INIT") return state
 
   switch (action.event) {
     case "INIT":
-      return { lobby: action.state, answerCount: 0 }
+      return { lobby: action.state ? { ...action.state, answerCount: 0 } : null }
 
     case "PLAYER_JOINED":
       return {
-        ...state,
         lobby: {
           ...state.lobby!,
           players: [...state.lobby!.players, action.payload.player],
@@ -34,7 +30,6 @@ function reducer(state: HostProviderState, action: ReducerAction): HostProviderS
 
     case "PLAYER_LEFT":
       return {
-        ...state,
         lobby: {
           ...state.lobby!,
           players: state.lobby!.players.filter(
@@ -48,7 +43,6 @@ function reducer(state: HostProviderState, action: ReducerAction): HostProviderS
         p.id === action.payload.player.id ? action.payload.player : p
       )
       return {
-        ...state,
         lobby: {
           ...state.lobby!,
           players: updated.sort((a, b) => b.score - a.score),
@@ -57,12 +51,11 @@ function reducer(state: HostProviderState, action: ReducerAction): HostProviderS
     }
 
     case "UPDATE_LOBBY_ANSWERS":
-      return { ...state, answerCount: action.payload.count }
+      return { lobby: { ...state.lobby!, answerCount: action.payload.count } }
 
     case "LOBBY_STATUS_UPDATE": {
       const { payload, stepNumber } = action
       const base: HostLobbyState = { ...state.lobby!, stepNumber }
-      let nextAnswerCount = state.answerCount
 
       const nextLobby: HostLobbyState = {
         ...base,
@@ -71,56 +64,47 @@ function reducer(state: HostProviderState, action: ReducerAction): HostProviderS
 
       switch (payload.status) {
         case LobbyStatus.question:
-          nextAnswerCount = 0
+          nextLobby.answerCount = 0
           nextLobby.currentStep = { type: "question", data: payload.question }
           nextLobby.timeout = new Date(payload.timeoutStartedAt).toISOString()
           nextLobby.answers = []
           break
 
         case LobbyStatus.slide:
-          nextAnswerCount = 0
+          nextLobby.answerCount = 0
           nextLobby.currentStep = { type: "slide", data: payload.slide }
           nextLobby.timeout = undefined
           nextLobby.answers = []
           break
 
         case LobbyStatus.answer:
-          // Players are now answering — show the host a countdown.
-          // timeoutStartedAt is required in the schema so no guard needed.
           nextLobby.timeout = new Date(payload.timeoutStartedAt).toISOString()
           break
 
         case LobbyStatus.answers:
-          // Review phase — store the answers so the host can highlight
-          // correct/incorrect choices. Fall back to existing answers if the
-          // server omits them (e.g. for slides with no answers).
           nextLobby.answers = (payload.answers ?? state.lobby!.answers) as any[]
           nextLobby.timeout = undefined
           break
 
         case LobbyStatus.score:
-          // Leaderboard phase — server sends the sorted leaderboard.
           nextLobby.players = payload.leaderboard
           nextLobby.timeout = undefined
           break
 
         case LobbyStatus.end:
-          // Game over — clear transient fields.
           nextLobby.timeout = undefined
           nextLobby.currentStep = undefined
           break
 
         case LobbyStatus.waiting:
-          // Shouldn't normally arrive mid-game but handle it cleanly.
           nextLobby.timeout = undefined
           nextLobby.currentStep = undefined
           break
       }
 
-      return { lobby: nextLobby, answerCount: nextAnswerCount }
+      return { lobby: nextLobby }
     }
 
-    // Events the host receives but that don't affect host lobby state.
     case "LOBBY_JOINED":
     case "PLAYER_ANSWER_RESULT":
     case "PLAYER_KICKED":
@@ -136,12 +120,11 @@ function reducer(state: HostProviderState, action: ReducerAction): HostProviderS
 
 const HostLobbyContext = createContext<{
   hostLobbyState: HostLobbyState | null
-  answerCount: number
   setHostLobbyState: (state: HostLobbyState | null) => void
 } | null>(null)
 
 export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode }) => {
-  const [{ lobby, answerCount }, dispatch] = useReducer(reducer, INITIAL)
+  const [{ lobby }, dispatch] = useReducer(reducer, INITIAL)
   const { onEvent } = useWebSocket()
   const router = useRouter()
 
@@ -180,7 +163,6 @@ export const HostLobbyStateProvider = ({ children }: { children: React.ReactNode
     <HostLobbyContext.Provider
       value={{
         hostLobbyState: lobby,
-        answerCount,
         setHostLobbyState: (state) => dispatch({ event: "INIT", state }),
       }}
     >

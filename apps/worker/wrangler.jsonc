@@ -1,0 +1,9 @@
+{
+  "name": "quizpot-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-25",
+  "assets": {
+    "directory": "../web/dist",
+    "binding": "ASSETS"
+  }
+}

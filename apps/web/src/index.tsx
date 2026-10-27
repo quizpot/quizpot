@@ -1,8 +1,13 @@
 import { render } from "preact";
-import { QuizSchema } from "@quizpot/core";
+import { Button } from "./components/ui/button";
+import "./style.css";
 
 function App() {
-  return <h1>Quizpot Web Ready</h1>;
+  return <>
+    <Button>
+      Testing Noep
+    </Button>  
+  </>
 }
 
 render(<App />, document.getElementById("app")!);

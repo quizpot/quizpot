@@ -12,13 +12,25 @@ export default {
       });
     }
 
-    try {
-      const response = await env.ASSETS.fetch(request);
-      if (response.status !== 404) return response;
-    } catch {
+    // const isDev = url.hostname === "localhost" || url.hostname === "127.0.0.1";
+    // console.log('hostname: ' + url.hostname)
 
-    }
+    // if (isDev) {
+    //   try {
+    //     const viteResponse = await fetch(`http://localhost:5173${url.pathname}${url.search}`, {
+    //       method: request.method,
+    //       headers: request.headers,
+    //       body: request.method !== "GET" && request.method !== "HEAD" ? request.body : null,
+    //     });
+    //     console.log('vite response from ' + `http://localhost:5173${url.pathname}${url.search}` + ' : ' + viteResponse.status)
+    //     if (viteResponse.ok || viteResponse.status === 304) {
+    //       return viteResponse;
+    //     }
+    //   } catch {
+    //     throw new Error("Vite not running in dev.")
+    //   }
+    // }
 
-    return fetch(`http://localhost:5173${url.pathname}${url.search}`);
+    return env.ASSETS.fetch(request);
   }
 };

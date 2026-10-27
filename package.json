@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "turbo dev",
+    "dev": "pnpm --filter=@quizpot/web exec node -e \"require('fs').mkdirSync('dist', { recursive: true })\" && turbo dev",
     "build": "turbo build",
     "typecheck": "turbo typecheck"
   },

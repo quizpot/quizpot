@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.turbo" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/bundle-IPuw2d" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/bundle-JtKiSy" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/bundle-LvrNIW" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/bundle-nDxgQx" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/bundle-v3QepO" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/dev-HwPlGc" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/dev-e1XKhS" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/dev-p5il15" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/dev-pbgeqH" />
+      <excludeFolder url="file://$MODULE_DIR$/apps/worker/.wrangler/tmp/dev-z7LOBg" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
